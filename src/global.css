@@ -1,0 +1,14 @@
+:root {
+  --bg-color: #eaeaec;
+  --text-color: #333333;
+  --border-color: #cccccc;
+  --border-width: 3px;
+
+  background-color: var(--bg-color);
+  box-sizing: border-box;
+  color: var(--text-color);
+}
+
+body {
+  margin: 0;
+}

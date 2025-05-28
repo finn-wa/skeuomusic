@@ -1,9 +1,5 @@
 import { component$ } from "@builder.io/qwik";
 
 export default component$(() => {
-  return (
-    <>
-    <h1>skeuomusic</h1>
-    </>
-  );
+  return <div>Artists</div>;
 });
