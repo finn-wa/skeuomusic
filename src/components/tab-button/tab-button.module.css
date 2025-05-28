@@ -3,11 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: white;
   background: linear-gradient(0deg, #dbdce1 0%, #f3f4f4 100%);
-  border-right-color: #efeff2;
-  border-left-color: #b1b1b5;
-  border-width: 0px 3px;
 }
 
 .tab.selected {

@@ -1,4 +1,4 @@
-import { Slot, component$ } from "@builder.io/qwik";
+import { Slot, component$, useComputed$ } from "@builder.io/qwik";
 import { Link, useLocation } from "@builder.io/qwik-city";
 import styles from "./tab-button.module.css";
 
@@ -8,12 +8,12 @@ export interface TabButtonProps {
 
 export const TabButton = component$<TabButtonProps>((props) => {
   const location = useLocation();
+  const selectedClass = useComputed$(() =>
+    location.url.pathname.startsWith(props.route) ? styles.selected : "",
+  );
   return (
     <Link
-      class={[
-        styles.tab,
-        location.url.pathname.startsWith(props.route) && styles.selected,
-      ]}
+      class={["emboss-x", styles.tab, selectedClass.value]}
       href={props.route}
     >
       <Slot />
