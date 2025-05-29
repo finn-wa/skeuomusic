@@ -39,6 +39,7 @@
   },
   "trustedDependencies": ["@biomejs/biome"],
   "dependencies": {
+    "@fontsource-variable/inter": "^5.2.5",
     "@spotify/web-api-ts-sdk": "^1.2.0"
   }
 }

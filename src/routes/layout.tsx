@@ -1,5 +1,6 @@
 import { Slot, component$ } from "@builder.io/qwik";
 import { TabBar } from "~/components/tab-bar/tab-bar";
+import "@fontsource-variable/inter";
 
 export default component$(() => {
   return (

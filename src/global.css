@@ -12,6 +12,10 @@
 }
 
 body {
+  font-family: Inter Variable, sans-serif;
+  font-weight: bold;
+  font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
+  font-display: swap;
   margin: 0;
   box-sizing: border-box;
 }
