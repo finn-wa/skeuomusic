@@ -10,12 +10,14 @@ import { spotify } from "~/server/spotify";
 type Artist = { name: string };
 
 export const getArtists = server$(async (query: string): Promise<Artist[]> => {
-  const results = await spotify.search(query, ["artist"], undefined, 20);
-  return results.artists.items.map(({ name }) => ({ name }));
+  const results = await spotify.search(query, ["artist"], undefined, 50);
+  return results.artists.items
+    .map(({ name }) => ({ name }))
+    .sort((a, b) => a.name.localeCompare(b.name));
 });
 
 export const useArtists = routeLoader$(async () => {
-  return getArtists("the");
+  return getArtists("e");
 });
 
 export default component$(() => {
