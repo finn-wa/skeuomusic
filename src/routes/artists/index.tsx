@@ -1,6 +1,9 @@
-import { $, component$, useSignal } from "@builder.io/qwik";
-
-import { routeLoader$, server$ } from "@builder.io/qwik-city";
+import { component$ } from "@builder.io/qwik";
+import {
+  type DocumentHead,
+  routeLoader$,
+  server$,
+} from "@builder.io/qwik-city";
 import { ListItem } from "~/components/list-item/list-item";
 import { spotify } from "~/server/spotify";
 
@@ -20,12 +23,17 @@ export default component$(() => {
 
   return (
     <>
-      <h1>artists</h1>
       <ul>
-        {artists.value.map((artist) => (
-          <ListItem key={artist.name} title={artist.name} />
-        ))}
+        <h2>
+          {artists.value.map((artist) => (
+            <ListItem key={artist.name} title={artist.name} />
+          ))}
+        </h2>
       </ul>
     </>
   );
 });
+
+export const head: DocumentHead = {
+  title: "Artists",
+};

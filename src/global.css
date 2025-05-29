@@ -1,5 +1,5 @@
 :root {
-  --bg-color: #eaeaec;
+  --bg-color: #e9eaec;
   --text-color: #414244;
   --shadow-light: white;
   --shadow-dark: #858585;
@@ -20,6 +20,26 @@ body {
   box-sizing: border-box;
 }
 
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 4rem;
+}
+
+h1,
+h2 {
+  margin: 0;
+}
+
+h1 {
+  font-size: 28px;
+}
+
+h2 {
+  font-size: 26px;
+}
+
 .page {
   height: 100dvh;
   width: 100dvw;
@@ -29,7 +49,7 @@ body {
 
   > .content {
     overflow-y: auto;
-    flex: 1;
+    flex: 1 0;
   }
 }
 
@@ -47,6 +67,14 @@ li {
   padding: 8px;
   list-style-type: none;
   margin: 0;
+}
+
+.bar {
+  background: linear-gradient(0deg, #dbdce1 0%, #f3f4f4 100%);
+  display: flex;
+  flex-wrap: nowrap;
+  flex: 0 0 auto;
+  padding: 0;
 }
 
 /* Two, three, or four <length> values.

@@ -3,7 +3,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(0deg, #dbdce1 0%, #f3f4f4 100%);
 }
 
 .tab.selected {
