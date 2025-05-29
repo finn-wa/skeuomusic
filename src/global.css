@@ -16,9 +16,31 @@ body {
   box-sizing: border-box;
 }
 
+.page {
+  height: 100dvh;
+  width: 100dvw;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  > .content {
+    overflow-y: auto;
+    flex: 1;
+  }
+}
+
 a {
   color: var(--text-color);
   text-decoration: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  padding: 8px;
 }
 
 /* Two, three, or four <length> values.
