@@ -1,6 +1,6 @@
 :root {
   --bg-color: #eaeaec;
-  --text-color: #333333;
+  --text-color: #414244;
   --shadow-light: white;
   --shadow-dark: #858585;
   --emboss-offset: 3px;
@@ -45,6 +45,8 @@ ul {
 
 li {
   padding: 8px;
+  list-style-type: none;
+  margin: 0;
 }
 
 /* Two, three, or four <length> values.

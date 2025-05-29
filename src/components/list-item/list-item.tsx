@@ -1,4 +1,4 @@
-import { component$, useStylesScoped$ } from "@builder.io/qwik";
+import { component$ } from "@builder.io/qwik";
 import styles from "./list-item.module.css";
 
 export interface ListItemProps {
@@ -6,5 +6,5 @@ export interface ListItemProps {
 }
 
 export const ListItem = component$<ListItemProps>((props) => {
-  return <li class={["emboss-y", styles.item]}>{props.title}</li>;
+  return <li class={[styles.item, "emboss-y"]}>{props.title}</li>;
 });
