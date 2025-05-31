@@ -40,3 +40,8 @@ lerna-debug.log*
 # Yarn
 .yarn/*
 !.yarn/releases
+
+# Local SSL certificates
+*.pem
+*.key
+cert/
