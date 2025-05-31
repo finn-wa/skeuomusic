@@ -1,12 +1,19 @@
-# Qwik City App ⚡️
+# skeuomusic
 
-- [Qwik Docs](https://qwik.dev/)
-- [Discord](https://qwik.dev/chat)
-- [Qwik GitHub](https://github.com/QwikDev/qwik)
-- [@QwikDev](https://twitter.com/QwikDev)
-- [Vite](https://vitejs.dev/)
+A web-based music player inspired by iOS 6.
 
 ---
+
+## Auth flow
+
+- [/](src/routes/index.tsx) root page
+  - if you are authenticated it saves the token details in localStorage, then redirects you to `/player/artists`
+  - if not, it will show the authenticate with spotify button.
+  - this will open spotify login, then redirect back here with a `?code=xxx` query param containing just the access token
+  - there's also the case where the user cancels and it redirects back
+- [/player](src/routes/player/layout.tsx) will retrieve the token from localStorage.
+  - if it's missing it will open spotify auth, which will redirect to `/?code=xxx`
+  - if it's expired the sdk should handle using the refresh token to get a new one
 
 ## Project Structure
 
