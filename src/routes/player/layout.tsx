@@ -13,7 +13,6 @@ export default component$(() => {
     <div class="page">
       <Header />
       <div class="content">
-        {spotifyAuth.token?.access_token ?? "no token"}
         <Slot />
       </div>
       <TabBar />

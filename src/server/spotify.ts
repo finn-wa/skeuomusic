@@ -5,7 +5,7 @@ import {
   SpotifyApi,
 } from "@spotify/web-api-ts-sdk";
 
-const scopes = () => ["user-library-read"];
+const scopes = () => ["user-library-read", "user-follow-read"];
 const options = (): SdkOptions => ({
   redirectionStrategy: {
     async onReturnFromRedirect() {
@@ -34,5 +34,6 @@ export function getSpotifyApiWithoutToken(currentUrl: URL): SpotifyApi {
 }
 
 export function getSpotifyApiWithToken(token: AccessToken): SpotifyApi {
-  return SpotifyApi.withAccessToken(clientId(), token, options());
+  const api = SpotifyApi.withAccessToken(clientId(), token, options());
+  return api;
 }

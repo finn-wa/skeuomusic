@@ -1,34 +1,44 @@
-import { component$ } from "@builder.io/qwik";
 import {
-  type DocumentHead,
-  routeLoader$,
-  server$,
-} from "@builder.io/qwik-city";
+  Resource,
+  component$,
+  useContext,
+  useResource$,
+} from "@builder.io/qwik";
+import type { DocumentHead } from "@builder.io/qwik-city";
 import { ListItem } from "~/components/list-item/list-item";
-
-type Artist = { name: string };
-
-export const getArtists = server$(async (query: string): Promise<Artist[]> => {
-  return [];
-});
-
-export const useArtists = routeLoader$(async () => {
-  return getArtists("e");
-});
+import { SpotifyAuthContext } from "~/routes/layout";
 
 export default component$(() => {
-  // TODO: make this a resource that uses the spotify api context
-  const artists = useArtists();
+  const spotify = useContext(SpotifyAuthContext);
+  const artistsResource = useResource$(async ({ cache, track }) => {
+    cache("immutable");
+    track(() => spotify.token?.access_token);
+    if (spotify.api == null) {
+      throw Error("spotify sdk undefined");
+    }
+    const res = await spotify.api.currentUser.followedArtists(undefined, 50);
+    return res.artists.items.sort((a, b) => a.name.localeCompare(b.name));
+  });
 
   return (
     <>
-      <ul>
-        <h2>
-          {artists.value.map((artist) => (
-            <ListItem key={artist.name} title={artist.name} />
-          ))}
-        </h2>
-      </ul>
+      <Resource
+        value={artistsResource}
+        onPending={() => <span>Loading...</span>}
+        onResolved={(artists) => (
+          <ul>
+            <h2>
+              {artists.map((artist) => (
+                <ListItem key={artist.name} title={artist.name} />
+              ))}
+            </h2>
+          </ul>
+        )}
+        onRejected={(reason) => {
+          console.error(reason);
+          return <span>{JSON.stringify(reason, null, 2)}</span>;
+        }}
+      />
     </>
   );
 });
