@@ -6,8 +6,9 @@ import {
   type SpotifyAuthState,
   type SpotifyToken,
   spotifyTokenKey,
-} from "./layout";
+} from "./player/layout";
 
+// login page that makes sure you have spotify authenticated
 export default component$(() => {
   const spotifyAuth = useStore<SpotifyAuthState>({});
   useContextProvider(SpotifyAuthContext, spotifyAuth);
