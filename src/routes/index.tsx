@@ -1,86 +1,52 @@
-import {
-  $,
-  type NoSerialize,
-  component$,
-  createContextId,
-  noSerialize,
-  useContextProvider,
-  useStore,
-  useVisibleTask$,
-} from "@builder.io/qwik";
-import { useLocation } from "@builder.io/qwik-city";
-import type { AccessToken, SpotifyApi } from "@spotify/web-api-ts-sdk";
-import {
-  getSpotifyAccessToken,
-  getSpotifyApiWithToken,
-  getSpotifyApiWithoutToken,
-} from "~/server/spotify";
-import { spotifyTokenKey } from "./auth";
+import { $, component$, useContext, useVisibleTask$ } from "@builder.io/qwik";
+import { useLocation, useNavigate } from "@builder.io/qwik-city";
+import type { SpotifyApi } from "@spotify/web-api-ts-sdk";
+import { SpotifyAuthContext, spotifyTokenKey } from "./layout";
 
-// login page that makes sure you have spotify authenticated
-
-export type SpotifyAuthState = {
-  token?: AccessToken;
-  api?: NoSerialize<SpotifyApi>;
-};
-export const SpotifyAuthContext = createContextId<SpotifyAuthState>("spotify");
-
-function getTokenFromLocalStorage(): AccessToken | undefined {
-  const value = localStorage.getItem(spotifyTokenKey);
-  if (value == null) {
-    return undefined;
-  }
-  return JSON.parse(value);
+function log(...obj: unknown[]) {
+  console.log("src/routes/index.tsx", ...obj);
 }
 
-async function doSpotifyAuth(api: SpotifyApi, spotifyAuth: SpotifyAuthState) {
+async function doSpotifyAuth(api: SpotifyApi) {
   const { accessToken, authenticated } = await api.authenticate();
   if (!authenticated) {
-    console.log("user refused auth");
-  } else {
-    console.log("auth complete!");
-    spotifyAuth.token = accessToken;
-    localStorage.setItem(spotifyTokenKey, JSON.stringify(accessToken));
+    return undefined;
   }
+  log("auth complete!");
+  localStorage.setItem(spotifyTokenKey, JSON.stringify(accessToken));
+  return accessToken;
 }
 
+/**
+ * login page for when spotify auth is not present.
+ * - initiates auth flow on button press
+ * - saves token to localStorage
+ * - sets spotifyAuth.token
+ * - redirects to player
+ */
 export default component$(() => {
-  const spotifyAuth = useStore<SpotifyAuthState>({});
-  useContextProvider(SpotifyAuthContext, spotifyAuth);
+  const spotifyAuth = useContext(SpotifyAuthContext);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useVisibleTask$(async () => {
-    if (spotifyAuth.api != null) {
-      console.log("api already initialized");
-      return;
+    if (spotifyAuth.api == null) {
+      throw new Error("layout should have provided api");
     }
-    const origin = location.url.origin;
-    const clientId: string | undefined = import.meta.env
-      .PUBLIC_SPOTIFY_CLIENT_ID;
-    if (clientId == null) {
-      throw new Error("Spotify client ID env variable is not defined");
+    if (spotifyAuth.token != null) {
+      log("api already initialized, going to albums");
+      return navigate("/player/albums");
     }
-    const redirect = `${origin}/`;
-    if (spotifyAuth.token == null) {
-      console.log("attempting to get token from localStorage");
-      spotifyAuth.token = getTokenFromLocalStorage();
-    } else {
-      console.log("token already present");
-    }
-    let api: SpotifyApi;
-    console.log("Instantiating api");
-    if (spotifyAuth.token == null) {
-      console.log("no token");
-      api = getSpotifyApiWithoutToken(clientId, redirect);
-      if (location.url.searchParams.get("code") != null) {
-        console.log("we've returned from a callback");
-        await doSpotifyAuth(api, spotifyAuth);
+    if (location.url.searchParams.get("code") != null) {
+      log("we've returned from a callback");
+      spotifyAuth.token = await doSpotifyAuth(spotifyAuth.api);
+      if (spotifyAuth.token != null) {
+        log("it was successful");
+        return navigate("/player/albums");
       }
-    } else {
-      console.log("existing token");
-      api = getSpotifyApiWithToken(clientId, spotifyAuth.token);
+      log("User did not authorize");
     }
-    spotifyAuth.api = noSerialize(api);
+    log("Waiting for user to log in");
   });
 
   const performSpotifyAuth = $(async () => {
@@ -88,16 +54,15 @@ export default component$(() => {
     if (api == null) {
       throw new Error("API undefined");
     }
-    await doSpotifyAuth(api, spotifyAuth);
+    await doSpotifyAuth(api);
   });
 
   return (
     <>
       <h1>skeuomusic</h1>
       <button type="button" onClick$={performSpotifyAuth}>
-        Auth
+        Login with Spotify
       </button>
-      <span>token: {spotifyAuth.token?.access_token ?? "None"} </span>
     </>
   );
 });

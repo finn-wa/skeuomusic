@@ -5,15 +5,11 @@ import {
   server$,
 } from "@builder.io/qwik-city";
 import { ListItem } from "~/components/list-item/list-item";
-import { spotify } from "~/server/spotify";
 
 type Artist = { name: string };
 
 export const getArtists = server$(async (query: string): Promise<Artist[]> => {
-  const results = await spotify.search(query, ["artist"], undefined, 50);
-  return results.artists.items
-    .map(({ name }) => ({ name }))
-    .sort((a, b) => a.name.localeCompare(b.name));
+  return [];
 });
 
 export const useArtists = routeLoader$(async () => {
@@ -21,6 +17,7 @@ export const useArtists = routeLoader$(async () => {
 });
 
 export default component$(() => {
+  // TODO: make this a resource that uses the spotify api context
   const artists = useArtists();
 
   return (
