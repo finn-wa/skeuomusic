@@ -9,7 +9,11 @@ import {
   useVisibleTask$,
 } from "@builder.io/qwik";
 import { useLocation, useNavigate } from "@builder.io/qwik-city";
-import type { AccessToken, SpotifyApi } from "@spotify/web-api-ts-sdk";
+import type {
+  AccessToken,
+  SdkOptions,
+  SpotifyApi,
+} from "@spotify/web-api-ts-sdk";
 import {
   getSpotifyApiWithToken,
   getSpotifyApiWithoutToken,
@@ -47,12 +51,23 @@ export default component$(() => {
   const navigate = useNavigate();
 
   useVisibleTask$(async () => {
+    const onAuthFailed = () => {
+      localStorage.removeItem(spotifyTokenKey);
+      spotifyAuth.api = noSerialize(
+        getSpotifyApiWithoutToken(location.url, onAuthFailed),
+      );
+      spotifyAuth.token = undefined;
+      navigate("/");
+    };
+    const options: SdkOptions = {};
     if (spotifyAuth.token == null) {
       log("attempting to get token from localStorage");
       spotifyAuth.token = getTokenFromLocalStorage();
     }
     if (spotifyAuth.token == null) {
-      spotifyAuth.api = noSerialize(getSpotifyApiWithoutToken(location.url));
+      spotifyAuth.api = noSerialize(
+        getSpotifyApiWithoutToken(location.url, onAuthFailed),
+      );
       if (location.url.pathname !== "/") {
         log("going to / for auth");
         return navigate("/");
@@ -61,7 +76,9 @@ export default component$(() => {
       return;
     }
     log("instantiating api");
-    spotifyAuth.api = noSerialize(getSpotifyApiWithToken(spotifyAuth.token));
+    spotifyAuth.api = noSerialize(
+      getSpotifyApiWithToken(spotifyAuth.token, onAuthFailed),
+    );
   });
 
   return <Slot />;
