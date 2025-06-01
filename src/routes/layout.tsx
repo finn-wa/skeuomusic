@@ -21,7 +21,7 @@ import {
 
 export type SpotifyAuthState = {
   token?: AccessToken;
-  api?: NoSerialize<SpotifyApi>;
+  api: NoSerialize<SpotifyApi>;
 };
 export const SpotifyAuthContext = createContextId<SpotifyAuthState>("spotify");
 export const spotifyTokenKey = "spotifyToken";
@@ -45,9 +45,12 @@ function log(...obj: unknown[]) {
  * - sets spotifyAuth.api
  */
 export default component$(() => {
-  const spotifyAuth = useStore<SpotifyAuthState>({});
-  useContextProvider(SpotifyAuthContext, spotifyAuth);
   const location = useLocation();
+  const spotifyAuth = useStore<SpotifyAuthState>({
+    // To be replaced in useVisibleTask$
+    api: noSerialize(getSpotifyApiWithoutToken(location.url, () => {})),
+  });
+  useContextProvider(SpotifyAuthContext, spotifyAuth);
   const navigate = useNavigate();
 
   useVisibleTask$(async () => {
@@ -59,7 +62,6 @@ export default component$(() => {
       spotifyAuth.token = undefined;
       navigate("/");
     };
-    const options: SdkOptions = {};
     if (spotifyAuth.token == null) {
       log("attempting to get token from localStorage");
       spotifyAuth.token = getTokenFromLocalStorage();
