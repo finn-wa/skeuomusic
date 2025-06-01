@@ -1,7 +1,7 @@
 import { Slot, component$, useContext } from "@builder.io/qwik";
 import "@fontsource-variable/inter";
 import { Header } from "~/components/header/header";
-import { TabBar } from "~/components/tab-bar/tab-bar";
+import { NavTabBar } from "~/components/nav-tab-bar/nav-tab-bar";
 import { SpotifyAuthContext } from "../layout";
 
 /**
@@ -15,7 +15,7 @@ export default component$(() => {
       <div class="content">
         <Slot />
       </div>
-      <TabBar />
+      <NavTabBar />
     </div>
   );
 });
