@@ -2,7 +2,7 @@
   --bg-color: #e9eaec;
   --text-color: #414244;
   --shadow-light: white;
-  --shadow-dark: #858585;
+  --shadow-dark: #6d6d6d;
   --emboss-offset: 3px;
   --emboss-blur: 3px;
 
@@ -70,7 +70,7 @@ li {
 }
 
 .bar {
-  background: linear-gradient(0deg, #dbdce1 0%, #f3f4f4 100%);
+  background: linear-gradient(0deg, #d2d2d2 0%, #f3f4f4 100%);
   display: flex;
   flex-wrap: nowrap;
   flex: 0 0 auto;
@@ -84,18 +84,19 @@ li {
  */
 
 .emboss-y {
-  box-shadow: inset 0 5px 5px -5px var(--shadow-light),
-    inset 0 -5px 5px -5px var(--shadow-dark);
+  box-shadow: inset 0 2px 2px -2px var(--shadow-light),
+    inset 0 6px 6px -6px var(--shadow-light),
+    inset 0 -2px 2px -2px var(--shadow-dark);
 }
 
 .emboss-x {
-  box-shadow: inset 5px 0 5px -5px var(--shadow-dark),
-    inset -5px 0 5px -5px var(--shadow-light);
+  box-shadow: inset 2px 0 2px -2px var(--shadow-dark),
+    inset -2px 0 2px -2px var(--shadow-light);
 }
 
 .engrave-x {
-  box-shadow: inset 5px 0 5px -5px var(--shadow-light),
-    inset -5px 0 5px -5px var(--shadow-dark);
+  box-shadow: inset 2px 0 2px -2px var(--shadow-light),
+    inset -2px 0 2px -2px var(--shadow-dark);
 }
 
 /* .engrave */

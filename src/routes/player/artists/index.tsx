@@ -17,6 +17,7 @@ export default component$(() => {
     const { cache, track } = ctx as ResourceCtx<Artist[]>;
     cache("immutable");
     track(() => spotify.token?.access_token);
+
     if (isServer) {
       return [];
     }
