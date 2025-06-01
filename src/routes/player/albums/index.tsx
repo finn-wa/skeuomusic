@@ -5,14 +5,19 @@ import {
   isServer,
   useContext,
   useResource$,
+  useSignal,
 } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import type { SavedAlbum } from "@spotify/web-api-ts-sdk";
-import { ListItem } from "~/components/list-item/list-item";
+import {
+  AlphabetList,
+  type AlphabetListItem,
+} from "~/components/alphabet-list/alphabet-list";
 import { SpotifyAuthContext } from "~/routes/layout";
 
 export default component$(() => {
   const spotify = useContext(SpotifyAuthContext);
+  const itemsSignal = useSignal<AlphabetListItem[]>([]);
   const albumsResource = useResource$<SavedAlbum[]>(async (ctx) => {
     const { cache, track } = ctx as ResourceCtx<SavedAlbum[]>;
     cache("immutable");
@@ -24,7 +29,14 @@ export default component$(() => {
       throw Error("spotify sdk undefined");
     }
     const res = await spotify.api.currentUser.albums.savedAlbums(50, 0);
-    return res.items.sort((a, b) => a.album.name.localeCompare(b.album.name));
+    const albums = res.items.sort((a, b) =>
+      a.album.name.localeCompare(b.album.name),
+    );
+    itemsSignal.value = albums.map(({ album }) => ({
+      key: album.id,
+      title: album.name,
+    }));
+    return albums;
   });
 
   return (
@@ -32,12 +44,10 @@ export default component$(() => {
       <Resource
         value={albumsResource}
         onPending={() => <span>Loading...</span>}
-        onResolved={(albums) => (
+        onResolved={() => (
           <ul>
             <h2>
-              {albums.map(({ album }) => (
-                <ListItem key={album.id} title={album.name} />
-              ))}
+              <AlphabetList items={itemsSignal} />
             </h2>
           </ul>
         )}
