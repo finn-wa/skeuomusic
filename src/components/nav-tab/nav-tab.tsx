@@ -4,6 +4,7 @@ import styles from "./nav-tab.module.css";
 
 export interface TabButtonProps {
   route: string;
+  label: string;
 }
 
 export const NavTab = component$<TabButtonProps>((props) => {
@@ -16,7 +17,7 @@ export const NavTab = component$<TabButtonProps>((props) => {
       class={["emboss-x", styles.tab, selectedClass.value]}
       href={props.route}
     >
-      <Slot />
+      <small>{props.label}</small>
     </Link>
   );
 });

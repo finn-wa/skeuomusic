@@ -1,0 +1,15 @@
+.indicator {
+  align-items: center;
+  background-color: #c4c5c7;
+  color: #58595b;
+  display: flex;
+  font-weight: 800;
+  padding: 0.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.sublist {
+  padding: 0;
+}

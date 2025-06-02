@@ -6,5 +6,9 @@ export interface ListItemProps {
 }
 
 export const ListItem = component$<ListItemProps>((props) => {
-  return <li class={[styles.item, "emboss-y"]}>{props.title}</li>;
+  return (
+    <li class={[styles.item, "emboss-y"]}>
+      <span class="h2">{props.title}</span>
+    </li>
+  );
 });

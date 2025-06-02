@@ -35,11 +35,9 @@ export default component$(() => {
         onPending={() => <span>Loading...</span>}
         onResolved={(artists) => (
           <ul>
-            <h2>
-              {artists.map((artist) => (
-                <ListItem key={artist.name} title={artist.name} />
-              ))}
-            </h2>
+            {artists.map((artist) => (
+              <ListItem key={artist.name} title={artist.name} />
+            ))}
           </ul>
         )}
         onRejected={(reason) => {

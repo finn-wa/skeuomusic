@@ -1,7 +1,6 @@
 import { type Signal, component$, useComputed$ } from "@builder.io/qwik";
-import { AlphabetDivider } from "../alphabet-divider/alphabet-divider";
 import { ListItem, type ListItemProps } from "../list-item/list-item";
-
+import styles from "./alphabet-list.module.css";
 export type AlphabetListItem = ListItemProps & { key: string };
 
 export interface AlphabetListProps {
@@ -41,17 +40,19 @@ export const AlphabetList = component$<AlphabetListProps>((props) => {
     groupItems(props.items.value),
   );
   return (
-    <ul class="list">
+    <ol class="list">
       {itemGroups.value.flatMap(({ letter, items }) => [
-        <li key={`${letter}_group`}>
-          <AlphabetDivider letter={letter} />
-          <ul class="sublist">
+        <li class={styles.sublist} key={`${letter}_group`}>
+          <div class={["emboss-y", styles.indicator]}>
+            <span>{letter}</span>
+          </div>
+          <ol>
             {...items.map(({ title }) => (
               <ListItem title={title} key={title} />
             ))}
-          </ul>
+          </ol>
         </li>,
       ])}
-    </ul>
+    </ol>
   );
 });
