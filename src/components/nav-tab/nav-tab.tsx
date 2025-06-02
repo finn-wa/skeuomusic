@@ -1,4 +1,4 @@
-import { Slot, component$, useComputed$ } from "@builder.io/qwik";
+import { component$, useComputed$ } from "@builder.io/qwik";
 import { Link, useLocation } from "@builder.io/qwik-city";
 import styles from "./nav-tab.module.css";
 

@@ -1,6 +1,7 @@
 :root {
   --bg-color: #e9eaec;
   --text-color: #414244;
+  --icon-color: #a3a3a3;
   --shadow-light: rgba(255, 255, 255, 0.75);
   --shadow-dark: rgb(109, 109, 109, 0.75);
   --emboss-offset: 3px;
@@ -25,6 +26,7 @@ header {
   align-items: center;
   justify-content: center;
   height: 3.625rem;
+  z-index: 2;
 }
 
 h1,
@@ -81,6 +83,10 @@ li {
   flex-wrap: nowrap;
   flex: 0 0 auto;
   padding: 0;
+}
+
+.d-none {
+  display: none;
 }
 
 /* Two, three, or four <length> values.
