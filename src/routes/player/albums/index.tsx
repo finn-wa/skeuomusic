@@ -43,8 +43,14 @@ export default component$(() => {
     <>
       <Resource
         value={albumsResource}
-        onPending={() => <span>Loading...</span>}
-        onResolved={() => <AlphabetList items={itemsSignal} />}
+        onPending={() => (
+          <div class="page-message">
+            <span class="page-message-text">Loading...</span>
+          </div>
+        )}
+        onResolved={() => (
+          <AlphabetList items={itemsSignal} namePlural="albums" />
+        )}
         onRejected={(reason) => {
           console.error(reason);
           return <span>{JSON.stringify(reason, null, 2)}</span>;

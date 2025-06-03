@@ -45,3 +45,6 @@ lerna-debug.log*
 *.pem
 *.key
 cert/
+
+# Mock data
+**/mock-data/*

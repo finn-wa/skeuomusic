@@ -17,6 +17,7 @@ import type {
 import {
   getSpotifyApiWithToken,
   getSpotifyApiWithoutToken,
+  mockSpotifyApi,
 } from "~/server/spotify";
 
 export type SpotifyAuthState = {
@@ -65,6 +66,11 @@ export default component$(() => {
     if (spotifyAuth.token == null) {
       log("attempting to get token from localStorage");
       spotifyAuth.token = getTokenFromLocalStorage();
+    }
+    if (import.meta.env.PUBLIC_USE_MOCK_DATA) {
+      log("Using mock spotify API");
+      spotifyAuth.api = noSerialize(mockSpotifyApi() as SpotifyApi);
+      return;
     }
     if (spotifyAuth.token == null) {
       spotifyAuth.api = noSerialize(

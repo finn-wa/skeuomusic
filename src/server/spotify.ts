@@ -1,10 +1,18 @@
 import {
   type AccessToken,
   AuthorizationCodeWithPKCEStrategy,
+  type FollowedArtists,
+  type Page,
+  type SavedAlbum,
+  type SavedTrack,
   type SdkOptions,
+  type SimplifiedPlaylist,
   SpotifyApi,
 } from "@spotify/web-api-ts-sdk";
-
+import followedArtists from "./mock-data/followedArtists.json";
+import playlists from "./mock-data/playlists.json";
+import savedAlbums from "./mock-data/savedAlbums.json";
+import savedTracks from "./mock-data/savedTracks.json";
 const scopes = () => ["user-library-read", "user-follow-read"];
 const options = (onAuthFailed: () => void): SdkOptions => ({
   afterRequest: (_url, _options, response) => {
@@ -66,3 +74,32 @@ export function getSpotifyApiWithToken(
   );
   return api;
 }
+
+type MockSpotifyApi = {
+  currentUser: {
+    albums: Pick<SpotifyApi["currentUser"]["albums"], "savedAlbums">;
+    playlists: Pick<SpotifyApi["currentUser"]["playlists"], "playlists">;
+    followedArtists: SpotifyApi["currentUser"]["followedArtists"];
+    tracks: Pick<SpotifyApi["currentUser"]["tracks"], "savedTracks">;
+  };
+};
+
+export const mockSpotifyApi = (): MockSpotifyApi => {
+  const albums = savedAlbums;
+  const mockResponse = <T>(res: unknown) => {
+    return new Promise<T>((resolve) => {
+      setTimeout(() => resolve(res as T), 100);
+    });
+  };
+  const currentUser: MockSpotifyApi["currentUser"] = {
+    albums: {
+      savedAlbums: () => mockResponse<Page<SavedAlbum>>(albums),
+    },
+    playlists: {
+      playlists: () => mockResponse<Page<SimplifiedPlaylist>>(playlists),
+    },
+    followedArtists: () => mockResponse<FollowedArtists>(followedArtists),
+    tracks: { savedTracks: () => mockResponse<Page<SavedTrack>>(savedTracks) },
+  };
+  return { currentUser };
+};
