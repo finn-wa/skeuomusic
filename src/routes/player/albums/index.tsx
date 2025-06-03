@@ -1,62 +1,42 @@
 import {
   Resource,
-  type ResourceCtx,
   component$,
-  isServer,
   useContext,
   useResource$,
-  useSignal,
 } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
-import type { SavedAlbum } from "@spotify/web-api-ts-sdk";
-import {
-  AlphabetList,
-  type AlphabetListItem,
-} from "~/components/alphabet-list/alphabet-list";
+import { AlphabetList } from "~/components/alphabet-list/alphabet-list";
+import { PageMessage } from "~/components/page-message/page-message";
 import { SpotifyAuthContext } from "~/routes/layout";
 
 export default component$(() => {
   const spotify = useContext(SpotifyAuthContext);
-  const itemsSignal = useSignal<AlphabetListItem[]>([]);
-  const albumsResource = useResource$<SavedAlbum[]>(async (ctx) => {
-    const { cache, track } = ctx as ResourceCtx<SavedAlbum[]>;
+  const albumsResource = useResource$(async ({ cache, track }) => {
     cache("immutable");
     track(() => spotify.token?.access_token);
-    if (isServer) {
-      return [];
-    }
     if (spotify.api == null) {
-      throw Error("spotify sdk undefined");
+      throw new Error("spotify sdk undefined");
     }
     const res = await spotify.api.currentUser.albums.savedAlbums(50, 0);
-    const albums = res.items.sort((a, b) =>
-      a.album.name.localeCompare(b.album.name),
-    );
-    itemsSignal.value = albums.map(({ album }) => ({
-      key: album.id,
-      title: album.name,
-    }));
-    return albums;
+    return res.items.map(({ album }) => ({ key: album.id, title: album.name }));
   });
 
   return (
-    <>
-      <Resource
-        value={albumsResource}
-        onPending={() => (
-          <div class="page-message">
-            <span class="page-message-text">Loading...</span>
-          </div>
-        )}
-        onResolved={() => (
-          <AlphabetList items={itemsSignal} namePlural="albums" />
-        )}
-        onRejected={(reason) => {
-          console.error(reason);
-          return <span>{JSON.stringify(reason, null, 2)}</span>;
-        }}
-      />
-    </>
+    <Resource
+      value={albumsResource}
+      onPending={() => <PageMessage message="Loading..." />}
+      onResolved={(value) => (
+        <AlphabetList items={{ value }} namePlural="albums" />
+      )}
+      onRejected={(reason) => {
+        console.error(reason);
+        return (
+          <PageMessage
+            message={reason.cause?.toString() ?? "An error occurred"}
+          />
+        );
+      }}
+    />
   );
 });
 

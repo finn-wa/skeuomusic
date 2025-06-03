@@ -1,51 +1,42 @@
 import {
   Resource,
-  type ResourceCtx,
   component$,
-  isServer,
   useContext,
   useResource$,
 } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
-import type { Artist } from "@spotify/web-api-ts-sdk";
-import { ListItem } from "~/components/list-item/list-item";
+import { AlphabetList } from "~/components/alphabet-list/alphabet-list";
+import { PageMessage } from "~/components/page-message/page-message";
 import { SpotifyAuthContext } from "~/routes/layout";
 
 export default component$(() => {
   const spotify = useContext(SpotifyAuthContext);
-  const artistsResource = useResource$<Artist[]>(async (ctx) => {
-    const { cache, track } = ctx as ResourceCtx<Artist[]>;
+  const artistsResource = useResource$(async ({ cache, track }) => {
     cache("immutable");
     track(() => spotify.token?.access_token);
-
-    if (isServer) {
-      return [];
-    }
     if (spotify.api == null) {
-      throw Error("spotify sdk undefined");
+      throw new Error("spotify sdk undefined");
     }
     const res = await spotify.api.currentUser.followedArtists(undefined, 50);
-    return res.artists.items.sort((a, b) => a.name.localeCompare(b.name));
+    return res.artists.items.map(({ id, name }) => ({ key: id, title: name }));
   });
 
   return (
-    <>
-      <Resource
-        value={artistsResource}
-        onPending={() => <span>Loading...</span>}
-        onResolved={(artists) => (
-          <ul>
-            {artists.map((artist) => (
-              <ListItem key={artist.name} title={artist.name} />
-            ))}
-          </ul>
-        )}
-        onRejected={(reason) => {
-          console.error(reason);
-          return <span>{JSON.stringify(reason, null, 2)}</span>;
-        }}
-      />
-    </>
+    <Resource
+      value={artistsResource}
+      onPending={() => <PageMessage message="Loading..." />}
+      onResolved={(value) => (
+        <AlphabetList items={{ value }} namePlural="artists" />
+      )}
+      onRejected={(reason) => {
+        console.error(reason);
+        return (
+          <PageMessage
+            message={reason.cause?.toString() ?? "An error occurred"}
+          />
+        );
+      }}
+    />
   );
 });
 

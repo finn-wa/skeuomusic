@@ -4,6 +4,9 @@
     "indentStyle": "space",
     "ignore": ["yarn.lock", ".*"]
   },
+  "linter": {
+    "enabled": false
+  },
   "javascript": {
     "formatter": {
       "quoteStyle": "double",

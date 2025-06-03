@@ -1,5 +1,6 @@
 import {
   type AccessToken,
+  type Album,
   AuthorizationCodeWithPKCEStrategy,
   type FollowedArtists,
   type Page,
@@ -9,10 +10,12 @@ import {
   type SimplifiedPlaylist,
   SpotifyApi,
 } from "@spotify/web-api-ts-sdk";
+import albums from "./mock-data/albums.json";
 import followedArtists from "./mock-data/followedArtists.json";
 import playlists from "./mock-data/playlists.json";
 import savedAlbums from "./mock-data/savedAlbums.json";
 import savedTracks from "./mock-data/savedTracks.json";
+
 const scopes = () => ["user-library-read", "user-follow-read"];
 const options = (onAuthFailed: () => void): SdkOptions => ({
   afterRequest: (_url, _options, response) => {
@@ -76,6 +79,7 @@ export function getSpotifyApiWithToken(
 }
 
 type MockSpotifyApi = {
+  albums: Pick<SpotifyApi["albums"], "get">;
   currentUser: {
     albums: Pick<SpotifyApi["currentUser"]["albums"], "savedAlbums">;
     playlists: Pick<SpotifyApi["currentUser"]["playlists"], "playlists">;
@@ -85,21 +89,26 @@ type MockSpotifyApi = {
 };
 
 export const mockSpotifyApi = (): MockSpotifyApi => {
-  const albums = savedAlbums;
   const mockResponse = <T>(res: unknown) => {
     return new Promise<T>((resolve) => {
       setTimeout(() => resolve(res as T), 100);
     });
   };
-  const currentUser: MockSpotifyApi["currentUser"] = {
+  return {
     albums: {
-      savedAlbums: () => mockResponse<Page<SavedAlbum>>(albums),
+      get: (() => mockResponse<Album>(albums[0])) as any,
     },
-    playlists: {
-      playlists: () => mockResponse<Page<SimplifiedPlaylist>>(playlists),
+    currentUser: {
+      albums: {
+        savedAlbums: () => mockResponse<Page<SavedAlbum>>(savedAlbums),
+      },
+      playlists: {
+        playlists: () => mockResponse<Page<SimplifiedPlaylist>>(playlists),
+      },
+      followedArtists: () => mockResponse<FollowedArtists>(followedArtists),
+      tracks: {
+        savedTracks: () => mockResponse<Page<SavedTrack>>(savedTracks),
+      },
     },
-    followedArtists: () => mockResponse<FollowedArtists>(followedArtists),
-    tracks: { savedTracks: () => mockResponse<Page<SavedTrack>>(savedTracks) },
   };
-  return { currentUser };
 };

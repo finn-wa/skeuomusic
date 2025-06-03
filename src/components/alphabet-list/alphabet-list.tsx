@@ -3,15 +3,15 @@ import {
   component$,
   useComputed$,
   useSignal,
-  useVisibleTask$,
 } from "@builder.io/qwik";
 import { ListItem, type ListItemProps } from "../list-item/list-item";
+import { PageMessage } from "../page-message/page-message";
 import { SearchInput } from "../search-input/search-input";
 import styles from "./alphabet-list.module.css";
 export type AlphabetListItem = ListItemProps & { key: string };
 export interface AlphabetListProps {
   namePlural: string;
-  items: Signal<AlphabetListItem[]>;
+  items: { value: AlphabetListItem[] };
 }
 
 type ItemGroup = {
@@ -28,14 +28,17 @@ function groupItems(allItems: AlphabetListItem[]): ItemGroup[] {
       groups.push({ letter: groupLetter, items: groupItems });
     }
   };
-  for (const item of allItems) {
+  const sortedItems = [...allItems].sort((a, b) =>
+    a.title.localeCompare(b.title),
+  );
+  for (const item of sortedItems) {
     const itemLetter = item.title[0] ?? "";
     if (itemLetter === groupLetter) {
       groupItems.push(item);
       continue;
     }
     addGroupIfPopulated();
-    groupItems = [];
+    groupItems = [item];
     groupLetter = itemLetter;
   }
   addGroupIfPopulated();
@@ -68,11 +71,9 @@ export const AlphabetList = component$<AlphabetListProps>((props) => {
       <SearchInput query={searchQuery} />
       <div class={styles["items-container"]}>
         {visibleItems.value.size === 0 ? (
-          <div class="page-message">
-            <span class="page-message-text">
-              {items.value.length > 0 ? "No results" : `No ${namePlural}`}
-            </span>
-          </div>
+          <PageMessage
+            message={items.value.length > 0 ? "No results" : `No ${namePlural}`}
+          />
         ) : (
           <ol>
             {itemGroups.value.flatMap(({ letter, items }) => (
