@@ -3,25 +3,26 @@ import {
   component$,
   useComputed$,
   useSignal,
+  useVisibleTask$,
 } from "@builder.io/qwik";
 import { ListItem, type ListItemProps } from "../list-item/list-item";
 import { SearchInput } from "../search-input/search-input";
 import styles from "./alphabet-list.module.css";
 export type AlphabetListItem = ListItemProps & { key: string };
-type ProcessedListItem = AlphabetListItem & { lowerTitle: string };
 export interface AlphabetListProps {
+  namePlural: string;
   items: Signal<AlphabetListItem[]>;
 }
 
 type ItemGroup = {
   letter: string;
-  items: ProcessedListItem[];
+  items: AlphabetListItem[];
 };
 
 function groupItems(allItems: AlphabetListItem[]): ItemGroup[] {
   const groups: ItemGroup[] = [];
   let groupLetter = "";
-  let groupItems: ProcessedListItem[] = [];
+  let groupItems: AlphabetListItem[] = [];
   const addGroupIfPopulated = () => {
     if (groupItems.length > 0) {
       groups.push({ letter: groupLetter, items: groupItems });
@@ -30,7 +31,7 @@ function groupItems(allItems: AlphabetListItem[]): ItemGroup[] {
   for (const item of allItems) {
     const itemLetter = item.title[0] ?? "";
     if (itemLetter === groupLetter) {
-      groupItems.push({ ...item, lowerTitle: item.title.toLowerCase() });
+      groupItems.push(item);
       continue;
     }
     addGroupIfPopulated();
@@ -42,45 +43,67 @@ function groupItems(allItems: AlphabetListItem[]): ItemGroup[] {
 }
 
 export const AlphabetList = component$<AlphabetListProps>((props) => {
+  const { items, namePlural } = props;
   const itemGroups: Signal<ItemGroup[]> = useComputed$(() =>
-    groupItems(props.items.value),
+    groupItems(items.value),
+  );
+  const queryableItems = useComputed$(() =>
+    items.value.map((item) => ({ ...item, title: item.title.toLowerCase() })),
   );
   const searchQuery = useSignal<string | undefined>();
-  const processedQuery = useComputed$(
-    () => searchQuery.value?.trim().toLowerCase() ?? "",
-  );
+  /** Set of item keys that match the current query */
+  const visibleItems = useComputed$(() => {
+    const query = searchQuery.value?.trim().toLowerCase() ?? "";
+    const visible = new Set<string>();
+    for (const item of queryableItems.value) {
+      if (item.title.includes(query)) {
+        visible.add(item.key);
+      }
+    }
+    return visible;
+  });
 
   return (
     <>
       <SearchInput query={searchQuery} />
-      <ol class="list">
-        {itemGroups.value.flatMap(({ letter, items }) => (
-          <li
-            class={[
-              styles.sublist,
-              {
-                "d-none": items.every(
-                  (item) => !item.lowerTitle.includes(processedQuery.value),
-                ),
-              },
-            ]}
-            key={`${letter}_group`}
-          >
-            <div class={["emboss-y", styles.indicator]}>
-              <span>{letter}</span>
-            </div>
-            <ol>
-              {...items.map(({ title, lowerTitle, key }) => (
-                <ListItem
-                  title={title}
-                  key={key}
-                  hide={!lowerTitle.includes(processedQuery.value)}
-                />
-              ))}
-            </ol>
-          </li>
-        ))}
-      </ol>
+      <div class={styles["items-container"]}>
+        {visibleItems.value.size === 0 ? (
+          <div class="page-message">
+            <span class="page-message-text">
+              {items.value.length > 0 ? "No results" : `No ${namePlural}`}
+            </span>
+          </div>
+        ) : (
+          <ol>
+            {itemGroups.value.flatMap(({ letter, items }) => (
+              <li
+                class={[
+                  styles.sublist,
+                  {
+                    "d-none": items.every(
+                      (item) => !visibleItems.value.has(item.key),
+                    ),
+                  },
+                ]}
+                key={`${letter}_group`}
+              >
+                <div class={["emboss-y", styles.indicator]}>
+                  <span>{letter}</span>
+                </div>
+                <ol>
+                  {...items.map(({ title, key }) => (
+                    <ListItem
+                      title={title}
+                      key={key}
+                      hide={!visibleItems.value.has(key)}
+                    />
+                  ))}
+                </ol>
+              </li>
+            ))}
+          </ol>
+        )}
+      </div>
     </>
   );
 });

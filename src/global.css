@@ -1,6 +1,7 @@
 :root {
   --bg-color: #e9eaec;
   --text-color: #414244;
+  --text-color-light: #969696;
   --icon-color: #a3a3a3;
   --shadow-light: rgba(255, 255, 255, 0.75);
   --shadow-dark: rgb(109, 109, 109, 0.75);
@@ -57,6 +58,21 @@ small {
   > .content {
     overflow-y: auto;
     flex: 1 0;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.page-message {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  > .page-message-text {
+    color: var(--text-color-light);
+    font-weight: 300;
+    font-size: 1.5rem;
   }
 }
 

@@ -1,3 +1,7 @@
+.items-container {
+  flex-grow: 1;
+}
+
 .indicator {
   align-items: center;
   background-color: #c4c5c7;

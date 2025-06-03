@@ -30,7 +30,7 @@ export const SearchInput = component$<SearchInputProps>((props) => {
         }}
         class={[
           styles["clear-button"],
-          { [styles.hidden]: props.query.value == null },
+          { [styles.hidden]: !props.query.value },
         ]}
       >
         <svg
