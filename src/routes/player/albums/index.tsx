@@ -1,29 +1,24 @@
-import {
-  Resource,
-  component$,
-  useContext,
-  useResource$,
-} from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
+import { Resource, component$ } from "@builder.io/qwik";
+import { type DocumentHead, routeLoader$ } from "@builder.io/qwik-city";
+import { SpotifyApi } from "@spotify/web-api-ts-sdk";
 import { AlphabetList } from "~/components/alphabet-list/alphabet-list";
 import { PageMessage } from "~/components/page-message/page-message";
-import { SpotifyAuthContext } from "~/routes/layout";
+
+export const useAlbums = routeLoader$(async ({ sharedMap }) => {
+  const api = sharedMap.get("spotifyApi") as SpotifyApi;
+  if (api == null) {
+    throw new Error("spotifyApi is not in sharedMap");
+  }
+  const res = await api.currentUser.albums.savedAlbums(50, 0);
+  return res.items.map(({ album }) => ({ key: album.id, title: album.name }));
+});
 
 export default component$(() => {
-  const spotify = useContext(SpotifyAuthContext);
-  const albumsResource = useResource$(async ({ cache, track }) => {
-    cache("immutable");
-    track(() => spotify.token?.access_token);
-    if (spotify.api == null) {
-      throw new Error("spotify sdk undefined");
-    }
-    const res = await spotify.api.currentUser.albums.savedAlbums(50, 0);
-    return res.items.map(({ album }) => ({ key: album.id, title: album.name }));
-  });
+  const albums = useAlbums();
 
   return (
     <Resource
-      value={albumsResource}
+      value={albums}
       onPending={() => <PageMessage message="Loading..." />}
       onResolved={(value) => (
         <AlphabetList items={{ value }} namePlural="albums" />

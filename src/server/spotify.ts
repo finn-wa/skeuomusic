@@ -59,7 +59,7 @@ export function getSpotifyApiWithoutToken(
   currentUrl: URL,
   onAuthFailed: () => void,
 ): SpotifyApi {
-  const redirect = `${currentUrl.origin}/`;
+  const redirect = `${currentUrl.origin}/auth/redirect`;
   return new SpotifyApi(
     new AuthorizationCodeWithPKCEStrategy(clientId(), redirect, scopes()),
     options(onAuthFailed),
@@ -76,6 +76,25 @@ export function getSpotifyApiWithToken(
     options(onAuthFailed),
   );
   return api;
+}
+
+export async function doSpotifyAuth(currentUrl: URL, onAuthFailed: () => void) {
+  const postback = `${currentUrl.origin}/auth`;
+  const redirect = `${currentUrl.origin}/auth/redirect`;
+  const { accessToken, authenticated } =
+    await SpotifyApi.performUserAuthorization(
+      clientId(),
+      redirect,
+      scopes(),
+      postback,
+      options(onAuthFailed),
+    );
+  if (!authenticated) {
+    console.log("auth failed");
+    return undefined;
+  }
+  console.log("auth success");
+  return accessToken;
 }
 
 type MockSpotifyApi = {

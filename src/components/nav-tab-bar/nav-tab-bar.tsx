@@ -8,7 +8,7 @@ export const NavTabBar = component$(() => {
       <NavTab route="/player/artists" label="Artists" />
       <NavTab route="/player/songs" label="Songs" />
       <NavTab route="/player/albums" label="Albums" />
-      <NavTab route="/player/more" label="More" />
+      <NavTab route="/test" label="More" />
     </nav>
   );
 });

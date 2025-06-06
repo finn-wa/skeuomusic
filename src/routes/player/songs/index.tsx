@@ -7,7 +7,7 @@ import {
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { AlphabetList } from "~/components/alphabet-list/alphabet-list";
 import { PageMessage } from "~/components/page-message/page-message";
-import { SpotifyAuthContext } from "~/routes/layout";
+import { SpotifyAuthContext } from "../layout";
 
 export default component$(() => {
   const spotify = useContext(SpotifyAuthContext);

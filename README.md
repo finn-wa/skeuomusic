@@ -4,6 +4,15 @@ A web-based music player inspired by iOS 6.
 
 ---
 
+## Auth Flow
+
+- layout.tsx checks for cookie auth
+  - if present, creates authorized API instance
+  - if not present, creates unauthorized API instance and redirects to / for login
+- index.tsx logs the user in with spotify
+  - spotify postback the url to the server, sets cookies
+  - redirects to player with authorized sdk
+
 ## Project Structure
 
 This project is using Qwik with [QwikCity](https://qwik.dev/qwikcity/overview/). QwikCity is just an extra set of tools on top of Qwik to make it easier to build a full site, including directory-based routing, layouts, and more.
