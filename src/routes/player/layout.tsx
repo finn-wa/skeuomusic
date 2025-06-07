@@ -17,7 +17,7 @@ import "@fontsource-variable/inter";
 import { AccessToken, SpotifyApi } from "@spotify/web-api-ts-sdk";
 import { Header } from "~/components/header/header";
 import { NavTabBar } from "~/components/nav-tab-bar/nav-tab-bar";
-import { getSpotifyApiWithToken } from "~/server/spotify";
+import { getSpotifyApiWithToken } from "~/providers/spotify";
 
 export type SpotifyAuthState = {
   token?: AccessToken;
@@ -32,6 +32,11 @@ export const onRequest: RequestHandler = async ({
 }) => {
   const accessToken = (cookie.get("spotify_token")?.json() ??
     null) as AccessToken | null;
+  if (
+    accessToken?.access_token === sharedMap.get("spotifyToken")?.access_token
+  ) {
+    return;
+  }
   if (accessToken != null) {
     sharedMap.set("spotifyToken", accessToken);
     sharedMap.set(

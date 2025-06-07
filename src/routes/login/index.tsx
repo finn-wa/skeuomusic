@@ -6,7 +6,7 @@ import {
   useNavigate,
 } from "@builder.io/qwik-city";
 import type { AccessToken } from "@spotify/web-api-ts-sdk";
-import { doSpotifyAuth } from "~/server/spotify";
+import { doSpotifyAuth } from "~/providers/spotify";
 
 function log(...obj: unknown[]) {
   console.log("src/routes/login/index.tsx", ...obj);

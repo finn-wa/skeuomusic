@@ -1,6 +1,6 @@
 import { component$, useVisibleTask$ } from "@builder.io/qwik";
 import { useLocation, useNavigate } from "@builder.io/qwik-city";
-import { doSpotifyAuth } from "~/server/spotify";
+import { doSpotifyAuth } from "~/providers/spotify";
 
 function log(...obj: unknown[]) {
   console.log("src/routes/auth/redirect/index.tsx", ...obj);
