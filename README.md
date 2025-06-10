@@ -1,70 +1,42 @@
-# skeuomusic
+# SolidStart
 
-A web-based music player inspired by iOS 6.
+Everything you need to build a Solid project, powered by [`solid-start`](https://start.solidjs.com);
 
----
+## Creating a project
 
-## Auth Flow
+```bash
+# create a new project in the current directory
+npm init solid@latest
 
-- layout.tsx checks for cookie auth
-  - if present, creates authorized API instance
-  - if not present, creates unauthorized API instance and redirects to / for login
-- index.tsx logs the user in with spotify
-  - spotify postback the url to the server, sets cookies
-  - redirects to player with authorized sdk
-
-## Project Structure
-
-This project is using Qwik with [QwikCity](https://qwik.dev/qwikcity/overview/). QwikCity is just an extra set of tools on top of Qwik to make it easier to build a full site, including directory-based routing, layouts, and more.
-
-Inside your project, you'll see the following directory structure:
-
-```
-├── public/
-│   └── ...
-└── src/
-    ├── components/
-    │   └── ...
-    └── routes/
-        └── ...
+# create a new project in my-app
+npm init solid@latest my-app
 ```
 
-- `src/routes`: Provides the directory-based routing, which can include a hierarchy of `layout.tsx` layout files, and an `index.tsx` file as the page. Additionally, `index.ts` files are endpoints. Please see the [routing docs](https://qwik.dev/qwikcity/routing/overview/) for more info.
+## Developing
 
-- `src/components`: Recommended directory for components.
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
-- `public`: Any static assets, like images, can be placed in the public directory. Please see the [Vite public directory](https://vitejs.dev/guide/assets.html#the-public-directory) for more info.
+```bash
+npm run dev
 
-## Add Integrations and deployment
-
-Use the `bun qwik add` command to add additional integrations. Some examples of integrations includes: Cloudflare, Netlify or Express Server, and the [Static Site Generator (SSG)](https://qwik.dev/qwikcity/guides/static-site-generation/).
-
-```shell
-bun qwik add # or `bun qwik add`
+# or start the server and open the app in a new browser tab
+npm run dev -- --open
 ```
 
-## Development
+## Building
 
-Development mode uses [Vite's development server](https://vitejs.dev/). The `dev` command will server-side render (SSR) the output during development.
+Solid apps are built with _presets_, which optimise your project for deployment to different environments.
 
-```shell
-npm start # or `bun start`
+By default, `npm run build` will generate a Node app that you can run with `npm start`. To use a different preset, add it to the `devDependencies` in `package.json` and specify in your `app.config.js`.
+
+## Testing
+
+Tests are written with `vitest`, `@solidjs/testing-library` and `@testing-library/jest-dom` to extend expect with some helpful custom matchers.
+
+To run them, simply start:
+
+```sh
+npm test
 ```
 
-> Note: during dev mode, Vite may request a significant number of `.js` files. This does not represent a Qwik production build.
-
-## Preview
-
-The preview command will create a production build of the client modules, a production build of `src/entry.preview.tsx`, and run a local server. The preview server is only for convenience to preview a production build locally and should not be used as a production server.
-
-```shell
-bun preview # or `bun preview`
-```
-
-## Production
-
-The production build will generate client and server modules by running both client and server build commands. The build command will use Typescript to run a type check on the source code.
-
-```shell
-bun build # or `bun build`
-```
+## This project was created with the [Solid CLI](https://github.com/solidjs-community/solid-cli)
