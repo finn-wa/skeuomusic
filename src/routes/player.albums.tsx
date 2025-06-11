@@ -2,13 +2,13 @@ import { createFileRoute } from "@tanstack/solid-router";
 import { ErrorBoundary, Show, Suspense } from "solid-js";
 import AlphabetList from "~/components/alphabet-list/AlphabetList";
 import { ErrorPage, LoadingPage } from "~/components/page-message/PageMessage";
-import { PageTitle } from "~/components/page-title/PageTitle";
 import { useSpotifyApi } from "~/lib/spotify";
 import type { Album } from "~/lib/types";
 
 export const Route = createFileRoute("/player/albums")({
   component: Albums,
   loader: () => getAlbums(),
+  head: () => ({ meta: [{ title: "Albums" }] }),
 });
 
 const getAlbums = async (): Promise<Album[]> => {
@@ -26,7 +26,6 @@ export default function Albums() {
 
   return (
     <>
-      <PageTitle>Albums</PageTitle>
       <Suspense fallback={<LoadingPage />}>
         <ErrorBoundary fallback={<ErrorPage message="Failed to load albums" />}>
           <Show when={albums()} fallback={<ErrorPage />}>

@@ -5,6 +5,7 @@ import ListItem from "../list-item/ListItem";
 import PageMessage from "../page-message/PageMessage";
 import SearchInput from "../search-input/SearchInput";
 import styles from "./AlphabetList.module.css";
+
 export interface AlphabetListProps {
   namePlural: string;
   items: Accessor<Item[]>;

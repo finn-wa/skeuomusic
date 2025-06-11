@@ -1,40 +1,36 @@
 {
-  "name": "example-with-vitest",
+  "name": "skeuomusic",
   "scripts": {
-    "dev": "vinxi dev",
-    "build": "vinxi build",
-    "start": "vinxi start",
+    "dev": "vite dev",
+    "build": "vite build && tsc --noEmit",
+    "start": "vite start",
     "test": "vitest run",
     "test-watch": "vitest",
     "test-ui": "vitest --ui"
   },
   "type": "module",
+  "sideEffects": false,
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@solidjs/meta": "^0.29.4",
-    "@solidjs/start": "^1.1.0",
     "@solidjs/testing-library": "^0.8.10",
-    "@tanstack/router-plugin": "^1.120.20",
-    "@testing-library/jest-dom": "^6.6.2",
-    "@testing-library/user-event": "^14.5.2",
-    "@types/node": "20",
-    "@vitest/ui": "3.0.5",
-    "jsdom": "^25.0.1",
-    "solid-js": "^1.9.3",
-    "typescript": "^5.6.3",
-    "vinxi": "^0.5.3",
-    "vite": "^6.0.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^22.5.4",
+    "@vitest/ui": "3.2.3",
+    "dotenv": "^16.5.0",
+    "jsdom": "^26.0.1",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
     "vite-plugin-solid": "^2.11.6",
-    "vitest": "3.0.5"
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "3.2.3"
   },
-  "trustedDependencies": [
-    "@biomejs/biome",
-    "@parcel/watcher"
-  ],
   "dependencies": {
     "@fontsource-variable/inter": "^5.2.6",
     "@spotify/web-api-ts-sdk": "^1.2.0",
-    "@tanstack/solid-router": "^1.120.19",
-    "@tanstack/solid-router-devtools": "^1.120.19"
+    "@tanstack/solid-router": "^1.121.0",
+    "@tanstack/solid-router-devtools": "^1.121.0",
+    "@tanstack/solid-start": "^1.121.0",
+    "solid-js": "^1.9.7"
   }
 }

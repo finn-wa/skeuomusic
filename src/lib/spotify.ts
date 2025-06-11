@@ -1,20 +1,20 @@
 import { type AccessToken, SpotifyApi } from "@spotify/web-api-ts-sdk";
-import { useSession } from "vinxi/http";
 
 export type SpotifySession = AccessToken;
 
-export async function useSpotifySession() {
+export async function useSpotifySession(): any {
   "use server";
-  return useSession<SpotifySession>({
-    password: process.env.SESSION_SECRET as string,
-    name: "spotify_token",
-  });
+  throw new Error("todo - useSession");
+  // return useSession<SpotifySession>({
+  //   password: process.env.SESSION_SECRET as string,
+  //   name: "spotify_token",
+  // });
 }
 
 const scopes = () => ["user-library-read", "user-follow-read"];
 
 function clientId() {
-  const clientId: string | undefined = import.meta.env.PUBLIC_SPOTIFY_CLIENT_ID;
+  const clientId: string | undefined = process.env.PUBLIC_SPOTIFY_CLIENT_ID;
   if (clientId == null) {
     throw new Error("PUBLIC_SPOTIFY_CLIENT_ID env variable is not defined");
   }

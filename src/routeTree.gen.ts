@@ -8,76 +8,157 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import { createServerRootRoute } from '@tanstack/solid-start/server'
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as PlayerImport } from './routes/player'
-import { Route as IndexImport } from './routes/index'
-import { Route as RedirectSpotifyImport } from './routes/redirect.spotify'
-import { Route as PlayerSongsImport } from './routes/player.songs'
-import { Route as PlayerPlaylistsImport } from './routes/player.playlists'
-import { Route as PlayerMoreImport } from './routes/player.more'
-import { Route as PlayerArtistsImport } from './routes/player.artists'
-import { Route as PlayerAlbumsImport } from './routes/player.albums'
-import { Route as ApiSpotifyAuthImport } from './routes/api/spotify/auth'
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as PlayerRouteImport } from './routes/player'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as RedirectSpotifyRouteImport } from './routes/redirect.spotify'
+import { Route as PlayerSongsRouteImport } from './routes/player.songs'
+import { Route as PlayerPlaylistsRouteImport } from './routes/player.playlists'
+import { Route as PlayerMoreRouteImport } from './routes/player.more'
+import { Route as PlayerArtistsRouteImport } from './routes/player.artists'
+import { Route as PlayerAlbumsRouteImport } from './routes/player.albums'
+import { ServerRoute as ApiSpotifyAuthServerRouteImport } from './routes/api/spotify/auth'
 
-// Create/Update Routes
+const rootServerRouteImport = createServerRootRoute()
 
-const PlayerRoute = PlayerImport.update({
+const PlayerRoute = PlayerRouteImport.update({
   id: '/player',
   path: '/player',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const IndexRoute = IndexImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const RedirectSpotifyRoute = RedirectSpotifyImport.update({
+const RedirectSpotifyRoute = RedirectSpotifyRouteImport.update({
   id: '/redirect/spotify',
   path: '/redirect/spotify',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const PlayerSongsRoute = PlayerSongsImport.update({
+const PlayerSongsRoute = PlayerSongsRouteImport.update({
   id: '/songs',
   path: '/songs',
   getParentRoute: () => PlayerRoute,
 } as any)
-
-const PlayerPlaylistsRoute = PlayerPlaylistsImport.update({
+const PlayerPlaylistsRoute = PlayerPlaylistsRouteImport.update({
   id: '/playlists',
   path: '/playlists',
   getParentRoute: () => PlayerRoute,
 } as any)
-
-const PlayerMoreRoute = PlayerMoreImport.update({
+const PlayerMoreRoute = PlayerMoreRouteImport.update({
   id: '/more',
   path: '/more',
   getParentRoute: () => PlayerRoute,
 } as any)
-
-const PlayerArtistsRoute = PlayerArtistsImport.update({
+const PlayerArtistsRoute = PlayerArtistsRouteImport.update({
   id: '/artists',
   path: '/artists',
   getParentRoute: () => PlayerRoute,
 } as any)
-
-const PlayerAlbumsRoute = PlayerAlbumsImport.update({
+const PlayerAlbumsRoute = PlayerAlbumsRouteImport.update({
   id: '/albums',
   path: '/albums',
   getParentRoute: () => PlayerRoute,
 } as any)
-
-const ApiSpotifyAuthRoute = ApiSpotifyAuthImport.update({
+const ApiSpotifyAuthServerRoute = ApiSpotifyAuthServerRouteImport.update({
   id: '/api/spotify/auth',
   path: '/api/spotify/auth',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootServerRouteImport,
 } as any)
 
-// Populate the FileRoutesByPath interface
+export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
+  '/player': typeof PlayerRouteWithChildren
+  '/player/albums': typeof PlayerAlbumsRoute
+  '/player/artists': typeof PlayerArtistsRoute
+  '/player/more': typeof PlayerMoreRoute
+  '/player/playlists': typeof PlayerPlaylistsRoute
+  '/player/songs': typeof PlayerSongsRoute
+  '/redirect/spotify': typeof RedirectSpotifyRoute
+}
+export interface FileRoutesByTo {
+  '/': typeof IndexRoute
+  '/player': typeof PlayerRouteWithChildren
+  '/player/albums': typeof PlayerAlbumsRoute
+  '/player/artists': typeof PlayerArtistsRoute
+  '/player/more': typeof PlayerMoreRoute
+  '/player/playlists': typeof PlayerPlaylistsRoute
+  '/player/songs': typeof PlayerSongsRoute
+  '/redirect/spotify': typeof RedirectSpotifyRoute
+}
+export interface FileRoutesById {
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/player': typeof PlayerRouteWithChildren
+  '/player/albums': typeof PlayerAlbumsRoute
+  '/player/artists': typeof PlayerArtistsRoute
+  '/player/more': typeof PlayerMoreRoute
+  '/player/playlists': typeof PlayerPlaylistsRoute
+  '/player/songs': typeof PlayerSongsRoute
+  '/redirect/spotify': typeof RedirectSpotifyRoute
+}
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/'
+    | '/player'
+    | '/player/albums'
+    | '/player/artists'
+    | '/player/more'
+    | '/player/playlists'
+    | '/player/songs'
+    | '/redirect/spotify'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/player'
+    | '/player/albums'
+    | '/player/artists'
+    | '/player/more'
+    | '/player/playlists'
+    | '/player/songs'
+    | '/redirect/spotify'
+  id:
+    | '__root__'
+    | '/'
+    | '/player'
+    | '/player/albums'
+    | '/player/artists'
+    | '/player/more'
+    | '/player/playlists'
+    | '/player/songs'
+    | '/redirect/spotify'
+  fileRoutesById: FileRoutesById
+}
+export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
+  PlayerRoute: typeof PlayerRouteWithChildren
+  RedirectSpotifyRoute: typeof RedirectSpotifyRoute
+}
+export interface FileServerRoutesByFullPath {
+  '/api/spotify/auth': typeof ApiSpotifyAuthServerRoute
+}
+export interface FileServerRoutesByTo {
+  '/api/spotify/auth': typeof ApiSpotifyAuthServerRoute
+}
+export interface FileServerRoutesById {
+  __root__: typeof rootServerRouteImport
+  '/api/spotify/auth': typeof ApiSpotifyAuthServerRoute
+}
+export interface FileServerRouteTypes {
+  fileServerRoutesByFullPath: FileServerRoutesByFullPath
+  fullPaths: '/api/spotify/auth'
+  fileServerRoutesByTo: FileServerRoutesByTo
+  to: '/api/spotify/auth'
+  id: '__root__' | '/api/spotify/auth'
+  fileServerRoutesById: FileServerRoutesById
+}
+export interface RootServerRouteChildren {
+  ApiSpotifyAuthServerRoute: typeof ApiSpotifyAuthServerRoute
+}
 
 declare module '@tanstack/solid-router' {
   interface FileRoutesByPath {
@@ -85,69 +166,134 @@ declare module '@tanstack/solid-router' {
       id: '/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/player': {
       id: '/player'
       path: '/player'
       fullPath: '/player'
-      preLoaderRoute: typeof PlayerImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof PlayerRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/player/albums': {
       id: '/player/albums'
       path: '/albums'
       fullPath: '/player/albums'
-      preLoaderRoute: typeof PlayerAlbumsImport
-      parentRoute: typeof PlayerImport
+      preLoaderRoute: typeof PlayerAlbumsRouteImport
+      parentRoute: typeof PlayerRoute
     }
     '/player/artists': {
       id: '/player/artists'
       path: '/artists'
       fullPath: '/player/artists'
-      preLoaderRoute: typeof PlayerArtistsImport
-      parentRoute: typeof PlayerImport
+      preLoaderRoute: typeof PlayerArtistsRouteImport
+      parentRoute: typeof PlayerRoute
     }
     '/player/more': {
       id: '/player/more'
       path: '/more'
       fullPath: '/player/more'
-      preLoaderRoute: typeof PlayerMoreImport
-      parentRoute: typeof PlayerImport
+      preLoaderRoute: typeof PlayerMoreRouteImport
+      parentRoute: typeof PlayerRoute
     }
     '/player/playlists': {
       id: '/player/playlists'
       path: '/playlists'
       fullPath: '/player/playlists'
-      preLoaderRoute: typeof PlayerPlaylistsImport
-      parentRoute: typeof PlayerImport
+      preLoaderRoute: typeof PlayerPlaylistsRouteImport
+      parentRoute: typeof PlayerRoute
     }
     '/player/songs': {
       id: '/player/songs'
       path: '/songs'
       fullPath: '/player/songs'
-      preLoaderRoute: typeof PlayerSongsImport
-      parentRoute: typeof PlayerImport
+      preLoaderRoute: typeof PlayerSongsRouteImport
+      parentRoute: typeof PlayerRoute
     }
     '/redirect/spotify': {
       id: '/redirect/spotify'
       path: '/redirect/spotify'
       fullPath: '/redirect/spotify'
-      preLoaderRoute: typeof RedirectSpotifyImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof RedirectSpotifyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/spotify/auth': {
+      id: '/api/spotify/auth'
+      path: ''
+      fullPath: '/api/spotify/auth'
+      preLoaderRoute: unknown
+      parentRoute: typeof rootRouteImport
+    }
+  }
+}
+declare module '@tanstack/solid-start/server' {
+  interface ServerFileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: unknown
+      parentRoute: typeof rootServerRouteImport
+    }
+    '/player': {
+      id: '/player'
+      path: '/player'
+      fullPath: '/player'
+      preLoaderRoute: unknown
+      parentRoute: typeof rootServerRouteImport
+    }
+    '/player/albums': {
+      id: '/player/albums'
+      path: '/albums'
+      fullPath: '/player/albums'
+      preLoaderRoute: unknown
+      parentRoute: typeof rootServerRouteImport
+    }
+    '/player/artists': {
+      id: '/player/artists'
+      path: '/artists'
+      fullPath: '/player/artists'
+      preLoaderRoute: unknown
+      parentRoute: typeof rootServerRouteImport
+    }
+    '/player/more': {
+      id: '/player/more'
+      path: '/more'
+      fullPath: '/player/more'
+      preLoaderRoute: unknown
+      parentRoute: typeof rootServerRouteImport
+    }
+    '/player/playlists': {
+      id: '/player/playlists'
+      path: '/playlists'
+      fullPath: '/player/playlists'
+      preLoaderRoute: unknown
+      parentRoute: typeof rootServerRouteImport
+    }
+    '/player/songs': {
+      id: '/player/songs'
+      path: '/songs'
+      fullPath: '/player/songs'
+      preLoaderRoute: unknown
+      parentRoute: typeof rootServerRouteImport
+    }
+    '/redirect/spotify': {
+      id: '/redirect/spotify'
+      path: '/redirect/spotify'
+      fullPath: '/redirect/spotify'
+      preLoaderRoute: unknown
+      parentRoute: typeof rootServerRouteImport
     }
     '/api/spotify/auth': {
       id: '/api/spotify/auth'
       path: '/api/spotify/auth'
       fullPath: '/api/spotify/auth'
-      preLoaderRoute: typeof ApiSpotifyAuthImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof ApiSpotifyAuthServerRouteImport
+      parentRoute: typeof rootServerRouteImport
     }
   }
 }
-
-// Create and export the route tree
 
 interface PlayerRouteChildren {
   PlayerAlbumsRoute: typeof PlayerAlbumsRoute
@@ -168,149 +314,17 @@ const PlayerRouteChildren: PlayerRouteChildren = {
 const PlayerRouteWithChildren =
   PlayerRoute._addFileChildren(PlayerRouteChildren)
 
-export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/player': typeof PlayerRouteWithChildren
-  '/player/albums': typeof PlayerAlbumsRoute
-  '/player/artists': typeof PlayerArtistsRoute
-  '/player/more': typeof PlayerMoreRoute
-  '/player/playlists': typeof PlayerPlaylistsRoute
-  '/player/songs': typeof PlayerSongsRoute
-  '/redirect/spotify': typeof RedirectSpotifyRoute
-  '/api/spotify/auth': typeof ApiSpotifyAuthRoute
-}
-
-export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/player': typeof PlayerRouteWithChildren
-  '/player/albums': typeof PlayerAlbumsRoute
-  '/player/artists': typeof PlayerArtistsRoute
-  '/player/more': typeof PlayerMoreRoute
-  '/player/playlists': typeof PlayerPlaylistsRoute
-  '/player/songs': typeof PlayerSongsRoute
-  '/redirect/spotify': typeof RedirectSpotifyRoute
-  '/api/spotify/auth': typeof ApiSpotifyAuthRoute
-}
-
-export interface FileRoutesById {
-  __root__: typeof rootRoute
-  '/': typeof IndexRoute
-  '/player': typeof PlayerRouteWithChildren
-  '/player/albums': typeof PlayerAlbumsRoute
-  '/player/artists': typeof PlayerArtistsRoute
-  '/player/more': typeof PlayerMoreRoute
-  '/player/playlists': typeof PlayerPlaylistsRoute
-  '/player/songs': typeof PlayerSongsRoute
-  '/redirect/spotify': typeof RedirectSpotifyRoute
-  '/api/spotify/auth': typeof ApiSpotifyAuthRoute
-}
-
-export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/player'
-    | '/player/albums'
-    | '/player/artists'
-    | '/player/more'
-    | '/player/playlists'
-    | '/player/songs'
-    | '/redirect/spotify'
-    | '/api/spotify/auth'
-  fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/player'
-    | '/player/albums'
-    | '/player/artists'
-    | '/player/more'
-    | '/player/playlists'
-    | '/player/songs'
-    | '/redirect/spotify'
-    | '/api/spotify/auth'
-  id:
-    | '__root__'
-    | '/'
-    | '/player'
-    | '/player/albums'
-    | '/player/artists'
-    | '/player/more'
-    | '/player/playlists'
-    | '/player/songs'
-    | '/redirect/spotify'
-    | '/api/spotify/auth'
-  fileRoutesById: FileRoutesById
-}
-
-export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  PlayerRoute: typeof PlayerRouteWithChildren
-  RedirectSpotifyRoute: typeof RedirectSpotifyRoute
-  ApiSpotifyAuthRoute: typeof ApiSpotifyAuthRoute
-}
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PlayerRoute: PlayerRouteWithChildren,
   RedirectSpotifyRoute: RedirectSpotifyRoute,
-  ApiSpotifyAuthRoute: ApiSpotifyAuthRoute,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/",
-        "/player",
-        "/redirect/spotify",
-        "/api/spotify/auth"
-      ]
-    },
-    "/": {
-      "filePath": "index.tsx"
-    },
-    "/player": {
-      "filePath": "player.tsx",
-      "children": [
-        "/player/albums",
-        "/player/artists",
-        "/player/more",
-        "/player/playlists",
-        "/player/songs"
-      ]
-    },
-    "/player/albums": {
-      "filePath": "player.albums.tsx",
-      "parent": "/player"
-    },
-    "/player/artists": {
-      "filePath": "player.artists.tsx",
-      "parent": "/player"
-    },
-    "/player/more": {
-      "filePath": "player.more.tsx",
-      "parent": "/player"
-    },
-    "/player/playlists": {
-      "filePath": "player.playlists.tsx",
-      "parent": "/player"
-    },
-    "/player/songs": {
-      "filePath": "player.songs.tsx",
-      "parent": "/player"
-    },
-    "/redirect/spotify": {
-      "filePath": "redirect.spotify.tsx"
-    },
-    "/api/spotify/auth": {
-      "filePath": "api/spotify/auth.ts"
-    }
-  }
+const rootServerRouteChildren: RootServerRouteChildren = {
+  ApiSpotifyAuthServerRoute: ApiSpotifyAuthServerRoute,
 }
-ROUTE_MANIFEST_END */
+export const serverRouteTree = rootServerRouteImport
+  ._addFileChildren(rootServerRouteChildren)
+  ._addFileTypes<FileServerRouteTypes>()
