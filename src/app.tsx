@@ -1,22 +1,9 @@
-import { MetaProvider, Title } from "@solidjs/meta";
-import { Router } from "@solidjs/router";
-import { FileRoutes } from "@solidjs/start/router";
-import { Suspense } from "solid-js";
-import "./global.css";
+import { RouterProvider } from "@tanstack/solid-router";
+import { router } from "./router";
+
 import "@fontsource-variable/inter";
-import { PageTitle } from "./components/page-title/PageTitle";
+import "./global.css";
 
 export default function App() {
-  return (
-    <Router
-      root={(props) => (
-        <MetaProvider>
-          <PageTitle>skeuomusic</PageTitle>
-          <Suspense>{props.children}</Suspense>
-        </MetaProvider>
-      )}
-    >
-      <FileRoutes />
-    </Router>
-  );
+  return <RouterProvider router={router} />;
 }

@@ -1,15 +1,19 @@
-import type { RouteSectionProps } from "@solidjs/router";
+import { Outlet, createFileRoute } from "@tanstack/solid-router";
 import Header from "~/components/header/Header";
 import NavTab from "~/components/nav-tab/NavTab";
+
+export const Route = createFileRoute("/player")({
+  component: Player,
+});
 
 /**
  * Provides header and nav tab bar for /player routes
  */
-export default function Player(props: RouteSectionProps) {
+export default function Player() {
   return (
     <div class="page">
       <Header />
-      <div class="content">{props.children}</div>
+      <Outlet />
       <nav class="bar">
         <NavTab route="/player/playlists" label="Playlists" />
         <NavTab route="/player/artists" label="Artists" />

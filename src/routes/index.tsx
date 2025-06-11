@@ -1,12 +1,16 @@
-import { useNavigate } from "@solidjs/router";
+import { createFileRoute, useNavigate } from "@tanstack/solid-router";
 import { doSpotifyAuth } from "~/lib/spotify";
 
+export const Route = createFileRoute("/")({
+  component: Home,
+});
+
 export default function Home() {
-  const navigate = useNavigate();
+  const navigate = useNavigate({ from: "/" });
   async function logInWithSpotify() {
     const token = await doSpotifyAuth(window.location.origin);
     if (token != null) {
-      return navigate("/player/albums");
+      return navigate({ to: "/player/albums" });
     }
     console.log("user cancelled?");
   }

@@ -1,4 +1,4 @@
-import { A } from "@solidjs/router";
+import { Link } from "@tanstack/solid-router";
 import styles from "./NavTab.module.css";
 
 export interface TabButtonProps {
@@ -8,8 +8,12 @@ export interface TabButtonProps {
 
 export default function NavTab(props: TabButtonProps) {
   return (
-    <A class={styles.tab} activeClass={styles.selected} href={props.route}>
+    <Link
+      to={props.route}
+      class={styles.tab}
+      activeProps={{ class: styles.selected }}
+    >
       <small>{props.label}</small>
-    </A>
+    </Link>
   );
 }

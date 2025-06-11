@@ -1,15 +1,4 @@
-import {
-  type AccessToken,
-  type Album,
-  AuthorizationCodeWithPKCEStrategy,
-  type FollowedArtists,
-  type Page,
-  type SavedAlbum,
-  type SavedTrack,
-  type SdkOptions,
-  type SimplifiedPlaylist,
-  SpotifyApi,
-} from "@spotify/web-api-ts-sdk";
+import { type AccessToken, SpotifyApi } from "@spotify/web-api-ts-sdk";
 import { useSession } from "vinxi/http";
 
 export type SpotifySession = AccessToken;

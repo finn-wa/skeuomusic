@@ -1,4 +1,4 @@
-import { type RouteDefinition, createAsync, query } from "@solidjs/router";
+import { createFileRoute } from "@tanstack/solid-router";
 import { ErrorBoundary, Show, Suspense } from "solid-js";
 import AlphabetList from "~/components/alphabet-list/AlphabetList";
 import { ErrorPage, LoadingPage } from "~/components/page-message/PageMessage";
@@ -6,7 +6,12 @@ import { PageTitle } from "~/components/page-title/PageTitle";
 import { useSpotifyApi } from "~/lib/spotify";
 import type { Song } from "~/lib/types";
 
-const getSongs = query(async (): Promise<Song[]> => {
+export const Route = createFileRoute("/player/songs")({
+  component: Songs,
+  loader: () => getSongs(),
+});
+
+const getSongs = async (): Promise<Song[]> => {
   "use server";
   const api = await useSpotifyApi();
   const response = await api.currentUser.tracks.savedTracks(50, 0);
@@ -14,14 +19,10 @@ const getSongs = query(async (): Promise<Song[]> => {
     id: track.id,
     name: track.name,
   }));
-}, "songs");
-
-export const route = {
-  preload: () => getSongs(),
-} satisfies RouteDefinition;
+};
 
 export default function Songs() {
-  const songs = createAsync(() => getSongs());
+  const songs = Route.useLoaderData();
 
   return (
     <>
