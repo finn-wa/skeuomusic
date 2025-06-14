@@ -14,9 +14,13 @@
 }
 
 body {
-  font-family: Inter Variable, sans-serif;
+  font-family:
+    Inter Variable,
+    sans-serif;
   font-weight: bold;
-  font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
+  font-feature-settings:
+    'liga' 1,
+    'calt' 1; /* fix for Chrome */
   margin: 0;
   box-sizing: border-box;
 }
@@ -98,18 +102,131 @@ li {
  */
 
 .emboss-y {
-  box-shadow: inset 0 3px 3px -3px var(--shadow-light),
+  box-shadow:
+    inset 0 3px 3px -3px var(--shadow-light),
     inset 0 -3px 3px -3px var(--shadow-dark);
 }
 
 .emboss-x {
-  box-shadow: inset 3px 0 3px -3px var(--shadow-dark),
+  box-shadow:
+    inset 3px 0 3px -3px var(--shadow-dark),
     inset -3px 0 3px -3px var(--shadow-light);
 }
 
 .engrave-x {
-  box-shadow: inset 3px 0 3px -3px var(--shadow-light),
+  box-shadow:
+    inset 3px 0 3px -3px var(--shadow-light),
     inset -3px 0 3px -3px var(--shadow-dark);
 }
 
 /* .engrave */
+
+.page-msg-container {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.page-msg {
+  color: var(--text-color-light);
+  font-weight: 300;
+  font-size: 1.5rem;
+}
+
+.tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 4.125rem;
+
+  > small {
+    padding: 0.25rem;
+    align-self: flex-end;
+  }
+}
+
+.tab.selected {
+  background:
+    linear-gradient(
+      0deg,
+      rgba(219, 220, 225, 0.5) 0%,
+      rgba(243, 244, 244, 0.5) 100%
+    ),
+    radial-gradient(
+      circle,
+      rgba(221, 221, 222, 0.5) 0%,
+      rgba(168, 168, 168, 0.5) 100%
+    );
+}
+
+.list-item {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 1rem;
+}
+
+.alphabet-items-container {
+  flex-grow: 1;
+}
+
+.alphabet-indicator {
+  align-items: center;
+  background-color: #c4c5c7;
+  color: #58595b;
+  display: flex;
+  font-weight: 800;
+  padding: 0.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.alphabet-sublist {
+  padding: 0;
+}
+
+.alphabet-footer {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.search-container {
+  flex: 0;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.search-input {
+  padding: 0.5rem 2.25rem;
+  margin: 0.25rem;
+  border: 1px solid #ddd;
+  border-radius: 9999px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+  flex: 1;
+}
+
+.search-icon {
+  color: var(--icon-color);
+  position: absolute;
+  left: 0.75rem;
+}
+
+.search-clear-button {
+  color: var(--icon-color);
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}

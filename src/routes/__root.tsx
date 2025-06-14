@@ -2,13 +2,13 @@ import { Outlet, createRootRoute } from "@tanstack/solid-router";
 import { TanStackRouterDevtools } from "@tanstack/solid-router-devtools";
 
 import "@fontsource-variable/inter";
-import "../global.css";
+import appCss from "~/global.css?url";
 
 export const Route = createRootRoute({
   component: () => (
     <>
       <Outlet />
-      <TanStackRouterDevtools />
+      {/* <TanStackRouterDevtools /> */}
     </>
   ),
   notFoundComponent: () => <div>404 Not Found</div>,
@@ -18,10 +18,11 @@ export const Route = createRootRoute({
       { charSet: "utf-8" },
       {
         name: "viewport",
-        content: "width=device-width, initial-scale=1",
+        content: "width=device-width, height=device-height, initial-scale=1",
       },
     ],
     links: [
+      { rel: "stylesheet", href: appCss },
       {
         rel: "icon",
         type: "image/png",

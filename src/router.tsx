@@ -3,11 +3,16 @@ import { routeTree } from "./routeTree.gen";
 
 export function createRouter() {
   return createTanstackSolidRouter({
-    defaultErrorComponent: (err) => <div>{err.error.stack}</div>,
     routeTree,
     defaultPreload: "intent",
     defaultStaleTime: 5000,
     scrollRestoration: true,
+    scrollRestorationBehavior: "instant",
+    // defaultHashScrollIntoView: {
+    //   behavior: "instant",
+    //   block: "start",
+    //   inline: "nearest",
+    // },
   });
 }
 

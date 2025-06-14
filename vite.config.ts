@@ -29,7 +29,7 @@ export default defineConfig({
   envPrefix: "PUBLIC_",
   plugins: [
     tsConfigPaths({ projects: ["./tsconfig.json"] }),
-    tanstackStart({}),
+    tanstackStart(),
     solidPlugin(),
   ],
 });

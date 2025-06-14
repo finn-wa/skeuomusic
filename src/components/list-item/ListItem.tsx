@@ -1,6 +1,3 @@
-import { Item } from "~/lib/types";
-import styles from "./ListItem.module.css";
-
 export interface ListItemProps {
   name: string;
   hide?: boolean;
@@ -9,7 +6,7 @@ export interface ListItemProps {
 export default function ListItem(props: ListItemProps) {
   return (
     <li
-      class={`${styles.item} emboss-y`}
+      class="list-item emboss-y"
       style={{ display: props.hide ? "none" : undefined }}
     >
       <span class="h2">{props.name}</span>

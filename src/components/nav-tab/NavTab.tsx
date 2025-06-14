@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/solid-router";
-import styles from "./NavTab.module.css";
+import { createSignal } from "solid-js";
+import { INITIAL_SCROLL_ID } from "~/lib/constants";
 
 export interface TabButtonProps {
   route: string;
@@ -7,11 +8,14 @@ export interface TabButtonProps {
 }
 
 export default function NavTab(props: TabButtonProps) {
+  const [clicked, setClicked] = createSignal(false);
   return (
     <Link
       to={props.route}
-      class={styles.tab}
-      activeProps={{ class: styles.selected }}
+      class="tab"
+      activeProps={{ class: "selected" }}
+      hash={clicked() ? undefined : INITIAL_SCROLL_ID}
+      onClick={() => setTimeout(() => setClicked(true), 0)}
     >
       <small>{props.label}</small>
     </Link>

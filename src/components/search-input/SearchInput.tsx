@@ -1,14 +1,13 @@
 import type { Signal } from "solid-js";
-import styles from "./SearchInput.module.css";
 
 export default function SearchInput(props: {
   query: Signal<string>;
 }) {
   const [query, setQuery] = props.query;
   return (
-    <form class={styles.container} on:submit={(e) => e.preventDefault()}>
+    <form class="search-container" on:submit={(e) => e.preventDefault()}>
       <svg
-        class={styles["search-icon"]}
+        class="search-icon"
         xmlns="http://www.w3.org/2000/svg"
         width="1.625rem"
         height="1.625rem"
@@ -22,6 +21,7 @@ export default function SearchInput(props: {
       </svg>
       <input
         type="search"
+        class="search-input"
         value={query() ?? ""}
         onInput={(e) => setQuery(e.currentTarget.value)}
         placeholder="Search..."
@@ -29,7 +29,7 @@ export default function SearchInput(props: {
       <button
         type="reset"
         onClick={() => setQuery("")}
-        class={styles["clear-button"]}
+        class="search-clear-button"
         style={{ display: query() ? undefined : "none" }}
         aria-label="Clear search"
         data-testid="clearSearch"

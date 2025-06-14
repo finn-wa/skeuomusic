@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/solid-router";
 import { doSpotifyAuth } from "~/lib/client/spotify-auth";
+import { INITIAL_SCROLL_ID } from "~/lib/constants";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -10,7 +11,7 @@ export default function Home() {
   async function logInWithSpotify() {
     const token = await doSpotifyAuth(window.location.origin);
     if (token != null) {
-      return navigate({ to: "/player/albums" });
+      return navigate({ to: "/player/albums", hash: INITIAL_SCROLL_ID });
     }
     console.log("user cancelled?");
   }

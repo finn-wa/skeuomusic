@@ -1,25 +1,27 @@
-import type { Accessor } from "solid-js";
+import type { Accessor, Component } from "solid-js";
 import { For, Show, createSignal } from "solid-js";
+import { INITIAL_SCROLL_ID } from "~/lib/constants";
 import type { Item } from "~/lib/types";
 import ListItem from "../list-item/ListItem";
 import PageMessage from "../page-message/PageMessage";
 import SearchInput from "../search-input/SearchInput";
-import styles from "./AlphabetList.module.css";
 
-export interface AlphabetListProps {
+export interface AlphabetListProps<T extends Item> {
   namePlural: string;
-  items: Accessor<Item[]>;
+  items: Accessor<T[]>;
+  hideItemCount?: boolean;
+  itemComponent?: Component<T & { hide?: boolean }>;
 }
 
-type ItemGroup = {
+type ItemGroup<T extends Item> = {
   letter: string;
-  items: Item[];
+  items: T[];
 };
 
-function groupItems(allItems: Item[]): ItemGroup[] {
-  const groups: ItemGroup[] = [];
+function groupItems<T extends Item>(allItems: T[]): ItemGroup<T>[] {
+  const groups: ItemGroup<T>[] = [];
   let groupLetter = "";
-  let groupItems: Item[] = [];
+  let groupItems: T[] = [];
   const addGroupIfPopulated = () => {
     if (groupItems.length > 0) {
       groups.push({ letter: groupLetter, items: groupItems });
@@ -29,7 +31,7 @@ function groupItems(allItems: Item[]): ItemGroup[] {
     a.name.localeCompare(b.name),
   );
   for (const item of sortedItems) {
-    const itemLetter = item.name[0] ?? "";
+    const itemLetter = item.name[0]?.toUpperCase() ?? "";
     if (itemLetter === groupLetter) {
       groupItems.push(item);
       continue;
@@ -42,7 +44,12 @@ function groupItems(allItems: Item[]): ItemGroup[] {
   return groups;
 }
 
-export default function AlphabetList({ items, namePlural }: AlphabetListProps) {
+export default function AlphabetList<T extends Item>({
+  items,
+  namePlural,
+  hideItemCount,
+  itemComponent = ListItem,
+}: AlphabetListProps<T>) {
   const itemGroups = () => groupItems(items());
 
   const queryableItems = () =>
@@ -50,6 +57,9 @@ export default function AlphabetList({ items, namePlural }: AlphabetListProps) {
 
   const searchSignal = createSignal("");
   const [search] = searchSignal;
+
+  const capitalisedNamePlural =
+    (namePlural[0]?.toUpperCase() ?? "") + (namePlural.substring(1) ?? "");
 
   /** Set of item keys that match the current query */
   const visibleItems = () => {
@@ -66,7 +76,7 @@ export default function AlphabetList({ items, namePlural }: AlphabetListProps) {
   return (
     <>
       <SearchInput query={searchSignal} />
-      <div class={styles["items-container"]}>
+      <div class="alphabet-items-container" id={INITIAL_SCROLL_ID}>
         <Show
           when={visibleItems().size > 0}
           fallback={
@@ -79,27 +89,38 @@ export default function AlphabetList({ items, namePlural }: AlphabetListProps) {
             <For each={itemGroups()}>
               {({ letter, items }) => (
                 <li
-                  class={styles.sublist}
+                  class="alphabet-sublist"
                   style={{
                     display: items.some((item) => visibleItems().has(item.id))
                       ? undefined
                       : "none",
                   }}
                 >
-                  <div class={`emboss-y ${styles.indicator}`}>
+                  <div class="emboss-y alphabet-indicator">
                     <span>{letter}</span>
                   </div>
                   <ol>
                     <For each={items}>
-                      {({ name, id }) => (
-                        <ListItem name={name} hide={!visibleItems().has(id)} />
-                      )}
+                      {(item) =>
+                        itemComponent({
+                          ...item,
+                          hide: !visibleItems().has(item.id),
+                        })
+                      }
                     </For>
                   </ol>
                 </li>
               )}
             </For>
           </ol>
+          <Show when={!hideItemCount}>
+            <div class="alphabet-footer">
+              <span class="page-msg">
+                {visibleItems().size}{" "}
+                {search() ? "Results" : capitalisedNamePlural}
+              </span>
+            </div>
+          </Show>
         </Show>
       </div>
     </>
