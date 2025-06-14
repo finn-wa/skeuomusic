@@ -26,6 +26,7 @@ export default defineConfig({
     https: { key, cert },
     proxy: {},
   },
+  envPrefix: "PUBLIC_",
   plugins: [
     tsConfigPaths({ projects: ["./tsconfig.json"] }),
     tanstackStart({}),

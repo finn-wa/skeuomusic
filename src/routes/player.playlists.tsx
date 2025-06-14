@@ -2,21 +2,13 @@ import { createFileRoute } from "@tanstack/solid-router";
 import { ErrorBoundary, Show, Suspense } from "solid-js";
 import AlphabetList from "~/components/alphabet-list/AlphabetList";
 import { ErrorPage, LoadingPage } from "~/components/page-message/PageMessage";
-import { useSpotifyApi } from "~/lib/spotify";
-import type { Playlist } from "~/lib/types";
+import { getPlaylists } from "~/lib/server/spotify-data";
 
 export const Route = createFileRoute("/player/playlists")({
   component: Playlists,
   loader: () => getPlaylists(),
   head: () => ({ meta: [{ title: "Playlists" }] }),
 });
-
-const getPlaylists = async (): Promise<Playlist[]> => {
-  "use server";
-  const api = await useSpotifyApi();
-  const response = await api.currentUser.playlists.playlists(50, 0);
-  return response.items.map(({ id, name }) => ({ id, name }));
-};
 
 export default function Playlists() {
   const playlists = Route.useLoaderData();

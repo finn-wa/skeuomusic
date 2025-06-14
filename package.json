@@ -28,9 +28,9 @@
   "dependencies": {
     "@fontsource-variable/inter": "^5.2.6",
     "@spotify/web-api-ts-sdk": "^1.2.0",
-    "@tanstack/solid-router": "^1.121.0",
-    "@tanstack/solid-router-devtools": "^1.121.0",
-    "@tanstack/solid-start": "^1.121.0",
+    "@tanstack/solid-router": "^1.121.12",
+    "@tanstack/solid-router-devtools": "^1.121.12",
+    "@tanstack/solid-start": "^1.121.12",
     "solid-js": "^1.9.7"
   }
 }

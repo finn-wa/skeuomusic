@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/solid-router";
 import { onMount } from "solid-js";
-import { doSpotifyAuth } from "~/lib/spotify";
+import { doSpotifyAuth } from "~/lib/client/spotify-auth";
 
 export const Route = createFileRoute("/redirect/spotify")({
   component: SpotifyRedirect,

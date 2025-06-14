@@ -13,7 +13,9 @@ export default function Player() {
   return (
     <div class="page">
       <Header />
-      <Outlet />
+      <div class="content">
+        <Outlet />
+      </div>
       <nav class="bar">
         <NavTab route="/player/playlists" label="Playlists" />
         <NavTab route="/player/artists" label="Artists" />

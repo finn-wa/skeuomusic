@@ -1,8 +1,16 @@
 import { Outlet, createRootRoute } from "@tanstack/solid-router";
 import { TanStackRouterDevtools } from "@tanstack/solid-router-devtools";
 
+import "@fontsource-variable/inter";
+import "../global.css";
+
 export const Route = createRootRoute({
-  component: RootComponent,
+  component: () => (
+    <>
+      <Outlet />
+      <TanStackRouterDevtools />
+    </>
+  ),
   notFoundComponent: () => <div>404 Not Found</div>,
   head: () => ({
     meta: [
@@ -29,12 +37,3 @@ export const Route = createRootRoute({
     ],
   }),
 });
-
-export function RootComponent() {
-  return (
-    <>
-      <Outlet />
-      <TanStackRouterDevtools />
-    </>
-  );
-}

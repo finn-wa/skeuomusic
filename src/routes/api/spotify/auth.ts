@@ -1,6 +1,6 @@
 import type { AccessToken } from "@spotify/web-api-ts-sdk";
 import { createServerFileRoute } from "@tanstack/solid-start/server";
-import { useSpotifySession } from "~/lib/spotify";
+import { useSpotifySession } from "~/lib/server/session";
 
 /** Receives postback from Spotify auth */
 export const ServerRoute = createServerFileRoute("/api/spotify/auth").methods({
@@ -18,7 +18,6 @@ export const ServerRoute = createServerFileRoute("/api/spotify/auth").methods({
       return new Response("Invalid JSON body", { status: 400 });
     }
     const spotifySession = await useSpotifySession();
-    console.log("received spotify postback", JSON.stringify(token));
     await spotifySession.update(token);
     return new Response(null, { status: 210 });
   },

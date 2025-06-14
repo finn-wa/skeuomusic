@@ -162,13 +162,6 @@ export interface RootServerRouteChildren {
 
 declare module '@tanstack/solid-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/player': {
       id: '/player'
       path: '/player'
@@ -176,25 +169,25 @@ declare module '@tanstack/solid-router' {
       preLoaderRoute: typeof PlayerRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/player/albums': {
-      id: '/player/albums'
-      path: '/albums'
-      fullPath: '/player/albums'
-      preLoaderRoute: typeof PlayerAlbumsRouteImport
-      parentRoute: typeof PlayerRoute
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/player/artists': {
-      id: '/player/artists'
-      path: '/artists'
-      fullPath: '/player/artists'
-      preLoaderRoute: typeof PlayerArtistsRouteImport
-      parentRoute: typeof PlayerRoute
+    '/redirect/spotify': {
+      id: '/redirect/spotify'
+      path: '/redirect/spotify'
+      fullPath: '/redirect/spotify'
+      preLoaderRoute: typeof RedirectSpotifyRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/player/more': {
-      id: '/player/more'
-      path: '/more'
-      fullPath: '/player/more'
-      preLoaderRoute: typeof PlayerMoreRouteImport
+    '/player/songs': {
+      id: '/player/songs'
+      path: '/songs'
+      fullPath: '/player/songs'
+      preLoaderRoute: typeof PlayerSongsRouteImport
       parentRoute: typeof PlayerRoute
     }
     '/player/playlists': {
@@ -204,87 +197,31 @@ declare module '@tanstack/solid-router' {
       preLoaderRoute: typeof PlayerPlaylistsRouteImport
       parentRoute: typeof PlayerRoute
     }
-    '/player/songs': {
-      id: '/player/songs'
-      path: '/songs'
-      fullPath: '/player/songs'
-      preLoaderRoute: typeof PlayerSongsRouteImport
+    '/player/more': {
+      id: '/player/more'
+      path: '/more'
+      fullPath: '/player/more'
+      preLoaderRoute: typeof PlayerMoreRouteImport
       parentRoute: typeof PlayerRoute
-    }
-    '/redirect/spotify': {
-      id: '/redirect/spotify'
-      path: '/redirect/spotify'
-      fullPath: '/redirect/spotify'
-      preLoaderRoute: typeof RedirectSpotifyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/spotify/auth': {
-      id: '/api/spotify/auth'
-      path: ''
-      fullPath: '/api/spotify/auth'
-      preLoaderRoute: unknown
-      parentRoute: typeof rootRouteImport
-    }
-  }
-}
-declare module '@tanstack/solid-start/server' {
-  interface ServerFileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: unknown
-      parentRoute: typeof rootServerRouteImport
-    }
-    '/player': {
-      id: '/player'
-      path: '/player'
-      fullPath: '/player'
-      preLoaderRoute: unknown
-      parentRoute: typeof rootServerRouteImport
-    }
-    '/player/albums': {
-      id: '/player/albums'
-      path: '/albums'
-      fullPath: '/player/albums'
-      preLoaderRoute: unknown
-      parentRoute: typeof rootServerRouteImport
     }
     '/player/artists': {
       id: '/player/artists'
       path: '/artists'
       fullPath: '/player/artists'
-      preLoaderRoute: unknown
-      parentRoute: typeof rootServerRouteImport
+      preLoaderRoute: typeof PlayerArtistsRouteImport
+      parentRoute: typeof PlayerRoute
     }
-    '/player/more': {
-      id: '/player/more'
-      path: '/more'
-      fullPath: '/player/more'
-      preLoaderRoute: unknown
-      parentRoute: typeof rootServerRouteImport
+    '/player/albums': {
+      id: '/player/albums'
+      path: '/albums'
+      fullPath: '/player/albums'
+      preLoaderRoute: typeof PlayerAlbumsRouteImport
+      parentRoute: typeof PlayerRoute
     }
-    '/player/playlists': {
-      id: '/player/playlists'
-      path: '/playlists'
-      fullPath: '/player/playlists'
-      preLoaderRoute: unknown
-      parentRoute: typeof rootServerRouteImport
-    }
-    '/player/songs': {
-      id: '/player/songs'
-      path: '/songs'
-      fullPath: '/player/songs'
-      preLoaderRoute: unknown
-      parentRoute: typeof rootServerRouteImport
-    }
-    '/redirect/spotify': {
-      id: '/redirect/spotify'
-      path: '/redirect/spotify'
-      fullPath: '/redirect/spotify'
-      preLoaderRoute: unknown
-      parentRoute: typeof rootServerRouteImport
-    }
+  }
+}
+declare module '@tanstack/solid-start/server' {
+  interface ServerFileRoutesByPath {
     '/api/spotify/auth': {
       id: '/api/spotify/auth'
       path: '/api/spotify/auth'

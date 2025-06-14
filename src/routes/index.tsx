@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/solid-router";
-import { doSpotifyAuth } from "~/lib/spotify";
+import { doSpotifyAuth } from "~/lib/client/spotify-auth";
 
 export const Route = createFileRoute("/")({
   component: Home,
