@@ -1,6 +1,7 @@
 import { Await, createFileRoute, defer } from "@tanstack/solid-router";
 import { ErrorBoundary, Suspense } from "solid-js";
 import AlphabetList from "~/components/alphabet-list/AlphabetList";
+import AlbumListItem from "~/components/list-item/AlbumListItem";
 import { ErrorPage, LoadingPage } from "~/components/page-message/PageMessage";
 import { PRELOAD_STALE_TIME, STALE_TIME } from "~/lib/constants";
 import { getAlbums } from "~/lib/server/spotify-data";
@@ -23,7 +24,11 @@ export default function Albums() {
         <ErrorBoundary fallback={<ErrorPage message="Failed to load albums" />}>
           <Await promise={albums} fallback={<ErrorPage />}>
             {(albumAccessor) => (
-              <AlphabetList items={() => albumAccessor} namePlural="albums" />
+              <AlphabetList
+                items={() => albumAccessor}
+                namePlural="albums"
+                itemComponent={AlbumListItem}
+              />
             )}
           </Await>
         </ErrorBoundary>

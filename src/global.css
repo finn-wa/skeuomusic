@@ -51,6 +51,11 @@ small {
   font-size: 0.75rem;
 }
 
+.subtitle {
+  font-size: 0.875rem;
+  font-weight: 300;
+}
+
 .page {
   height: 100dvh;
   width: 100dvw;
@@ -163,9 +168,36 @@ li {
 }
 
 .list-item {
+  height: 3.625rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.text-truncate {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+
+.list-item-img {
+  height: 100%;
+  width: auto;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.p-2 {
+  padding: 0.5rem;
+}
+
+.p-3 {
   padding: 1rem;
 }
 
@@ -179,7 +211,7 @@ li {
   color: #58595b;
   display: flex;
   font-weight: 800;
-  padding: 0.5rem;
+  padding: 0.25rem 0.5rem;
   position: sticky;
   top: 0;
   z-index: 1;

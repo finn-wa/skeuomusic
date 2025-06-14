@@ -1,9 +1,14 @@
+import type { Image } from "@spotify/web-api-ts-sdk";
+
 export type Item = {
   id: string;
   name: string;
 };
 
-export type Album = Item;
+export type Album = Item & {
+  artists: { name: string }[];
+  images: Image[];
+};
 
 export type Artist = Item;
 

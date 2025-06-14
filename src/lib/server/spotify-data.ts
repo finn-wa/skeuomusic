@@ -28,6 +28,8 @@ export const getAlbums = createServerFn({ method: "GET" }).handler(() =>
     return response.items.map(({ album }) => ({
       id: album.id,
       name: album.name,
+      images: album.images,
+      artists: album.artists.map((artist) => ({ name: artist.name })),
     }));
   }),
 );
