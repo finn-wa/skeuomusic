@@ -7,7 +7,7 @@ import { PRELOAD_STALE_TIME, STALE_TIME } from "~/lib/constants";
 import { getArtists } from "~/lib/server/spotify-data";
 
 const title = "Artists";
-export const Route = createFileRoute("/player/artists")({
+export const Route = createFileRoute("/player/artists/")({
   component: Artists,
   head: () => ({ meta: [{ title }] }),
   beforeLoad: () => ({ headerTitle: title }),
