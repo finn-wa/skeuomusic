@@ -17,7 +17,7 @@ export default function SongListItem({
       class="list-item emboss-y text-truncate"
       style={{ display: hide() ? "none" : undefined }}
     >
-      <div class="flex-col px-3 py-2">
+      <div class="flex-col px-3 py-2 text-truncate">
         <span class="h2 text-truncate">{song.name}</span>
         <span class="subtitle text-truncate">{subtitle}</span>
       </div>

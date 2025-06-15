@@ -18,7 +18,12 @@ export const ServerRoute = createServerFileRoute("/api/spotify/auth").methods({
       return new Response("Invalid JSON body", { status: 400 });
     }
     const spotifySession = await useSpotifySession();
-    await spotifySession.update(token);
+    await spotifySession.update({
+      token: {
+        expires: Date.now() + token.expires_in,
+        ...token,
+      },
+    });
     return new Response(null, { status: 210 });
   },
 });

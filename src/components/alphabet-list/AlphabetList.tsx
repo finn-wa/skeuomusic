@@ -1,3 +1,4 @@
+import { useNavigate } from "@tanstack/solid-router";
 import type { Accessor, JSXElement } from "solid-js";
 import { For, Show, createSignal } from "solid-js";
 import { INITIAL_SCROLL_ID } from "~/lib/constants";
@@ -5,6 +6,8 @@ import type { Item } from "~/lib/types";
 import ListItem from "../list-item/ListItem";
 import PageMessage from "../page-message/PageMessage";
 import SearchInput from "../search-input/SearchInput";
+import AlphabetIndex from "./AlphabetIndex";
+import { LETTERS, LETTER_LABEL, type Letter } from "./AlphabetListModel";
 
 export interface AlphabetListProps<T extends Item> {
   namePlural: string;
@@ -13,42 +16,7 @@ export interface AlphabetListProps<T extends Item> {
   itemRenderer?: (item: T, hide?: Accessor<boolean>) => JSXElement;
 }
 
-type ItemGroup<T extends Item> = {
-  letter: string;
-  items: T[];
-};
-
-const letters = [
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-  "I",
-  "J",
-  "K",
-  "L",
-  "M",
-  "N",
-  "O",
-  "P",
-  "Q",
-  "R",
-  "S",
-  "T",
-  "U",
-  "V",
-  "W",
-  "X",
-  "Y",
-  "Z",
-  "#",
-] as const;
-type Letter = (typeof letters)[number];
-type SortableItem<T> = { key: string; value: T };
+type SortableItem<T> = { key: string; value: T; hide?: boolean };
 
 type GroupedItems<T> = { [K in Letter]: SortableItem<T>[] };
 
@@ -63,7 +31,7 @@ function getLetter(uppercaseChar: string): Letter {
 
 function groupItems<T extends Item>(sortedItems: SortableItem<T>[]) {
   const groups = Object.fromEntries(
-    letters.map((letter) => [letter, [] as SortableItem<T>[]]),
+    LETTERS.map((letter) => [letter, [] as SortableItem<T>[]]),
   ) as GroupedItems<T>;
 
   for (const value of sortedItems) {
@@ -81,6 +49,8 @@ export default function AlphabetList<T extends Item>({
 }: AlphabetListProps<T>) {
   const searchSignal = createSignal("");
   const [search] = searchSignal;
+  const navigate = useNavigate();
+  const jumpTo = (letter: string) => navigate({ hash: letter });
 
   const sortedItems = (): SortableItem<T>[] =>
     items()
@@ -105,61 +75,64 @@ export default function AlphabetList<T extends Item>({
   };
 
   return (
-    <>
-      <SearchInput query={searchSignal} />
-      <div class="alphabet-items-container" id={INITIAL_SCROLL_ID}>
-        <Show
-          when={visibleItems().size > 0}
-          fallback={
-            <PageMessage
-              message={items().length > 0 ? "No results" : `No ${namePlural}`}
-            />
-          }
-        >
-          <ol>
-            <For each={letters}>
-              {(letter) => {
-                const items = () => itemGroups()[letter];
-                const hasVisibleItems = () =>
-                  items().some((item) => visibleItems().has(item.key));
-                return (
-                  <li
-                    id={letter}
-                    class="alphabet-sublist"
-                    style={{
-                      visibility: hasVisibleItems() ? undefined : "hidden",
-                    }}
-                  >
-                    <div
-                      class="emboss-y alphabet-indicator"
+    <div class="content">
+      <div class="alphabet-items-container">
+        <SearchInput query={searchSignal} />
+        <div id={INITIAL_SCROLL_ID}>
+          <Show
+            when={visibleItems().size > 0}
+            fallback={
+              <PageMessage
+                message={items().length > 0 ? "No results" : `No ${namePlural}`}
+              />
+            }
+          >
+            <ul>
+              <For each={LETTERS}>
+                {(letter) => {
+                  const items = () => itemGroups()[letter];
+                  const hasVisibleItems = () =>
+                    items().some((item) => visibleItems().has(item.key));
+                  return (
+                    <li
+                      id={letter}
+                      class="alphabet-sublist"
                       style={{
-                        display: hasVisibleItems() ? undefined : "none",
+                        visibility: hasVisibleItems() ? undefined : "hidden",
                       }}
                     >
-                      <span>{letter}</span>
-                    </div>
-                    <ol>
-                      <For each={items()}>
-                        {({ key, value }) =>
-                          itemRenderer(value, () => !visibleItems().has(key))
-                        }
-                      </For>
-                    </ol>
-                  </li>
-                );
-              }}
-            </For>
-          </ol>
-          <Show when={!hideItemCount}>
-            <div class="alphabet-footer">
-              <span class="page-msg">
-                {visibleItems().size}{" "}
-                {search() ? "Results" : capitalisedNamePlural}
-              </span>
-            </div>
+                      <div
+                        class="emboss-y alphabet-indicator"
+                        style={{
+                          display: hasVisibleItems() ? undefined : "none",
+                        }}
+                      >
+                        <span>{LETTER_LABEL[letter]}</span>
+                      </div>
+                      <ul>
+                        <For each={items()}>
+                          {({ key, value }) =>
+                            itemRenderer(value, () => !visibleItems().has(key))
+                          }
+                        </For>
+                      </ul>
+                    </li>
+                  );
+                }}
+              </For>
+            </ul>
+            <Show when={!hideItemCount}>
+              <div class="alphabet-footer">
+                <span class="page-msg">
+                  {visibleItems().size}{" "}
+                  {search() ? "Results" : capitalisedNamePlural}
+                </span>
+              </div>
+            </Show>
           </Show>
-        </Show>
+        </div>
       </div>
-    </>
+      <AlphabetIndex jumpTo={jumpTo} />
+    </div>
   );
 }
