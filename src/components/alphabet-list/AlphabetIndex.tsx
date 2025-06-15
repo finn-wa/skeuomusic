@@ -7,10 +7,10 @@ export type AlphabetIndexProps = {
 
 export default function AlphabetIndex(props: AlphabetIndexProps) {
   const [jumping, setJumping] = createSignal(false);
-  //
+
   return (
     <nav
-      class="alphabet-index"
+      classList={{ "alphabet-index": true, jumping: jumping() }}
       aria-label="List index"
       onMouseDown={() => setJumping(true)}
       onMouseLeave={() => setJumping(false)}

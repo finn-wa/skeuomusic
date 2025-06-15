@@ -13,9 +13,9 @@ export const spotifyApiMiddleware = createMiddleware({
       to: "/",
     });
   }
-  const api = SpotifyApi.withAccessToken(
+  const spotify = SpotifyApi.withAccessToken(
     import.meta.env.PUBLIC_SPOTIFY_CLIENT_ID,
     session.data.token,
   );
-  return next({ context: { api } });
+  return next({ context: { spotify } });
 });
