@@ -13,7 +13,12 @@ export interface AlphabetListProps<T extends Item> {
   namePlural: string;
   items: Accessor<T[]>;
   hideItemCount?: boolean;
-  itemRenderer?: (item: T, hide?: Accessor<boolean>) => JSXElement;
+  hideIndex?: boolean;
+  itemRenderer?: (
+    item: T,
+    hide?: Accessor<boolean>,
+    href?: string,
+  ) => JSXElement;
 }
 
 type SortableItem<T> = { key: string; value: T; hide?: boolean };
@@ -45,6 +50,7 @@ export default function AlphabetList<T extends Item>({
   items,
   namePlural,
   hideItemCount,
+  hideIndex,
   itemRenderer = (item, hide) => <ListItem name={item.name} hide={hide} />,
 }: AlphabetListProps<T>) {
   const searchSignal = createSignal("");
@@ -132,7 +138,9 @@ export default function AlphabetList<T extends Item>({
           </Show>
         </div>
       </div>
-      <AlphabetIndex jumpTo={jumpTo} />
+      <Show when={!hideIndex}>
+        <AlphabetIndex jumpTo={jumpTo} />
+      </Show>
     </div>
   );
 }

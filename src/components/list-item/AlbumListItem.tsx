@@ -4,6 +4,7 @@ import type { Album } from "~/lib/types";
 
 export type AlbumListItemProps = {
   song: Album;
+  href?: string;
   hide?: Accessor<boolean>;
 };
 
@@ -27,7 +28,7 @@ export default function AlbumListItem({
         alt={`${song.name} cover art`}
         width={thumbnail.width}
         height={thumbnail.height}
-        class="list-item-img"
+        class="thumb"
       />
       <div class="flex-col p-2 text-truncate">
         <span class="h2 text-truncate">{song.name}</span>

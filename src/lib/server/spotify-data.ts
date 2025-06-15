@@ -25,7 +25,7 @@ export const getAlbums = createServerFn({ method: "GET" })
       id: album.id,
       name: album.name,
       images: album.images,
-      artists: album.artists.map((artist) => ({ name: artist.name })),
+      artists: album.artists.map(({ id, name }) => ({ id, name })),
     }));
   });
 
@@ -36,6 +36,14 @@ export const getArtists = createServerFn({ method: "GET" })
       context.spotify.currentUser.followedArtists(undefined, 50),
     );
     return response.artists.items.map(({ id, name }) => ({ id, name }));
+  });
+
+export const getArtist = createServerFn({ method: "GET" })
+  .middleware([loggingMiddleware, spotifyApiMiddleware])
+  .validator((data: string) => data)
+  .handler(async ({ context, data }) => {
+    const response = await tryRequest(() => context.spotify.artists.get(data));
+    return { id: response.id, name: response.name };
   });
 
 export const getPlaylists = createServerFn({ method: "GET" })

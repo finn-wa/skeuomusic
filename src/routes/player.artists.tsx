@@ -1,6 +1,7 @@
 import { Await, createFileRoute, defer } from "@tanstack/solid-router";
 import { ErrorBoundary, Suspense } from "solid-js";
 import AlphabetList from "~/components/alphabet-list/AlphabetList";
+import ListItem from "~/components/list-item/ListItem";
 import { ErrorPage, LoadingPage } from "~/components/page-message/PageMessage";
 import { PRELOAD_STALE_TIME, STALE_TIME } from "~/lib/constants";
 import { getArtists } from "~/lib/server/spotify-data";
@@ -27,8 +28,18 @@ export default function Artists() {
           fallback={<ErrorPage message="Failed to load artists" />}
         >
           <Await promise={artists} fallback={<ErrorPage />}>
-            {(artistAccessor) => (
-              <AlphabetList items={() => artistAccessor} namePlural="artists" />
+            {(artists) => (
+              <AlphabetList
+                items={() => artists}
+                namePlural="artists"
+                itemRenderer={(item, hide) => (
+                  <ListItem
+                    name={item.name}
+                    hide={hide}
+                    href={`/player/artists/${item.id}`}
+                  />
+                )}
+              />
             )}
           </Await>
         </ErrorBoundary>

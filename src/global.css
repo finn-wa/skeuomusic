@@ -172,23 +172,31 @@ li {
 .list-item {
   height: 3.625rem;
   padding: 0;
-  padding-right: var(--spacer-3);
   display: flex;
   align-items: center;
   overflow: hidden;
+
+  > .thumb {
+    height: 100%;
+    width: auto;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+  }
+
+  > .list-link {
+    flex-grow: 1;
+    padding: var(--spacer-3);
+    padding-right: var(--spacer-4);
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
 }
 
 .text-truncate {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-}
-
-.list-item-img {
-  height: 100%;
-  width: auto;
-  border: 1px solid transparent;
-  box-sizing: border-box;
 }
 
 .flex-col {

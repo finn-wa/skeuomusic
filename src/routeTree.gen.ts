@@ -19,6 +19,7 @@ import { Route as PlayerPlaylistsRouteImport } from './routes/player.playlists'
 import { Route as PlayerMoreRouteImport } from './routes/player.more'
 import { Route as PlayerArtistsRouteImport } from './routes/player.artists'
 import { Route as PlayerAlbumsRouteImport } from './routes/player.albums'
+import { Route as PlayerArtistsArtistIdRouteImport } from './routes/player.artists_.$artistId'
 import { ServerRoute as ApiSpotifyAuthServerRouteImport } from './routes/api/spotify/auth'
 
 const rootServerRouteImport = createServerRootRoute()
@@ -63,6 +64,11 @@ const PlayerAlbumsRoute = PlayerAlbumsRouteImport.update({
   path: '/albums',
   getParentRoute: () => PlayerRoute,
 } as any)
+const PlayerArtistsArtistIdRoute = PlayerArtistsArtistIdRouteImport.update({
+  id: '/artists_/$artistId',
+  path: '/artists/$artistId',
+  getParentRoute: () => PlayerRoute,
+} as any)
 const ApiSpotifyAuthServerRoute = ApiSpotifyAuthServerRouteImport.update({
   id: '/api/spotify/auth',
   path: '/api/spotify/auth',
@@ -78,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/player/playlists': typeof PlayerPlaylistsRoute
   '/player/songs': typeof PlayerSongsRoute
   '/redirect/spotify': typeof RedirectSpotifyRoute
+  '/player/artists/$artistId': typeof PlayerArtistsArtistIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -88,6 +95,7 @@ export interface FileRoutesByTo {
   '/player/playlists': typeof PlayerPlaylistsRoute
   '/player/songs': typeof PlayerSongsRoute
   '/redirect/spotify': typeof RedirectSpotifyRoute
+  '/player/artists/$artistId': typeof PlayerArtistsArtistIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -99,6 +107,7 @@ export interface FileRoutesById {
   '/player/playlists': typeof PlayerPlaylistsRoute
   '/player/songs': typeof PlayerSongsRoute
   '/redirect/spotify': typeof RedirectSpotifyRoute
+  '/player/artists_/$artistId': typeof PlayerArtistsArtistIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -111,6 +120,7 @@ export interface FileRouteTypes {
     | '/player/playlists'
     | '/player/songs'
     | '/redirect/spotify'
+    | '/player/artists/$artistId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -121,6 +131,7 @@ export interface FileRouteTypes {
     | '/player/playlists'
     | '/player/songs'
     | '/redirect/spotify'
+    | '/player/artists/$artistId'
   id:
     | '__root__'
     | '/'
@@ -131,6 +142,7 @@ export interface FileRouteTypes {
     | '/player/playlists'
     | '/player/songs'
     | '/redirect/spotify'
+    | '/player/artists_/$artistId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -218,6 +230,13 @@ declare module '@tanstack/solid-router' {
       preLoaderRoute: typeof PlayerAlbumsRouteImport
       parentRoute: typeof PlayerRoute
     }
+    '/player/artists_/$artistId': {
+      id: '/player/artists_/$artistId'
+      path: '/artists/$artistId'
+      fullPath: '/player/artists/$artistId'
+      preLoaderRoute: typeof PlayerArtistsArtistIdRouteImport
+      parentRoute: typeof PlayerRoute
+    }
   }
 }
 declare module '@tanstack/solid-start/server' {
@@ -238,6 +257,7 @@ interface PlayerRouteChildren {
   PlayerMoreRoute: typeof PlayerMoreRoute
   PlayerPlaylistsRoute: typeof PlayerPlaylistsRoute
   PlayerSongsRoute: typeof PlayerSongsRoute
+  PlayerArtistsArtistIdRoute: typeof PlayerArtistsArtistIdRoute
 }
 
 const PlayerRouteChildren: PlayerRouteChildren = {
@@ -246,6 +266,7 @@ const PlayerRouteChildren: PlayerRouteChildren = {
   PlayerMoreRoute: PlayerMoreRoute,
   PlayerPlaylistsRoute: PlayerPlaylistsRoute,
   PlayerSongsRoute: PlayerSongsRoute,
+  PlayerArtistsArtistIdRoute: PlayerArtistsArtistIdRoute,
 }
 
 const PlayerRouteWithChildren =

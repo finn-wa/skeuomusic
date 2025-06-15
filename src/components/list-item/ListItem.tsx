@@ -1,17 +1,29 @@
-import type { Accessor } from "solid-js";
+import { type Accessor, Show } from "solid-js";
 
 export interface ListItemProps {
   name: string;
+  href?: string;
   hide?: Accessor<boolean>;
 }
 
-export default function ListItem({ name, hide = () => false }: ListItemProps) {
+export default function ListItem({
+  name,
+  href,
+  hide = () => false,
+}: ListItemProps) {
   return (
     <li
       class="list-item emboss-y text-truncate"
       style={{ display: hide() ? "none" : undefined }}
     >
-      <span class="h2 p-3 text-truncate">{name}</span>
+      <Show
+        when={href != null}
+        fallback={<span class="h2 list-link">{name}</span>}
+      >
+        <a class="h2 list-link" href={href}>
+          {name}
+        </a>
+      </Show>
     </li>
   );
 }
