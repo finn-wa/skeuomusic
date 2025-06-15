@@ -5,12 +5,14 @@ import { ErrorPage, LoadingPage } from "~/components/page-message/PageMessage";
 import { PRELOAD_STALE_TIME, STALE_TIME } from "~/lib/constants";
 import { getPlaylists } from "~/lib/server/spotify-data";
 
+const title = "Playlists";
 export const Route = createFileRoute("/player/playlists")({
   component: Playlists,
+  head: () => ({ meta: [{ title }] }),
+  beforeLoad: () => ({ headerTitle: title }),
   loader: async () => {
     return { playlists: defer(getPlaylists()) };
   },
-  head: () => ({ meta: [{ title: "Playlists" }] }),
   staleTime: STALE_TIME,
   preloadStaleTime: PRELOAD_STALE_TIME,
 });

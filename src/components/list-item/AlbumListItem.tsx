@@ -1,12 +1,17 @@
-import type { Album, Item } from "~/lib/types";
-import fallbackImage from "../../../public/favicon-64.png";
+import type { Accessor } from "solid-js";
+import fallbackImage from "~/assets/fallback-album-thumbnail.png?url";
+import type { Album } from "~/lib/types";
 
-export type AlbumListItemProps = Album & {
-  hide?: boolean;
+export type AlbumListItemProps = {
+  song: Album;
+  hide?: Accessor<boolean>;
 };
 
-export default function AlbumListItem(props: AlbumListItemProps) {
-  const thumbnail = props.images.at(-1) ?? {
+export default function AlbumListItem({
+  song,
+  hide = () => false,
+}: AlbumListItemProps) {
+  const thumbnail = song.images.at(-1) ?? {
     height: 64,
     width: 64,
     url: fallbackImage,
@@ -15,19 +20,19 @@ export default function AlbumListItem(props: AlbumListItemProps) {
   return (
     <li
       class="list-item emboss-y text-truncate"
-      style={{ display: props.hide ? "none" : "flex" }}
+      style={{ display: hide() ? "none" : "flex" }}
     >
       <img
         src={thumbnail.url}
-        alt={`${props.name} cover art`}
+        alt={`${song.name} cover art`}
         width={thumbnail.width}
         height={thumbnail.height}
         class="list-item-img"
       />
       <div class="flex-col p-2 text-truncate">
-        <span class="h2 text-truncate">{props.name}</span>
+        <span class="h2 text-truncate">{song.name}</span>
         <span class="subtitle text-truncate">
-          {props.artists.map((artist) => artist.name).join(", ")}
+          {song.artists.map((artist) => artist.name).join(", ")}
         </span>
       </div>
     </li>

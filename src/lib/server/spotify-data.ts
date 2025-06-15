@@ -1,7 +1,7 @@
 import { SpotifyApi } from "@spotify/web-api-ts-sdk";
 import { redirect } from "@tanstack/solid-router";
 import { createServerFn } from "@tanstack/solid-start";
-import type { Album, Artist, Playlist } from "../types";
+import type { Album, Artist, Playlist, Song } from "../types";
 import { useSpotifySession } from "./session";
 
 async function withSpotifyApi<T>(loader: (api: SpotifyApi) => Promise<T>) {
@@ -51,12 +51,14 @@ export const getPlaylists = createServerFn({ method: "GET" }).handler(() =>
 );
 
 export const getSongs = createServerFn({ method: "GET" }).handler(() =>
-  withSpotifyApi(async (api): Promise<Playlist[]> => {
+  withSpotifyApi(async (api): Promise<Song[]> => {
     console.log("getSongs");
     const response = await api.currentUser.tracks.savedTracks(50, 0);
     return response.items.map(({ track }) => ({
       id: track.id,
       name: track.name,
+      artists: track.artists.map((artist) => ({ name: artist.name })),
+      album: { name: track.album.name },
     }));
   }),
 );

@@ -6,12 +6,14 @@ import { ErrorPage, LoadingPage } from "~/components/page-message/PageMessage";
 import { PRELOAD_STALE_TIME, STALE_TIME } from "~/lib/constants";
 import { getAlbums } from "~/lib/server/spotify-data";
 
+const title = "Albums";
 export const Route = createFileRoute("/player/albums")({
   component: Albums,
+  head: () => ({ meta: [{ title }] }),
+  beforeLoad: () => ({ headerTitle: title }),
   loader: async () => {
     return { albums: defer(getAlbums()) };
   },
-  head: () => ({ meta: [{ title: "Albums" }] }),
   staleTime: STALE_TIME,
   preloadStaleTime: PRELOAD_STALE_TIME,
 });
@@ -27,7 +29,9 @@ export default function Albums() {
               <AlphabetList
                 items={() => albumAccessor}
                 namePlural="albums"
-                itemComponent={AlbumListItem}
+                itemRenderer={(album, hide) => (
+                  <AlbumListItem song={album} hide={hide} />
+                )}
               />
             )}
           </Await>

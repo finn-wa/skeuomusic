@@ -1,4 +1,4 @@
-import type { Accessor, Component } from "solid-js";
+import type { Accessor, Component, JSXElement } from "solid-js";
 import { For, Show, createSignal } from "solid-js";
 import { INITIAL_SCROLL_ID } from "~/lib/constants";
 import type { Item } from "~/lib/types";
@@ -10,7 +10,7 @@ export interface AlphabetListProps<T extends Item> {
   namePlural: string;
   items: Accessor<T[]>;
   hideItemCount?: boolean;
-  itemComponent?: Component<T & { hide?: boolean }>;
+  itemRenderer?: (item: T, hide?: Accessor<boolean>) => JSXElement;
 }
 
 type ItemGroup<T extends Item> = {
@@ -48,7 +48,7 @@ export default function AlphabetList<T extends Item>({
   items,
   namePlural,
   hideItemCount,
-  itemComponent = ListItem,
+  itemRenderer = (item, hide) => <ListItem name={item.name} hide={hide} />,
 }: AlphabetListProps<T>) {
   const itemGroups = () => groupItems(items());
 
@@ -102,10 +102,7 @@ export default function AlphabetList<T extends Item>({
                   <ol>
                     <For each={items}>
                       {(item) =>
-                        itemComponent({
-                          ...item,
-                          hide: !visibleItems().has(item.id),
-                        })
+                        itemRenderer(item, () => !visibleItems().has(item.id))
                       }
                     </For>
                   </ol>
