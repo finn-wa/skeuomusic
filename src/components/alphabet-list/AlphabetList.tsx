@@ -1,4 +1,4 @@
-import type { Accessor, Component, JSXElement } from "solid-js";
+import type { Accessor, JSXElement } from "solid-js";
 import { For, Show, createSignal } from "solid-js";
 import { INITIAL_SCROLL_ID } from "~/lib/constants";
 import type { Item } from "~/lib/types";
@@ -18,29 +18,58 @@ type ItemGroup<T extends Item> = {
   items: T[];
 };
 
-function groupItems<T extends Item>(allItems: T[]): ItemGroup<T>[] {
-  const groups: ItemGroup<T>[] = [];
-  let groupLetter = "";
-  let groupItems: T[] = [];
-  const addGroupIfPopulated = () => {
-    if (groupItems.length > 0) {
-      groups.push({ letter: groupLetter, items: groupItems });
-    }
-  };
-  const sortedItems = [...allItems].sort((a, b) =>
-    a.name.localeCompare(b.name),
-  );
-  for (const item of sortedItems) {
-    const itemLetter = item.name[0]?.toUpperCase() ?? "";
-    if (itemLetter === groupLetter) {
-      groupItems.push(item);
-      continue;
-    }
-    addGroupIfPopulated();
-    groupItems = [item];
-    groupLetter = itemLetter;
+const letters = [
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+  "M",
+  "N",
+  "O",
+  "P",
+  "Q",
+  "R",
+  "S",
+  "T",
+  "U",
+  "V",
+  "W",
+  "X",
+  "Y",
+  "Z",
+  "#",
+] as const;
+type Letter = (typeof letters)[number];
+type SortableItem<T> = { key: string; value: T };
+
+type GroupedItems<T> = { [K in Letter]: SortableItem<T>[] };
+
+const letterRegex = /^[A-Z]/;
+
+function getLetter(uppercaseChar: string): Letter {
+  if (letterRegex.test(uppercaseChar)) {
+    return uppercaseChar as Letter;
   }
-  addGroupIfPopulated();
+  return "#";
+}
+
+function groupItems<T extends Item>(sortedItems: SortableItem<T>[]) {
+  const groups = Object.fromEntries(
+    letters.map((letter) => [letter, [] as SortableItem<T>[]]),
+  ) as GroupedItems<T>;
+
+  for (const value of sortedItems) {
+    const letter = getLetter(value.key[0] ?? "");
+    groups[letter].push(value);
+  }
   return groups;
 }
 
@@ -50,24 +79,26 @@ export default function AlphabetList<T extends Item>({
   hideItemCount,
   itemRenderer = (item, hide) => <ListItem name={item.name} hide={hide} />,
 }: AlphabetListProps<T>) {
-  const itemGroups = () => groupItems(items());
-
-  const queryableItems = () =>
-    items().map((item) => ({ ...item, title: item.name.toLowerCase() }));
-
   const searchSignal = createSignal("");
   const [search] = searchSignal;
+
+  const sortedItems = (): SortableItem<T>[] =>
+    items()
+      .map((value) => ({ value, key: value.name.trim().toUpperCase() }))
+      .sort((a, b) => a.key.localeCompare(b.key));
+
+  const itemGroups = () => groupItems(sortedItems());
 
   const capitalisedNamePlural =
     (namePlural[0]?.toUpperCase() ?? "") + (namePlural.substring(1) ?? "");
 
   /** Set of item keys that match the current query */
   const visibleItems = () => {
-    const query = search().toLowerCase();
+    const query = search().trim().toUpperCase();
     const visible = new Set<string>();
-    for (const item of queryableItems()) {
-      if (item.title.includes(query)) {
-        visible.add(item.id);
+    for (const item of sortedItems()) {
+      if (item.key.includes(query)) {
+        visible.add(item.key);
       }
     }
     return visible;
@@ -86,28 +117,37 @@ export default function AlphabetList<T extends Item>({
           }
         >
           <ol>
-            <For each={itemGroups()}>
-              {({ letter, items }) => (
-                <li
-                  class="alphabet-sublist"
-                  style={{
-                    display: items.some((item) => visibleItems().has(item.id))
-                      ? undefined
-                      : "none",
-                  }}
-                >
-                  <div class="emboss-y alphabet-indicator">
-                    <span>{letter}</span>
-                  </div>
-                  <ol>
-                    <For each={items}>
-                      {(item) =>
-                        itemRenderer(item, () => !visibleItems().has(item.id))
-                      }
-                    </For>
-                  </ol>
-                </li>
-              )}
+            <For each={letters}>
+              {(letter) => {
+                const items = () => itemGroups()[letter];
+                const hasVisibleItems = () =>
+                  items().some((item) => visibleItems().has(item.key));
+                return (
+                  <li
+                    id={letter}
+                    class="alphabet-sublist"
+                    style={{
+                      visibility: hasVisibleItems() ? undefined : "hidden",
+                    }}
+                  >
+                    <div
+                      class="emboss-y alphabet-indicator"
+                      style={{
+                        display: hasVisibleItems() ? undefined : "none",
+                      }}
+                    >
+                      <span>{letter}</span>
+                    </div>
+                    <ol>
+                      <For each={items()}>
+                        {({ key, value }) =>
+                          itemRenderer(value, () => !visibleItems().has(key))
+                        }
+                      </For>
+                    </ol>
+                  </li>
+                );
+              }}
             </For>
           </ol>
           <Show when={!hideItemCount}>
