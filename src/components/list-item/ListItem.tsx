@@ -18,9 +18,9 @@ export default function ListItem({
     >
       <Show
         when={href != null}
-        fallback={<span class="h2 list-link">{name}</span>}
+        fallback={<span class="h2 item-text">{name}</span>}
       >
-        <a class="h2 list-link" href={href}>
+        <a class="h2 item-text" href={href}>
           {name}
         </a>
       </Show>

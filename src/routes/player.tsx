@@ -11,9 +11,11 @@ export const Route = createFileRoute("/player")({
  */
 export default function Player() {
   return (
-    <div class="page">
+    <>
       <Header />
-      <Outlet />
+      <div class="content-frame">
+        <Outlet />
+      </div>
       <nav class="bar">
         <NavTab route="/player/playlists" label="Playlists" />
         <NavTab route="/player/artists" label="Artists" />
@@ -21,6 +23,6 @@ export default function Player() {
         <NavTab route="/player/albums" label="Albums" />
         <NavTab route="/player/more" label="More" />
       </nav>
-    </div>
+    </>
   );
 }

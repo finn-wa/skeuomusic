@@ -28,6 +28,20 @@ body {
     'calt' 1; /* fix for Chrome */
   margin: 0;
   box-sizing: border-box;
+
+  height: 100dvh;
+  width: 100dvw;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.content-frame {
+  flex-grow: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
 header {
@@ -59,22 +73,6 @@ small {
 .subtitle {
   font-size: 0.875rem;
   font-weight: 300;
-}
-
-.page {
-  height: 100dvh;
-  width: 100dvw;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-
-  > .content {
-    flex-grow: 1;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-  }
 }
 
 a {
@@ -176,20 +174,34 @@ li {
   align-items: center;
   overflow: hidden;
 
-  > .thumb {
+  .thumb {
     height: 100%;
-    width: auto;
+    aspect-ratio: 1;
     border: 1px solid transparent;
     box-sizing: border-box;
   }
 
-  > .list-link {
+  .item-text {
     flex-grow: 1;
     padding: var(--spacer-3);
-    padding-right: var(--spacer-4);
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+  }
+
+  .item-link {
+    height: 100%;
+    flex-grow: 1;
+    display: flex;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+.content-scroll:has(+ nav.alphabet-index) {
+  .list-item {
+    padding-right: var(--spacer-4);
   }
 }
 
@@ -222,7 +234,7 @@ li {
   padding-right: var(--spacer-3);
 }
 
-.alphabet-items-container {
+.content-scroll {
   overflow-y: auto;
   flex: 1 0;
   display: flex;
@@ -251,7 +263,7 @@ li {
   padding: var(--spacer-3);
 }
 
-.alphabet-index {
+nav.alphabet-index {
   position: absolute;
   top: 0;
   bottom: 0;

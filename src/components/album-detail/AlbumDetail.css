@@ -1,0 +1,13 @@
+.album-header {
+  display: flex;
+
+  .album-art {
+    aspect-ratio: 1;
+    flex: 1;
+    max-width: 33vw;
+  }
+
+  /* .album-details {
+
+  } */
+}

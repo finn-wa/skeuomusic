@@ -1,4 +1,4 @@
-import type { Image } from "@spotify/web-api-ts-sdk";
+import type { Image, SimplifiedTrack } from "@spotify/web-api-ts-sdk";
 
 export type Item = {
   id: string;
@@ -6,8 +6,13 @@ export type Item = {
 };
 
 export type Album = Item & {
-  artists: { name: string }[];
+  artists: { id: string; name: string }[];
   images: Image[];
+  releaseDate: string;
+};
+
+export type AlbumWithTracklist = Album & {
+  tracks: SimplifiedTrack[];
 };
 
 export type Artist = Item;

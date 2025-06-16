@@ -30,7 +30,11 @@ export default function Albums() {
                 items={() => albumAccessor}
                 namePlural="albums"
                 itemRenderer={(album, hide) => (
-                  <AlbumListItem song={album} hide={hide} />
+                  <AlbumListItem
+                    song={album}
+                    hide={hide}
+                    href={`/player/albums/${album.id}`}
+                  />
                 )}
               />
             )}

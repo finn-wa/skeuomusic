@@ -81,8 +81,8 @@ export default function AlphabetList<T extends Item>({
   };
 
   return (
-    <div class="content">
-      <div class="alphabet-items-container">
+    <>
+      <div class="content-scroll">
         <SearchInput query={searchSignal} />
         <div id={INITIAL_SCROLL_ID}>
           <Show
@@ -141,6 +141,6 @@ export default function AlphabetList<T extends Item>({
       <Show when={!hideIndex}>
         <AlphabetIndex jumpTo={jumpTo} />
       </Show>
-    </div>
+    </>
   );
 }

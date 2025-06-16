@@ -8,7 +8,7 @@ import { getAlbums, getArtist } from "~/lib/server/spotify-data";
 
 const title = "Artists";
 export const Route = createFileRoute("/player/artists/$artistId")({
-  component: Artist,
+  component: ArtistDetail,
   head: () => ({ meta: [{ title }] }),
   beforeLoad: async ({ params }) => {
     const artist = await getArtist({ data: params.artistId });
@@ -29,7 +29,7 @@ export const Route = createFileRoute("/player/artists/$artistId")({
   preloadStaleTime: PRELOAD_STALE_TIME,
 });
 
-export default function Artist() {
+export default function ArtistDetail() {
   const { albums } = Route.useLoaderData()();
   return (
     <>
