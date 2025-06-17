@@ -2,7 +2,6 @@ import { createSignal } from "solid-js";
 import type { AlbumWithTracklist } from "~/lib/types";
 import Image from "../image/Image";
 import SearchInput from "../search-input/SearchInput";
-import "./AlbumDetail.css";
 
 export type AlbumDetailProps = {
   readonly album: AlbumWithTracklist;
