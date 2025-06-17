@@ -18,25 +18,27 @@ export default function AlbumDetail({ album }: AlbumDetailProps) {
   return (
     <>
       <SearchInput query={search} />
-      <div class="album-header">
-        <Image
-          srcset={album.images}
-          sizes={["(max-width: 1000px) 33vw", "333px"]}
-          alt={`${album.name} cover art`}
-          class="album-art"
-        />
-        <div class="album-details">
-          <h3>
-            <small>{artists}</small>
-            <br />
-            {album.name}
-          </h3>
-          <ul>
-            <li>Released {album.releaseDate}</li>
-            <li>
-              {album.tracks.length} Songs, {runtimeMins} Mins.
-            </li>
-          </ul>
+      <div class="album-detail">
+        <div class="album-header">
+          <Image
+            srcset={album.images}
+            sizes={["(max-width: 1000px) 33vw", "333px"]}
+            alt={`${album.name} cover art`}
+            class="album-art"
+          />
+          <div class="album-info">
+            <h2 class="album-title">
+              <span class="h4">{artists}</span>
+              <br />
+              <span class="h3">{album.name}</span>
+            </h2>
+            <ul class="album-facts">
+              <li>Released {album.releaseDate}</li>
+              <li>
+                {album.tracks.length} Songs, {runtimeMins} Mins.
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </>

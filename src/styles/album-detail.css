@@ -1,13 +1,35 @@
+.album-detail {
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(180deg, var(--shadow-med) 0%, transparent 100%);
+}
+
 .album-header {
   display: flex;
+  max-width: 900px;
+  margin: 1rem;
+}
 
-  .album-art {
-    aspect-ratio: 1;
-    flex: 1;
-    max-width: 33vw;
+.album-header > .album-art {
+  aspect-ratio: 1;
+  flex: 1;
+  max-width: 33%;
+  margin-right: 1rem;
+}
+
+.album-header > .album-info {
+  flex: 1;
+  ul {
+    font-size: 0.675rem;
+    color: var(--text-color-light);
+    font-weight: bold;
   }
+  li {
+    padding: 0;
+  }
+}
 
-  /* .album-details {
-
-  } */
+.album-title {
+  line-height: 80%;
+  margin-bottom: 0.5rem;
 }

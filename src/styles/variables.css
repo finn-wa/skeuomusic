@@ -4,6 +4,7 @@
   --text-color-light: #969696;
   --icon-color: #a3a3a3;
   --shadow-light: rgba(255, 255, 255, 0.75);
+  --shadow-med: rgba(176, 176, 176, 0.75);
   --shadow-dark: rgb(109, 109, 109, 0.75);
   --half-grey: rgba(168, 168, 168, 0.5);
   --emboss-offset: 3px;
