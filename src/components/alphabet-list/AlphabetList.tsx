@@ -102,13 +102,13 @@ export default function AlphabetList<T extends Item>({
                   return (
                     <li
                       id={letter}
-                      class="alphabet-sublist"
+                      class="list-section"
                       style={{
                         visibility: hasVisibleItems() ? undefined : "hidden",
                       }}
                     >
                       <div
-                        class="emboss-y alphabet-indicator"
+                        class="emboss-y section-header"
                         style={{
                           display: hasVisibleItems() ? undefined : "none",
                         }}
@@ -128,7 +128,7 @@ export default function AlphabetList<T extends Item>({
               </For>
             </ul>
             <Show when={!hideItemCount}>
-              <div class="alphabet-footer">
+              <div class="list-footer">
                 <span class="page-msg">
                   {visibleItems().size}{" "}
                   {search() ? "Results" : capitalisedNamePlural}

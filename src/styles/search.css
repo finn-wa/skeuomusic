@@ -1,0 +1,35 @@
+.search-container {
+  flex: 0;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.search-input {
+  padding: var(--spacer-2) 2.25rem;
+  margin: var(--spacer-1);
+  border: 1px solid #ddd;
+  border-radius: 9999px;
+  font-size: var(--spacer-3);
+  outline: none;
+  transition: border-color 0.2s;
+  flex: 1;
+}
+
+.search-icon {
+  color: var(--icon-color);
+  position: absolute;
+  left: 0.75rem;
+}
+
+.search-clear-button {
+  color: var(--icon-color);
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}

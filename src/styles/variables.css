@@ -1,0 +1,15 @@
+:root {
+  --bg-color: #e9eaec;
+  --text-color: #414244;
+  --text-color-light: #969696;
+  --icon-color: #a3a3a3;
+  --shadow-light: rgba(255, 255, 255, 0.75);
+  --shadow-dark: rgb(109, 109, 109, 0.75);
+  --half-grey: rgba(168, 168, 168, 0.5);
+  --emboss-offset: 3px;
+  --emboss-blur: 3px;
+  --spacer-1: 0.25rem;
+  --spacer-2: 0.5rem;
+  --spacer-3: 1rem;
+  --spacer-4: 2rem;
+}

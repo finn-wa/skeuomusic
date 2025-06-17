@@ -1,0 +1,30 @@
+.bar {
+  background: linear-gradient(0deg, #d2d2d2 0%, #f3f4f4 100%);
+  display: flex;
+  flex-wrap: nowrap;
+  flex: 0 0 auto;
+  padding: 0;
+}
+
+.tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 4.125rem;
+
+  > small {
+    padding: var(--spacer-1);
+    align-self: flex-end;
+  }
+}
+
+.tab.selected {
+  background:
+    linear-gradient(
+      0deg,
+      rgba(219, 220, 225, 0.5) 0%,
+      rgba(243, 244, 244, 0.5) 100%
+    ),
+    radial-gradient(circle, rgba(221, 221, 222, 0.5) 0%, var(--half-grey) 100%);
+}
