@@ -31,7 +31,7 @@ export default function Albums() {
                 namePlural="albums"
                 itemRenderer={(album, hide) => (
                   <AlbumListItem
-                    song={album}
+                    album={album}
                     hide={hide}
                     href={`/player/albums/${album.id}`}
                   />

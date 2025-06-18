@@ -3,6 +3,7 @@
   justify-content: center;
   background: linear-gradient(180deg, var(--shadow-med) 0%, transparent 60%);
   padding-bottom: var(--spacer-3);
+  overflow: hidden;
 }
 
 .album-header {

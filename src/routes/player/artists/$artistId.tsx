@@ -9,13 +9,14 @@ import { getAlbums, getArtist } from "~/lib/server/spotify-data";
 const title = "Artists";
 export const Route = createFileRoute("/player/artists/$artistId")({
   component: ArtistDetail,
-  head: () => ({ meta: [{ title }] }),
   beforeLoad: async ({ params }) => {
     const artist = await getArtist({ data: params.artistId });
     return { headerTitle: artist.name, artist };
   },
-  loader: async ({ params }) => {
+  loader: async ({ params, context }) => {
     return {
+      ...context,
+      artist: context.artist,
       albums: defer(
         getAlbums().then((albums) =>
           albums.filter((album) =>
@@ -25,12 +26,16 @@ export const Route = createFileRoute("/player/artists/$artistId")({
       ),
     };
   },
+  head: ({ loaderData }) => ({
+    meta: [{ title: loaderData?.headerTitle }],
+  }),
   staleTime: STALE_TIME,
   preloadStaleTime: PRELOAD_STALE_TIME,
 });
 
 export default function ArtistDetail() {
-  const { albums } = Route.useLoaderData()();
+  const { albums, artist } = Route.useLoaderData()();
+
   return (
     <>
       <Suspense fallback={<LoadingPage />}>
@@ -45,7 +50,11 @@ export default function ArtistDetail() {
                 hideIndex={true}
                 hideItemCount={true}
                 itemRenderer={(album, hide) => (
-                  <AlbumListItem song={album} hide={hide} />
+                  <AlbumListItem
+                    album={album}
+                    href={`/player/artists/${artist.id}/${album.id}`}
+                    hide={hide}
+                  />
                 )}
               />
             )}

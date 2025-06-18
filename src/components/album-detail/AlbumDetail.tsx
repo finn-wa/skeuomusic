@@ -1,5 +1,5 @@
 import { For } from "solid-js";
-import { getRuntimeMins } from "~/lib/client/music-utils";
+import { formatArtists, getRuntimeMins } from "~/lib/client/music-utils";
 import type { AlbumWithTracklist } from "~/lib/types";
 import Image from "../image/Image";
 import TrackListItem from "../list-item/TrackListItem";
@@ -10,7 +10,7 @@ export type AlbumDetailProps = {
 
 export default function AlbumDetail({ album }: AlbumDetailProps) {
   const runtimeMins = getRuntimeMins(album.tracks);
-  const artists = album.artists.map((artist) => artist.name).join(" & ");
+  const artists = formatArtists(album.artists);
   return (
     <>
       <div class="album-detail emboss-y" id="1">

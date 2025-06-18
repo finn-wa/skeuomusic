@@ -24,3 +24,7 @@ export function formatTrackDuration(durationMs: number) {
   }
   return `${mins}:${leadingZero(secs)}`;
 }
+
+export function formatArtists(artists: { name: string }[]): string {
+  return artists.map((artist) => artist.name).join(", ");
+}
