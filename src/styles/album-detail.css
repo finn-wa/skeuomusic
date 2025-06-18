@@ -10,14 +10,7 @@
   margin: 1rem;
 }
 
-.album-header > .album-art {
-  aspect-ratio: 1;
-  flex: 1;
-  max-width: 33%;
-  margin-right: 1rem;
-}
-
-.album-header > .album-info {
+.album-info {
   flex: 1;
   ul {
     font-size: 0.675rem;
@@ -32,4 +25,31 @@
 .album-title {
   line-height: 80%;
   margin-bottom: 0.5rem;
+}
+
+.album-art-container {
+  flex: 1;
+  display: flex;
+  max-width: 33%;
+  margin-right: 1rem;
+  position: relative;
+}
+
+.album-art {
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.album-art-reflection {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  left: 0;
+  aspect-ratio: 1;
+  background-size: contain;
+  transform: scaleY(-1);
+  pointer-events: none;
+  mask-image: linear-gradient(transparent 90%, black 100%);
+  transform: scaleY(-1);
+  opacity: 0.5;
 }

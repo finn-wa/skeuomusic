@@ -20,12 +20,20 @@ export default function AlbumDetail({ album }: AlbumDetailProps) {
       <SearchInput query={search} />
       <div class="album-detail">
         <div class="album-header">
-          <Image
-            srcset={album.images}
-            sizes={["(max-width: 1000px) 33vw", "333px"]}
-            alt={`${album.name} cover art`}
-            class="album-art"
-          />
+          <div class="album-art-container">
+            <Image
+              srcset={album.images}
+              sizes={["(max-width: 1000px) 33vw", "333px"]}
+              alt={`${album.name} cover art`}
+              class="album-art"
+            />
+            <Image
+              srcset={album.images}
+              sizes={["(max-width: 1000px) 33vw", "333px"]}
+              alt={`${album.name} cover art reflection`}
+              class="album-art-reflection"
+            />
+          </div>
           <div class="album-info">
             <h2 class="album-title">
               <span class="h4">{artists}</span>
