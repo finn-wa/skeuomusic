@@ -8,7 +8,7 @@ type ImagePropOverrides = {
 export type ImageProps = ImagePropOverrides &
   Pick<
     JSX.ImgHTMLAttributes<HTMLImageElement>,
-    "alt" | "width" | "height" | "class" | "classList" | "style"
+    "alt" | "width" | "height" | "class" | "classList" | "style" | "id"
   >;
 
 export default function Image({ srcset, sizes, alt, ...props }: ImageProps) {

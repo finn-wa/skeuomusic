@@ -17,12 +17,6 @@
   display: none;
 }
 
-.text-truncate {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
 .flex-col {
   display: flex;
   flex-direction: column;

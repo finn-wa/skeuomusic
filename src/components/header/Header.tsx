@@ -1,4 +1,4 @@
-import { useRouter, useRouterState } from "@tanstack/solid-router";
+import { useRouterState } from "@tanstack/solid-router";
 
 // https://docs.solidjs.com/solid-start/building-your-application/head-and-metadata
 export default function Header() {

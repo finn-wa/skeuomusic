@@ -49,7 +49,12 @@ export const getAlbum = createServerFn({ method: "GET" })
       images: response.images,
       releaseDate: response.release_date,
       // TODO: it's paginated?
-      tracks: response.tracks.items,
+      tracks: response.tracks.items.map((track) => ({
+        id: track.id,
+        name: track.name,
+        durationMs: track.duration_ms,
+        trackNumber: track.track_number,
+      })),
     };
   });
 

@@ -11,10 +11,6 @@ export type Album = Item & {
   releaseDate: string;
 };
 
-export type AlbumWithTracklist = Album & {
-  tracks: SimplifiedTrack[];
-};
-
 export type Artist = Item;
 
 export type Playlist = Item;
@@ -22,4 +18,13 @@ export type Playlist = Item;
 export type Song = Item & {
   album: { name: string };
   artists: { name: string }[];
+};
+
+export type Track = Item & {
+  trackNumber: number;
+  durationMs: number;
+};
+
+export type AlbumWithTracklist = Album & {
+  tracks: Track[];
 };

@@ -45,3 +45,9 @@ small {
   font-size: 0.875rem;
   font-weight: 300;
 }
+
+.text-truncate {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

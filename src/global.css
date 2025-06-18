@@ -1,6 +1,6 @@
 @import './styles/album-detail.css';
 @import './styles/alphabet-index.css';
-@import './styles/gradients.css';
+@import './styles/skeuomorphic.css';
 @import './styles/header.css';
 @import './styles/list.css';
 @import './styles/navbar.css';
@@ -31,7 +31,7 @@ a {
   text-decoration: none;
 }
 
-ul,
+ol,
 ul {
   margin: 0;
   padding: 0;
@@ -41,4 +41,13 @@ li {
   padding: var(--spacer-2);
   list-style-type: none;
   margin: 0;
+}
+
+button {
+  border: none;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+  text-align: inherit;
+  font: inherit;
 }

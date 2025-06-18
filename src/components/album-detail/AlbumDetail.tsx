@@ -1,24 +1,19 @@
-import { createSignal } from "solid-js";
+import { For } from "solid-js";
+import { getRuntimeMins } from "~/lib/client/music-utils";
 import type { AlbumWithTracklist } from "~/lib/types";
 import Image from "../image/Image";
-import SearchInput from "../search-input/SearchInput";
+import TrackListItem from "../list-item/TrackListItem";
 
 export type AlbumDetailProps = {
   readonly album: AlbumWithTracklist;
 };
 
 export default function AlbumDetail({ album }: AlbumDetailProps) {
-  const search = createSignal("");
-  const runtimeMs = album.tracks.reduce(
-    (acc, curr) => acc + curr.duration_ms,
-    0,
-  );
-  const runtimeMins = Math.round(runtimeMs / 60_000);
+  const runtimeMins = getRuntimeMins(album.tracks);
   const artists = album.artists.map((artist) => artist.name).join(" & ");
   return (
     <>
-      <SearchInput query={search} />
-      <div class="album-detail">
+      <div class="album-detail emboss-y" id="1">
         <div class="album-header">
           <div class="album-art-container">
             <Image
@@ -49,6 +44,11 @@ export default function AlbumDetail({ album }: AlbumDetailProps) {
           </div>
         </div>
       </div>
+      <ol class="tracklist">
+        <For each={album.tracks}>
+          {(track) => <TrackListItem track={track} />}
+        </For>
+      </ol>
     </>
   );
 }
