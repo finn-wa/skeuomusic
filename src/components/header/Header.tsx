@@ -1,4 +1,5 @@
 import { useRouterState } from "@tanstack/solid-router";
+import { SKEUOMUSIC } from "~/lib/constants";
 
 // https://docs.solidjs.com/solid-start/building-your-application/head-and-metadata
 export default function Header() {
@@ -8,7 +9,7 @@ export default function Header() {
   });
   return (
     <header class="bar emboss-y">
-      <h1>{currentRouteContext()?.headerTitle ?? "skeuomusic"}</h1>
+      <h1>{currentRouteContext()?.headerTitle ?? SKEUOMUSIC}</h1>
     </header>
   );
 }

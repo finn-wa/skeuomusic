@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/solid-router";
 import { type Accessor, Show } from "solid-js";
 
 export interface ListItemProps {
@@ -20,9 +21,9 @@ export default function ListItem({
         when={href != null}
         fallback={<span class="h2 item-text">{name}</span>}
       >
-        <a class="h2 item-text" href={href}>
+        <Link class="h2 item-text" to={href}>
           {name}
-        </a>
+        </Link>
       </Show>
     </li>
   );

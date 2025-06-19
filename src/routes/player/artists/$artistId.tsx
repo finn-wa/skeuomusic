@@ -3,7 +3,7 @@ import { ErrorBoundary, Suspense } from "solid-js";
 import AlphabetList from "~/components/alphabet-list/AlphabetList";
 import AlbumListItem from "~/components/list-item/AlbumListItem";
 import { ErrorPage, LoadingPage } from "~/components/page-message/PageMessage";
-import { PRELOAD_STALE_TIME, STALE_TIME } from "~/lib/constants";
+import { PRELOAD_STALE_TIME, SKEUOMUSIC, STALE_TIME } from "~/lib/constants";
 import { getAlbums, getArtist } from "~/lib/server/spotify-data";
 
 const title = "Artists";
@@ -27,7 +27,7 @@ export const Route = createFileRoute("/player/artists/$artistId")({
     };
   },
   head: ({ loaderData }) => ({
-    meta: [{ title: loaderData?.headerTitle }],
+    meta: [{ title: loaderData?.headerTitle ?? SKEUOMUSIC }],
   }),
   staleTime: STALE_TIME,
   preloadStaleTime: PRELOAD_STALE_TIME,

@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/solid-router";
 import type { Accessor } from "solid-js";
 import type { Album } from "~/lib/types";
 import Image from "../image/Image";
@@ -18,7 +19,7 @@ export default function AlbumListItem({
       class="list-item emboss-y text-truncate"
       style={{ display: hide() ? "none" : "flex" }}
     >
-      <a class="item-link" href={href}>
+      <Link class="item-link" to={href}>
         <Image
           srcset={album.images}
           alt={`${album.name} cover art`}
@@ -31,7 +32,7 @@ export default function AlbumListItem({
             {album.artists.map((artist) => artist.name).join(", ")}
           </span>
         </div>
-      </a>
+      </Link>
     </li>
   );
 }

@@ -16,3 +16,4 @@ export const HOURS_MS = 3_600_000;
 
 export const MINS_S = 60;
 export const HOURS_S = 3_600;
+export const SKEUOMUSIC = "skeuomusic";

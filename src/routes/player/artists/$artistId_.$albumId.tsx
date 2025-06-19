@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/solid-router";
 import AlbumDetail from "~/components/album-detail/AlbumDetail";
 import { formatArtists } from "~/lib/client/music-utils";
+import { SKEUOMUSIC } from "~/lib/constants";
 import { getAlbum } from "~/lib/server/spotify-data";
 
 export const Route = createFileRoute("/player/artists/$artistId_/$albumId")({
@@ -12,7 +13,7 @@ export const Route = createFileRoute("/player/artists/$artistId_/$albumId")({
   loader: ({ context }) => context,
   head: ({ loaderData }) => {
     if (loaderData == null) {
-      return {};
+      return { meta: [{ title: SKEUOMUSIC }] };
     }
     const artists = formatArtists(loaderData.album.artists);
     const albumTitle = loaderData.headerTitle;
