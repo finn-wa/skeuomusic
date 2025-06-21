@@ -13,7 +13,7 @@ export default function AlbumDetail({ album }: AlbumDetailProps) {
   const artists = formatArtists(album.artists);
   return (
     <>
-      <div class="album-detail emboss-y" id="1">
+      <div class="album-detail" id="1">
         <div class="album-header">
           <div class="album-art-container">
             <Image

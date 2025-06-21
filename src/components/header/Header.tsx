@@ -8,8 +8,9 @@ export default function Header() {
       (state.matches.at(-1)?.context ?? {}) as { headerTitle?: string },
   });
   return (
-    <header class="bar emboss-y">
+    <header class="bar">
       <h1>{currentRouteContext()?.headerTitle ?? SKEUOMUSIC}</h1>
+      <div />
     </header>
   );
 }

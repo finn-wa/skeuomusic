@@ -108,12 +108,14 @@ export default function AlphabetList<T extends Item>({
                       }}
                     >
                       <div
-                        class="emboss-y section-header"
+                        class="section-header"
                         style={{
                           display: hasVisibleItems() ? undefined : "none",
                         }}
                       >
-                        <span>{LETTER_LABEL[letter]}</span>
+                        <div class="section-header-border">
+                          <span>{LETTER_LABEL[letter]}</span>
+                        </div>
                       </div>
                       <ul>
                         <For each={items()}>

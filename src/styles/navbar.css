@@ -1,30 +1,51 @@
-.bar {
-  background: linear-gradient(0deg, #d2d2d2 0%, #f3f4f4 100%);
+nav.bar {
   display: flex;
   flex-wrap: nowrap;
   flex: 0 0 auto;
   padding: 0;
+  border-top: var(--i-px) solid var(--navbar-border-top-color);
+  background: linear-gradient(
+    180deg,
+    var(--navbar-gradient-top) 0%,
+    var(--navbar-gradient-mid) 33%,
+    var(--navbar-gradient-bottom) 100%
+  );
+  box-shadow: 0px calc(var(--i-px) * -2) calc(var(--i-px) * 8) 0px
+    var(--navbar-shadow-color);
 }
 
 .tab {
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   height: 4.125rem;
 
-  > small {
-    padding: var(--spacer-1);
-    align-self: flex-end;
+  > .tab-border {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: var(--emboss-border-left);
+    border-right: var(--emboss-border-right);
+    box-sizing: border-box;
+
+    > small {
+      padding: var(--spacer-1);
+      align-self: flex-end;
+    }
   }
 }
 
 .tab.selected {
-  background:
-    linear-gradient(
-      0deg,
-      rgba(219, 220, 225, 0.5) 0%,
-      rgba(243, 244, 244, 0.5) 100%
-    ),
-    radial-gradient(circle, rgba(221, 221, 222, 0.5) 0%, var(--half-grey) 100%);
+  box-shadow: inset 0px 6px 15px 2px rgba(0, 0, 0, 0.3);
+
+  > .tab-border {
+    /* Make light emboss border more transparent */
+    border-right: var(--emboss-border-style) rgba(255, 255, 255, 0.1);
+  }
+
+  + .tab > .tab-border {
+    /* Make dark emboss border more opaque on tab to right */
+    border-left: var(--emboss-border-style) rgba(0, 0, 0, 0.3);
+  }
 }

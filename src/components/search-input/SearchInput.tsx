@@ -24,7 +24,7 @@ export default function SearchInput(props: {
         class="search-input"
         value={query() ?? ""}
         onInput={(e) => setQuery(e.currentTarget.value)}
-        placeholder="Search..."
+        placeholder="Search"
       />
       <button
         type="reset"

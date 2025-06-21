@@ -17,7 +17,9 @@ export default function NavTab(props: TabButtonProps) {
       hash={clicked() ? undefined : INITIAL_SCROLL_ID}
       onClick={() => setTimeout(() => setClicked(true), 0)}
     >
-      <small>{props.label}</small>
+      <div class="tab-border">
+        <small>{props.label}</small>
+      </div>
     </Link>
   );
 }

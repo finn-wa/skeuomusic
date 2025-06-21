@@ -1,7 +1,16 @@
-header {
+header.bar {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 3.625rem;
+  flex: 0 0 auto;
   z-index: 2;
+  color: var(--header-font-color);
+  background: linear-gradient(
+    180deg,
+    var(--header-gradient-top) 0%,
+    var(--header-gradient-bottom) 100%
+  );
+  box-shadow: 0px var(--i-2px) calc(var(--i-px) * 8) 0px
+    var(--navbar-shadow-color);
 }

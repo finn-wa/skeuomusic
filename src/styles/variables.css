@@ -1,17 +1,67 @@
 :root {
+  --i-px: clamp(1px, calc(100vh / 960), 6px);
+  --i-2px: calc(var(--i-px) * 2);
   --bg-color: #e9eaec;
-  --bg-color-2: #dadbde;
-  --text-color: #414244;
-  --text-color-light: #969696;
-  --icon-color: #a3a3a3;
-  --shadow-light: rgba(255, 255, 255, 0.75);
-  --shadow-med: rgba(176, 176, 176, 0.75);
-  --shadow-dark: rgb(109, 109, 109, 0.75);
-  --half-grey: rgba(168, 168, 168, 0.5);
-  --emboss-offset: 3px;
-  --emboss-blur: 3px;
+  --text-color: #424242;
+  --text-shadow-color: #fff;
   --spacer-1: 0.25rem;
   --spacer-2: 0.5rem;
   --spacer-3: 1rem;
   --spacer-4: 2rem;
+
+  /* colors picked from screenshots */
+  /* Bar gradients have slight noise applied to them! */
+  --header-gradient-top: #f6f6f6;
+  --header-gradient-bottom: #dfdfdf;
+  --header-font-color: #474747;
+  /* drop shadow below header - taken from album page. 3px  */
+  --header-shadow-color: #656565;
+
+  --album-title-font-color: #2d2d2d;
+  --album-subtitle-font-color: #777777;
+  --album-odd-track-bg-color: #dedede;
+  --album-even-track-bg-color: #eaeaea;
+  --album-track-font-color: #424242;
+  --album-header-gradient-top: #9a9a9a;
+  --album-header-gradient-bottom: var(--album-even-track-bg-color);
+
+  --list-item-bg-color: #e9eaec;
+  --list-item-font-color: #474747;
+  --list-item-font-color-2: #898989;
+  --list-item-height: 3.625rem;
+  --list-index-font-color: #808080;
+  --list-index-bg-hover: rgba(0, 0, 0, 0.1);
+  --list-index-bg-focus: rgba(0, 0, 0, 0.2);
+  /* also textured */
+  --list-section-gradient-top: #cececf;
+  --list-section-gradient-bottom: #bdbdbd;
+  --list-section-emboss-top: #e3e3e3;
+  --list-section-emboss-bottom: #a4a5a6;
+  --list-section-font-color: #595959;
+
+  --page-msg-font-color: #808080;
+
+  --navbar-gradient-top: #f8f8f8;
+  --navbar-gradient-mid: #e5e6e7;
+  --navbar-gradient-bottom: #dddddd;
+  --navbar-border-top-color: #cecece;
+  --navbar-shadow-color: rgba(0, 0, 0, 0.2);
+  --nav-tab-selected-bg-gradient-light: #cecece;
+  --nav-tab-selected-bg-gradient-dark: #949495;
+  --nav-tab-font-color: #474747;
+
+  --emboss-top-color: #ffffff;
+  --emboss-bottom-color: #c6c7c9;
+  --emboss-left-color: rgba(0, 0, 0, 0.2);
+  --emboss-right-color: rgba(255, 255, 255, 0.7);
+  --emboss-border-style: var(--i-2px) solid;
+  --emboss-border-left: var(--emboss-border-style) var(--emboss-left-color);
+  --emboss-border-right: var(--emboss-border-style) var(--emboss-right-color);
+  --emboss-border-top: var(--emboss-border-style) var(--emboss-top-color);
+  --emboss-border-bottom: var(--emboss-border-style) var(--emboss-bottom-color);
+
+  --search-gradient-top: #d9d9d9;
+  --search-gradient-bottom: #c0c0c2;
+  /* It's actually a cutout gradient */
+  --search-icon-color: #838485;
 }
