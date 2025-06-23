@@ -1,0 +1,16 @@
+button.nav-arrow {
+  background-color: transparent;
+  display: flex;
+  position: relative;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-arrow-text {
+  position: absolute;
+  left: 20px;
+  top: 9px;
+  text-shadow: var(--text-emboss);
+  color: var(--text-color);
+  font-size: 1rem;
+}

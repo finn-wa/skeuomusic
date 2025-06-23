@@ -17,6 +17,8 @@
   /* drop shadow below header - taken from album page. 3px  */
   --header-shadow-color: #656565;
 
+  --text-emboss: 0px 1px 0px var(--text-shadow-color);
+
   --album-title-font-color: #2d2d2d;
   --album-subtitle-font-color: #777777;
   --album-odd-track-bg-color: #dedede;

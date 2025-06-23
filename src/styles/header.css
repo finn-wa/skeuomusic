@@ -1,7 +1,7 @@
 header.bar {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   height: 3.625rem;
   flex: 0 0 auto;
   z-index: 2;
@@ -13,4 +13,24 @@ header.bar {
   );
   box-shadow: 0px var(--i-2px) calc(var(--i-px) * 8) 0px
     var(--navbar-shadow-color);
+  padding: 0 var(--spacer-2);
+}
+
+header > .header-button {
+  flex: 1 2;
+  display: flex;
+
+  &.left {
+    justify-content: start;
+  }
+
+  &.right {
+    justify-content: end;
+  }
+}
+
+header > h1 {
+  flex: 2 1;
+  display: flex;
+  justify-content: center;
 }
