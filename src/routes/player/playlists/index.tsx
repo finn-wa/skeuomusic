@@ -9,7 +9,7 @@ const title = "Playlists";
 export const Route = createFileRoute("/player/playlists/")({
   component: Playlists,
   head: () => ({ meta: [{ title }] }),
-  beforeLoad: () => ({ headerTitle: title }),
+  beforeLoad: () => ({ header: { title } }),
   loader: async () => {
     return { playlists: defer(getPlaylists()) };
   },

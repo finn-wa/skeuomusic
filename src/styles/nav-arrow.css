@@ -1,16 +1,37 @@
-button.nav-arrow {
+.nav-arrow {
   background-color: transparent;
   display: flex;
   position: relative;
-  padding: 0;
+  flex-wrap: nowrap;
   margin: 0;
+  max-width: max(33%, 200px);
+  overflow: hidden;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+
+  &.left {
+    padding-left: var(--spacer-3);
+    padding-right: var(--spacer-2);
+  }
+
+  &.right {
+    padding-left: var(--spacer-2);
+    padding-right: var(--spacer-3);
+  }
+
+  > svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }
 
 .nav-arrow-text {
-  position: absolute;
-  left: 20px;
-  top: 9px;
+  max-width: max(33%, 175px);
+  min-width: 1rem;
   text-shadow: var(--text-emboss);
   color: var(--text-color);
   font-size: 1rem;
+  z-index: 3;
 }

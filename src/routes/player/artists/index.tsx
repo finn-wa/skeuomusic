@@ -10,7 +10,7 @@ const title = "Artists";
 export const Route = createFileRoute("/player/artists/")({
   component: Artists,
   head: () => ({ meta: [{ title }] }),
-  beforeLoad: () => ({ headerTitle: title }),
+  beforeLoad: () => ({ header: { title } }),
   loader: async () => {
     return { artists: defer(getArtists()) };
   },

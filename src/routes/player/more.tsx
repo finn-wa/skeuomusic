@@ -4,7 +4,7 @@ const title = "More";
 export const Route = createFileRoute("/player/more")({
   component: More,
   head: () => ({ meta: [{ title }] }),
-  beforeLoad: () => ({ headerTitle: title }),
+  beforeLoad: () => ({ header: { title } }),
 });
 
 export default function More() {

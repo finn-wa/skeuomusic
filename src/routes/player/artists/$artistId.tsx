@@ -1,17 +1,21 @@
 import { Await, createFileRoute, defer } from "@tanstack/solid-router";
 import { ErrorBoundary, Suspense } from "solid-js";
 import AlphabetList from "~/components/alphabet-list/AlphabetList";
+import type { HeaderRouteContext } from "~/components/header/Header";
 import AlbumListItem from "~/components/list-item/AlbumListItem";
 import { ErrorPage, LoadingPage } from "~/components/page-message/PageMessage";
 import { PRELOAD_STALE_TIME, SKEUOMUSIC, STALE_TIME } from "~/lib/constants";
 import { getAlbums, getArtist } from "~/lib/server/spotify-data";
 
-const title = "Artists";
 export const Route = createFileRoute("/player/artists/$artistId")({
   component: ArtistDetail,
   beforeLoad: async ({ params }) => {
     const artist = await getArtist({ data: params.artistId });
-    return { headerTitle: artist.name, artist };
+    const header: HeaderRouteContext = {
+      title: artist.name,
+      backButton: { label: "Artists", href: "/player/artists" },
+    };
+    return { header, artist };
   },
   loader: async ({ params, context }) => {
     return {
@@ -27,7 +31,7 @@ export const Route = createFileRoute("/player/artists/$artistId")({
     };
   },
   head: ({ loaderData }) => ({
-    meta: [{ title: loaderData?.headerTitle ?? SKEUOMUSIC }],
+    meta: [{ title: loaderData?.header?.title ?? SKEUOMUSIC }],
   }),
   staleTime: STALE_TIME,
   preloadStaleTime: PRELOAD_STALE_TIME,

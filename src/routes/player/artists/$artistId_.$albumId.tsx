@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/solid-router";
 import AlbumDetail from "~/components/album-detail/AlbumDetail";
+import type { HeaderRouteContext } from "~/components/header/Header";
 import { formatArtists } from "~/lib/client/music-utils";
 import { SKEUOMUSIC } from "~/lib/constants";
 import { getAlbum } from "~/lib/server/spotify-data";
@@ -8,7 +9,14 @@ export const Route = createFileRoute("/player/artists/$artistId_/$albumId")({
   component: AlbumDetailPage,
   beforeLoad: async ({ params, context }) => {
     const album = await getAlbum({ data: params.albumId });
-    return { ...context, headerTitle: album.name, album };
+    const header: HeaderRouteContext = {
+      title: album.name,
+      backButton: {
+        label: formatArtists(album.artists),
+        href: `/player/artists/${params.artistId}`,
+      },
+    };
+    return { ...context, album, header };
   },
   loader: ({ context }) => context,
   head: ({ loaderData }) => {
@@ -16,7 +24,7 @@ export const Route = createFileRoute("/player/artists/$artistId_/$albumId")({
       return { meta: [{ title: SKEUOMUSIC }] };
     }
     const artists = formatArtists(loaderData.album.artists);
-    const albumTitle = loaderData.headerTitle;
+    const albumTitle = loaderData.header?.title;
     return {
       meta: [{ title: `${albumTitle} - ${artists}` }],
     };

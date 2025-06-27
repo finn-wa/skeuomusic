@@ -31,6 +31,5 @@ header > .header-button {
 
 header > h1 {
   flex: 2 1;
-  display: flex;
-  justify-content: center;
+  text-align: center;
 }
