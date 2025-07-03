@@ -2,15 +2,28 @@ import { Outlet, createRootRoute } from "@tanstack/solid-router";
 import { TanStackRouterDevtools } from "@tanstack/solid-router-devtools";
 
 import "@fontsource-variable/inter";
+import type { SpotifyApi } from "@spotify/web-api-ts-sdk";
+import { createSignal } from "solid-js";
 import appCss from "~/global.css?url";
+import { PlayerContext } from "~/lib/client/player-context";
 
 export const Route = createRootRoute({
-  component: () => (
-    <>
-      <Outlet />
-      {/* <TanStackRouterDevtools /> */}
-    </>
-  ),
+  component: () => {
+    const [spotify, setSpotify] = createSignal<SpotifyApi>();
+    const context = {
+      spotify,
+      setSpotify,
+    };
+
+    return (
+      <>
+        <PlayerContext.Provider value={context}>
+          <Outlet />
+        </PlayerContext.Provider>
+        {/* <TanStackRouterDevtools /> */}
+      </>
+    );
+  },
   notFoundComponent: () => <div>404 Not Found</div>,
   head: () => ({
     meta: [

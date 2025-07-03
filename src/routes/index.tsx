@@ -1,5 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/solid-router";
-import { doSpotifyAuth } from "~/lib/client/spotify-auth";
+import { useContext } from "solid-js";
+import { PlayerContext } from "~/lib/client/player-context";
+import { createSpotifyClient } from "~/lib/client/spotify-auth";
 import { INITIAL_SCROLL_ID } from "~/lib/constants";
 
 export const Route = createFileRoute("/")({
@@ -8,12 +10,16 @@ export const Route = createFileRoute("/")({
 
 export default function Home() {
   const navigate = useNavigate({ from: "/" });
+  const ctx = useContext(PlayerContext)!;
+
   async function logInWithSpotify() {
-    const token = await doSpotifyAuth(window.location.origin);
-    if (token != null) {
+    const { client, authenticated } = await createSpotifyClient();
+    if (authenticated) {
+      console.log("home: auth success");
+      ctx.setSpotify(client);
       return navigate({ to: "/player/albums", hash: INITIAL_SCROLL_ID });
     }
-    console.log("user cancelled?");
+    console.log("home: user cancelled?");
   }
 
   return (

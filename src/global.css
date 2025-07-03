@@ -52,4 +52,6 @@ button {
   padding: 0;
   text-align: inherit;
   font: inherit;
+  color: var(--text-color);
+  cursor: pointer;
 }

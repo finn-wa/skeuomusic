@@ -1,21 +1,24 @@
 import { SpotifyApi } from "@spotify/web-api-ts-sdk";
 import { SPOTIFY_SCOPES } from "../constants";
 
-export async function doSpotifyAuth(origin: string) {
-  const postback = `${origin}/api/spotify/auth`;
-  const redirect = `${origin}/redirect/spotify`;
-  console.log({ clientId: import.meta.env.PUBLIC_SPOTIFY_CLIENT_ID });
-  const { accessToken, authenticated } =
-    await SpotifyApi.performUserAuthorization(
-      import.meta.env.PUBLIC_SPOTIFY_CLIENT_ID,
-      redirect,
-      SPOTIFY_SCOPES(),
-      postback,
-    );
-  if (!authenticated) {
-    console.log("auth failed");
-    return undefined;
+export async function createSpotifyClient(
+  origin = window.location.origin,
+): Promise<{ authenticated: boolean; client: SpotifyApi }> {
+  const client = SpotifyApi.withUserAuthorization(
+    import.meta.env.PUBLIC_SPOTIFY_CLIENT_ID,
+    `${origin}/redirect/spotify`,
+    SPOTIFY_SCOPES(),
+  );
+  const { authenticated, accessToken } = await client.authenticate();
+  if (authenticated) {
+    console.log("Posting access token to postback URL.");
+    await fetch(`${origin}/api/spotify/auth`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(accessToken),
+    });
   }
-  console.log("auth success");
-  return accessToken;
+  return { authenticated, client };
 }

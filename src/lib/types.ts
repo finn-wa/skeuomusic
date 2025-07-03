@@ -18,6 +18,7 @@ export type Playlist = Item;
 export type Song = Item & {
   album: { name: string };
   artists: { name: string }[];
+  uri: string;
 };
 
 export type Track = Item & {

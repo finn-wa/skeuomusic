@@ -1,4 +1,19 @@
-export const SPOTIFY_SCOPES = () => ["user-library-read", "user-follow-read"];
+export const SPOTIFY_SCOPES = () => [
+  "playlist-modify-private",
+  "playlist-modify-public",
+  "playlist-read-collaborative",
+  "playlist-read-private",
+  "streaming",
+  "user-follow-read",
+  "user-library-modify",
+  "user-library-read",
+  "user-modify-playback-state",
+  "user-read-currently-playing",
+  "user-read-playback-position",
+  "user-read-playback-state",
+  "user-read-recently-played",
+  "user-top-read",
+];
 
 export const STALE_TIME = 5 * 60 * 1000;
 

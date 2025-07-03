@@ -66,6 +66,10 @@
   }
 }
 
+.list-item > button {
+  flex-grow: 1;
+}
+
 .content-scroll:has(+ nav.alphabet-index) {
   .list-item {
     padding-right: var(--spacer-4);

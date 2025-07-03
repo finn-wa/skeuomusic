@@ -1,8 +1,9 @@
 import { Await, createFileRoute, defer } from "@tanstack/solid-router";
-import { ErrorBoundary, Suspense } from "solid-js";
+import { ErrorBoundary, Suspense, onMount, useContext } from "solid-js";
 import AlphabetList from "~/components/alphabet-list/AlphabetList";
 import SongListItem from "~/components/list-item/SongListItem";
 import { ErrorPage, LoadingPage } from "~/components/page-message/PageMessage";
+import { PlayerContext } from "~/lib/client/player-context";
 import { PRELOAD_STALE_TIME, STALE_TIME } from "~/lib/constants";
 import { getSongs } from "~/lib/server/spotify-data";
 
@@ -19,7 +20,13 @@ export const Route = createFileRoute("/player/songs")({
 });
 
 export default function Songs() {
-  const { songs } = Route.useLoaderData()();
+  const songs = Route.useLoaderData({ select: (ctx) => ctx.songs })();
+  const spotifyApi = useContext(PlayerContext)?.spotify()!;
+
+  async function playSong(uri: string) {
+    console.log(`playing ${uri}`);
+    await spotifyApi.player.startResumePlayback("", undefined, [uri]);
+  }
 
   return (
     <>
@@ -31,7 +38,11 @@ export default function Songs() {
                 items={() => songAccessor}
                 namePlural="songs"
                 itemRenderer={(song, hide) => (
-                  <SongListItem song={song} hide={hide} />
+                  <SongListItem
+                    song={song}
+                    hide={hide}
+                    click={() => playSong(song.uri)}
+                  />
                 )}
               />
             )}
