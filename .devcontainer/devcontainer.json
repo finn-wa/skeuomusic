@@ -1,0 +1,9 @@
+{
+  "name": "NodeJS & Bun",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22-bookworm",
+  "features": {
+    "ghcr.io/shyim/devcontainers-features/bun:0": {}
+  },
+  "postCreateCommand": "bun install",
+  "forwardPorts": [3000]
+}
