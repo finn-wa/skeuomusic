@@ -1,42 +1,23 @@
-# SolidStart
+# skeuomusic
 
-Everything you need to build a Solid project, powered by [`solid-start`](https://start.solidjs.com);
+A music player web-app based on the Music app in [iOS 6](https://en.wikipedia.org/wiki/IOS_6).
 
-## Creating a project
+This is primarily a fun personal project to mess around with CSS and learn SolidJS.
 
-```bash
-# create a new project in the current directory
-npm init solid@latest
+iOS 6 was the final iteration of Apple's [skeuomorphic](https://en.wikipedia.org/wiki/Skeuomorph) design system on mobile.
+I have fond memories of using it on my first smart device, the [4th generation iPod Touch](https://en.wikipedia.org/wiki/IPod_Touch_(4th_generation)).
 
-# create a new project in my-app
-npm init solid@latest my-app
-```
+### Tech
 
-## Developing
+- Written in SolidJS with TanStack Router.
+- Uses the Spotify API.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+### Current State
 
-```bash
-npm run dev
+Works as a janky Spotify library viewer.
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+### Goals
 
-## Building
-
-Solid apps are built with _presets_, which optimise your project for deployment to different environments.
-
-By default, `npm run build` will generate a Node app that you can run with `npm start`. To use a different preset, add it to the `devDependencies` in `package.json` and specify in your `app.config.js`.
-
-## Testing
-
-Tests are written with `vitest`, `@solidjs/testing-library` and `@testing-library/jest-dom` to extend expect with some helpful custom matchers.
-
-To run them, simply start:
-
-```sh
-npm test
-```
-
-## This project was created with the [Solid CLI](https://github.com/solidjs-community/solid-cli)
+- Implement the Now Playing view.
+- "Play Next" and "Play Last" queueing system. I had this functionality on my jailbroken iPod via [Cyueue](https://cydia.saurik.com/info/com.saurik.cyueue/), but I may decide to use a different UI.
+- Add support for local files. I'd support Apple Music if they didn't charge 100 USD for the privilege of using their API.
