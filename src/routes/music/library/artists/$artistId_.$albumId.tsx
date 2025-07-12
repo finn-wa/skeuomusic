@@ -1,26 +1,33 @@
 import { createFileRoute } from "@tanstack/solid-router";
 import AlbumDetail from "~/components/album-detail/AlbumDetail";
 import type { HeaderRouteContext } from "~/components/header/Header";
+import { formatArtists } from "~/lib/client/music-utils";
 import { SKEUOMUSIC } from "~/lib/constants";
 import { getAlbum } from "~/lib/server/spotify-data";
 
-export const Route = createFileRoute("/player/albums/$albumId")({
+export const Route = createFileRoute(
+  "/music/library/artists/$artistId_/$albumId",
+)({
   component: AlbumDetailPage,
-  beforeLoad: async ({ params }) => {
+  beforeLoad: async ({ params, context }) => {
     const album = await getAlbum({ data: params.albumId });
     const header: HeaderRouteContext = {
       title: album.name,
-      backButton: {
-        label: "Albums",
-        href: "/player/albums",
-      },
+      backButton: { label: formatArtists(album.artists) },
     };
-    return { header, album };
+    return { ...context, album, header };
   },
   loader: ({ context }) => context,
-  head: ({ loaderData }) => ({
-    meta: [{ title: loaderData?.header?.title ?? SKEUOMUSIC }],
-  }),
+  head: ({ loaderData }) => {
+    if (loaderData == null) {
+      return { meta: [{ title: SKEUOMUSIC }] };
+    }
+    const artists = formatArtists(loaderData.album.artists);
+    const albumTitle = loaderData.header?.title;
+    return {
+      meta: [{ title: `${albumTitle} - ${artists}` }],
+    };
+  },
   staleTime: Number.MAX_SAFE_INTEGER,
   preloadStaleTime: Number.MAX_SAFE_INTEGER,
 });

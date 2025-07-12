@@ -7,13 +7,13 @@ import { ErrorPage, LoadingPage } from "~/components/page-message/PageMessage";
 import { PRELOAD_STALE_TIME, SKEUOMUSIC, STALE_TIME } from "~/lib/constants";
 import { getAlbums, getArtist } from "~/lib/server/spotify-data";
 
-export const Route = createFileRoute("/player/artists/$artistId")({
+export const Route = createFileRoute("/music/library/artists/$artistId")({
   component: ArtistDetail,
   beforeLoad: async ({ params }) => {
     const artist = await getArtist({ data: params.artistId });
     const header: HeaderRouteContext = {
       title: artist.name,
-      backButton: { label: "Artists", href: "/player/artists" },
+      backButton: { label: "Artists" },
     };
     return { header, artist };
   },
@@ -56,7 +56,7 @@ export default function ArtistDetail() {
                 itemRenderer={(album, hide) => (
                   <AlbumListItem
                     album={album}
-                    href={`/player/artists/${artist.id}/${album.id}`}
+                    href={`./${album.id}`}
                     hide={hide}
                   />
                 )}

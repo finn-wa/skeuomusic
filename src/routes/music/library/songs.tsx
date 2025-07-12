@@ -3,12 +3,12 @@ import { ErrorBoundary, Suspense, onMount, useContext } from "solid-js";
 import AlphabetList from "~/components/alphabet-list/AlphabetList";
 import SongListItem from "~/components/list-item/SongListItem";
 import { ErrorPage, LoadingPage } from "~/components/page-message/PageMessage";
-import { PlayerContext } from "~/lib/client/player-context";
+import { MusicContext } from "~/lib/client/music-context";
 import { PRELOAD_STALE_TIME, STALE_TIME } from "~/lib/constants";
 import { getSongs } from "~/lib/server/spotify-data";
 
 const title = "Songs";
-export const Route = createFileRoute("/player/songs")({
+export const Route = createFileRoute("/music/library/songs")({
   component: Songs,
   head: () => ({ meta: [{ title }] }),
   beforeLoad: () => ({ header: { title } }),
@@ -21,11 +21,11 @@ export const Route = createFileRoute("/player/songs")({
 
 export default function Songs() {
   const songs = Route.useLoaderData({ select: (ctx) => ctx.songs })();
-  const spotifyApi = useContext(PlayerContext)?.spotify()!;
+  const spotifyApi = useContext(MusicContext)?.spotify()!;
 
   async function playSong(uri: string) {
     console.log(`playing ${uri}`);
-    await spotifyApi.player.startResumePlayback("", undefined, [uri]);
+    await spotifyApi.music.startResumePlayback("", undefined, [uri]);
   }
 
   return (

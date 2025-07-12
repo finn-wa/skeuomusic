@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/solid-router";
 
 const title = "More";
-export const Route = createFileRoute("/player/more")({
+export const Route = createFileRoute("/music/library/more")({
   component: More,
   head: () => ({ meta: [{ title }] }),
   beforeLoad: () => ({ header: { title } }),

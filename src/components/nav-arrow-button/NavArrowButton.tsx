@@ -2,7 +2,6 @@ import { Link } from "@tanstack/solid-router";
 import {
   type Accessor,
   Show,
-  createEffect,
   createSignal,
   createUniqueId,
   onMount,

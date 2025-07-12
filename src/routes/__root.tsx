@@ -5,7 +5,7 @@ import "@fontsource-variable/inter";
 import type { SpotifyApi } from "@spotify/web-api-ts-sdk";
 import { createSignal } from "solid-js";
 import appCss from "~/global.css?url";
-import { PlayerContext } from "~/lib/client/player-context";
+import { MusicContext } from "~/lib/client/music-context";
 
 export const Route = createRootRoute({
   component: () => {
@@ -17,9 +17,9 @@ export const Route = createRootRoute({
 
     return (
       <>
-        <PlayerContext.Provider value={context}>
+        <MusicContext.Provider value={context}>
           <Outlet />
-        </PlayerContext.Provider>
+        </MusicContext.Provider>
         {/* <TanStackRouterDevtools /> */}
       </>
     );

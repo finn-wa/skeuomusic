@@ -5,7 +5,7 @@ import NavArrowButton from "../nav-arrow-button/NavArrowButton";
 
 export type HeaderRouteContext = {
   title?: string;
-  backButton?: { label: string; href: string };
+  backButton?: { label: string; href?: string };
 };
 
 export default function Header() {
@@ -38,7 +38,7 @@ export function HeaderComponent({ title, backButton }: HeaderProps) {
           <NavArrowButton
             direction="left"
             text={() => backButton()?.label}
-            href={() => backButton()?.href}
+            href={() => backButton()?.href ?? ".."}
           />
         </Show>
       </div>
