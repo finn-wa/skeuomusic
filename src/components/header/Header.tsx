@@ -48,8 +48,9 @@ export function HeaderComponent({ title, backButton }: HeaderProps) {
       <div class="header-button right">
         <NavArrowButton
           direction="right"
-          text={() => undefined}
-          href={() => undefined}
+          kind="primary"
+          text={() => "Now\nPlaying"}
+          href={() => "/player"}
         />
       </div>
     </header>

@@ -15,6 +15,7 @@ import { Route as MusicRouteImport } from './routes/music'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RedirectSpotifyRouteImport } from './routes/redirect.spotify'
 import { Route as MusicLibraryRouteImport } from './routes/music/library'
+import { Route as MusicPlayerIndexRouteImport } from './routes/music/player/index'
 import { Route as MusicLibrarySongsRouteImport } from './routes/music/library/songs'
 import { Route as MusicLibraryMoreRouteImport } from './routes/music/library/more'
 import { Route as MusicLibraryPlaylistsIndexRouteImport } from './routes/music/library/playlists/index'
@@ -45,6 +46,11 @@ const RedirectSpotifyRoute = RedirectSpotifyRouteImport.update({
 const MusicLibraryRoute = MusicLibraryRouteImport.update({
   id: '/library',
   path: '/library',
+  getParentRoute: () => MusicRoute,
+} as any)
+const MusicPlayerIndexRoute = MusicPlayerIndexRouteImport.update({
+  id: '/player/',
+  path: '/player/',
   getParentRoute: () => MusicRoute,
 } as any)
 const MusicLibrarySongsRoute = MusicLibrarySongsRouteImport.update({
@@ -105,6 +111,7 @@ export interface FileRoutesByFullPath {
   '/redirect/spotify': typeof RedirectSpotifyRoute
   '/music/library/more': typeof MusicLibraryMoreRoute
   '/music/library/songs': typeof MusicLibrarySongsRoute
+  '/music/player': typeof MusicPlayerIndexRoute
   '/music/library/albums/$albumId': typeof MusicLibraryAlbumsAlbumIdRoute
   '/music/library/artists/$artistId': typeof MusicLibraryArtistsArtistIdRoute
   '/music/library/albums': typeof MusicLibraryAlbumsIndexRoute
@@ -119,6 +126,7 @@ export interface FileRoutesByTo {
   '/redirect/spotify': typeof RedirectSpotifyRoute
   '/music/library/more': typeof MusicLibraryMoreRoute
   '/music/library/songs': typeof MusicLibrarySongsRoute
+  '/music/player': typeof MusicPlayerIndexRoute
   '/music/library/albums/$albumId': typeof MusicLibraryAlbumsAlbumIdRoute
   '/music/library/artists/$artistId': typeof MusicLibraryArtistsArtistIdRoute
   '/music/library/albums': typeof MusicLibraryAlbumsIndexRoute
@@ -134,6 +142,7 @@ export interface FileRoutesById {
   '/redirect/spotify': typeof RedirectSpotifyRoute
   '/music/library/more': typeof MusicLibraryMoreRoute
   '/music/library/songs': typeof MusicLibrarySongsRoute
+  '/music/player/': typeof MusicPlayerIndexRoute
   '/music/library/albums/$albumId': typeof MusicLibraryAlbumsAlbumIdRoute
   '/music/library/artists/$artistId': typeof MusicLibraryArtistsArtistIdRoute
   '/music/library/albums/': typeof MusicLibraryAlbumsIndexRoute
@@ -150,6 +159,7 @@ export interface FileRouteTypes {
     | '/redirect/spotify'
     | '/music/library/more'
     | '/music/library/songs'
+    | '/music/player'
     | '/music/library/albums/$albumId'
     | '/music/library/artists/$artistId'
     | '/music/library/albums'
@@ -164,6 +174,7 @@ export interface FileRouteTypes {
     | '/redirect/spotify'
     | '/music/library/more'
     | '/music/library/songs'
+    | '/music/player'
     | '/music/library/albums/$albumId'
     | '/music/library/artists/$artistId'
     | '/music/library/albums'
@@ -178,6 +189,7 @@ export interface FileRouteTypes {
     | '/redirect/spotify'
     | '/music/library/more'
     | '/music/library/songs'
+    | '/music/player/'
     | '/music/library/albums/$albumId'
     | '/music/library/artists/$artistId'
     | '/music/library/albums/'
@@ -241,6 +253,13 @@ declare module '@tanstack/solid-router' {
       path: '/library'
       fullPath: '/music/library'
       preLoaderRoute: typeof MusicLibraryRouteImport
+      parentRoute: typeof MusicRoute
+    }
+    '/music/player/': {
+      id: '/music/player/'
+      path: '/player'
+      fullPath: '/music/player'
+      preLoaderRoute: typeof MusicPlayerIndexRouteImport
       parentRoute: typeof MusicRoute
     }
     '/music/library/songs': {
@@ -342,10 +361,12 @@ const MusicLibraryRouteWithChildren = MusicLibraryRoute._addFileChildren(
 
 interface MusicRouteChildren {
   MusicLibraryRoute: typeof MusicLibraryRouteWithChildren
+  MusicPlayerIndexRoute: typeof MusicPlayerIndexRoute
 }
 
 const MusicRouteChildren: MusicRouteChildren = {
   MusicLibraryRoute: MusicLibraryRouteWithChildren,
+  MusicPlayerIndexRoute: MusicPlayerIndexRoute,
 }
 
 const MusicRouteWithChildren = MusicRoute._addFileChildren(MusicRouteChildren)

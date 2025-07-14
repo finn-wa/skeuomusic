@@ -10,6 +10,20 @@
   align-items: center;
   justify-content: center;
 
+  &.primary {
+    color: var(--header-btn-primary-text-color);
+    text-shadow: var(--text-emboss-shadow);
+    --header-btn-gradient-top: var(--header-btn-primary-gradient-top);
+    --header-btn-gradient-bottom: var(--header-btn-primary-gradient-bottom);
+  }
+
+  &.secondary {
+    color: var(--header-btn-secondary-text-color);
+    text-shadow: var(--text-emboss-glow);
+    --header-btn-gradient-top: var(--header-btn-secondary-gradient-top);
+    --header-btn-gradient-bottom: var(--header-btn-secondary-gradient-bottom);
+  }
+
   &.left {
     padding-left: var(--spacer-3);
     padding-right: var(--spacer-2);
@@ -30,8 +44,6 @@
 .nav-arrow-text {
   max-width: max(33%, 175px);
   min-width: 1rem;
-  text-shadow: var(--text-emboss);
-  color: var(--text-color);
   font-size: 1rem;
   z-index: 3;
 }

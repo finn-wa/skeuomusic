@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/solid-router";
 import {
   type Accessor,
+  type ParentProps,
   Show,
   createSignal,
   createUniqueId,
@@ -8,17 +9,19 @@ import {
 } from "solid-js";
 import { estimateTextWidth } from "~/lib/client/font-width";
 
-export type NavArrowButtonProps = {
+export type NavArrowButtonProps = ParentProps<{
   text: Accessor<string | undefined>;
   href: Accessor<string | undefined>;
   direction: "left" | "right";
+  kind?: "primary" | "secondary";
   hide?: Accessor<boolean>;
-};
+}>;
 
 export default function NavArrowButton({
   text,
   href,
   direction,
+  kind = "secondary",
   hide = () => false,
 }: NavArrowButtonProps) {
   const [mounted, setMounted] = createSignal<boolean>(false);
@@ -49,9 +52,11 @@ export default function NavArrowButton({
   const clipId = `clip-${id}`;
   const bgId = `bg-${id}`;
   const shadowId = `shadow-${id}`;
+  // TODO : Now Playing text is a bit smaller and it has a line break
+  // perhaps support using child prop for text via foreignObject
   return (
     <Show when={!hide() && text() != null && href() != null}>
-      <Link to={href()} class={`nav-arrow ${direction} text-truncate`}>
+      <Link to={href()} class={`nav-arrow ${direction} ${kind} text-truncate`}>
         <span ref={textElement} class="nav-arrow-text text-truncate">
           {text()}
         </span>
@@ -80,8 +85,8 @@ export default function NavArrowButton({
               y2="40"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#e8e8e8" offset="0" />
-              <stop stop-color="#d3d3d3" offset="1" />
+              <stop stop-color="var(--header-btn-gradient-top)" offset="0" />
+              <stop stop-color="var(--header-btn-gradient-bottom)" offset="1" />
             </linearGradient>
             <filter id={shadowId} color-interpolation-filters="sRGB">
               <feOffset dx="0" dy="0.25" />

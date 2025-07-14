@@ -3,7 +3,6 @@
   --i-2px: calc(var(--i-px) * 2);
   --bg-color: #e9eaec;
   --text-color: #424242;
-  --text-shadow-color: #fff;
   --spacer-1: 0.25rem;
   --spacer-2: 0.5rem;
   --spacer-3: 1rem;
@@ -16,8 +15,15 @@
   --header-font-color: #474747;
   /* drop shadow below header - taken from album page. 3px  */
   --header-shadow-color: #656565;
+  --header-btn-primary-text-color: #fff;
+  --header-btn-primary-gradient-top: #787878;
+  --header-btn-primary-gradient-bottom: #484848;
+  --header-btn-secondary-text-color: var(--header-font-color);
+  --header-btn-secondary-gradient-top: #e8e8e8;
+  --header-btn-secondary-gradient-bottom: #d3d3d3;
 
-  --text-emboss: 0px 1px 0px var(--text-shadow-color);
+  --text-emboss-glow: 0px 1px 0px #fff;
+  --text-emboss-shadow: 0px -1px 0px rgba(40, 40, 40, 0.9);
 
   --album-title-font-color: #2d2d2d;
   --album-subtitle-font-color: #777777;
