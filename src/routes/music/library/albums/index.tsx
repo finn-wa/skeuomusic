@@ -25,9 +25,9 @@ export default function Albums() {
       <Suspense fallback={<LoadingPage />}>
         <ErrorBoundary fallback={<ErrorPage message="Failed to load albums" />}>
           <Await promise={albums} fallback={<ErrorPage />}>
-            {(albumAccessor) => (
+            {(resolvedAlbums) => (
               <AlphabetList
-                items={() => albumAccessor}
+                items={resolvedAlbums}
                 namePlural="albums"
                 itemRenderer={(album, hide) => (
                   <AlbumListItem

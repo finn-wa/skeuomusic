@@ -11,14 +11,23 @@ export type ImageProps = ImagePropOverrides &
     "alt" | "width" | "height" | "class" | "classList" | "style" | "id"
   >;
 
-export default function Image({ srcset, sizes, alt, ...props }: ImageProps) {
+export default function Image(props: ImageProps) {
   return (
     <img
-      {...props}
-      alt={alt}
-      src={srcset.at(-1)?.url}
-      srcset={srcset.map(({ width, url }) => `${url} ${width}w`).join(", ")}
-      sizes={typeof sizes === "string" ? sizes : sizes?.join("\n")}
+      srcset={props.srcset
+        .map(({ width, url }) => `${url} ${width}w`)
+        .join(", ")}
+      sizes={
+        typeof props.sizes === "string" ? props.sizes : props.sizes?.join("\n")
+      }
+      alt={props.alt}
+      width={props.width}
+      height={props.height}
+      class={props.class}
+      classList={props.classList}
+      style={props.style}
+      src={props.srcset.at(-1)?.url}
+      id={props.id}
     />
   );
 }

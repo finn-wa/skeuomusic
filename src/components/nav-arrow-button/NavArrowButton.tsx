@@ -1,35 +1,31 @@
 import { Link } from "@tanstack/solid-router";
 import {
-  type Accessor,
   type ParentProps,
   Show,
   createSignal,
   createUniqueId,
+  mergeProps,
   onMount,
 } from "solid-js";
 import { estimateTextWidth } from "~/lib/client/font-width";
 
 export type NavArrowButtonProps = ParentProps<{
-  text: Accessor<string | undefined>;
-  href: Accessor<string | undefined>;
+  text?: string;
+  href?: string;
   direction: "left" | "right";
   kind?: "primary" | "secondary";
-  hide?: Accessor<boolean>;
+  hide?: boolean;
 }>;
 
-export default function NavArrowButton({
-  text,
-  href,
-  direction,
-  kind = "secondary",
-  hide = () => false,
-}: NavArrowButtonProps) {
+export default function NavArrowButton(initialProps: NavArrowButtonProps) {
+  const defaultProps = { kind: "secondary", hide: false };
+  const props = mergeProps(defaultProps, initialProps);
   const [mounted, setMounted] = createSignal<boolean>(false);
   onMount(() => setMounted(true));
 
   let textElement!: HTMLSpanElement;
   const textWidth = () => {
-    const textContent = text();
+    const textContent = props.text;
     if (textContent == null) {
       return 0;
     }
@@ -55,10 +51,13 @@ export default function NavArrowButton({
   // TODO : Now Playing text is a bit smaller and it has a line break
   // perhaps support using child prop for text via foreignObject
   return (
-    <Show when={!hide() && text() != null && href() != null}>
-      <Link to={href()} class={`nav-arrow ${direction} ${kind} text-truncate`}>
+    <Show when={!props.hide && props.text != null && props.href != null}>
+      <Link
+        to={props.href}
+        class={`nav-arrow ${props.direction} ${props.kind} text-truncate`}
+      >
         <span ref={textElement} class="nav-arrow-text text-truncate">
-          {text()}
+          {props.text}
         </span>
         <svg
           width={`${width()}px`}
@@ -72,7 +71,7 @@ export default function NavArrowButton({
               id={arrowId}
               d={`m0 20 13.2-17.6a6 6 153.43 0 1 4.8-2.4h${svgPadding()}a6 6 45 0 1 6 6v28a6 6 135 0 1-6 6h-${svgPadding()}a6 6 26.565 0 1-4.8-2.4z`}
               transform={
-                direction === "left"
+                props.direction === "left"
                   ? undefined
                   : `translate(${width()}) scale(-1, 1)`
               }

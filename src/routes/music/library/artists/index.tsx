@@ -28,9 +28,9 @@ export default function Artists() {
           fallback={<ErrorPage message="Failed to load artists" />}
         >
           <Await promise={artists} fallback={<ErrorPage />}>
-            {(artists) => (
+            {(resolvedArtists) => (
               <AlphabetList
-                items={() => artists}
+                items={resolvedArtists}
                 namePlural="artists"
                 itemRenderer={(item, hide) => (
                   <ListItem

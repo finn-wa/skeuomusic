@@ -1,5 +1,5 @@
 import { Await, createFileRoute, defer } from "@tanstack/solid-router";
-import { ErrorBoundary, Suspense, onMount, useContext } from "solid-js";
+import { ErrorBoundary, Suspense, useContext } from "solid-js";
 import AlphabetList from "~/components/alphabet-list/AlphabetList";
 import SongListItem from "~/components/list-item/SongListItem";
 import { ErrorPage, LoadingPage } from "~/components/page-message/PageMessage";
@@ -25,7 +25,7 @@ export default function Songs() {
 
   async function playSong(uri: string) {
     console.log(`playing ${uri}`);
-    await spotifyApi.music.startResumePlayback("", undefined, [uri]);
+    await spotifyApi.player.startResumePlayback("", undefined, [uri]);
   }
 
   return (
@@ -33,9 +33,9 @@ export default function Songs() {
       <Suspense fallback={<LoadingPage />}>
         <ErrorBoundary fallback={<ErrorPage message="Failed to load songs" />}>
           <Await promise={songs} fallback={<ErrorPage />}>
-            {(songAccessor) => (
+            {(resolvedSongs) => (
               <AlphabetList
-                items={() => songAccessor}
+                items={resolvedSongs}
                 namePlural="songs"
                 itemRenderer={(song, hide) => (
                   <SongListItem

@@ -27,11 +27,8 @@ export default function Playlists() {
           fallback={<ErrorPage message="Failed to load playlists" />}
         >
           <Await promise={playlists} fallback={<ErrorPage />}>
-            {(playlistAccessor) => (
-              <AlphabetList
-                items={() => playlistAccessor}
-                namePlural="playlists"
-              />
+            {(resolvedPlaylists) => (
+              <AlphabetList items={resolvedPlaylists} namePlural="playlists" />
             )}
           </Await>
         </ErrorBoundary>

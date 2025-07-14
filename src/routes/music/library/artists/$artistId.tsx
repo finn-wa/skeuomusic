@@ -38,7 +38,7 @@ export const Route = createFileRoute("/music/library/artists/$artistId")({
 });
 
 export default function ArtistDetail() {
-  const { albums, artist } = Route.useLoaderData()();
+  const { albums } = Route.useLoaderData()();
 
   return (
     <>
@@ -47,9 +47,9 @@ export default function ArtistDetail() {
           fallback={<ErrorPage message="Failed to load discography" />}
         >
           <Await promise={albums} fallback={<ErrorPage />}>
-            {(albumAccessor) => (
+            {(resolvedAlbums) => (
               <AlphabetList
-                items={() => albumAccessor}
+                items={resolvedAlbums}
                 namePlural="albums"
                 hideIndex={true}
                 hideItemCount={true}

@@ -1,5 +1,5 @@
 import { useRouterState } from "@tanstack/solid-router";
-import { type Accessor, Show } from "solid-js";
+import { Show } from "solid-js";
 import { SKEUOMUSIC } from "~/lib/constants";
 import NavArrowButton from "../nav-arrow-button/NavArrowButton";
 
@@ -20,37 +20,35 @@ export default function Header() {
   });
   return (
     <HeaderComponent
-      title={() => context()?.title}
-      backButton={() => context()?.backButton}
+      title={context()?.title}
+      backButton={context()?.backButton}
     />
   );
 }
 
-export type HeaderProps = {
-  [K in keyof HeaderRouteContext]-?: Accessor<HeaderRouteContext[K]>;
-};
+export type HeaderProps = HeaderRouteContext;
 
-export function HeaderComponent({ title, backButton }: HeaderProps) {
+export function HeaderComponent(props: HeaderProps) {
   return (
     <header class="bar">
       <div class="header-button left">
-        <Show when={backButton() != null}>
+        <Show when={props.backButton != null}>
           <NavArrowButton
             direction="left"
-            text={() => backButton()?.label}
-            href={() => backButton()?.href ?? ".."}
+            text={props.backButton?.label}
+            href={props.backButton?.href ?? ".."}
           />
         </Show>
       </div>
 
-      <h1 class="text-truncate">{title() ?? SKEUOMUSIC}</h1>
+      <h1 class="text-truncate">{props.title ?? SKEUOMUSIC}</h1>
 
       <div class="header-button right">
         <NavArrowButton
           direction="right"
           kind="primary"
-          text={() => "Now\nPlaying"}
-          href={() => "/player"}
+          text={"Now\nPlaying"}
+          href={"/player"}
         />
       </div>
     </header>

@@ -1,6 +1,6 @@
 import { useNavigate } from "@tanstack/solid-router";
-import type { Accessor, JSXElement } from "solid-js";
-import { For, Show, createSignal } from "solid-js";
+import type { JSXElement } from "solid-js";
+import { For, Show, createSignal, mergeProps } from "solid-js";
 import { INITIAL_SCROLL_ID } from "~/lib/constants";
 import type { Item } from "~/lib/types";
 import ListItem from "../list-item/ListItem";
@@ -11,14 +11,10 @@ import { LETTERS, LETTER_LABEL, type Letter } from "./AlphabetListModel";
 
 export interface AlphabetListProps<T extends Item> {
   namePlural: string;
-  items: Accessor<T[]>;
+  items: T[];
   hideItemCount?: boolean;
   hideIndex?: boolean;
-  itemRenderer?: (
-    item: T,
-    hide?: Accessor<boolean>,
-    href?: string,
-  ) => JSXElement;
+  itemRenderer?: (item: T, hide?: boolean, href?: string) => JSXElement;
 }
 
 type SortableItem<T> = { key: string; value: T; hide?: boolean };
@@ -46,27 +42,29 @@ function groupItems<T extends Item>(sortedItems: SortableItem<T>[]) {
   return groups;
 }
 
-export default function AlphabetList<T extends Item>({
-  items,
-  namePlural,
-  hideItemCount,
-  hideIndex,
-  itemRenderer = (item, hide) => <ListItem name={item.name} hide={hide} />,
-}: AlphabetListProps<T>) {
+export default function AlphabetList<T extends Item>(
+  initialProps: AlphabetListProps<T>,
+) {
+  const defaultItemRenderer: NonNullable<
+    AlphabetListProps<T>["itemRenderer"]
+  > = (item, hide) => <ListItem name={item.name} hide={hide} />;
+  const props = mergeProps({ itemRenderer: defaultItemRenderer }, initialProps);
+
   const searchSignal = createSignal("");
   const [search] = searchSignal;
   const navigate = useNavigate();
   const jumpTo = (letter: string) => navigate({ hash: letter });
 
   const sortedItems = (): SortableItem<T>[] =>
-    items()
+    props.items
       .map((value) => ({ value, key: value.name.trim().toUpperCase() }))
       .sort((a, b) => a.key.localeCompare(b.key));
 
   const itemGroups = () => groupItems(sortedItems());
 
   const capitalisedNamePlural =
-    (namePlural[0]?.toUpperCase() ?? "") + (namePlural.substring(1) ?? "");
+    (props.namePlural[0]?.toUpperCase() ?? "") +
+    (props.namePlural.substring(1) ?? "");
 
   /** Set of item keys that match the current query */
   const visibleItems = () => {
@@ -89,7 +87,11 @@ export default function AlphabetList<T extends Item>({
             when={visibleItems().size > 0}
             fallback={
               <PageMessage
-                message={items().length > 0 ? "No results" : `No ${namePlural}`}
+                message={
+                  props.items.length > 0
+                    ? "No results"
+                    : `No ${props.namePlural}`
+                }
               />
             }
           >
@@ -120,7 +122,7 @@ export default function AlphabetList<T extends Item>({
                       <ul>
                         <For each={items()}>
                           {({ key, value }) =>
-                            itemRenderer(value, () => !visibleItems().has(key))
+                            props.itemRenderer(value, !visibleItems().has(key))
                           }
                         </For>
                       </ul>
@@ -129,7 +131,7 @@ export default function AlphabetList<T extends Item>({
                 }}
               </For>
             </ul>
-            <Show when={!hideItemCount}>
+            <Show when={!props.hideItemCount}>
               <div class="list-footer">
                 <span class="page-msg">
                   {visibleItems().size}{" "}
@@ -140,7 +142,7 @@ export default function AlphabetList<T extends Item>({
           </Show>
         </div>
       </div>
-      <Show when={!hideIndex}>
+      <Show when={!props.hideIndex}>
         <AlphabetIndex jumpTo={jumpTo} />
       </Show>
     </>

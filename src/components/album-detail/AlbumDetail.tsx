@@ -8,24 +8,24 @@ export type AlbumDetailProps = {
   readonly album: AlbumWithTracklist;
 };
 
-export default function AlbumDetail({ album }: AlbumDetailProps) {
-  const runtimeMins = getRuntimeMins(album.tracks);
-  const artists = formatArtists(album.artists);
+export default function AlbumDetail(props: AlbumDetailProps) {
+  const runtimeMins = getRuntimeMins(props.album.tracks);
+  const artists = formatArtists(props.album.artists);
   return (
     <>
       <div class="album-detail" id="1">
         <div class="album-header">
           <div class="album-art-container">
             <Image
-              srcset={album.images}
+              srcset={props.album.images}
               sizes={["(max-width: 1000px) 33vw", "333px"]}
-              alt={`${album.name} cover art`}
+              alt={`${props.album.name} cover art`}
               class="album-art"
             />
             <Image
-              srcset={album.images}
+              srcset={props.album.images}
               sizes={["(max-width: 1000px) 33vw", "333px"]}
-              alt={`${album.name} cover art reflection`}
+              alt={`${props.album.name} cover art reflection`}
               class="album-art-reflection"
             />
           </div>
@@ -33,19 +33,19 @@ export default function AlbumDetail({ album }: AlbumDetailProps) {
             <h2 class="album-title">
               <span class="h4">{artists}</span>
               <br />
-              <span class="h3">{album.name}</span>
+              <span class="h3">{props.album.name}</span>
             </h2>
             <ul class="album-facts">
-              <li>Released {album.releaseDate}</li>
+              <li>Released {props.album.releaseDate}</li>
               <li>
-                {album.tracks.length} Songs, {runtimeMins} Mins.
+                {props.album.tracks.length} Songs, {runtimeMins} Mins.
               </li>
             </ul>
           </div>
         </div>
       </div>
       <ol class="tracklist">
-        <For each={album.tracks}>
+        <For each={props.album.tracks}>
           {(track) => <TrackListItem track={track} />}
         </For>
       </ol>
