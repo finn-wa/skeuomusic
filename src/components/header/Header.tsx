@@ -48,7 +48,7 @@ export function HeaderComponent(props: HeaderProps) {
           direction="right"
           kind="primary"
           text={"Now\nPlaying"}
-          href={"/player"}
+          href="/music/player"
         />
       </div>
     </header>

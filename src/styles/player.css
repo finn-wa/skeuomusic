@@ -1,0 +1,41 @@
+.panel {
+  display: flex;
+  flex-wrap: nowrap;
+  flex: 0 0 auto;
+  padding: 0;
+}
+
+.player-background {
+  background-color: black;
+}
+
+.player-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-shadow: var(--text-emboss-shadow);
+  height: 3.625rem;
+  flex: 0 0 auto;
+  z-index: 2;
+  border-top-style: solid;
+  border-top-width: 0.125rem;
+  border-image: linear-gradient(
+      90deg,
+      var(--player-header-border-gradient-low) 0%,
+      var(--player-header-border-gradient-high) 40%,
+      var(--player-header-border-gradient-low) 100%
+    )
+    1;
+  background: linear-gradient(
+    180deg,
+    var(--player-header-gradient-top) 0%,
+    var(--player-header-gradient-bottom) 100%
+  );
+
+  .player-header-title {
+    color: var(--player-header-title-color);
+  }
+  .player-header-subtitle {
+    color: var(--player-header-subtitle-color);
+  }
+}
