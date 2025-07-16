@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/solid-router";
 import { PlaybackControlOverlay } from "~/components/player/PlaybackControlOverlay";
-import { PlaybackControlPanel } from "~/components/player/PlaybackControlPanel";
 import { PlayerAlbumArt } from "~/components/player/PlayerAlbumArt";
 import { PlayerHeader } from "~/components/player/PlayerHeader";
 import { VolumeControlPanel } from "~/components/player/VolumeControlPanel";
+import { PlaybackControlPanel } from "~/components/player/playback-control-panel/PlaybackControlPanel";
 
 export const Route = createFileRoute("/music/player/")({
   component: Player,
