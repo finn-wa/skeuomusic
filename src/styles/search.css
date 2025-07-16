@@ -5,9 +5,9 @@
   position: relative;
   height: var(--list-item-height);
   background: linear-gradient(
-    180deg,
-    var(--search-gradient-top) 0%,
-    var(--search-gradient-bottom) 100%
+    to bottom,
+    var(--search-gradient-top),
+    var(--search-gradient-bottom)
   );
 }
 

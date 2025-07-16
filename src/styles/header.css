@@ -7,9 +7,9 @@ header.bar {
   z-index: 2;
   color: var(--header-font-color);
   background: linear-gradient(
-    180deg,
-    var(--header-gradient-top) 0%,
-    var(--header-gradient-bottom) 100%
+    to bottom,
+    var(--header-gradient-top),
+    var(--header-gradient-bottom)
   );
   box-shadow: 0px var(--i-2px) calc(var(--i-px) * 8) 0px
     var(--navbar-shadow-color);
@@ -21,10 +21,12 @@ header > .header-button {
   display: flex;
 
   &.left {
+    padding-left: 0.5rem;
     justify-content: start;
   }
 
   &.right {
+    padding-right: 0.5rem;
     justify-content: end;
   }
 }

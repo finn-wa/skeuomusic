@@ -1,8 +1,9 @@
 import NavArrowButton from "../nav-arrow-button/NavArrowButton";
+import styles from "./PlayerHeader.module.css";
 
 export function PlayerHeader() {
   return (
-    <header class="player-header">
+    <header class={styles.header}>
       <div class="header-button left">
         <NavArrowButton
           direction="left"
@@ -13,11 +14,11 @@ export function PlayerHeader() {
       </div>
 
       <h1 class="h4 text-truncate">
-        <span class="player-header-subtitle">Artist</span>
+        <span class={styles["track-subtitle"]}>Artist</span>
         <br />
-        <span class="player-header-title">Song</span>
+        <span class={styles["track-title"]}>Song</span>
         <br />
-        <span class="player-header-subtitle">Album</span>
+        <span class={styles["track-subtitle"]}>Album</span>
       </h1>
 
       <div class="header-button right">

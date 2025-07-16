@@ -1,7 +1,7 @@
 .section-header {
   align-items: center;
   background: linear-gradient(
-    180deg,
+    to bottom,
     var(--list-section-gradient-top),
     var(--list-section-gradient-bottom)
   );

@@ -2,9 +2,9 @@
   display: flex;
   justify-content: center;
   background: linear-gradient(
-    180deg,
-    var(--album-header-gradient-top) 0%,
-    var(--album-header-gradient-bottom) 100%
+    to bottom,
+    var(--album-header-gradient-top),
+    var(--album-header-gradient-bottom)
   );
   padding-bottom: var(--spacer-3);
   overflow: clip;

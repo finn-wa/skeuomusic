@@ -1,0 +1,31 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-shadow: var(--text-emboss-shadow);
+  height: 3.625rem;
+  flex: 0 0 auto;
+  z-index: 2;
+  border-top-style: solid;
+  border-top-width: 0.125rem;
+  border-image: linear-gradient(
+      to right,
+      var(--player-header-border-gradient-low),
+      var(--player-header-border-gradient-high) 40%,
+      var(--player-header-border-gradient-low)
+    )
+    1;
+  background: linear-gradient(
+    to bottom,
+    var(--player-header-gradient-top),
+    var(--player-header-gradient-bottom)
+  );
+}
+
+.track-title {
+  color: var(--player-header-title-color);
+}
+
+.track-subtitle {
+  color: var(--player-header-subtitle-color);
+}

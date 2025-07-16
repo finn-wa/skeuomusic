@@ -11,7 +11,7 @@ export const Route = createFileRoute("/music/player/")({
 
 function Player() {
   return (
-    <>
+    <div class="player-container">
       <PlayerHeader />
       <div class="player-background content-frame">
         <PlaybackControlOverlay show={false} />
@@ -19,6 +19,6 @@ function Player() {
       </div>
       <PlaybackControlPanel />
       <VolumeControlPanel />
-    </>
+    </div>
   );
 }

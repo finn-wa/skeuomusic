@@ -5,10 +5,10 @@ nav.bar {
   padding: 0;
   border-top: var(--i-px) solid var(--navbar-border-top-color);
   background: linear-gradient(
-    180deg,
-    var(--navbar-gradient-top) 0%,
+    to bottom,
+    var(--navbar-gradient-top),
     var(--navbar-gradient-mid) 33%,
-    var(--navbar-gradient-bottom) 100%
+    var(--navbar-gradient-bottom)
   );
   box-shadow: 0px calc(var(--i-px) * -2) calc(var(--i-px) * 8) 0px
     var(--navbar-shadow-color);
@@ -17,7 +17,7 @@ nav.bar {
 .tab {
   flex: 1;
   display: block;
-  height: 4.125rem;
+  height: var(--panel-height);
 
   > .tab-border {
     width: 100%;
