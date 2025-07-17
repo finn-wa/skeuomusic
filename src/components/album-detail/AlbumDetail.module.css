@@ -1,0 +1,48 @@
+.album {
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(
+    to bottom,
+    var(--album-header-gradient-top),
+    var(--album-header-gradient-bottom)
+  );
+  padding-bottom: var(--spacer-3);
+  overflow: clip;
+  border-bottom: var(--emboss-border-bottom);
+}
+
+.header {
+  display: flex;
+  max-width: 900px;
+  margin: var(--spacer-2);
+  text-shadow: none;
+}
+
+.header > .info {
+  flex: 1;
+
+  ul.facts {
+    font-size: 0.675rem;
+    color: var(--album-subtitle-font-color);
+    font-weight: bold;
+  }
+  li.fact {
+    padding: 0;
+  }
+
+  .title {
+    line-height: 80%;
+    margin-bottom: var(--spacer-2);
+    color: var(--album-title-font-color);
+  }
+}
+
+.art {
+  flex: 1;
+  max-width: 33%;
+  margin-right: 1rem;
+}
+
+.reflection {
+  mask-image: linear-gradient(transparent 85%, black 100%);
+}

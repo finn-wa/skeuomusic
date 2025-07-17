@@ -1,0 +1,553 @@
+<head>
+  <style>
+    body {
+      font-family: sans-serif;
+      font-size: 16px;
+      margin: 0;
+      padding: 0;
+    }
+
+    #colors {
+      border-collapse: collapse;
+      border: 2px solid #545454;
+      font-family: Monaco, 'Courier New', monospace;
+    }
+
+    #colors td,
+    #colors tr {
+      padding: 4px 20px 4px 20px;
+    }
+
+    #colors th {
+      color: #545454;
+      text-align: left;
+      vertical-align: bottom;
+    }
+
+    .field-1 {
+      margin-left: -10px;
+      margin-right: 0px;
+      width: 82px;
+    }
+
+    .field-2 {
+      margin-left: -10px;
+      margin-right: 0px;
+      width: 82px;
+    }
+
+    .field-3 {
+      margin-left: -10px;
+      margin-right: 20px;
+      width: 82px;
+    }
+
+    .colorblock {
+      background: #fff;
+      border: 1px solid #ccc;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+      height: 34px;
+      margin-left: 20px;
+      width: 34px;
+    }
+
+    .box {
+      border: 1px solid #ccc;
+    }
+
+    #tool {
+      border-collapse: collapse;
+      margin: 10px 0px 0px 0px;
+      width: 460px;
+    }
+
+    #tool tr,
+    #tool td {
+      border: 1px solid #cccccc;
+      padding: 30px 20px 30px 20px;
+    }
+
+    #tool p {
+      margin-bottom: 20px;
+    }
+
+    h3 {
+      margin: 10px 0px 10px 0px;
+      padding: 0px;
+    }
+
+    h4 {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 4px;
+      margin-top: 0px;
+    }
+
+    input {
+      font-family: Monaco, 'Courier New', monospace;
+    }
+
+    .form-group {
+      margin: 0px;
+    }
+
+    .percent {
+      font-weight: bold;
+      margin-left: -20px;
+    }
+
+    .tabs {
+      width: 460px;
+    }
+
+    .nav-tabs {
+      border-bottom: 0px;
+      border-color: #ccc;
+      border-left: 1px;
+      border-right: 1px;
+      border-style: solid;
+      border-top: 1px;
+    }
+
+    .nav-tabs > li > a {
+      border: 0px;
+      border-radius: 0px;
+    }
+
+    .nav-tabs > li.active > a,
+    .nav-tabs > li.active > a:hover,
+    .nav-tabs > li.active > a:focus {
+      border: 0px;
+    }
+
+    .calculate,
+    .calculate:hover {
+      text-align: center;
+    }
+
+    .reset,
+    .reset:hover {
+      font-weight: 600;
+      text-align: center;
+    }
+
+    a:hover {
+      text-decoration: none;
+    }
+
+    .error {
+      color: #d9534f;
+      font-weight: 600;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h3>Leave blank the row you want to get result</h3>
+
+  <table id="tool">
+    <!-- Start of foreground color section -->
+    <tr>
+      <td>
+        <h4>Foreground Color</h4>
+        <p>
+          The default color at 100% opacity of the object to be manipulated.
+        </p>
+
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label
+              for="foreground-color--r"
+              class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+              >R:</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 field-1">
+              <input
+                type="text"
+                class="form-control color-picker-option rgb-foreground-color"
+                id="foreground-color--r"
+                maxlength="3"
+                value=""
+              />
+            </div>
+
+            <label
+              for="foreground-color--g"
+              class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+              >G:</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 field-2">
+              <input
+                type="text"
+                class="form-control color-picker-option rgb-foreground-color"
+                id="foreground-color--g"
+                maxlength="3"
+                value=""
+              />
+            </div>
+
+            <label
+              for="foreground-color--b"
+              class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+              >B:</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 field-3">
+              <input
+                type="text"
+                class="form-control color-picker-option rgb-foreground-color"
+                id="foreground-color--b"
+                maxlength="3"
+                value=""
+              />
+            </div>
+
+            <input
+              id="rgb-foreground-color"
+              class="col-xs-1 col-sm-1 col-md-1 col-lg-1 colorblock"
+              disabled
+            />
+          </div>
+        </form>
+      </td>
+    </tr>
+
+    <!-- Start of opacity section -->
+    <tr>
+      <td>
+        <h4>Overlay Opacity</h4>
+        <p>The opacity of the foreground color.</p>
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <div
+              class="col-xs-2"
+              col-sm-2
+              col-md-2
+              col-lg-2
+              style="width: 120px"
+            >
+              <input
+                type="text"
+                class="form-control"
+                id="rgb-opacity"
+                maxlength="4"
+                value=""
+              />
+            </div>
+            <div>
+              <label
+                for="opacity"
+                class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label percent"
+                >%</label
+              >
+            </div>
+          </div>
+        </form>
+      </td>
+    </tr>
+
+    <!-- Start of background color section -->
+    <tr>
+      <td>
+        <h4>Background Color</h4>
+        <p>The bottom layer of color.</p>
+
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label
+              for="background-color--r"
+              class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+              >R:</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 field-1">
+              <input
+                type="text"
+                class="form-control color-picker-option rgb-background-color"
+                id="background-color--r"
+                maxlength="3"
+                value="255"
+              />
+            </div>
+
+            <label
+              for="background-color--g"
+              class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+              >G:</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 field-2">
+              <input
+                type="text"
+                class="form-control color-picker-option rgb-background-color"
+                id="background-color--g"
+                maxlength="3"
+                value="255"
+              />
+            </div>
+
+            <label
+              for="background-color--b"
+              class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+              >B:</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 field-3">
+              <input
+                type="text"
+                class="form-control color-picker-option rgb-background-color"
+                id="background-color--b"
+                maxlength="3"
+                value="255"
+              />
+            </div>
+
+            <input
+              id="rgb-background-color"
+              class="col-xs-1 col-sm-1 col-md-1 col-lg-1 colorblock"
+              disabled
+            />
+          </div>
+        </form>
+      </td>
+    </tr>
+
+    <!-- Start of flattened color section -->
+    <tr>
+      <td>
+        <h4>Flattened Color</h4>
+        <p>The desired color of the object to be manipulated.</p>
+
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label
+              for="flattened-color--r"
+              class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+              >R:</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 field-1">
+              <input
+                type="text"
+                class="form-control color-picker-option rgb-flattened-color"
+                id="flattened-color--r"
+                maxlength="3"
+                value=""
+              />
+            </div>
+
+            <label
+              for="flattened-color--g"
+              class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+              >G:</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 field-2">
+              <input
+                type="text"
+                class="form-control color-picker-option rgb-flattened-color"
+                id="flattened-color--g"
+                maxlength="3"
+                value=""
+              />
+            </div>
+
+            <label
+              for="flattened-color--b"
+              class="col-xs-1 col-sm-1 col-md-1 col-lg-1 control-label"
+              >B:</label
+            >
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 field-3">
+              <input
+                type="text"
+                class="form-control color-picker-option rgb-flattened-color"
+                id="flattened-color--b"
+                maxlength="3"
+                value=""
+              />
+            </div>
+
+            <input
+              id="rgb-flattened-color"
+              class="col-xs-1 col-sm-1 col-md-1 col-lg-1 colorblock"
+              disabled
+            />
+          </div>
+        </form>
+      </td>
+    </tr>
+
+    <!-- Start of controls section -->
+    <tr>
+      <td>
+        <p class="error">Error. Your inputs are likely not feasible.</p>
+        <a href="#" style="display: block">
+          <div class="calculate">
+            <h3>CALCULATE</h3>
+          </div>
+        </a>
+        <a href="#" style="display: block">
+          <div class="reset">CLEAR</div>
+        </a>
+      </td>
+    </tr>
+  </table>
+
+  <script>
+    var COLOR = {
+      showError: function () {
+        this.$error.fadeIn();
+      },
+
+      hideError: function () {
+        this.$error.fadeOut();
+      },
+
+      rgbToHex: function (R, G, B) {
+        if (!R && !G && !B) return;
+
+        var toHex = function (n) {
+          n = parseInt(n, 10);
+          if (isNaN(n)) return '00';
+          n = Math.max(0, Math.min(n, 255));
+          return (
+            '0123456789ABCDEF'.charAt((n - (n % 16)) / 16) +
+            '0123456789ABCDEF'.charAt(n % 16)
+          );
+        };
+
+        return toHex(R) + toHex(G) + toHex(B);
+      },
+
+      setup: function () {
+        this.vars();
+        this.binds();
+
+        this.$error.hide();
+      },
+
+      vars: function () {
+        this.$body = $('body');
+        this.$blocks = $('.colorblock');
+        this.$options = $('.color-picker-option');
+        this.$submit = $('.calculate');
+        this.$reset = $('.reset');
+        this.$form = $('form');
+        this.$error = $('.error');
+      },
+
+      binds: function () {
+        this.$options.on('blur focus', this.updateColor.bind(this));
+        this.$blocks.on('change', function () {
+          alert('awesome');
+        });
+        this.$submit.on('click', this.calculate.bind(this));
+        this.$reset.on('click', this.reset.bind(this));
+      },
+
+      reset: function () {
+        this.$error.fadeOut();
+        this.$form.each(function () {
+          this.reset();
+        });
+        this.$blocks.css('background-color', '#fff');
+      },
+
+      updateColor: function (e) {
+        var $item = $(e.currentTarget);
+
+        if ($item.val() != '') {
+          var className = $item.attr('class');
+          var targetClassName =
+            '.' + className.substr(className.lastIndexOf(' ') + 1);
+          var $targets = $(targetClassName);
+          var $closestColorBox = $targets
+            .eq(0)
+            .parents('.form-group')
+            .find('.colorblock');
+          var color;
+
+          if ($item.val() > 255) $item.val(255);
+          if ($item.val() < 0) $item.val(0);
+
+          // Assign color values to other inputs
+          // $targets.val(Math.round($item.val()));
+
+          color = this.rgbToHex(
+            $targets.eq(0).val(),
+            $targets.eq(1).val(),
+            $targets.eq(2).val()
+          );
+
+          $closestColorBox.css('background-color', '#' + color);
+        }
+      },
+
+      calculate: function (e) {
+        e.preventDefault();
+
+        var target;
+        ['r', 'g', 'b'].forEach((layer) => {
+          target = this.calculator(layer);
+        });
+
+        target.trigger('blur');
+      },
+
+      calculator: function (layer) {
+        var $row1 = $('#foreground-color--' + layer);
+        var $row2 = $('#rgb-opacity');
+        var $row3 = $('#background-color--' + layer);
+        var $row4 = $('#flattened-color--' + layer);
+        var result, target;
+
+        if ($row1.val() && $row2.val() && $row3.val()) {
+          $row4.val(
+            Math.round(
+              ($row2.val() / 100) * $row1.val() +
+                (1 - $row2.val() / 100) * $row3.val()
+            )
+          );
+          target = $row4;
+        } else if ($row1.val() && $row2.val() && $row4.val()) {
+          $row3.val(
+            Math.round(
+              ($row4.val() - ($row2.val() / 100) * $row1.val()) /
+                (1 - $row2.val() / 100)
+            )
+          );
+          target = $row3;
+        } else if ($row1.val() && $row3.val() && $row4.val()) {
+          result =
+            100 * (($row4.val() - $row3.val()) / ($row1.val() - $row3.val()));
+          if ($row2.val()) result = ($row2.val() + result) / 2;
+          $row2.val(result);
+          target = $row2;
+        } else if ($row2.val() && $row3.val() && $row4.val()) {
+          $row1.val(
+            Math.round(
+              ($row4.val() - (1 - $row2.val() / 100) * $row3.val()) /
+                ($row2.val() / 100)
+            )
+          );
+          target = $row1;
+        }
+
+        if (
+          $row3.val() > 255 ||
+          $row3.val() < 0 ||
+          $row4.val() > 255 ||
+          $row4.val() < 0 ||
+          $row1.val() > 255 ||
+          $row1.val() < 0 ||
+          $row2.val() > 100 ||
+          $row2.val() < 0
+        ) {
+          this.showError();
+        } else {
+          this.hideError();
+        }
+
+        return target;
+      },
+    };
+
+    COLOR.setup();
+  </script>
+</body>

@@ -1,16 +1,17 @@
 import { formatTrackDuration } from "~/lib/client/music-utils";
 import type { Track } from "~/lib/types";
+import styles from "./AlbumTrack.module.css";
 
-export type TrackListItemProps = {
+export type AlbumTrackProps = {
   track: Track;
 };
 
-export default function TrackListItem(props: TrackListItemProps) {
+export default function AlbumTrack(props: AlbumTrackProps) {
   return (
-    <li class="list-item track text-truncate emboss-y">
+    <li class={`${styles.track} list-item text-truncate emboss-y`}>
       <div class="item-link">
-        <div class="track-number">{props.track.trackNumber}</div>
-        <div class="track-details p-2 text-truncate emboss-x">
+        <div class={styles.number}>{props.track.trackNumber}</div>
+        <div class={`${styles.details} p-2 text-truncate emboss-x`}>
           <span class="text-truncate">{props.track.name}</span>
           <span class="subtitle text-truncate">
             {formatTrackDuration(props.track.durationMs)}

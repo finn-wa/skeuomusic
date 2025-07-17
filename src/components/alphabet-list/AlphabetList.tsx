@@ -75,6 +75,7 @@ export default function AlphabetList<T extends Item>(
         visible.add(item.key);
       }
     }
+    console.log({ query, visible });
     return visible;
   };
 
@@ -106,7 +107,7 @@ export default function AlphabetList<T extends Item>(
                       id={letter}
                       class="list-section"
                       style={{
-                        visibility: hasVisibleItems() ? undefined : "hidden",
+                        display: hasVisibleItems() ? undefined : "none",
                       }}
                     >
                       <div

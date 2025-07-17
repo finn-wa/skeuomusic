@@ -6,20 +6,25 @@ export function PlaybackControlPanel() {
   return (
     <div class={`panel ${styles.background}`}>
       <fieldset class={styles.controls} aria-label="Playback controls">
-        <button type="button" aria-label="Previous track">
+        <button
+          class={styles["emboss-right"]}
+          aria-label="Previous track"
+          type="button"
+        >
           ⏮️
         </button>
-        <Show when={!playing()}>
-          <button type="button" aria-label="Play">
-            ▶️
-          </button>
-        </Show>
-        <Show when={playing()}>
-          <button type="button" aria-label="Pause">
-            ⏸️
-          </button>
-        </Show>
-        <button type="button" aria-label="Next track">
+        <button
+          class={`${styles["emboss-left"]} ${styles["emboss-right"]}`}
+          aria-label={playing() ? "Pause" : "Play"}
+          type="button"
+        >
+          {playing() ? "⏸️" : "▶️"}
+        </button>
+        <button
+          class={styles["emboss-left"]}
+          aria-label="Next track"
+          type="button"
+        >
           ⏭️
         </button>
       </fieldset>

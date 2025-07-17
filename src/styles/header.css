@@ -1,3 +1,7 @@
+header {
+  padding: 0 var(--spacer-2);
+}
+
 header.bar {
   display: flex;
   align-items: center;
@@ -13,7 +17,6 @@ header.bar {
   );
   box-shadow: 0px var(--i-2px) calc(var(--i-px) * 8) 0px
     var(--navbar-shadow-color);
-  padding: 0 var(--spacer-2);
 }
 
 header > .header-button {
@@ -21,12 +24,10 @@ header > .header-button {
   display: flex;
 
   &.left {
-    padding-left: 0.5rem;
     justify-content: start;
   }
 
   &.right {
-    padding-right: 0.5rem;
     justify-content: end;
   }
 }

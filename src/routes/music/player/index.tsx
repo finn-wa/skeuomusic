@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/solid-router";
+import placeholderArt from "~/assets/channel-orange-mockup.png";
+import { AlbumArt } from "~/components/album-art/AlbumArt";
 import { PlaybackControlOverlay } from "~/components/player/PlaybackControlOverlay";
-import { PlayerAlbumArt } from "~/components/player/PlayerAlbumArt";
 import { PlayerHeader } from "~/components/player/PlayerHeader";
 import { VolumeControlPanel } from "~/components/player/VolumeControlPanel";
 import { PlaybackControlPanel } from "~/components/player/playback-control-panel/PlaybackControlPanel";
@@ -10,15 +11,35 @@ export const Route = createFileRoute("/music/player/")({
 });
 
 function Player() {
+  /**
+   * TODO: album art needs to stop growing in width when it
+   * starts to push the controls off the page.
+   *
+   * art size:
+   * - grows to fit the smallest of width and height
+   * - does not cause parent container to grow large and push
+   *    panels off-screen
+   * - ideally does not expand past max res
+   * - is centered in art-container vertically and horizontally
+   *
+   * buttons in panel:
+   * - full width
+   * - but not ultra-stretched, perhaps a fixed max width
+   */
   return (
     <div class="player-container">
       <PlayerHeader />
-      <div class="player-background content-frame">
-        <PlaybackControlOverlay show={false} />
-        <PlayerAlbumArt />
+      <div class="content-frame">
+        <div class="art-container">
+          <PlaybackControlOverlay show={false} />
+          <AlbumArt
+            name="Channel Orange"
+            srcset={[{ url: placeholderArt, width: 1280 }]}
+          />
+        </div>
+        <PlaybackControlPanel />
+        <VolumeControlPanel />
       </div>
-      <PlaybackControlPanel />
-      <VolumeControlPanel />
     </div>
   );
 }
