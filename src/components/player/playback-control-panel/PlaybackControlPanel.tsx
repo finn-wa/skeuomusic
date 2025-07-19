@@ -1,8 +1,9 @@
-import { Show, createSignal } from "solid-js";
+import { createSignal } from "solid-js";
 import styles from "./PlaybackControlPanel.module.css";
 import {
-  PlaybackControlPanelPause,
-  PlaybackControlPanelPlay,
+  PlaybackControlPanelNext,
+  PlaybackControlPanelPlayPause,
+  PlaybackControlPanelPrev,
 } from "./PlaybackControlPanelIcons";
 
 export function PlaybackControlPanel() {
@@ -15,7 +16,7 @@ export function PlaybackControlPanel() {
           aria-label="Previous track"
           type="button"
         >
-          ⏮️
+          <PlaybackControlPanelPrev />
         </button>
         <button
           class={`${styles["emboss-left"]} ${styles["emboss-right"]}`}
@@ -23,16 +24,14 @@ export function PlaybackControlPanel() {
           onClick={() => setPlaying(!playing())}
           type="button"
         >
-          <Show when={playing()} fallback={<PlaybackControlPanelPlay />}>
-            <PlaybackControlPanelPause />
-          </Show>
+          <PlaybackControlPanelPlayPause playing={playing()} />
         </button>
         <button
           class={styles["emboss-left"]}
           aria-label="Next track"
           type="button"
         >
-          ⏭️
+          <PlaybackControlPanelNext />
         </button>
       </fieldset>
     </div>
