@@ -3,8 +3,8 @@ import placeholderArt from "~/assets/channel-orange-mockup.png";
 import { AlbumArt } from "~/components/album-art/AlbumArt";
 import { PlaybackControlOverlay } from "~/components/player/PlaybackControlOverlay";
 import { PlayerHeader } from "~/components/player/PlayerHeader";
-import { VolumeControlPanel } from "~/components/player/VolumeControlPanel";
 import { PlaybackControlPanel } from "~/components/player/playback-control-panel/PlaybackControlPanel";
+import { VolumeControlPanel } from "~/components/player/volume-control-panel/VolumeControlPanel";
 
 export const Route = createFileRoute("/music/player/")({
   component: Player,

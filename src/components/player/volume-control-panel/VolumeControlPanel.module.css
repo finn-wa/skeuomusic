@@ -1,0 +1,30 @@
+.background {
+  background: linear-gradient(to bottom, hsl(0 0 0 / 0.8), hsl(0 0 0 / 0.9));
+}
+
+.knob {
+  /* Three gradients to achieve the metal knob look:
+   * 1. A soft lightened border
+   * 2. Light shine effect in quadrants 
+   * 3. Circular bezel lines */
+  background-image:
+    radial-gradient(circle at center, transparent 67%, hsl(0 0 100% / 0.8) 70%),
+    conic-gradient(
+      white 0deg 10deg,
+      transparent 80deg 100deg,
+      white 170deg 190deg,
+      transparent 260deg 280deg,
+      white 350deg 360deg
+    ),
+    repeating-radial-gradient(
+      circle at center,
+      hsl(0 0 50%),
+      hsl(0 0 45%),
+      hsl(0 0 50%) 6%
+    );
+  margin: 1rem;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 2rem;
+  height: 2rem;
+}
