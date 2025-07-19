@@ -37,15 +37,15 @@ nav.bar {
 }
 
 .tab.selected {
-  box-shadow: inset 0px 6px 15px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0px 6px 15px 2px hsl(0 0 0 / 0.3);
 
   > .tab-border {
     /* Make light emboss border more transparent */
-    border-right: var(--emboss-border-style) rgba(255, 255, 255, 0.1);
+    border-right: var(--emboss-border-style) hsl(0 0 100% / 0.1);
   }
 
   + .tab > .tab-border {
     /* Make dark emboss border more opaque on tab to right */
-    border-left: var(--emboss-border-style) rgba(0, 0, 0, 0.3);
+    border-left: var(--emboss-border-style) hsl(0 0 0 / 0.3);
   }
 }

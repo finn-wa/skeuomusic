@@ -23,7 +23,7 @@
   --header-btn-secondary-gradient-bottom: #d3d3d3;
 
   --text-emboss-glow: 0px 1px 0px #fff;
-  --text-emboss-shadow: 0px -1px 0px rgba(0, 0, 0, 0.5);
+  --text-emboss-shadow: 0px -1px 0px hsl(0 0 0 / 0.5);
 
   --album-title-font-color: #2d2d2d;
   --album-subtitle-font-color: #777777;
@@ -38,8 +38,8 @@
   --list-item-font-color-2: #898989;
   --list-item-height: 3.625rem;
   --list-index-font-color: #808080;
-  --list-index-bg-hover: rgba(0, 0, 0, 0.1);
-  --list-index-bg-focus: rgba(0, 0, 0, 0.2);
+  --list-index-bg-hover: hsl(0 0 0 / 0.1);
+  --list-index-bg-focus: hsl(0 0 0 / 0.2);
   /* also textured */
   --list-section-gradient-top: #cececf;
   --list-section-gradient-bottom: #bdbdbd;
@@ -53,15 +53,15 @@
   --navbar-gradient-mid: #e5e6e7;
   --navbar-gradient-bottom: #dddddd;
   --navbar-border-top-color: #cecece;
-  --navbar-shadow-color: rgba(0, 0, 0, 0.2);
+  --navbar-shadow-color: hsl(0 0 0 / 0.2);
   --nav-tab-selected-bg-gradient-light: #cecece;
   --nav-tab-selected-bg-gradient-dark: #949495;
   --nav-tab-font-color: #474747;
 
   --emboss-top-color: #ffffff;
   --emboss-bottom-color: #c6c7c9;
-  --emboss-left-color: rgba(0, 0, 0, 0.2);
-  --emboss-right-color: rgba(255, 255, 255, 0.7);
+  --emboss-left-color: hsl(0 0 0 / 0.2);
+  --emboss-right-color: hsl(0 0 100% / 0.7);
   --emboss-border-style: var(--i-2px) solid;
   --emboss-border-left: var(--emboss-border-style) var(--emboss-left-color);
   --emboss-border-right: var(--emboss-border-style) var(--emboss-right-color);
