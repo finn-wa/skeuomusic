@@ -35,6 +35,7 @@ function Player() {
           <AlbumArt
             name="Channel Orange"
             srcset={[{ url: placeholderArt, width: 1280 }]}
+            reflectionClass="player-reflection"
           />
         </div>
         <PlaybackControlPanel />

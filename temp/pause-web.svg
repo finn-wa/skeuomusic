@@ -1,0 +1,42 @@
+<svg width="40px" height="48px" version="1.1" xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <linearGradient id="playback-icon-gradient" x1="0" x2="0" y1="8" y2="48">
+      <stop stop-color="#e0dfdf" offset="0" />
+      <stop stop-color="#969696" offset="1" />
+    </linearGradient>
+    <filter id="playback-icon-shadow">
+      <feOffset dx="0" dy="-2" result="offset" />
+      <feFlood flood-color="black" flood-opacity="0.95" />
+      <feComposite
+        in="color"
+        in2="offset"
+        operator="in"
+        result="playback-icon-shadow"
+      />
+      <feMerge>
+        <feMergeNode in="playback-icon-shadow" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  <title>Pause</title>
+  <g>
+    <rect
+      x="0"
+      y="2"
+      width="13"
+      height="46"
+      fill="url(#playback-icon-gradient)"
+      filter="url(#playback-icon-shadow)"
+    />
+    <rect
+      x="27"
+      y="2"
+      width="13"
+      height="46"
+      fill="url(#playback-icon-gradient)"
+      filter="url(#playback-icon-shadow)"
+    />
+  </g>
+</svg>

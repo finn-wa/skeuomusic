@@ -1,8 +1,12 @@
 import { Show, createSignal } from "solid-js";
 import styles from "./PlaybackControlPanel.module.css";
+import {
+  PlaybackControlPanelPause,
+  PlaybackControlPanelPlay,
+} from "./PlaybackControlPanelIcons";
 
 export function PlaybackControlPanel() {
-  const [playing, _setPlaying] = createSignal(false);
+  const [playing, setPlaying] = createSignal(false);
   return (
     <div class={`panel ${styles.background}`}>
       <fieldset class={styles.controls} aria-label="Playback controls">
@@ -16,9 +20,12 @@ export function PlaybackControlPanel() {
         <button
           class={`${styles["emboss-left"]} ${styles["emboss-right"]}`}
           aria-label={playing() ? "Pause" : "Play"}
+          onClick={() => setPlaying(!playing())}
           type="button"
         >
-          {playing() ? "⏸️" : "▶️"}
+          <Show when={playing()} fallback={<PlaybackControlPanelPlay />}>
+            <PlaybackControlPanelPause />
+          </Show>
         </button>
         <button
           class={styles["emboss-left"]}

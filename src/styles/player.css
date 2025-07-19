@@ -17,6 +17,10 @@
   background-color: #000;
 }
 
+.player-reflection {
+  mask-image: linear-gradient(to top, black, transparent 50%);
+}
+
 .art-container {
   flex: 1 1;
 }

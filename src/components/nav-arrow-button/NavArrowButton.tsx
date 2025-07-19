@@ -8,6 +8,7 @@ import {
   onMount,
 } from "solid-js";
 import { estimateTextWidth } from "~/lib/client/font-width";
+import { urlForId } from "~/lib/client/svg-utils";
 
 export type NavArrowButtonProps = ParentProps<{
   text?: string;
@@ -105,9 +106,9 @@ export default function NavArrowButton(initialProps: NavArrowButtonProps) {
           </defs>
           <use
             href={`#${arrowId}`}
-            clip-path={`url(#${clipId})`}
-            fill={`url(#${bgId})`}
-            filter={`url(#${shadowId})`}
+            clip-path={urlForId(clipId)}
+            fill={urlForId(bgId)}
+            filter={urlForId(shadowId)}
           />
         </svg>
       </Link>
