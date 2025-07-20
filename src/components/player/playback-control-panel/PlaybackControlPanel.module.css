@@ -1,31 +1,21 @@
 .background {
-  /* TO-DO: The panel overlay de-saturates the album art */
-  /* TO-DO: The panel overlay has a horiz gradient too, perhaps radial */
-  background: linear-gradient(to bottom, hsl(0 0 0), hsl(0 0 0 / 0.75));
-  /* Channel Orange at 50% opacity on a black bg */
-  --co50: rgb(119, 56, 22);
-  /* Screenshot samples top right */
-  --bg-top-right: rgb(37, 31, 28);
-  --bg-bot-right: rgb(28, 25, 23);
-
-  /* actually matches panel background, so should have a slight horizontal gradient */
-  border-top: calc(var(--i-2px)) solid hsl(0 0 0 / 0.6);
+  background:
+    linear-gradient(to bottom, hsl(0 0 0 / 0.55), hsl(0 0 0 / 0.7)),
+    radial-gradient(circle at top, hsl(0 0 100% / 0.05), hsl(0 0 100% / 0.025));
+  backdrop-filter: grayscale(80%);
+  border-top: 2px solid hsl(0 0 0 / 0.6);
   box-sizing: border-box;
 }
-
-/* 
-hsl(0 0 0 / 0.85),
-    hsl(0 0 0 / 0.9) */
 
 .controls {
   width: 100%;
   height: 100%;
   border: none;
-  border-top: var(--i-2px) solid;
+  border-top: 2px solid;
   border-image: linear-gradient(
       to right,
       hsl(0 0 100% / 0.1),
-      hsl(0 0 100% / 0.25),
+      hsl(0 0 100% / 0.35),
       hsl(0 0 100% / 0.1)
     )
     1;
@@ -46,12 +36,8 @@ hsl(0 0 0 / 0.85),
 }
 
 .emboss-left {
-  border-left: var(--i-2px) solid hsl(0 0 100% / 0.1);
+  border-left: 2px solid hsl(0 0 100% / 0.1);
 }
 .emboss-right {
-  border-right: var(--i-2px) solid hsl(0 0 0 / 0.9);
-}
-
-.controls:nth-child(1) {
-  border-right: var(--emboss-border-right);
+  border-right: 2px solid hsl(0 0 0 / 0.9);
 }

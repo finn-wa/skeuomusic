@@ -62,7 +62,7 @@
   --emboss-bottom-color: #c6c7c9;
   --emboss-left-color: hsl(0 0 0 / 0.2);
   --emboss-right-color: hsl(0 0 100% / 0.7);
-  --emboss-border-style: var(--i-2px) solid;
+  --emboss-border-style: 2px solid;
   --emboss-border-left: var(--emboss-border-style) var(--emboss-left-color);
   --emboss-border-right: var(--emboss-border-style) var(--emboss-right-color);
   --emboss-border-top: var(--emboss-border-style) var(--emboss-top-color);

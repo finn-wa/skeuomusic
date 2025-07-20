@@ -1,7 +1,7 @@
 import { Show } from "solid-js";
 import { urlForId } from "~/lib/client/svg-utils";
 
-const svgHeight = "40%";
+const svgHeight = "45%";
 const viewBox = (width: number) => `0 0 ${width} 39`;
 
 type IconDefIds = {

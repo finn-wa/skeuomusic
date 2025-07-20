@@ -7,6 +7,9 @@
   padding: 0;
   height: var(--panel-height);
   z-index: 1;
+  --x: hsl(20, 67%, 11%);
+  --x2: hsl(22, 67%, 11%);
+  --x3: hsl(22, 67%, 11%);
 }
 
 .player-container {

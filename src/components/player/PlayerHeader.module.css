@@ -6,7 +6,7 @@
   height: 3.625rem;
   flex: 0 0 auto;
   z-index: 2;
-  border-top: var(--i-2px) solid;
+  border-top: 2px solid;
   border-image: linear-gradient(
       to right,
       var(--player-header-border-gradient-low),
