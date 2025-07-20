@@ -1,9 +1,9 @@
 import styles from "./VolumeControlPanel.module.css";
 
 export function VolumeControlPanel() {
-  let knobElement!: HTMLDivElement;
+  let slider!: HTMLDivElement;
   function setKnobPosition(value: string) {
-    knobElement.style.left = `${value}%`;
+    slider.style.setProperty("--range-percent", `${value}%`);
   }
   function onInput(value: string) {
     setKnobPosition(value);
@@ -13,9 +13,11 @@ export function VolumeControlPanel() {
   }
   return (
     <div class={`panel ${styles.background}`}>
-      <div class={styles.slider}>
-        <div class={styles["knob-container"]}>
-          <div class={`${styles.knob}`} ref={knobElement} />
+      <div class={`${styles.slider} ${styles.volume}`} ref={slider}>
+        <div class={styles.icing}>
+          <div class={styles.track} />
+          <div class={styles.progress} />
+          <div class={styles.knob} />
         </div>
         <input
           type="range"
