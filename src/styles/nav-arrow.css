@@ -24,6 +24,13 @@
     --header-btn-gradient-bottom: var(--header-btn-secondary-gradient-bottom);
   }
 
+  &.player {
+    color: var(--header-btn-secondary-text-color);
+    text-shadow: var(--text-emboss-glow);
+    --header-btn-gradient-top: var(--player-btn-gradient-top);
+    --header-btn-gradient-bottom: var(--player-btn-gradient-bottom);
+  }
+
   &.left {
     padding-left: var(--spacer-3);
     padding-right: var(--spacer-2);

@@ -79,8 +79,11 @@
   --player-header-gradient-bottom: #050505;
   --player-header-title-color: #fff;
   --player-header-subtitle-color: #9f9f9f;
+  --player-header-btn-gradient-top: hsl(0, 0%, 13%);
+  --player-header-btn-gradient-bottom: hsl(0, 0%, 8%);
   --player-icon-gradient-top: #e0dfdf;
   --player-icon-gradient-bottom: #969696;
 
   --panel-height: 4.125rem;
+  --player-overlay-height: 5.75rem;
 }

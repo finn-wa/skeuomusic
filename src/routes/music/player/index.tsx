@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/solid-router";
+import { createSignal } from "solid-js";
 import placeholderArt from "~/assets/channel-orange-mockup.png";
 import { AlbumArt } from "~/components/album-art/AlbumArt";
-import { PlaybackControlOverlay } from "~/components/player/PlaybackControlOverlay";
 import { PlayerHeader } from "~/components/player/PlayerHeader";
+import { PlaybackControlOverlay } from "~/components/player/playback-control-overlay/PlaybackControlOverlay";
 import { PlaybackControlPanel } from "~/components/player/playback-control-panel/PlaybackControlPanel";
 import { VolumeControlPanel } from "~/components/player/volume-control-panel/VolumeControlPanel";
 
@@ -26,12 +27,21 @@ function Player() {
    * - full width
    * - but not ultra-stretched, perhaps a fixed max width
    */
+  const [isOverlayShown, setOverlayShown] = createSignal(true);
+
+  function toggleOverlay() {
+    setOverlayShown(!isOverlayShown());
+  }
   return (
     <div class="player-container">
-      <PlayerHeader />
+      <PlayerHeader onInfoClick={toggleOverlay} />
       <div class="content-frame">
         <div class="art-container">
-          <PlaybackControlOverlay show={false} />
+          <PlaybackControlOverlay
+            show={isOverlayShown()}
+            currentTrack={1}
+            totalTracks={17}
+          />
           <AlbumArt
             name="Channel Orange"
             srcset={[{ url: placeholderArt, width: 1280 }]}

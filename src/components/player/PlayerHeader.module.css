@@ -21,6 +21,11 @@
   );
 }
 
+.info {
+  background-color: transparent;
+  text-align: center;
+}
+
 .track-title {
   color: var(--player-header-title-color);
 }

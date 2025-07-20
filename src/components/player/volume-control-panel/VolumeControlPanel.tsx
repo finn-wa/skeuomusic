@@ -7,7 +7,9 @@ export function VolumeControlPanel() {
 
   return (
     <div class={`panel ${styles.background}`}>
-      <RangeInput value={volume} customClass={styles.volume} />
+      <div class={styles["volume-container"]}>
+        <RangeInput value={volume} customClass={styles.volume} />
+      </div>
     </div>
   );
 }

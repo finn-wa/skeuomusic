@@ -14,7 +14,7 @@ export type NavArrowButtonProps = ParentProps<{
   text?: string;
   href?: string;
   direction: "left" | "right";
-  kind?: "primary" | "secondary";
+  kind?: "primary" | "secondary" | "player";
   hide?: boolean;
 }>;
 

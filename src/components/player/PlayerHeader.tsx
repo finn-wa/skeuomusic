@@ -1,30 +1,41 @@
 import NavArrowButton from "../nav-arrow-button/NavArrowButton";
 import styles from "./PlayerHeader.module.css";
 
-export function PlayerHeader() {
+export type PlayerHeaderProps = {
+  onInfoClick: () => void;
+};
+
+export function PlayerHeader(props: PlayerHeaderProps) {
   return (
     <header class={styles.header}>
       <div class="header-button left">
         <NavArrowButton
           direction="left"
           text="<-"
-          kind="primary"
-          href="/music/player/library"
+          kind="player"
+          href="/music/library/albums"
         />
       </div>
 
-      <h1 class="h4 text-truncate">
-        <span class={styles["track-subtitle"]}>Artist</span>
-        <br />
-        <span class={styles["track-title"]}>Song</span>
-        <br />
-        <span class={styles["track-subtitle"]}>Album</span>
-      </h1>
+      <button
+        class={styles.info}
+        type="button"
+        onClick={() => props.onInfoClick()}
+        aria-label="Show/hide player controls"
+      >
+        <h1 class="h4 text-truncate">
+          <span class={styles["track-subtitle"]}>Artist</span>
+          <br />
+          <span class={styles["track-title"]}>Song</span>
+          <br />
+          <span class={styles["track-subtitle"]}>Album</span>
+        </h1>
+      </button>
 
       <div class="header-button right">
         <NavArrowButton
           direction="right"
-          kind="primary"
+          kind="player"
           text={"="}
           href="/music/player/menu"
         />

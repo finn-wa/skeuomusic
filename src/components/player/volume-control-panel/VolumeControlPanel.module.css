@@ -2,6 +2,12 @@
   background: linear-gradient(to bottom, hsl(0 0 0 / 0.8), hsl(0 0 0 / 0.9));
 }
 
+.volume-container {
+  flex: 1 1;
+  max-width: calc(var(--panel-height) * 4.4);
+  height: 2.5rem;
+}
+
 .volume {
   --track-border-top-width: 1px;
   --track-border-top-color: #282625;

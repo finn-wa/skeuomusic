@@ -1,7 +1,7 @@
 .slider {
   --range-percent: 50%;
   --knob-size: 2rem;
-  --track-height: calc(var(--knob-size) / 3);
+  --track-height: 0.75rem;
   --track-gradient-top: hsl(0 0 0 / 0.1);
   --track-gradient-bottom: hsl(0 0 0 / 0.05);
   --track-border-top-width: 0px;
@@ -13,8 +13,7 @@
   --progress-gradient-bottom: #949596;
 
   height: 100%;
-  flex: 1 1;
-  max-width: calc(var(--panel-height) * 4.4);
+  width: 100%;
   display: flex;
   align-items: center;
   position: relative;
