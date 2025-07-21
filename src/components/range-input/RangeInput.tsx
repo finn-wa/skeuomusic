@@ -1,4 +1,4 @@
-import { type Signal, createEffect, mergeProps, onMount } from "solid-js";
+import { type Signal, createEffect, mergeProps } from "solid-js";
 import styles from "./RangeInput.module.css";
 
 export type RangeInputProps = {

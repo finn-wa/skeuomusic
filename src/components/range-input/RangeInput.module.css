@@ -17,7 +17,6 @@
   display: flex;
   align-items: center;
   position: relative;
-  padding: 0 calc(var(--knob-size) / 4);
 
   .range {
     position: absolute;
