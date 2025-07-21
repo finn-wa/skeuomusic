@@ -86,4 +86,6 @@
 
   --panel-height: 4.125rem;
   --player-overlay-height: 5.75rem;
+  --player-overlay-track-number-color: #c1c1c1;
+  --player-overlay-track-timestamp-color: #adadad;
 }

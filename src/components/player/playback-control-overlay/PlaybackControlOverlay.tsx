@@ -1,5 +1,5 @@
 import { Show, createSignal } from "solid-js";
-import { RangeInput } from "~/components/range-input/RangeInput";
+import PlaybackTimeline from "../playback-timeline/PlaybackTimeline";
 import styles from "./PlaybackControlOverlay.module.css";
 
 export type PlaybackControlOverlayProps = {
@@ -15,17 +15,15 @@ export function PlaybackControlOverlay(props: PlaybackControlOverlayProps) {
       <div class={styles.outline}>
         <div class={styles.background}>
           <div class={styles.row}>
-            <small class={styles["track-number"]}>
+            <span class={`h4 ${styles["track-number"]}`}>
               {`${props.currentTrack} of ${props.totalTracks}`}
-            </small>
+            </span>
           </div>
-          <div class={`${styles.row} ${styles["timeline-container"]}`}>
-            <RangeInput
-              value={timestampSignal}
-              max={120}
-              customClass={styles.timeline}
-            />
-          </div>
+          <PlaybackTimeline
+            currentSeconds={timestampSignal}
+            playing={true}
+            totalSeconds={100}
+          />
         </div>
       </div>
     </Show>

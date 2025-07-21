@@ -37,20 +37,6 @@
 }
 
 .track-number {
-  color: var(--player-header-subtitle-color);
-}
-
-.timeline-container {
-  height: 2rem;
-  max-width: 100%;
-  margin: 0 1rem;
-}
-
-.timeline {
-  --track-border-top-width: 2px;
-  --track-border-top-color: hsl(0 0 0 / 0.9);
-  --track-gradient-top: hsl(0 0 45% / 0.95);
-  --track-gradient-bottom: hsl(0 0 15% / 0.95);
-  --knob-size: 1.5rem;
-  /* --track-border-side: 1px solid hsl(0 0 100% / 0.2); */
+  color: var(--player-overlay-track-number-color);
+  padding-top: 0.25rem;
 }

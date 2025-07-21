@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  margin: 0 1rem;
+}
+
+.timestamp {
+  color: var(--player-overlay-track-timestamp-color);
+  font-size: 0.875rem;
+  margin: 0.25rem 1rem;
+  flex: 0;
+  width: 2rem;
+}
+
+.timeline-container {
+  flex: 1 1;
+}
+
+.timeline {
+  --track-border-top-width: 2px;
+  --track-border-top-color: hsl(0 0 0 / 0.9);
+  --track-gradient-top: hsl(0 0 45% / 0.95);
+  --track-gradient-bottom: hsl(0 0 15% / 0.95);
+  --knob-size: 1.5rem;
+}
