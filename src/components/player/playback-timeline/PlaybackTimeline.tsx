@@ -63,7 +63,7 @@ export default function PlaybackTimeline(props: PlaybackTimelineProps) {
   });
   return (
     <div class={styles.container}>
-      <span class={styles.timestamp}>{currentTime()}</span>
+      <div class={`${styles.timestamp} ${styles.left}`}>{currentTime()}</div>
       <div class={styles["timeline-container"]}>
         <RangeInput
           value={props.currentSeconds}
@@ -71,7 +71,9 @@ export default function PlaybackTimeline(props: PlaybackTimelineProps) {
           customClass={styles.timeline}
         />
       </div>
-      <span class={styles.timestamp}>{`-${remainingTime()}`}</span>
+      <div class={`${styles.timestamp} ${styles.right}`}>
+        {`-${remainingTime()}`}
+      </div>
     </div>
   );
 }

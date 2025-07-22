@@ -6,13 +6,23 @@
 .timestamp {
   color: var(--player-overlay-track-timestamp-color);
   font-size: 0.875rem;
-  margin: 0.25rem 1rem;
-  flex: 0;
   width: 2rem;
+
+  &.left {
+    text-align: right;
+    margin-right: 0.5rem;
+  }
+
+  &.right {
+    text-align: left;
+    margin-left: 0.5rem;
+  }
 }
 
 .timeline-container {
   flex: 1 1;
+  display: flex;
+  align-items: center;
 }
 
 .timeline {

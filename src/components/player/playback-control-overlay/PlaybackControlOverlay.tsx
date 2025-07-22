@@ -21,7 +21,7 @@ export function PlaybackControlOverlay(props: PlaybackControlOverlayProps) {
           </div>
           <PlaybackTimeline
             currentSeconds={timestampSignal}
-            playing={true}
+            playing={false}
             totalSeconds={100}
           />
         </div>
