@@ -38,16 +38,19 @@ export function RangeInput(rawProps: RangeInputProps) {
 
   return (
     <div class={styles.slider} ref={slider}>
-      <div class={`${styles.icing} ${props.customClass ?? ""}`}>
-        <div class={styles.track} />
-        <div class={styles.progress} />
-        <div class={styles.knob} />
+      <div class={`${props.customClass ?? ""} ${styles.wh100}`}>
+        <div class={`${styles.track} ${styles.wh100}`} />
+        <div class={`${styles.progress} ${styles.wh100}`} />
+        <div class={styles.bounds}>
+          <div class={styles.knob} />
+        </div>
       </div>
+
       <input
         type="range"
         min={props.min}
         max={props.max}
-        class={styles.range}
+        class={`${styles.range} ${styles.wh100}`}
         onInput={(e) => onRangeInputEvent(e)}
         onChange={(e) => onRangeChangeEvent(e)}
       />

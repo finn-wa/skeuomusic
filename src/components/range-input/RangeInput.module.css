@@ -1,3 +1,13 @@
+.wh100 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+}
+
 .slider {
   --range-percent: 50%;
   --knob-size: 2rem;
@@ -16,34 +26,17 @@
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   position: relative;
 
   .range {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: 0;
-    padding: 0;
-    width: 100%;
     opacity: 0;
   }
 
-  .icing {
-    pointer-events: none;
-    flex: 1 1;
-    position: relative;
-    height: 100%;
-  }
-
   .track {
+    pointer-events: none;
     height: var(--track-height);
-    position: absolute;
     top: calc(50% - (var(--track-height) / 2));
-    bottom: 0;
-    left: 0;
-    right: 0;
     background: linear-gradient(
       to bottom,
       var(--track-gradient-top),
@@ -59,8 +52,8 @@
   }
 
   .progress {
+    pointer-events: none;
     height: var(--track-height);
-    position: absolute;
     top: calc(50% - (var(--track-height) / 2) + var(--track-border-top-width));
     left: 0;
     width: var(--range-percent);
@@ -72,13 +65,21 @@
     border-radius: 999px;
   }
 
+  /* Sets size of the element and bounds for knob movement */
+  .bounds {
+    pointer-events: none;
+    flex: 1 1;
+    position: relative;
+    height: 100%;
+    margin: 0 calc(var(--knob-size) / 2);
+  }
+
   .knob {
     pointer-events: none;
     position: absolute;
     top: calc(50% - (var(--knob-size) / 2));
     bottom: 0;
     left: var(--range-percent);
-    right: 0;
     /* Three gradients to achieve the metal knob look:
    * 1. A soft lightened border
    * 2. Light shine effect in quadrants 
