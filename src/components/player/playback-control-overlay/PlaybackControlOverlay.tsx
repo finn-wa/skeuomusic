@@ -1,5 +1,6 @@
 import { Show, createSignal } from "solid-js";
 import { RepeatIcon } from "~/components/icons/RepeatIcon";
+import { ShuffleIcon } from "~/components/icons/ShuffleIcon";
 import PlaybackTimeline from "../playback-timeline/PlaybackTimeline";
 import styles from "./PlaybackControlOverlay.module.css";
 
@@ -28,6 +29,7 @@ export function PlaybackControlOverlay(props: PlaybackControlOverlayProps) {
           />
           <div class={`${styles["shuffle-repeat"]} ${styles.row}`}>
             <RepeatIcon height="28px" />
+            <ShuffleIcon height="28px" />
           </div>
         </div>
       </div>
