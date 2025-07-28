@@ -1,4 +1,5 @@
 import { Show, createSignal } from "solid-js";
+import { RepeatIcon } from "~/components/icons/RepeatIcon";
 import PlaybackTimeline from "../playback-timeline/PlaybackTimeline";
 import styles from "./PlaybackControlOverlay.module.css";
 
@@ -8,6 +9,7 @@ export type PlaybackControlOverlayProps = {
   totalTracks: number;
 };
 
+// TODO: I think this is actually three columns, convert to grid layout
 export function PlaybackControlOverlay(props: PlaybackControlOverlayProps) {
   const timestampSignal = createSignal(10);
   return (
@@ -24,6 +26,9 @@ export function PlaybackControlOverlay(props: PlaybackControlOverlayProps) {
             playing={false}
             totalSeconds={100}
           />
+          <div class={`${styles["shuffle-repeat"]} ${styles.row}`}>
+            <RepeatIcon height="28px" />
+          </div>
         </div>
       </div>
     </Show>

@@ -30,7 +30,9 @@
     )
     1;
   box-sizing: border-box;
+  padding: 0 1rem;
 }
+
 .row {
   display: flex;
   justify-content: center;
@@ -39,4 +41,9 @@
 .track-number {
   color: var(--player-overlay-track-number-color);
   padding-top: 0.25rem;
+}
+
+.shuffle-repeat {
+  justify-content: space-between;
+  margin-top: 0.5rem;
 }

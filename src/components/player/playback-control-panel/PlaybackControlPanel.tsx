@@ -1,10 +1,12 @@
 import { createSignal } from "solid-js";
-import styles from "./PlaybackControlPanel.module.css";
+import { PlayPauseIcon } from "~/components/icons/PlayPauseIcon";
 import {
-  PlaybackControlPanelNext,
-  PlaybackControlPanelPlayPause,
-  PlaybackControlPanelPrev,
-} from "./PlaybackControlPanelIcons";
+  PlaybackNextIcon,
+  PlaybackPrevIcon,
+} from "../../icons/PlaybackPrevNextIcons";
+import styles from "./PlaybackControlPanel.module.css";
+
+const iconHeight = "45%";
 
 export function PlaybackControlPanel() {
   const [playing, setPlaying] = createSignal(false);
@@ -16,7 +18,7 @@ export function PlaybackControlPanel() {
           aria-label="Previous track"
           type="button"
         >
-          <PlaybackControlPanelPrev />
+          <PlaybackPrevIcon height={iconHeight} />
         </button>
         <button
           class={`${styles["emboss-left"]} ${styles["emboss-right"]}`}
@@ -24,14 +26,14 @@ export function PlaybackControlPanel() {
           onClick={() => setPlaying(!playing())}
           type="button"
         >
-          <PlaybackControlPanelPlayPause playing={playing()} />
+          <PlayPauseIcon playing={playing()} height={iconHeight} />
         </button>
         <button
           class={styles["emboss-left"]}
           aria-label="Next track"
           type="button"
         >
-          <PlaybackControlPanelNext />
+          <PlaybackNextIcon height={iconHeight} />
         </button>
       </fieldset>
     </div>
