@@ -19,7 +19,10 @@ export type NavArrowButtonProps = ParentProps<{
 }>;
 
 export default function NavArrowButton(initialProps: NavArrowButtonProps) {
-  const defaultProps = { kind: "secondary", hide: false };
+  const defaultProps: Partial<NavArrowButtonProps> = {
+    kind: "secondary",
+    hide: false,
+  };
   const props = mergeProps(defaultProps, initialProps);
   const [mounted, setMounted] = createSignal<boolean>(false);
   onMount(() => setMounted(true));
@@ -91,7 +94,11 @@ export default function NavArrowButton(initialProps: NavArrowButtonProps) {
             <filter id={shadowId} color-interpolation-filters="sRGB">
               <feOffset dx="0" dy="0.25" />
               <feGaussianBlur result="blur" stdDeviation="0.8" />
-              <feFlood flood-color="rgb(0,0,0)" result="flood" />
+              <feFlood
+                // TODO: Implement inner glow/shadow for player button
+                flood-color={props.kind === "player" ? "white" : "black"}
+                result="flood"
+              />
               <feComposite
                 in="flood"
                 in2="SourceGraphic"

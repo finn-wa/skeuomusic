@@ -7,7 +7,7 @@ export type PlayerHeaderProps = {
 
 export function PlayerHeader(props: PlayerHeaderProps) {
   return (
-    <header class={styles.header}>
+    <header class={`player-header ${styles.header}`}>
       <div class="header-button left">
         <NavArrowButton
           direction="left"

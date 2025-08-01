@@ -27,8 +27,8 @@
   &.player {
     color: var(--header-btn-secondary-text-color);
     text-shadow: var(--text-emboss-glow);
-    --header-btn-gradient-top: var(--player-btn-gradient-top);
-    --header-btn-gradient-bottom: var(--player-btn-gradient-bottom);
+    --header-btn-gradient-top: var(--player-header-btn-gradient-top);
+    --header-btn-gradient-bottom: var(--player-header-btn-gradient-bottom);
   }
 
   &.left {

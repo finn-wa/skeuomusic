@@ -9,6 +9,10 @@
   z-index: 1;
 }
 
+.player-header .nav-arrow-text {
+  text-shadow: var(--text-emboss-shadow);
+}
+
 .player-container {
   display: flex;
   flex: 1 1;

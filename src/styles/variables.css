@@ -21,6 +21,8 @@
   --header-btn-secondary-text-color: var(--header-font-color);
   --header-btn-secondary-gradient-top: #e8e8e8;
   --header-btn-secondary-gradient-bottom: #d3d3d3;
+  --header-btn-player-gradient-top: #1e1e1e;
+  --header-btn-player-gradient-bottom: #141414;
 
   --text-emboss-glow: 0px 1px 0px #fff;
   --text-emboss-shadow: 0px -1px 0px hsl(0 0 0 / 0.5);
@@ -79,8 +81,8 @@
   --player-header-gradient-bottom: #050505;
   --player-header-title-color: #fff;
   --player-header-subtitle-color: #9f9f9f;
-  --player-header-btn-gradient-top: hsl(0, 0%, 13%);
-  --player-header-btn-gradient-bottom: hsl(0, 0%, 8%);
+  --player-header-btn-gradient-top: #1e1e1e;
+  --player-header-btn-gradient-bottom: #141414;
   --player-icon-gradient-top: #e0dfdf;
   --player-icon-gradient-bottom: #969696;
 
