@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/solid-router";
 import { createSignal } from "solid-js";
 import { INITIAL_SCROLL_ID } from "~/lib/constants";
+import { NavTabMoreIcon } from "../icons/NavTabIcons";
 
 export interface TabButtonProps {
   route: string;
@@ -18,6 +19,7 @@ export default function NavTab(props: TabButtonProps) {
       onClick={() => setTimeout(() => setClicked(true), 0)}
     >
       <div class="tab-border">
+        <NavTabMoreIcon />
         <small>{props.label}</small>
       </div>
     </Link>
