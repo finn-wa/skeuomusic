@@ -1,15 +1,16 @@
 import { Link } from "@tanstack/solid-router";
-import { createSignal } from "solid-js";
+import { type FlowProps, children, createSignal } from "solid-js";
 import { INITIAL_SCROLL_ID } from "~/lib/constants";
-import { NavTabMoreIcon } from "../icons/NavTabIcons";
 
-export interface TabButtonProps {
+export type TabButtonProps = FlowProps<{
   route: string;
   label: string;
-}
+}>;
 
 export default function NavTab(props: TabButtonProps) {
   const [clicked, setClicked] = createSignal(false);
+  const icon = children(() => props.children);
+
   return (
     <Link
       to={props.route}
@@ -19,7 +20,7 @@ export default function NavTab(props: TabButtonProps) {
       onClick={() => setTimeout(() => setClicked(true), 0)}
     >
       <div class="tab-border">
-        <NavTabMoreIcon />
+        {icon()}
         <small>{props.label}</small>
       </div>
     </Link>
