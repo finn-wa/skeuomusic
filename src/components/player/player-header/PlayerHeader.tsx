@@ -1,4 +1,4 @@
-import NavArrowButton from "../nav-arrow-button/NavArrowButton";
+import NavArrowButton from "../../nav-arrow-button/NavArrowButton";
 import styles from "./PlayerHeader.module.css";
 
 export type PlayerHeaderProps = {
