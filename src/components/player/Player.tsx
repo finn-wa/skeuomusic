@@ -31,14 +31,10 @@ export function Player() {
   }
   return (
     <div class="player-container">
-      <PlayerHeader onInfoClick={toggleOverlay} />
+      <PlayerHeader song={state.song} onInfoClick={toggleOverlay} />
       <div class="content-frame">
         <div class="art-container">
-          <PlaybackControlOverlay
-            show={isOverlayShown()}
-            currentTrack={1}
-            totalTracks={17}
-          />
+          <PlaybackControlOverlay show={isOverlayShown()} />
           <AlbumArt
             name="Channel Orange"
             srcset={[{ url: placeholderArt, width: 1280 }]}

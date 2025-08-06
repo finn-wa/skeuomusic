@@ -1,8 +1,12 @@
+import { Show } from "solid-js";
+import { formatArtists } from "~/lib/client/music-utils";
+import type { Song } from "~/lib/types";
 import NavArrowButton from "../../nav-arrow-button/NavArrowButton";
 import styles from "./PlayerHeader.module.css";
 
 export type PlayerHeaderProps = {
   onInfoClick: () => void;
+  song: Song | null;
 };
 
 export function PlayerHeader(props: PlayerHeaderProps) {
@@ -24,11 +28,17 @@ export function PlayerHeader(props: PlayerHeaderProps) {
         aria-label="Show/hide player controls"
       >
         <h1 class="h4 text-truncate">
-          <span class={styles["track-subtitle"]}>Artist</span>
-          <br />
-          <span class={styles["track-title"]}>Song</span>
-          <br />
-          <span class={styles["track-subtitle"]}>Album</span>
+          <Show when={props.song != null}>
+            <span class={styles["track-subtitle"]}>
+              {formatArtists(props.song!.artists)}
+            </span>
+            <br />
+            <span class={styles["track-title"]}>{props.song!.name}</span>
+            <br />
+            <span class={styles["track-subtitle"]}>
+              {props.song!.album.name}
+            </span>
+          </Show>
         </h1>
       </button>
 

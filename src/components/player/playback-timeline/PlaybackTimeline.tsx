@@ -10,6 +10,7 @@ type PlaybackTimelineProps = {
 };
 
 export default function PlaybackTimeline(props: PlaybackTimelineProps) {
+  // TODO: figure out how to get this from the store
   const [playedAt, setPlayedAt] = createSignal<{
     epochMs: number;
     trackMs: number;
