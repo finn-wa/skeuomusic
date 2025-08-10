@@ -12,9 +12,9 @@ export type Repeat = "off" | "track" | "context";
 
 export type PlayerState = {
   playing: boolean;
-  playedAt: { epochMs: number; trackMs: number } | null;
-  song: Song | null;
-  track: { current: number; total: number } | null;
+  playedAt?: { epochMs: number; trackMs: number };
+  song?: Song;
+  track?: { current: number; total: number };
   shuffle: boolean;
   repeat: Repeat;
   /** As a percentage (0-100) */
@@ -43,48 +43,78 @@ export function createPlayerStore(
     volume: 50,
   });
 
-  const updateState: {
-    [K in PlayerActionKind]: (action: PlayerActions[K]) => void;
+  type StateUpdateFn<T extends PlayerAction> = (action: T) => {
+    undo?: () => void;
+  };
+
+  const stateUpdaters: {
+    [K in PlayerActionKind]: StateUpdateFn<PlayerActions[K]>;
   } = {
     play: () => {
+      const fallback = state.playing;
       setState("playing", true);
+      return { undo: () => setState("playing", fallback) };
     },
     pause: () => {
+      const fallback = state.playing;
       setState("playing", false);
+      return { undo: () => setState("playing", fallback) };
     },
-    setSong: (action: PlayerActions["setSong"]) => {
+    setSong: (action) => {
+      const fallback = state.song == null ? null : { ...state.song };
       setState("song", action.song);
+      return { undo: () => setState("song", fallback) };
     },
-    setVolume: (action: PlayerActions["setVolume"]) => {
+    setVolume: (action) => {
+      const fallback = state.volume;
       setState("volume", action.volume);
+      return { undo: () => setState("volume", fallback) };
     },
     next: () => {
       // TODO: state change
+      return {};
     },
     previous: () => {
       // TODO: state change
+      return {};
     },
-    setRepeat: (action: PlayerActions["setRepeat"]) => {
+    setRepeat: (action) => {
+      const fallback = state.repeat;
       setState("repeat", action.repeat);
+      return { undo: () => setState("repeat", fallback) };
     },
-    setShuffle: (action: PlayerActions["setShuffle"]) => {
+    setShuffle: (action) => {
+      const fallback = state.shuffle;
       setState("shuffle", action.shuffle);
+      return { undo: () => setState("shuffle", fallback) };
     },
-    syncExternalState: (action: PlayerActions["syncExternalState"]) => {
+    syncExternalState: (action) => {
       setState(action.state);
+      return {};
     },
-    requestSync: () => {},
+    requestSync: () => ({}),
   };
 
   const dispatch = <T extends PlayerAction>(action: T) => {
     console.log("Action", action);
-    const stateUpdateHandler = updateState[action.kind] as (action: T) => void;
-    stateUpdateHandler(action);
-    client.onDispatch(action);
+    const updateState = stateUpdaters[action.kind] as StateUpdateFn<T>;
+    const update = updateState(action);
+    client.applyAction(action).then((result) => {
+      if (result.success) {
+        return;
+      }
+      console.error("Failed to apply action", action, result.error);
+      if (update.undo != null) {
+        console.log("Reverting action", action);
+        update.undo();
+      }
+    });
   };
-  const client = createClient((state) =>
-    dispatch(PlayerActionFactory.syncExternalState(state)),
-  );
 
-  return { state, dispatch, action: PlayerActionFactory };
+  const action = PlayerActionFactory;
+  const setStateFn = (state: PlayerState): void =>
+    dispatch(action.syncExternalState(state));
+  const client = createClient(setStateFn);
+
+  return { state, dispatch, action };
 }

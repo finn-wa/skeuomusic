@@ -122,9 +122,15 @@ export default function AlphabetList<T extends Item>(
                       </div>
                       <ul>
                         <For each={items()}>
-                          {({ key, value }) =>
-                            props.itemRenderer(value, !visibleItems().has(key))
-                          }
+                          {({ key, value }) => (
+                            // Wrap in JSX so it reacts to updates: https://docs.solidjs.com/reference/components/show#render-function
+                            <>
+                              {props.itemRenderer(
+                                value,
+                                !visibleItems().has(key),
+                              )}
+                            </>
+                          )}
                         </For>
                       </ul>
                     </li>

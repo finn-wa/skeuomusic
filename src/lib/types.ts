@@ -16,7 +16,7 @@ export type Artist = Item;
 export type Playlist = Item;
 
 export type Song = Item & {
-  album: { name: string };
+  album: Pick<Album, "id" | "name" | "images">;
   artists: { name: string }[];
   uri: string;
 };

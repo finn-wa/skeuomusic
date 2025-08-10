@@ -36,8 +36,8 @@ export function Player() {
         <div class="art-container">
           <PlaybackControlOverlay show={isOverlayShown()} />
           <AlbumArt
-            name="Channel Orange"
-            srcset={[{ url: placeholderArt, width: 1280 }]}
+            name={state.song?.album.name ?? "None"}
+            srcset={state.song?.album.images ?? []}
             reflectionClass="player-reflection"
           />
         </div>

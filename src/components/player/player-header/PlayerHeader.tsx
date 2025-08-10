@@ -6,7 +6,7 @@ import styles from "./PlayerHeader.module.css";
 
 export type PlayerHeaderProps = {
   onInfoClick: () => void;
-  song: Song | null;
+  song: Song | undefined;
 };
 
 export function PlayerHeader(props: PlayerHeaderProps) {

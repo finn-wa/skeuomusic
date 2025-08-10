@@ -14,7 +14,7 @@ export const Route = createFileRoute("/music/player/")({
 function PlayerRouteComponent() {
   const musicCtx = useMusicContext();
   const playerCtx = createPlayerStore((patchLocalState) =>
-    createSpotifyPlayerClient(musicCtx.spotify()!, patchLocalState),
+    createSpotifyPlayerClient(musicCtx.spotify, patchLocalState),
   );
   const [syncInterval, setSyncInterval] = createSignal<number | undefined>();
 

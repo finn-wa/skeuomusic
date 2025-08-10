@@ -13,13 +13,13 @@ export const Route = createFileRoute("/music")({
  * or it should just be a guard of some kind
  */
 export default function Music() {
-  // const navigate = useNavigate();
-  // const context = useContext(MusicContext);
-  // onMount(() => {
-  //   if (context?.spotify() == null) {
-  //     // TODO: handle re-auth without redirect
-  //     navigate({ to: "/redirect/spotify" });
-  //   }
-  // });
+  const navigate = useNavigate();
+  const context = useContext(MusicContext);
+  onMount(() => {
+    if (context?.spotify() == null) {
+      // TODO: handle re-auth without redirect
+      navigate({ to: "/redirect/spotify" });
+    }
+  });
   return <Outlet />;
 }
