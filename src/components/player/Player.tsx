@@ -1,4 +1,4 @@
-import { createSignal } from "solid-js";
+import { createSignal, onMount } from "solid-js";
 import placeholderArt from "~/assets/channel-orange-mockup.png";
 import { usePlayerContext } from "~/lib/player/player-context";
 import { AlbumArt } from "../album-art/AlbumArt";
@@ -8,7 +8,7 @@ import { PlayerHeader } from "./player-header/PlayerHeader";
 import { VolumeControlPanel } from "./volume-control-panel/VolumeControlPanel";
 
 export function Player() {
-  const { state, actions } = usePlayerContext();
+  const { state, action } = usePlayerContext();
   /**
    * TODO: album art needs to stop growing in width when it
    * starts to push the controls off the page.

@@ -1,7 +1,7 @@
 import { createContext, useContext } from "solid-js";
 import type { PlayerStore } from "./player-store";
 
-const PlayerContext = createContext<PlayerStore>();
+export const PlayerContext = createContext<PlayerStore>();
 
 export function usePlayerContext() {
   const ctx = useContext(PlayerContext);

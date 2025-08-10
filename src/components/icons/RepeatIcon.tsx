@@ -5,8 +5,9 @@ import {
   urlForId,
   viewBox,
 } from "~/lib/client/svg-utils";
+import type { Repeat } from "~/lib/player/player-store";
 
-export function RepeatIcon(props: { height: string }) {
+export function RepeatIcon(props: { height: string; state: Repeat }) {
   const ids = {
     ...getIconDefIds("repeat"),
     arrowId: "repeat-icon-arrow",

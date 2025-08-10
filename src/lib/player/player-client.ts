@@ -1,13 +1,11 @@
-import type { PlayerActions, PlayerState } from "./player-store";
-
-export type PlayerEffects = {
-  [K in keyof PlayerActions]: (
-    ...params: Parameters<PlayerActions[K]>
-  ) => Promise<void>;
-};
+import type { PlayerAction } from "./player-actions";
+import type { PlayerState } from "./player-store";
 
 export type PlayerClient = {
   /** Callbacks to perform side-effects when actions occur */
-  readonly effects: PlayerEffects;
-  getState(): Promise<PlayerState>;
+  readonly onDispatch: (action: PlayerAction) => Promise<void>;
 };
+
+export type CreatePlayerClientFn = (
+  patchLocalState: (state: Partial<PlayerState>) => void,
+) => PlayerClient;

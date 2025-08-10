@@ -1,6 +1,6 @@
 import { useNavigate } from "@tanstack/solid-router";
 import type { JSXElement } from "solid-js";
-import { For, Show, createSignal, mergeProps } from "solid-js";
+import { For, Show, createMemo, createSignal, mergeProps } from "solid-js";
 import { INITIAL_SCROLL_ID } from "~/lib/constants";
 import type { Item } from "~/lib/types";
 import ListItem from "../list-item/ListItem";
@@ -67,7 +67,7 @@ export default function AlphabetList<T extends Item>(
     (props.namePlural.substring(1) ?? "");
 
   /** Set of item keys that match the current query */
-  const visibleItems = () => {
+  const visibleItems = createMemo(() => {
     const query = search().trim().toUpperCase();
     const visible = new Set<string>();
     for (const item of sortedItems()) {
@@ -77,7 +77,7 @@ export default function AlphabetList<T extends Item>(
     }
     console.log({ query, visible });
     return visible;
-  };
+  });
 
   return (
     <>
