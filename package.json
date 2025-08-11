@@ -6,12 +6,15 @@
     "start": "vite start",
     "test": "vitest run",
     "test-watch": "vitest",
-    "test-ui": "vitest --ui"
+    "test-ui": "vitest --ui",
+    "spotify-api-client:update": "bun run spotify-api-client/download-spec.ts",
+    "spotify-api-client:generate": "openapi-generator-cli generate"
   },
   "type": "module",
   "sideEffects": false,
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@openapitools/openapi-generator-cli": "^2.21.4",
     "@solidjs/testing-library": "^0.8.10",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/user-event": "^14.6.1",
@@ -31,6 +34,7 @@
     "@tanstack/solid-router": "^1.121.12",
     "@tanstack/solid-router-devtools": "^1.121.12",
     "@tanstack/solid-start": "^1.121.12",
-    "solid-js": "^1.9.7"
+    "solid-js": "^1.9.7",
+    "spotify-api-client": "file:spotify-api-client/generated"
   }
 }
