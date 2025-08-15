@@ -17,7 +17,7 @@ export function PlaybackControlPanel() {
     <div class={`panel ${styles.background}`}>
       <fieldset class={styles.controls} aria-label="Playback controls">
         <button
-          class={styles["emboss-right"]}
+          class={`btn-shine ${styles["emboss-right"]}`}
           aria-label="Previous track"
           type="button"
           onClick={() => dispatch(action.previous())}
@@ -25,7 +25,7 @@ export function PlaybackControlPanel() {
           <PlaybackPrevIcon height={iconHeight} />
         </button>
         <button
-          class={`${styles["emboss-left"]} ${styles["emboss-right"]}`}
+          class={`btn-shine ${styles["emboss-left"]} ${styles["emboss-right"]} shine`}
           aria-label={state.playing ? "Pause" : "Play"}
           onClick={togglePlayPause}
           type="button"
@@ -33,7 +33,7 @@ export function PlaybackControlPanel() {
           <PlayPauseIcon playing={state.playing} height={iconHeight} />
         </button>
         <button
-          class={styles["emboss-left"]}
+          class={`btn-shine ${styles["emboss-left"]}`}
           aria-label="Next track"
           type="button"
           onClick={() => dispatch(action.next())}

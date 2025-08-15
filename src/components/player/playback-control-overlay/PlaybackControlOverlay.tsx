@@ -21,7 +21,6 @@ export function PlaybackControlOverlay(props: PlaybackControlOverlayProps) {
   const { state, action, dispatch } = usePlayerContext();
   const timestampSignal = createSignal(10);
 
-  // label: Repeat
   const repeatStates: RepeatState[] = [
     { current: "off", checked: "false", description: "Enable repeat" },
     { current: "context", checked: "true", description: "Enable repeat one" },

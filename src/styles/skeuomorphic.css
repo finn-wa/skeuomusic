@@ -9,3 +9,29 @@
   border-left: var(--emboss-border-left);
   border-right: var(--emboss-border-right);
 }
+
+.btn-shine {
+  position: relative;
+
+  &::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    transition: opacity ease-in-out 0.1s;
+    background: radial-gradient(
+      circle at center,
+      hsl(0 0 100%) 10%,
+      transparent 70%
+    );
+    content: '';
+  }
+  &:hover::after {
+    opacity: 0.1;
+  }
+  &:active::after {
+    opacity: 0.7;
+  }
+}
