@@ -8,6 +8,7 @@ export type PlayerActionKind =
   | "setVolume"
   | "next"
   | "previous"
+  | "seek"
   | "setRepeat"
   | "setShuffle"
   | "requestSync"
@@ -31,6 +32,7 @@ export const PlayerActionFactory = {
     kind: "setVolume",
     volume,
   }),
+  seek: (positionMs: number) => ({ kind: "seek", positionMs }),
   next: () => ({ kind: "next" }),
   previous: () => ({ kind: "previous" }),
   setRepeat: (repeat: Repeat) => ({ kind: "setRepeat", repeat }),

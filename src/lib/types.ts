@@ -1,4 +1,4 @@
-import type { Image, SimplifiedTrack } from "@spotify/web-api-ts-sdk";
+import type { Image } from "@spotify/web-api-ts-sdk";
 
 export type Item = {
   id: string;
@@ -19,6 +19,7 @@ export type Song = Item & {
   album: Pick<Album, "id" | "name" | "images">;
   artists: { name: string }[];
   uri: string;
+  durationMs: number;
 };
 
 export type Track = Item & {

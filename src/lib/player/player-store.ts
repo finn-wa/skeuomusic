@@ -6,7 +6,7 @@ import {
   type PlayerActionKind,
   type PlayerActions,
 } from "./player-actions";
-import type { CreatePlayerClientFn, PlayerClient } from "./player-client";
+import type { CreatePlayerClientFn } from "./player-client";
 
 export type Repeat = "off" | "track" | "context";
 
@@ -77,6 +77,11 @@ export function createPlayerStore(
     previous: () => {
       // TODO: state change
       return {};
+    },
+    seek: ({ positionMs }) => {
+      const fallback = state.playedAt;
+      setState("playedAt", { epochMs: Date.now(), trackMs: positionMs });
+      return { undo: () => setState("playedAt", fallback) };
     },
     setRepeat: (action) => {
       const fallback = state.repeat;

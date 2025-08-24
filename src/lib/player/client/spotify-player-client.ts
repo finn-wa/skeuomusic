@@ -35,7 +35,10 @@ export async function getSpotifyPlayerState(
     repeat: spotifyState.repeat_state as Repeat,
     shuffle: spotifyState.shuffle_state,
     // TODO: could be episode
-    song: spotifyState.item as Track,
+    song: {
+      ...(spotifyState.item as Track),
+      durationMs: spotifyState.item.duration_ms,
+    },
     track: {
       current: (spotifyState.item as Track).track_number,
       total: (spotifyState.item as Track).album.total_tracks,
@@ -83,8 +86,11 @@ export const SpotifyPlayerEffects: {
     await playerApi.addItemToPlaybackQueue(action.song.uri);
     await playerApi.skipToNext("");
   },
-  setVolume: async (playerApi, action) => {
-    await playerApi.setPlaybackVolume(action.volume);
+  setVolume: async (playerApi, { volume }) => {
+    await playerApi.setPlaybackVolume(volume);
+  },
+  seek: async (playerApi, { positionMs }) => {
+    await playerApi.seekToPosition(positionMs);
   },
   next: async (playerApi) => {
     await playerApi.skipToNext("");
@@ -92,11 +98,11 @@ export const SpotifyPlayerEffects: {
   previous: async (playerApi) => {
     await playerApi.skipToPrevious("");
   },
-  setRepeat: async (playerApi, action) => {
-    await playerApi.setRepeatMode(action.repeat);
+  setRepeat: async (playerApi, { repeat }) => {
+    await playerApi.setRepeatMode(repeat);
   },
-  setShuffle: async (playerApi, action) => {
-    await playerApi.togglePlaybackShuffle(action.shuffle);
+  setShuffle: async (playerApi, { shuffle }) => {
+    await playerApi.togglePlaybackShuffle(shuffle);
   },
 };
 

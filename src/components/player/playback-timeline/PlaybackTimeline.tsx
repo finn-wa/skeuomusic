@@ -1,74 +1,53 @@
-import { type Signal, createEffect, createSignal } from "solid-js";
+import { createEffect, createSignal, onCleanup } from "solid-js";
 import { RangeInput } from "~/components/range-input/RangeInput";
 import { formatTrackDuration } from "~/lib/client/music-utils";
+import { usePlayerContext } from "~/lib/player/player-context";
 import styles from "./PlaybackTimeline.module.css";
 
-type PlaybackTimelineProps = {
-  readonly currentSeconds: Signal<number>;
-  totalSeconds: number;
-  playing: boolean;
-};
+export default function PlaybackTimeline() {
+  const { state, action, dispatch } = usePlayerContext();
 
-export default function PlaybackTimeline(props: PlaybackTimelineProps) {
-  // TODO: figure out how to get this from the store
-  const [playedAt, setPlayedAt] = createSignal<{
-    epochMs: number;
-    trackMs: number;
-  } | null>(null);
-
-  const [timeSeconds, setTimeSeconds] = props.currentSeconds;
+  const [timeSeconds, setTimeSeconds] = createSignal(0);
   const currentTime = () => formatTrackDuration(timeSeconds() * 1000);
   const remainingTime = () =>
-    formatTrackDuration((props.totalSeconds - timeSeconds()) * 1000);
+    formatTrackDuration(state.song?.durationMs ?? 0 - timeSeconds() * 1000);
 
-  // ugly workaround for duplicate timers being created when hmr runs
+  const onSeek = (positionSecs: number) => {
+    dispatch(action.seek(positionSecs * 1000));
+  };
 
+  let timer: NodeJS.Timeout | number | undefined;
   createEffect(() => {
-    if (
-      props.playing &&
-      playedAt() == null &&
-      timeSeconds() < props.totalSeconds
-    ) {
-      setPlayedAt({
-        epochMs: Date.now(),
-        trackMs: timeSeconds() * 1000,
-      });
+    if (!state.playing) {
+      clearInterval(timer);
       return;
     }
-    if (!props.playing && playedAt() != null) {
-      setPlayedAt(null);
+    if (state.playedAt == null || state.song == null) {
+      return;
     }
+    if (timer != null) {
+      clearInterval(timer);
+    }
+    timer = setInterval(() => {
+      const calcTimeSeconds = Math.round(
+        (Date.now() - state.playedAt!.epochMs + state.playedAt!.trackMs) / 1000,
+      );
+      if (calcTimeSeconds > timeSeconds()) {
+        setTimeSeconds(calcTimeSeconds);
+      }
+    }, 1000);
+
+    onCleanup(() => clearInterval(timer));
   });
 
-  let timer: NodeJS.Timeout | number | null = null;
-  createEffect(() => {
-    const playedAtValue = playedAt();
-    if (playedAtValue != null && timer == null) {
-      const { epochMs, trackMs } = playedAtValue;
-      timer = setInterval(() => {
-        if (
-          timer != null &&
-          (timeSeconds() >= props.totalSeconds || !props.playing)
-        ) {
-          clearInterval(timer);
-          timer = null;
-          setPlayedAt(null);
-          return;
-        }
-        const calcTimeSeconds = (Date.now() - epochMs + trackMs) / 1000;
-        if (calcTimeSeconds > timeSeconds()) {
-          setTimeSeconds(timeSeconds() + 1);
-        }
-      }, 1000);
-    }
-  });
   return (
     <div class={styles.container}>
       <div class={`${styles.timestamp} ${styles.left}`}>{currentTime()}</div>
       <div class={styles["timeline-container"]}>
         <RangeInput
-          value={props.currentSeconds}
-          max={props.totalSeconds ?? 60}
+          value={timeSeconds()}
+          valueInput={onSeek}
+          max={Math.ceil((state.song?.durationMs ?? 0) / 1000)}
           customClass={styles.timeline}
         />
       </div>

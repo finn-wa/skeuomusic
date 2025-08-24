@@ -6,7 +6,7 @@ import {
   viewBox,
 } from "~/lib/client/svg-utils";
 
-export function ShuffleIcon(props: { height: string }) {
+export function ShuffleIcon(props: { height: string; shuffle: boolean }) {
   const ids = {
     ...getIconDefIds("shuffle"),
     arrow1: "shuffle-icon-arrow-1",

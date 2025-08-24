@@ -1,8 +1,9 @@
-import { type Signal, createEffect, mergeProps } from "solid-js";
+import { createEffect, mergeProps } from "solid-js";
 import styles from "./RangeInput.module.css";
 
 export type RangeInputProps = {
-  readonly value: Signal<number>;
+  readonly value: number;
+  readonly valueInput: (value: number) => void;
   min?: number;
   max?: number;
   /** Set CSS variables in this class to override appearance */
@@ -12,10 +13,9 @@ export type RangeInputProps = {
 // Used in volume control and audio bar (scrubbing)
 export function RangeInput(rawProps: RangeInputProps) {
   const props = mergeProps({ min: 0, max: 100 }, rawProps);
-  const [value, setValue] = props.value;
 
   createEffect(() => {
-    setKnobPosition(value());
+    setKnobPosition(props.value);
   });
 
   let slider!: HTMLDivElement;
@@ -27,13 +27,13 @@ export function RangeInput(rawProps: RangeInputProps) {
   }
 
   function onRangeInputEvent(event: { target: HTMLInputElement }) {
-    const value = Number.parseInt(event.target.value);
+    const value = Number.parseInt(event.target.value, 10);
     setKnobPosition(value);
   }
 
   function onRangeChangeEvent(event: { target: HTMLInputElement }) {
-    const value = Number.parseInt(event.target.value);
-    setValue(value);
+    const value = Number.parseInt(event.target.value, 10);
+    props.valueInput(value);
   }
 
   return (

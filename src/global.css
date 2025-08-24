@@ -54,4 +54,5 @@ button {
   font: inherit;
   color: var(--text-color);
   cursor: pointer;
+  background-color: transparent;
 }
