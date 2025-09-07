@@ -137,6 +137,8 @@ export function createPlayerStore(
       console.error("Failed to apply action", action, result.error);
       if (update.undo != null) {
         console.log("Reverting action", action);
+        // TODO: check if store was touched since action was dispatched
+        // if yes, do not undo
         update.undo();
       }
     });

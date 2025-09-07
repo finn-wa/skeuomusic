@@ -29,7 +29,9 @@ export default function PlaybackTimeline() {
 
   let timer: NodeJS.Timeout | number | undefined;
   const clearTimer = () => {
-    console.log(`clearing timer ${timer}`);
+    if (timer == null) {
+      return;
+    }
     clearInterval(timer);
     timer = undefined;
   };
@@ -54,7 +56,7 @@ export default function PlaybackTimeline() {
       setTimeMs(Date.now() - playedAt.epochMs + playedAt.trackMs);
     }, 1000);
 
-    onCleanup(clearTimer);
+    onCleanup(() => clearTimer());
   });
 
   return (
