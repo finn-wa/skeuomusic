@@ -15,18 +15,11 @@ export type PlayerActionKind =
   | "syncExternalState";
 
 export const PlayerActionFactory = {
-  play: () => ({
-    kind: "play",
-    undo: () => PlayerActionFactory.pause(),
-  }),
-  pause: () => ({
-    kind: "pause",
-    undo: () => PlayerActionFactory.play(),
-  }),
-  setSong: (song: Song | null) => ({
+  play: () => ({ kind: "play" }),
+  pause: () => ({ kind: "pause" }),
+  setSong: (song: Song | undefined) => ({
     kind: "setSong",
     song,
-    undo: () => PlayerActionFactory.setSong(null),
   }),
   setVolume: (volume: number) => ({
     kind: "setVolume",

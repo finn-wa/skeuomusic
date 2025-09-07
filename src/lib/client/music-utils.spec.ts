@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { HOURS_MS, MINS_MS, SECS_MS } from "../constants";
-import { formatTrackDuration } from "./music-utils";
+import { formatTrackTimeMs } from "./music-utils";
 
-describe(formatTrackDuration.name, () => {
+describe(formatTrackTimeMs.name, () => {
   function expectFormattedDuration(h = 0, m = 0, s = 0, ms = 0) {
     const durationMs = h * HOURS_MS + m * MINS_MS + s * SECS_MS + ms;
-    return expect(formatTrackDuration(durationMs));
+    return expect(formatTrackTimeMs(durationMs));
   }
 
   it("should format milliseconds into mm:ss", () => {

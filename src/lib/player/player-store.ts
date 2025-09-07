@@ -35,9 +35,9 @@ export function createPlayerStore(
 ): PlayerStore {
   const [state, setState] = createStore<PlayerState>({
     playing: false,
-    song: null,
-    track: null,
-    playedAt: null,
+    song: undefined,
+    track: undefined,
+    playedAt: undefined,
     repeat: "off",
     shuffle: false,
     volume: 50,
@@ -51,17 +51,43 @@ export function createPlayerStore(
     [K in PlayerActionKind]: StateUpdateFn<PlayerActions[K]>;
   } = {
     play: () => {
-      const fallback = state.playing;
+      const playingFallback = state.playing;
+      const playedAtFallback =
+        state.playedAt == null ? undefined : { ...state.playedAt };
       setState("playing", true);
-      return { undo: () => setState("playing", fallback) };
+      setState("playedAt", {
+        epochMs: Date.now(),
+        trackMs: state.playedAt?.trackMs ?? 0,
+      });
+      return {
+        undo: () => {
+          setState("playing", playingFallback);
+          setState("playedAt", playedAtFallback);
+        },
+      };
     },
     pause: () => {
-      const fallback = state.playing;
+      const playingFallback = state.playing;
+      const playedAtFallback =
+        state.playedAt == null ? undefined : { ...state.playedAt };
+
       setState("playing", false);
-      return { undo: () => setState("playing", fallback) };
+      if (state.playedAt != null) {
+        const epochMs = Date.now();
+        setState("playedAt", {
+          epochMs,
+          trackMs: state.playedAt.trackMs + (epochMs - state.playedAt.epochMs),
+        });
+      }
+      return {
+        undo: () => {
+          setState("playing", playingFallback);
+          setState("playedAt", playedAtFallback);
+        },
+      };
     },
     setSong: (action) => {
-      const fallback = state.song == null ? null : { ...state.song };
+      const fallback = state.song == null ? undefined : { ...state.song };
       setState("song", action.song);
       return { undo: () => setState("song", fallback) };
     },

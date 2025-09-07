@@ -1,4 +1,4 @@
-import { formatTrackDuration } from "~/lib/client/music-utils";
+import { formatTrackTimeMs } from "~/lib/client/music-utils";
 import type { Track } from "~/lib/types";
 import styles from "./AlbumTrack.module.css";
 
@@ -14,7 +14,7 @@ export default function AlbumTrack(props: AlbumTrackProps) {
         <div class={`${styles.details} p-2 text-truncate emboss-x`}>
           <span class="text-truncate">{props.track.name}</span>
           <span class="subtitle text-truncate">
-            {formatTrackDuration(props.track.durationMs)}
+            {formatTrackTimeMs(props.track.durationMs)}
           </span>
         </div>
       </div>

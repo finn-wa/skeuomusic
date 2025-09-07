@@ -11,11 +11,12 @@ function leadingZero(minsOrSecs: number): string {
   return minsOrSecs >= 10 ? minsOrSecs.toString() : `0${minsOrSecs}`;
 }
 
-export function formatTrackDuration(durationMs: number) {
-  if (typeof durationMs !== "number") {
-    return "0:00";
-  }
+export function formatTrackTimeMs(durationMs: number) {
   const durationSecs = Math.round(durationMs / SECS_MS);
+  return formatTrackTimeSecs(durationSecs);
+}
+
+export function formatTrackTimeSecs(durationSecs: number) {
   const hours = Math.floor(durationSecs / HOURS_S) % 60;
   const mins = Math.floor(durationSecs / MINS_S) % 60;
   const secs = durationSecs % 60;

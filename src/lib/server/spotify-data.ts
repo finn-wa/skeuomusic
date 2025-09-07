@@ -96,5 +96,6 @@ export const getSongs = createServerFn({ method: "GET" })
       artists: track.artists.map((artist) => ({ name: artist.name })),
       album: track.album,
       uri: track.uri,
+      durationMs: track.duration_ms,
     }));
   });

@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { tanstackStart } from "@tanstack/solid-start/plugin/vite";
-import { type ServerOptions, defineConfig } from "vite";
+import { defineConfig, type ServerOptions } from "vite";
 import solidPlugin from "vite-plugin-solid";
 import tsConfigPaths from "vite-tsconfig-paths";
 
@@ -27,7 +27,7 @@ requiredEnvVar(
   "This is required for session cookies. Generate a secret with this command: openssl rand -base64 32",
 );
 
-let https: ServerOptions["https"] = undefined;
+let https: ServerOptions["https"];
 if (booleanEnvVar(vars.httpsEnabled)) {
   const keyPath = requiredEnvVar(vars.httpsKeyPath);
   const certPath = requiredEnvVar(vars.httpsCertPath);
