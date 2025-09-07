@@ -8,6 +8,18 @@ export async function createSpotifyClient(
     import.meta.env.PUBLIC_SPOTIFY_CLIENT_ID,
     `${origin}/redirect/spotify`,
     SPOTIFY_SCOPES(),
+    {
+      deserializer: {
+        deserialize: (res) => {
+          // Spotify client always expects JSON when sometimes there are just strings
+          // The response type for these endpoints in the client is typically void
+          if (res.headers.get("content-type")?.startsWith("application/json")) {
+            return res.json();
+          }
+          return res.text();
+        },
+      },
+    },
   );
   const { authenticated, accessToken } = await client.authenticate();
   if (authenticated) {
