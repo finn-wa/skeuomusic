@@ -51,8 +51,8 @@ export function RangeInput(rawProps: RangeInputProps) {
         min={props.min}
         max={props.max}
         class={`${styles.range} ${styles.wh100}`}
-        onInput={(e) => onRangeInputEvent(e)}
-        onChange={(e) => onRangeChangeEvent(e)}
+        onInput={onRangeInputEvent}
+        onChange={onRangeChangeEvent}
       />
     </div>
   );
