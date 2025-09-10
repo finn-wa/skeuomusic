@@ -2,7 +2,6 @@ import { createEffect, createSignal, onCleanup } from "solid-js";
 import { RangeInput } from "~/components/range-input/RangeInput";
 import { formatTrackTimeSecs } from "~/lib/client/music-utils";
 import { usePlayerContext } from "~/lib/player/player-context";
-import styles from "./PlaybackTimeline.module.css";
 
 export default function PlaybackTimeline() {
   const { state, action, dispatch } = usePlayerContext();
@@ -60,21 +59,21 @@ export default function PlaybackTimeline() {
   });
 
   return (
-    <div class={styles.container}>
-      <div class={`${styles.timestamp} ${styles.left}`}>
+    <>
+      <div class="playback-timestamp time-current">
         {formatTrackTimeSecs(timeSecs())}
       </div>
-      <div class={styles["timeline-container"]}>
+      <div class="playback-timeline">
         <RangeInput
           value={timeSecs()}
           valueInput={onSeek}
           max={durationSecs()}
-          customClass={styles.timeline}
+          customClass="timeline-slider"
         />
       </div>
-      <div class={`${styles.timestamp} ${styles.right}`}>
+      <div class="playback-timestamp time-remaining">
         {`-${formatTrackTimeSecs(remainingTimeSecs())}`}
       </div>
-    </div>
+    </>
   );
 }

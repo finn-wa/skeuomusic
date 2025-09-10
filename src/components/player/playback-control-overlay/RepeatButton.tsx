@@ -22,6 +22,7 @@ export function RepeatButton() {
       aria-label="Repeat"
       aria-describedby="repeat-tooltip"
       onClick={nextRepeat}
+      class="playback-repeat"
     >
       <RepeatIcon height="28px" state={state.repeat} />
       <div id="repeat-tooltip" style={{ display: "none" }}>

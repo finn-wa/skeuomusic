@@ -1,5 +1,4 @@
-import { createSignal, onMount } from "solid-js";
-import placeholderArt from "~/assets/channel-orange-mockup.png";
+import { createSignal } from "solid-js";
 import { usePlayerContext } from "~/lib/player/player-context";
 import { AlbumArt } from "../album-art/AlbumArt";
 import { PlaybackControlOverlay } from "./playback-control-overlay/PlaybackControlOverlay";
@@ -8,30 +7,15 @@ import { PlayerHeader } from "./player-header/PlayerHeader";
 import { VolumeControlPanel } from "./volume-control-panel/VolumeControlPanel";
 
 export function Player() {
-  const { state, action } = usePlayerContext();
-  /**
-   * TODO: album art needs to stop growing in width when it
-   * starts to push the controls off the page.
-   *
-   * art size:
-   * - grows to fit the smallest of width and height
-   * - does not cause parent container to grow large and push
-   *    panels off-screen
-   * - ideally does not expand past max res
-   * - is centered in art-container vertically and horizontally
-   *
-   * buttons in panel:
-   * - full width
-   * - but not ultra-stretched, perhaps a fixed max width
-   */
+  const { state } = usePlayerContext();
   const [isOverlayShown, setOverlayShown] = createSignal(true);
 
-  function toggleOverlay() {
-    setOverlayShown(!isOverlayShown());
-  }
   return (
     <div class="player-container">
-      <PlayerHeader song={state.song} onInfoClick={toggleOverlay} />
+      <PlayerHeader
+        song={state.song}
+        onInfoClick={() => setOverlayShown(!isOverlayShown())}
+      />
       <div class="content-frame">
         <div class="art-container">
           <PlaybackControlOverlay show={isOverlayShown()} />

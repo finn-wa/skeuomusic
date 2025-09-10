@@ -12,7 +12,7 @@ export type RangeInputProps = {
 
 // Used in volume control and audio bar (scrubbing)
 export function RangeInput(rawProps: RangeInputProps) {
-  const props = mergeProps({ min: 0, max: 100 }, rawProps);
+  const props = mergeProps({ min: 0, max: 100, value: 0 }, rawProps);
 
   createEffect(() => {
     setKnobPosition(props.value);
@@ -22,7 +22,9 @@ export function RangeInput(rawProps: RangeInputProps) {
 
   function setKnobPosition(newValue: number) {
     const valueDecimal = (newValue - props.min) / (props.max - props.min);
-    const valuePercent = Math.round(valueDecimal * 100);
+    const valuePercent = Number.isNaN(valueDecimal)
+      ? 0
+      : Math.round(valueDecimal * 100);
     slider.style.setProperty("--range-percent", `${valuePercent}%`);
   }
 
