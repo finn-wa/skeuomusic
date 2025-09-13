@@ -1,18 +1,18 @@
-import { Link } from "@tanstack/solid-router";
+import { Link, useLocation } from "@tanstack/solid-router";
 import {
-  type ParentProps,
-  Show,
   createSignal,
   createUniqueId,
   mergeProps,
   onMount,
+  type ParentProps,
+  Show,
 } from "solid-js";
 import { estimateTextWidth } from "~/lib/client/font-width";
 import { urlForId } from "~/lib/client/svg-utils";
 
 export type NavArrowButtonProps = ParentProps<{
   text?: string;
-  href?: string;
+  href: string;
   direction: "left" | "right";
   kind?: "primary" | "secondary" | "player";
   hide?: boolean;
@@ -46,6 +46,7 @@ export default function NavArrowButton(initialProps: NavArrowButtonProps) {
     return cappedMin;
   };
   const width = () => svgPadding() + 24;
+  const currentLocation = useLocation({ select: (state) => state.href });
 
   const id = createUniqueId();
   const arrowId = `arrow-${id}`;
@@ -58,6 +59,8 @@ export default function NavArrowButton(initialProps: NavArrowButtonProps) {
     <Show when={!props.hide && props.text != null && props.href != null}>
       <Link
         to={props.href}
+        // biome-ignore lint/suspicious/noExplicitAny: Required for relative navigation to work
+        from={currentLocation() as any}
         class={`nav-arrow ${props.direction} ${props.kind} text-truncate`}
       >
         <span ref={textElement} class="nav-arrow-text text-truncate">
