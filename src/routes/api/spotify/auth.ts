@@ -1,11 +1,11 @@
-import type { AccessToken } from "@spotify/web-api-ts-sdk";
 import { createServerFileRoute } from "@tanstack/solid-start/server";
+import type { SpotifyAccessToken } from "spotify-api-client";
 import { useSpotifySession } from "~/lib/server/session";
 
 /** Receives postback from Spotify auth */
 export const ServerRoute = createServerFileRoute("/api/spotify/auth").methods({
   POST: async ({ request }) => {
-    const token: AccessToken | undefined = await request.json();
+    const token: SpotifyAccessToken | undefined = await request.json();
     if (
       token?.access_token == null ||
       token.refresh_token == null ||

@@ -1,4 +1,10 @@
-import type { PlaybackState, SpotifyApi, Track } from "@spotify/web-api-ts-sdk";
+import {
+  type CurrentlyPlayingContextObject,
+  type PlayerApi,
+  type SpotifyAuth,
+  spotifyPlayerApi,
+  type TrackObject,
+} from "spotify-api-client";
 import type {
   PlayerAction,
   PlayerActionKind,
@@ -8,17 +14,17 @@ import type { PlayerClient } from "../player-client";
 import type { PlayerState, Repeat } from "../player-store";
 
 export async function getSpotifyPlayerState(
-  playerApi: SpotifyApi["player"],
+  playerApi: PlayerApi,
 ): Promise<
   { success: true; state: PlayerState } | { success: false; error: unknown }
 > {
-  let spotifyState: PlaybackState;
+  let spotifyState: CurrentlyPlayingContextObject | null | undefined;
   try {
-    spotifyState = await playerApi.getPlaybackState();
+    spotifyState = await playerApi.getInformationAboutTheUsersCurrentPlayback();
   } catch (error) {
     return { success: false, error };
   }
-  if (spotifyState == null) {
+  if (spotifyState == null || spotifyState.currently_playing_type !== "track") {
     return {
       success: true,
       state: {
@@ -29,21 +35,31 @@ export async function getSpotifyPlayerState(
       },
     };
   }
+  const currentTrack = spotifyState.item as TrackObject;
+  const song: PlayerState["song"] = {
+    id: currentTrack.id!,
+    uri: currentTrack.uri!,
+    durationMs: currentTrack.duration_ms!,
+    name: currentTrack.name!,
+    album: currentTrack.album!,
+    artists:
+      currentTrack.artists == null
+        ? []
+        : currentTrack.artists.filter(
+            (artist): artist is { name: string } => artist.name != null,
+          ),
+  };
   const state: PlayerState = {
-    playedAt: { epochMs: Date.now(), trackMs: spotifyState.progress_ms },
-    playing: spotifyState.is_playing,
+    playedAt: { epochMs: Date.now(), trackMs: spotifyState.progress_ms ?? 0 },
+    playing: spotifyState.is_playing ?? false,
     repeat: spotifyState.repeat_state as Repeat,
-    shuffle: spotifyState.shuffle_state,
-    // TODO: could be episode
-    song: {
-      ...(spotifyState.item as Track),
-      durationMs: spotifyState.item.duration_ms,
-    },
+    shuffle: spotifyState.shuffle_state ?? false,
+    song,
     track: {
-      current: (spotifyState.item as Track).track_number,
-      total: (spotifyState.item as Track).album.total_tracks,
+      current: currentTrack.track_number ?? 0,
+      total: currentTrack.album?.total_tracks ?? 0,
     },
-    volume: spotifyState.device.volume_percent ?? 50,
+    volume: spotifyState.device?.volume_percent ?? 50,
   };
   return { success: true, state };
 }
@@ -54,70 +70,59 @@ type EffectActionKind = Exclude<
 >;
 
 type SpotifyPlayerEffect<K extends EffectActionKind> = (
-  playerApi: SpotifyApi["player"],
+  playerApi: PlayerApi,
   action: PlayerActions[K],
 ) => Promise<void>;
-
-async function ignoreParseError(request: () => Promise<void>): Promise<void> {
-  try {
-    await request();
-  } catch (error) {
-    if (Error.isError(error) && error.message.includes("JSON.parse")) {
-      // SDK expects JSON but API returns a plain string
-      return;
-    }
-    throw error;
-  }
-}
 
 export const SpotifyPlayerEffects: {
   [K in EffectActionKind]: SpotifyPlayerEffect<K>;
 } = {
-  play: async (playerApi) => {
-    await ignoreParseError(() => playerApi.startResumePlayback(""));
-  },
-  pause: async (playerApi) => {
-    await ignoreParseError(() => playerApi.pausePlayback(""));
-  },
+  play: async (playerApi) => playerApi.startAUsersPlayback(),
+  pause: async (playerApi) => playerApi.pauseAUsersPlayback(),
   setSong: async (playerApi, action) => {
     if (action.song == null) {
       return;
     }
-    await playerApi.addItemToPlaybackQueue(action.song.uri);
-    await playerApi.skipToNext("");
+    await playerApi.startAUsersPlayback({
+      startAUsersPlaybackRequest: { contextUri: action.song.uri },
+    });
   },
   setVolume: async (playerApi, { volume }) => {
-    await playerApi.setPlaybackVolume(volume);
+    await playerApi.setVolumeForUsersPlayback({ volumePercent: volume });
   },
   seek: async (playerApi, { positionMs }) => {
-    await playerApi.seekToPosition(positionMs);
+    await playerApi.seekToPositionInCurrentlyPlayingTrack({ positionMs });
   },
   next: async (playerApi) => {
-    await playerApi.skipToNext("");
+    await playerApi.skipUsersPlaybackToNextTrack();
   },
   previous: async (playerApi) => {
-    await playerApi.skipToPrevious("");
+    await playerApi.skipUsersPlaybackToPreviousTrack();
   },
   setRepeat: async (playerApi, { repeat }) => {
-    await playerApi.setRepeatMode(repeat);
+    await playerApi.setRepeatModeOnUsersPlayback({ state: repeat });
   },
   setShuffle: async (playerApi, { shuffle }) => {
-    await playerApi.togglePlaybackShuffle(shuffle);
+    await playerApi.toggleShuffleForUsersPlayback({ state: shuffle });
   },
 };
 
 export function createSpotifyPlayerClient(
-  api: () => SpotifyApi | undefined,
+  getSpotifyAuth: () => SpotifyAuth | undefined,
   setState: (state: PlayerState) => void,
 ): PlayerClient {
   return {
     applyAction: async <T extends PlayerAction>(action: T) => {
-      const spotify = api();
-      if (spotify == null) {
-        throw new Error("spotify API is undefined");
+      const spotifyAuth = getSpotifyAuth();
+      if (spotifyAuth == null) {
+        throw new Error("spotifyAuth is undefined");
       }
+      if (action.kind === "syncExternalState") {
+        return { success: true };
+      }
+      const playerApi = spotifyPlayerApi(spotifyAuth);
       if (action.kind === "requestSync") {
-        const result = await getSpotifyPlayerState(spotify.player);
+        const result = await getSpotifyPlayerState(playerApi);
         if (result.success) {
           setState(result.state);
           return { success: true };
@@ -125,15 +130,12 @@ export function createSpotifyPlayerClient(
         console.error("Error getting Spotify playback state");
         return result;
       }
-      if (action.kind === "syncExternalState") {
-        return { success: true };
-      }
       try {
         const actionEffect = SpotifyPlayerEffects[action.kind] as (
-          playerApi: SpotifyApi["player"],
+          playerApi: PlayerApi,
           action: T,
         ) => Promise<void>;
-        await actionEffect(spotify.player, action);
+        await actionEffect(playerApi, action);
       } catch (error) {
         console.error("Error in SpotifyPlayerClient");
         return { success: false, error };

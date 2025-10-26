@@ -1,27 +1,23 @@
-import { SpotifyApi } from "@spotify/web-api-ts-sdk";
+import {
+  isEmptyAccessToken,
+  type SpotifyAuth,
+  spotifyAuthViaCodeWithPkce,
+} from "spotify-api-client";
 import { SPOTIFY_SCOPES } from "../constants";
 
-export async function createSpotifyClient(
+export async function initSpotifyAuth(
   origin = window.location.origin,
-): Promise<{ authenticated: boolean; client: SpotifyApi }> {
-  const client = SpotifyApi.withUserAuthorization(
-    import.meta.env.PUBLIC_SPOTIFY_CLIENT_ID,
-    `${origin}/redirect/spotify`,
-    SPOTIFY_SCOPES(),
-    {
-      deserializer: {
-        deserialize: (res) => {
-          // Spotify client always expects JSON when sometimes there are just strings
-          // The response type for these endpoints in the client is typically void
-          if (res.headers.get("content-type")?.startsWith("application/json")) {
-            return res.json();
-          }
-          return res.text();
-        },
-      },
-    },
-  );
-  const { authenticated, accessToken } = await client.authenticate();
+): Promise<{ authenticated: boolean; spotifyAuth: SpotifyAuth }> {
+  const spotifyAuth = spotifyAuthViaCodeWithPkce({
+    clientId: import.meta.env.PUBLIC_SPOTIFY_CLIENT_ID,
+    redirectUri: `${origin}/redirect/spotify`,
+    scopes: SPOTIFY_SCOPES(),
+  });
+  // trigger any redirects
+  const accessToken = await spotifyAuth.getOrCreateAccessToken();
+  const authenticated =
+    accessToken.expires! > Date.now() && !isEmptyAccessToken(accessToken);
+
   if (authenticated) {
     console.log("Posting access token to postback URL.");
     await fetch(`${origin}/api/spotify/auth`, {
@@ -32,5 +28,5 @@ export async function createSpotifyClient(
       body: JSON.stringify(accessToken),
     });
   }
-  return { authenticated, client };
+  return { authenticated, spotifyAuth };
 }

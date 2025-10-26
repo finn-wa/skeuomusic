@@ -1,8 +1,8 @@
 import { createFileRoute, useNavigate } from "@tanstack/solid-router";
-import { createEffect, useContext } from "solid-js";
+import { createEffect } from "solid-js";
 import { isServer } from "solid-js/web";
-import { MusicContext } from "~/lib/client/music-context";
-import { createSpotifyClient } from "~/lib/client/spotify-auth";
+import { useAuthContext } from "~/lib/client/auth-context";
+import { initSpotifyAuth } from "~/lib/client/spotify-auth";
 import { INITIAL_SCROLL_ID } from "~/lib/constants";
 
 export const Route = createFileRoute("/redirect/spotify")({
@@ -11,7 +11,7 @@ export const Route = createFileRoute("/redirect/spotify")({
 
 export default function SpotifyRedirect() {
   const navigate = useNavigate({ from: "/redirect/spotify" });
-  const ctx = useContext(MusicContext);
+  const ctx = useAuthContext();
 
   createEffect(async () => {
     if (isServer) {
@@ -22,10 +22,10 @@ export default function SpotifyRedirect() {
     }
 
     console.log("redirect: creating spotify instance");
-    const { client, authenticated } = await createSpotifyClient();
+    const { spotifyAuth, authenticated } = await initSpotifyAuth();
     if (authenticated) {
       console.log("redirect: auth success");
-      ctx.setSpotify(client);
+      ctx.setSpotifyAuth(spotifyAuth);
       return navigate({ to: "/music/library/albums", hash: INITIAL_SCROLL_ID });
     }
     console.log("redirect: auth failure");

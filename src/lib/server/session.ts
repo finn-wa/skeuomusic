@@ -1,8 +1,8 @@
-import type { AccessToken } from "@spotify/web-api-ts-sdk";
 import { useSession } from "@tanstack/solid-start/server";
+import type { SpotifyAccessToken } from "spotify-api-client";
 
 export type SpotifySession = {
-  token?: AccessToken & Required<Pick<AccessToken, "expires">>;
+  token?: SpotifyAccessToken & Required<Pick<SpotifyAccessToken, "expires">>;
 };
 
 export async function useSpotifySession() {

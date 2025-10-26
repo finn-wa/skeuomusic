@@ -1,5 +1,3 @@
-import type { Image } from "@spotify/web-api-ts-sdk";
-
 export type Item = {
   id: string;
   name: string;
@@ -7,7 +5,7 @@ export type Item = {
 
 export type Album = Item & {
   artists: { id: string; name: string }[];
-  images: Image[];
+  images: { url: string; width?: number | null }[];
   releaseDate: string;
 };
 

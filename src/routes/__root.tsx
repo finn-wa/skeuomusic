@@ -1,25 +1,24 @@
-import { Outlet, createRootRoute } from "@tanstack/solid-router";
-import { TanStackRouterDevtools } from "@tanstack/solid-router-devtools";
+import { createRootRoute, Outlet } from "@tanstack/solid-router";
+import { createSignal } from "solid-js";
+import type { SpotifyAuth } from "spotify-api-client";
+import appCss from "~/global.css?url";
+import { AuthContext } from "~/lib/client/auth-context";
 
 import "@fontsource-variable/inter";
-import type { SpotifyApi } from "@spotify/web-api-ts-sdk";
-import { createSignal } from "solid-js";
-import appCss from "~/global.css?url";
-import { MusicContext } from "~/lib/client/music-context";
 
 export const Route = createRootRoute({
   component: () => {
-    const [spotify, setSpotify] = createSignal<SpotifyApi>();
-    const context = {
-      spotify,
-      setSpotify,
+    const [spotifyAuth, setSpotifyAuth] = createSignal<SpotifyAuth>();
+    const context: AuthContext = {
+      spotifyAuth: spotifyAuth,
+      setSpotifyAuth: setSpotifyAuth,
     };
 
     return (
       <>
-        <MusicContext.Provider value={context}>
+        <AuthContext.Provider value={context}>
           <Outlet />
-        </MusicContext.Provider>
+        </AuthContext.Provider>
         {/* <TanStackRouterDevtools /> */}
       </>
     );

@@ -1,11 +1,12 @@
 import { Await, createFileRoute, defer } from "@tanstack/solid-router";
-import { ErrorBoundary, Suspense, useContext } from "solid-js";
+import { ErrorBoundary, Suspense } from "solid-js";
 import AlphabetList from "~/components/alphabet-list/AlphabetList";
 import SongListItem from "~/components/list-item/SongListItem";
 import { ErrorPage, LoadingPage } from "~/components/page-message/PageMessage";
-import { MusicContext } from "~/lib/client/music-context";
 import { PRELOAD_STALE_TIME, STALE_TIME } from "~/lib/constants";
+import { usePlayerContext } from "~/lib/player/player-context";
 import { getSongs } from "~/lib/server/spotify-data";
+import type { Song } from "~/lib/types";
 
 const title = "Songs";
 export const Route = createFileRoute("/music/library/songs")({
@@ -21,34 +22,31 @@ export const Route = createFileRoute("/music/library/songs")({
 
 export default function Songs() {
   const songs = Route.useLoaderData({ select: (ctx) => ctx.songs })();
-  const spotifyApi = useContext(MusicContext)?.spotify()!;
+  const player = usePlayerContext();
 
-  async function playSong(uri: string) {
-    console.log(`playing ${uri}`);
-    await spotifyApi.player.startResumePlayback("", undefined, [uri]);
+  function playSong(song: Song) {
+    player.dispatch(player.action.setSong(song));
   }
 
   return (
-    <>
-      <Suspense fallback={<LoadingPage />}>
-        <ErrorBoundary fallback={<ErrorPage message="Failed to load songs" />}>
-          <Await promise={songs} fallback={<ErrorPage />}>
-            {(resolvedSongs) => (
-              <AlphabetList
-                items={resolvedSongs}
-                namePlural="songs"
-                itemRenderer={(song, hide) => (
-                  <SongListItem
-                    song={song}
-                    hide={hide}
-                    click={() => playSong(song.uri)}
-                  />
-                )}
-              />
-            )}
-          </Await>
-        </ErrorBoundary>
-      </Suspense>
-    </>
+    <Suspense fallback={<LoadingPage />}>
+      <ErrorBoundary fallback={<ErrorPage message="Failed to load songs" />}>
+        <Await promise={songs} fallback={<ErrorPage />}>
+          {(resolvedSongs) => (
+            <AlphabetList
+              items={resolvedSongs}
+              namePlural="songs"
+              itemRenderer={(song, hide) => (
+                <SongListItem
+                  song={song}
+                  hide={hide}
+                  click={() => playSong(song)}
+                />
+              )}
+            />
+          )}
+        </Await>
+      </ErrorBoundary>
+    </Suspense>
   );
 }

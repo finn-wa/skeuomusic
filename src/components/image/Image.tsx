@@ -1,7 +1,7 @@
 import type { JSX } from "solid-js/jsx-runtime";
 
 type ImagePropOverrides = {
-  srcset: { width: number; url: string }[];
+  srcset: { width?: number | null; url: string }[];
   sizes?: string[] | string;
 };
 
@@ -15,7 +15,7 @@ export default function Image(props: ImageProps) {
   return (
     <img
       srcset={props.srcset
-        .map(({ width, url }) => `${url} ${width}w`)
+        .map(({ width, url }) => (width == null ? url : `${url} ${width}w`))
         .join(", ")}
       sizes={
         typeof props.sizes === "string" ? props.sizes : props.sizes?.join("\n")

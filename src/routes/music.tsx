@@ -1,6 +1,10 @@
-import { Outlet, createFileRoute, useNavigate } from "@tanstack/solid-router";
-import { onMount, useContext } from "solid-js";
-import { MusicContext } from "~/lib/client/music-context";
+import { createFileRoute, Outlet, useNavigate } from "@tanstack/solid-router";
+import { createSignal, onCleanup, onMount } from "solid-js";
+import { useAuthContext } from "~/lib/client/auth-context";
+import { SECS_MS } from "~/lib/constants";
+import { createSpotifyPlayerClient } from "~/lib/player/client/spotify-player-client";
+import { PlayerContext } from "~/lib/player/player-context";
+import { createPlayerStore } from "~/lib/player/player-store";
 
 export const Route = createFileRoute("/music")({
   component: Music,
@@ -14,12 +18,39 @@ export const Route = createFileRoute("/music")({
  */
 export default function Music() {
   const navigate = useNavigate();
-  const context = useContext(MusicContext);
+  const authCtx = useAuthContext();
+  const playerStore = createPlayerStore((patchLocalState) =>
+    createSpotifyPlayerClient(authCtx.spotifyAuth, patchLocalState),
+  );
+  const [syncInterval, setSyncInterval] = createSignal<number | undefined>();
+  const clearSyncInterval = () => {
+    const intervalRef = syncInterval();
+    if (intervalRef == null) {
+      return;
+    }
+    clearInterval(intervalRef);
+    setSyncInterval(undefined);
+  };
   onMount(() => {
-    if (context?.spotify() == null) {
+    const requestSync = () =>
+      playerStore.dispatch(playerStore.action.requestSync());
+    requestSync();
+
+    clearSyncInterval();
+    const newSyncInterval = setInterval(requestSync, 10 * SECS_MS);
+    setSyncInterval(newSyncInterval as unknown as number);
+    onCleanup(() => clearSyncInterval());
+  });
+
+  onMount(() => {
+    if (authCtx?.spotifyAuth() == null) {
       // TODO: handle re-auth without redirect
       navigate({ to: "/redirect/spotify" });
     }
   });
-  return <Outlet />;
+  return (
+    <PlayerContext.Provider value={playerStore}>
+      <Outlet />
+    </PlayerContext.Provider>
+  );
 }
