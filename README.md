@@ -14,14 +14,14 @@ I have fond memories of using it on my first smart device, the [4th generation i
 
 ### Current State
 
-Works as a janky Spotify library viewer.
+Works as a Spotify playback remote and limited library viewer.
 
 ### Goals
 
-- Implement the Now Playing view.
 - "Play Next" and "Play Last" queueing system. I had this functionality on my jailbroken iPod via [Cyueue](https://cydia.saurik.com/info/com.saurik.cyueue/), but I may decide to use a different UI.
 - Add support for local files. I'd support Apple Music if they didn't charge 100 USD for the privilege of using their API.
 
 ### Notes
 
+- Bun server capabilities: https://bun.com/blog/bun-v1.3
 - Useful for reverse-engineering colour opacity: https://codepen.io/quyenvsp/pen/jOLBBmX

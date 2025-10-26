@@ -56,7 +56,6 @@ export const getAlbum = createServerFn({ method: "GET" })
   .handler(async ({ context, data }): Promise<AlbumWithTracklist> => {
     const albumsApi = spotifyAlbumsApi(context.spotifyAuth);
     const response = await tryRequest(() => albumsApi.getAnAlbum({ id: data }));
-    console.log(response);
     return {
       id: response.id,
       name: response.name,
