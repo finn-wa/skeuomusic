@@ -22,28 +22,20 @@ export default function Artists() {
   const { artists } = Route.useLoaderData()();
 
   return (
-    <>
-      <Suspense fallback={<LoadingPage />}>
-        <ErrorBoundary
-          fallback={<ErrorPage message="Failed to load artists" />}
-        >
-          <Await promise={artists} fallback={<ErrorPage />}>
-            {(resolvedArtists) => (
-              <AlphabetList
-                items={resolvedArtists}
-                namePlural="artists"
-                itemRenderer={(item, hide) => (
-                  <ListItem
-                    name={item.name}
-                    hide={hide}
-                    href={`./${item.id}`}
-                  />
-                )}
-              />
-            )}
-          </Await>
-        </ErrorBoundary>
-      </Suspense>
-    </>
+    <Suspense fallback={<LoadingPage />}>
+      <ErrorBoundary fallback={<ErrorPage message="Failed to load artists" />}>
+        <Await promise={artists} fallback={<ErrorPage />}>
+          {(resolvedArtists) => (
+            <AlphabetList
+              items={resolvedArtists}
+              namePlural="artists"
+              itemRenderer={(item, hide) => (
+                <ListItem name={item.name} hide={hide} href={`./${item.id}`} />
+              )}
+            />
+          )}
+        </Await>
+      </ErrorBoundary>
+    </Suspense>
   );
 }

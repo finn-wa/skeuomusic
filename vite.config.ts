@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { tanstackStart } from "@tanstack/solid-start/plugin/vite";
 import { defineConfig, type ServerOptions } from "vite";
-import solidPlugin from "vite-plugin-solid";
+import viteSolid from "vite-plugin-solid";
 import tsConfigPaths from "vite-tsconfig-paths";
 
 import "dotenv/config";
@@ -49,8 +49,10 @@ export default defineConfig({
   envPrefix: "PUBLIC_",
   plugins: [
     tsConfigPaths({ projects: ["./tsconfig.json"] }),
-    tanstackStart(),
-    solidPlugin(),
+    tanstackStart({
+      spa: { enabled: true },
+    }),
+    viteSolid({ ssr: true }),
   ],
   css: {
     modules: {
