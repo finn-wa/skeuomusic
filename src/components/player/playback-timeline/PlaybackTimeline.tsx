@@ -1,10 +1,10 @@
 import { createEffect, createSignal, onCleanup } from "solid-js";
 import { RangeInput } from "~/components/range-input/RangeInput";
+import { useMusicContext } from "~/lib/client/music-context";
 import { formatTrackTimeSecs } from "~/lib/client/music-utils";
-import { usePlayerContext } from "~/lib/player/player-context";
 
 export default function PlaybackTimeline() {
-  const { state, action, dispatch } = usePlayerContext();
+  const { state, action, dispatch } = useMusicContext().playerStore;
 
   const [timeMs, setTimeMs] = createSignal(0);
   const durationSecs = () => {

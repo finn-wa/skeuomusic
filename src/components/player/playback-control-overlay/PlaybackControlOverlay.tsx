@@ -1,4 +1,4 @@
-import { usePlayerContext } from "~/lib/player/player-context";
+import { useMusicContext } from "~/lib/client/music-context";
 import PlaybackTimeline from "../playback-timeline/PlaybackTimeline";
 import { RepeatButton } from "./RepeatButton";
 import { ShuffleButton } from "./ShuffleButton";
@@ -8,7 +8,7 @@ export type PlaybackControlOverlayProps = {
 };
 
 export function PlaybackControlOverlay(props: PlaybackControlOverlayProps) {
-  const { state } = usePlayerContext();
+  const { state } = useMusicContext().playerStore;
   return (
     <div
       class="playback-controls-outline"

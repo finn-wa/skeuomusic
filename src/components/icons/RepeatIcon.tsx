@@ -1,11 +1,11 @@
 import { PlayerIconGradient } from "~/components/icons/IconDefs";
+import type { Repeat } from "~/lib/client/player/player-store";
 import {
   getIconDefIds,
   hrefForId,
   urlForId,
   viewBox,
 } from "~/lib/client/svg-utils";
-import type { Repeat } from "~/lib/player/player-store";
 
 export function RepeatIcon(props: { height: string; state: Repeat }) {
   const ids = {

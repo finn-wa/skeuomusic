@@ -1,7 +1,7 @@
 import { createSignal, onMount } from "solid-js";
 import { initSpotifyPlayer } from "spotify-api-client";
 import { useAuthContext } from "~/lib/client/auth-context";
-import { usePlayerContext } from "~/lib/player/player-context";
+import { useMusicContext } from "~/lib/client/music-context";
 import { AlbumArt } from "../album-art/AlbumArt";
 import { PlaybackControlOverlay } from "./playback-control-overlay/PlaybackControlOverlay";
 import { PlaybackControlPanel } from "./playback-control-panel/PlaybackControlPanel";
@@ -9,7 +9,7 @@ import { PlayerHeader } from "./player-header/PlayerHeader";
 import { VolumeControlPanel } from "./volume-control-panel/VolumeControlPanel";
 
 export function Player() {
-  const { state } = usePlayerContext();
+  const { state } = useMusicContext().playerStore;
   const auth = useAuthContext();
   const [isOverlayShown, setOverlayShown] = createSignal(true);
 

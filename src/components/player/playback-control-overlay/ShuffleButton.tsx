@@ -1,8 +1,8 @@
 import { ShuffleIcon } from "~/components/icons/ShuffleIcon";
-import { usePlayerContext } from "~/lib/player/player-context";
+import { useMusicContext } from "~/lib/client/music-context";
 
 export function ShuffleButton() {
-  const { state, action, dispatch } = usePlayerContext();
+  const { state, action, dispatch } = useMusicContext();
   const toggleShuffle = () => {
     dispatch(action.setShuffle(!state.shuffle));
   };

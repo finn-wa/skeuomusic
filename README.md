@@ -25,3 +25,19 @@ Works as a Spotify playback remote and limited library viewer.
 
 - Bun server capabilities: https://bun.com/blog/bun-v1.3
 - Useful for reverse-engineering colour opacity: https://codepen.io/quyenvsp/pen/jOLBBmX
+
+# plan
+
+- remove undo system, just retry or show error
+- store shouldn't need to create the client
+- it needs a listener system instead
+- requestSync shouldn't be needed, client can manage that
+- also passing setState callback seems unnecessary and a bit dodgy - client should just dispatch actions?
+- I think i was trying to isolate it from action dispatching to avoid loops, it doesn't need to dispatch actions apart from sync state
+
+setting up a client should be:
+
+- component injects the store (root store?)
+- component creates client and registers it as a listener
+- although there should probably only be one active listener at a time?
+  otherwise we get double ups in requests

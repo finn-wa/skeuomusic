@@ -1,5 +1,5 @@
 import { PlayPauseIcon } from "~/components/icons/PlayPauseIcon";
-import { usePlayerContext } from "~/lib/player/player-context";
+import { useMusicContext } from "~/lib/client/music-context";
 import {
   PlaybackNextIcon,
   PlaybackPrevIcon,
@@ -9,7 +9,7 @@ import styles from "./PlaybackControlPanel.module.css";
 const iconHeight = "45%";
 
 export function PlaybackControlPanel() {
-  const { state, action, dispatch } = usePlayerContext();
+  const { state, action, dispatch } = useMusicContext().playerStore;
   const togglePlayPause = () =>
     dispatch(state.playing ? action.pause() : action.play());
 

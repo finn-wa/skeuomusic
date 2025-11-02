@@ -1,5 +1,5 @@
 import { createStore } from "solid-js/store";
-import type { Song } from "../types";
+import type { Song } from "../../types";
 import {
   type PlayerAction,
   PlayerActionFactory,

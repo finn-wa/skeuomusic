@@ -3,8 +3,8 @@ import { ErrorBoundary, Suspense } from "solid-js";
 import AlphabetList from "~/components/alphabet-list/AlphabetList";
 import SongListItem from "~/components/list-item/SongListItem";
 import { ErrorPage, LoadingPage } from "~/components/page-message/PageMessage";
+import { useMusicContext } from "~/lib/client/music-context";
 import { PRELOAD_STALE_TIME, STALE_TIME } from "~/lib/constants";
-import { usePlayerContext } from "~/lib/player/player-context";
 import { getSongs } from "~/lib/server/spotify-data";
 import type { Song } from "~/lib/types";
 
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/music/library/songs")({
 
 export default function Songs() {
   const songs = Route.useLoaderData({ select: (ctx) => ctx.songs })();
-  const player = usePlayerContext();
+  const player = useMusicContext().playerStore;
 
   function playSong(song: Song) {
     player.dispatch(player.action.setSong(song));

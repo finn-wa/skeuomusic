@@ -1,9 +1,9 @@
 import { RangeInput } from "~/components/range-input/RangeInput";
-import { usePlayerContext } from "~/lib/player/player-context";
+import { useMusicContext } from "~/lib/client/music-context";
 import styles from "./VolumeControlPanel.module.css";
 
 export function VolumeControlPanel() {
-  const { state, action, dispatch } = usePlayerContext();
+  const { state, action, dispatch } = useMusicContext().playerStore;
 
   return (
     <div class={`panel ${styles.background}`}>

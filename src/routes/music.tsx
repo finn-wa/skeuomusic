@@ -1,10 +1,10 @@
 import { createFileRoute, Outlet, useNavigate } from "@tanstack/solid-router";
 import { createSignal, onCleanup, onMount } from "solid-js";
 import { useAuthContext } from "~/lib/client/auth-context";
+import { MusicContext } from "~/lib/client/music-context";
+import { createSpotifyPlayerClient } from "~/lib/client/player/client/spotify-player-client";
+import { createPlayerStore } from "~/lib/client/player/player-store";
 import { SECS_MS } from "~/lib/constants";
-import { createSpotifyPlayerClient } from "~/lib/player/client/spotify-player-client";
-import { PlayerContext } from "~/lib/player/player-context";
-import { createPlayerStore } from "~/lib/player/player-store";
 
 export const Route = createFileRoute("/music")({
   component: Music,
@@ -49,8 +49,8 @@ export default function Music() {
     }
   });
   return (
-    <PlayerContext.Provider value={playerStore}>
+    <MusicContext.Provider value={playerStore}>
       <Outlet />
-    </PlayerContext.Provider>
+    </MusicContext.Provider>
   );
 }

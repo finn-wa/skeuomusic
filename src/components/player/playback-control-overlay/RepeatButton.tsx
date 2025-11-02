@@ -1,9 +1,9 @@
 import { RepeatIcon } from "~/components/icons/RepeatIcon";
-import { usePlayerContext } from "~/lib/player/player-context";
-import type { Repeat } from "~/lib/player/player-store";
+import { useMusicContext } from "~/lib/client/music-context";
+import type { Repeat } from "~/lib/client/player/player-store";
 
 export function RepeatButton() {
-  const { state, action, dispatch } = usePlayerContext();
+  const { state, action, dispatch } = useMusicContext();
   const repeatOrder: Readonly<Repeat[]> = ["off", "context", "track"];
   const repeatDescription: Record<Repeat, string> = {
     off: "Enable repeat",

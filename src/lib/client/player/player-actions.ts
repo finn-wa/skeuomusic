@@ -1,4 +1,4 @@
-import type { Song } from "../types";
+import type { Song } from "../../types";
 import type { PlayerState, Repeat } from "./player-store";
 
 export type PlayerActionKind =
