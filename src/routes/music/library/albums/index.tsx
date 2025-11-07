@@ -21,26 +21,24 @@ export const Route = createFileRoute("/music/library/albums/")({
 export default function Albums() {
   const { albums } = Route.useLoaderData()();
   return (
-    <>
-      <Suspense fallback={<LoadingPage />}>
-        <ErrorBoundary fallback={<ErrorPage message="Failed to load albums" />}>
-          <Await promise={albums} fallback={<ErrorPage />}>
-            {(resolvedAlbums) => (
-              <AlphabetList
-                items={resolvedAlbums}
-                namePlural="albums"
-                itemRenderer={(album, hide) => (
-                  <AlbumListItem
-                    album={album}
-                    hide={hide}
-                    href={`./${album.id}`}
-                  />
-                )}
-              />
-            )}
-          </Await>
-        </ErrorBoundary>
-      </Suspense>
-    </>
+    <Suspense fallback={<LoadingPage />}>
+      <ErrorBoundary fallback={<ErrorPage message="Failed to load albums" />}>
+        <Await promise={albums} fallback={<ErrorPage />}>
+          {(resolvedAlbums) => (
+            <AlphabetList
+              items={resolvedAlbums}
+              namePlural="albums"
+              itemRenderer={(album, hide) => (
+                <AlbumListItem
+                  album={album}
+                  hide={hide}
+                  href={`./${album.id}`}
+                />
+              )}
+            />
+          )}
+        </Await>
+      </ErrorBoundary>
+    </Suspense>
   );
 }

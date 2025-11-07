@@ -1,5 +1,14 @@
-import { createFileRoute, Outlet, useNavigate } from "@tanstack/solid-router";
+import { createFileRoute, Outlet } from "@tanstack/solid-router";
 import { createSignal, onCleanup, onMount } from "solid-js";
+import {
+  initSpotifyPlayer,
+  type SpotifyPlayer,
+  spotifyAlbumsApi,
+  spotifyArtistsApi,
+  spotifyPlayerApi,
+  spotifyPlaylistsApi,
+  spotifyTracksApi,
+} from "spotify-api-client";
 import { useAuthContext } from "~/lib/client/auth-context";
 import { MusicContext } from "~/lib/client/music-context";
 import { createSpotifyPlayerClient } from "~/lib/client/player/client/spotify-player-client";
@@ -17,11 +26,51 @@ export const Route = createFileRoute("/music")({
  * or it should just be a guard of some kind
  */
 export default function Music() {
-  const navigate = useNavigate();
-  const authCtx = useAuthContext();
+  const { spotifyAuth } = useAuthContext();
+  const requiredSpotifyAuth = () => {
+    const auth = spotifyAuth();
+    if (auth == null) {
+      throw new Error("Spotify auth required but not present");
+    }
+    return auth;
+  };
+
   const playerStore = createPlayerStore((patchLocalState) =>
-    createSpotifyPlayerClient(authCtx.spotifyAuth, patchLocalState),
+    createSpotifyPlayerClient(spotifyAuth, patchLocalState),
   );
+
+  let spotifyPlayer: SpotifyPlayer | undefined;
+  const spotifyPlayerAccessor = () => {
+    if (spotifyPlayer == null) {
+      const SpotifyPlayer = initSpotifyPlayer(window);
+      spotifyPlayer = new SpotifyPlayer({
+        name: "skeuomusic",
+        getOAuthToken: (provideToken) => {
+          return requiredSpotifyAuth()
+            .getAccessToken()
+            .then((token) => {
+              provideToken(token!.access_token);
+            });
+        },
+        enableMediaSession: true,
+      });
+    }
+    return spotifyPlayer;
+  };
+
+  const musicContext: MusicContext = {
+    playerStore,
+    spotify: {
+      player: spotifyPlayerAccessor,
+      api: {
+        albums: () => spotifyAlbumsApi(requiredSpotifyAuth()),
+        artists: () => spotifyArtistsApi(requiredSpotifyAuth()),
+        player: () => spotifyPlayerApi(requiredSpotifyAuth()),
+        playlists: () => spotifyPlaylistsApi(requiredSpotifyAuth()),
+        tracks: () => spotifyTracksApi(requiredSpotifyAuth()),
+      },
+    },
+  };
   const [syncInterval, setSyncInterval] = createSignal<number | undefined>();
   const clearSyncInterval = () => {
     const intervalRef = syncInterval();
@@ -42,14 +91,8 @@ export default function Music() {
     onCleanup(() => clearSyncInterval());
   });
 
-  onMount(() => {
-    if (authCtx?.spotifyAuth() == null) {
-      // TODO: handle re-auth without redirect
-      navigate({ to: "/redirect/spotify" });
-    }
-  });
   return (
-    <MusicContext.Provider value={playerStore}>
+    <MusicContext.Provider value={musicContext}>
       <Outlet />
     </MusicContext.Provider>
   );

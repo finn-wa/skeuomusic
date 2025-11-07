@@ -1,18 +1,24 @@
 import { createRootRoute, Outlet } from "@tanstack/solid-router";
-import { createSignal } from "solid-js";
-import type { SpotifyAuth } from "spotify-api-client";
+import { createSignal, onMount, Show } from "solid-js";
 import appCss from "~/global.css?url";
 import { AuthContext } from "~/lib/client/auth-context";
 
 import "@fontsource-variable/inter";
+import type { SpotifyAuth } from "spotify-api-client";
+import { createSpotifyAuth } from "~/lib/client/spotify-auth";
 
 export const Route = createRootRoute({
+  context: () => {},
   component: () => {
-    const [spotifyAuth, setSpotifyAuth] = createSignal<SpotifyAuth>();
-    const context: AuthContext = {
-      spotifyAuth: spotifyAuth,
-      setSpotifyAuth: setSpotifyAuth,
-    };
+    const [spotifyAuth, setSpotifyAuth] = createSignal<
+      SpotifyAuth | undefined
+    >();
+    const context: AuthContext = { spotifyAuth, setSpotifyAuth };
+
+    onMount(() => {
+      const initialSpotifyAuth = createSpotifyAuth();
+      setSpotifyAuth(initialSpotifyAuth);
+    });
 
     return (
       <>
@@ -24,6 +30,19 @@ export const Route = createRootRoute({
     );
   },
   notFoundComponent: () => <div>404 Not Found</div>,
+  errorComponent: (error) => (
+    <div style={{ overflow: "auto", margin: "2rem" }}>
+      <h2>{`${error.error.name}: ${error.error.message}`}</h2>
+      <Show when={error.error.stack != null}>
+        <pre>{error.error.stack}</pre>
+      </Show>
+      <Show when={error.info?.componentStack != null}>
+        <h3>Component stack:</h3>
+        <p>{error.info!.componentStack}</p>
+      </Show>
+    </div>
+  ),
+
   head: () => ({
     meta: [
       { title: "skeuomusic" },

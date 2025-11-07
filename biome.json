@@ -6,7 +6,11 @@
   "linter": {
     "rules": {
       "style": {
-        "noNonNullAssertion": "off"
+        "noNonNullAssertion": "off",
+        "useConst": { "fix": "none", "level": "warn" }
+      },
+      "correctness": {
+        "noUnusedVariables": { "fix": "none", "level": "warn" }
       }
     }
   },

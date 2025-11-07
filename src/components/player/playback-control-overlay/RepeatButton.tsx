@@ -3,7 +3,7 @@ import { useMusicContext } from "~/lib/client/music-context";
 import type { Repeat } from "~/lib/client/player/player-store";
 
 export function RepeatButton() {
-  const { state, action, dispatch } = useMusicContext();
+  const { state, action, dispatch } = useMusicContext().playerStore;
   const repeatOrder: Readonly<Repeat[]> = ["off", "context", "track"];
   const repeatDescription: Record<Repeat, string> = {
     off: "Enable repeat",

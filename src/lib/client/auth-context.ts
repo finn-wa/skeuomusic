@@ -15,7 +15,7 @@ export const AuthContext = createContext<AuthContext>();
 
 export const useAuthContext = () => {
   const ctx = useContext(AuthContext);
-  if (!ctx) {
+  if (ctx == null) {
     throw new Error("AuthContext not found");
   }
   return ctx;
