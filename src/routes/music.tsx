@@ -12,32 +12,18 @@ import {
 import { useAuthContext } from "~/lib/client/auth-context";
 import { MusicContext } from "~/lib/client/music-context";
 import { createSpotifyPlayerClient } from "~/lib/client/player/client/spotify-player-client";
-import { createPlayerStore } from "~/lib/client/player/player-store";
+import { createPlayerStore } from "~/lib/client/player/store/player-store";
 import { SECS_MS } from "~/lib/constants";
 
 export const Route = createFileRoute("/music")({
   component: Music,
 });
 
-/**
- * Validates context for /music routes. There is probably a more idomatic way
- * to do this.
- * TODO: this should be a layout-only route, prevent navigation to /music
- * or it should just be a guard of some kind
- */
+/** Layout route that provides MusicContext */
 export default function Music() {
-  const { spotifyAuth } = useAuthContext();
-  const requiredSpotifyAuth = () => {
-    const auth = spotifyAuth();
-    if (auth == null) {
-      throw new Error("Spotify auth required but not present");
-    }
-    return auth;
-  };
+  const { requiredSpotifyAuth } = useAuthContext();
 
-  const playerStore = createPlayerStore((patchLocalState) =>
-    createSpotifyPlayerClient(spotifyAuth, patchLocalState),
-  );
+  const playerStore = createPlayerStore();
 
   let spotifyPlayer: SpotifyPlayer | undefined;
   const spotifyPlayerAccessor = () => {
@@ -71,6 +57,9 @@ export default function Music() {
       },
     },
   };
+  const playerClient = createSpotifyPlayerClient(musicContext);
+  playerStore.listeners.add(playerClient);
+
   const [syncInterval, setSyncInterval] = createSignal<number | undefined>();
   const clearSyncInterval = () => {
     const intervalRef = syncInterval();
@@ -80,6 +69,7 @@ export default function Music() {
     clearInterval(intervalRef);
     setSyncInterval(undefined);
   };
+
   onMount(() => {
     const requestSync = () =>
       playerStore.dispatch(playerStore.action.requestSync());
@@ -90,6 +80,8 @@ export default function Music() {
     setSyncInterval(newSyncInterval as unknown as number);
     onCleanup(() => clearSyncInterval());
   });
+
+  onCleanup(() => playerStore.listeners.remove(playerClient));
 
   return (
     <MusicContext.Provider value={musicContext}>

@@ -7,7 +7,7 @@ import type {
   SpotifyPlayer,
   TracksApi,
 } from "spotify-api-client";
-import type { PlayerStore } from "./player/player-store";
+import type { PlayerStore } from "./player/store/player-store";
 
 export type MusicContext = {
   playerStore: PlayerStore;

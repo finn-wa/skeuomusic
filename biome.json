@@ -10,7 +10,8 @@
         "useConst": { "fix": "none", "level": "warn" }
       },
       "correctness": {
-        "noUnusedVariables": { "fix": "none", "level": "warn" }
+        "noUnusedVariables": { "fix": "none", "level": "warn" },
+        "noUnusedPrivateClassMembers": { "fix": "none", "level": "warn" }
       }
     }
   },

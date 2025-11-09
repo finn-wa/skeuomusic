@@ -9,6 +9,7 @@ import type { SpotifyAuth } from "spotify-api-client";
 export type AuthContext = {
   spotifyAuth: Accessor<SpotifyAuth | undefined>;
   setSpotifyAuth: Setter<SpotifyAuth | undefined>;
+  requiredSpotifyAuth: Accessor<SpotifyAuth>;
 };
 
 export const AuthContext = createContext<AuthContext>();

@@ -1,5 +1,5 @@
-import type { PlayerAction } from "./player-actions";
-import type { PlayerState } from "./player-store";
+import type { PlayerAction } from "./store/player-actions";
+import type { PlayerState } from "./store/player-state";
 
 export type PlayerClient = {
   /** Callbacks to perform side-effects when actions occur */

@@ -1,6 +1,6 @@
 import { RepeatIcon } from "~/components/icons/RepeatIcon";
 import { useMusicContext } from "~/lib/client/music-context";
-import type { Repeat } from "~/lib/client/player/player-store";
+import type { Repeat } from "~/lib/client/player/store/player-state";
 
 export function RepeatButton() {
   const { state, action, dispatch } = useMusicContext().playerStore;

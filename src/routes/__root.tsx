@@ -13,7 +13,18 @@ export const Route = createRootRoute({
     const [spotifyAuth, setSpotifyAuth] = createSignal<
       SpotifyAuth | undefined
     >();
-    const context: AuthContext = { spotifyAuth, setSpotifyAuth };
+
+    const context: AuthContext = {
+      spotifyAuth,
+      setSpotifyAuth,
+      requiredSpotifyAuth: () => {
+        const auth = spotifyAuth();
+        if (auth == null) {
+          throw new Error("Spotify auth required but not present");
+        }
+        return auth;
+      },
+    };
 
     onMount(() => {
       const initialSpotifyAuth = createSpotifyAuth();

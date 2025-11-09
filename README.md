@@ -12,9 +12,11 @@ I have fond memories of using it on my first smart device, the [4th generation i
 - Written in SolidJS with TanStack Router.
 - Uses the Spotify API.
 
-### Current State
+### Features
 
-Works as a Spotify playback remote and limited library viewer.
+- Control Spotify playback
+- Play music in-browser
+- Browse library (currently only the first 50 items)
 
 ### Goals
 
@@ -26,18 +28,14 @@ Works as a Spotify playback remote and limited library viewer.
 - Bun server capabilities: https://bun.com/blog/bun-v1.3
 - Useful for reverse-engineering colour opacity: https://codepen.io/quyenvsp/pen/jOLBBmX
 
-# plan
+# To Do
 
-- remove undo system, just retry or show error
-- store shouldn't need to create the client
-- it needs a listener system instead
-- requestSync shouldn't be needed, client can manage that
-- also passing setState callback seems unnecessary and a bit dodgy - client should just dispatch actions?
-- I think i was trying to isolate it from action dispatching to avoid loops, it doesn't need to dispatch actions apart from sync state
-
-setting up a client should be:
-
-- component injects the store (root store?)
-- component creates client and registers it as a listener
-- although there should probably only be one active listener at a time?
+- add screenshots
+- pass player ID from playback sdk in if no active device
+- requestSync shouldn't be needed, client can manage that?
+- there should probably only be one active listener at a time?
   otherwise we get double ups in requests
+- scroll position memory for tab navigation
+- make login page pretty
+- make player component back arrow pretty
+- add local file playback

@@ -1,6 +1,9 @@
 import { redirect } from "@tanstack/solid-router";
 import { createMiddleware } from "@tanstack/solid-start";
-import { spotifyAuthViaProvidedAccessToken } from "spotify-api-client";
+import {
+  emptyAccessToken,
+  spotifyAuthViaProvidedAccessToken,
+} from "spotify-api-client";
 import { useSpotifySession } from "../server/session";
 
 export const spotifyApiMiddleware = createMiddleware({
@@ -13,6 +16,10 @@ export const spotifyApiMiddleware = createMiddleware({
   }
   const spotifyAuth = spotifyAuthViaProvidedAccessToken(session.data.token, {
     clientId: import.meta.env.PUBLIC_SPOTIFY_CLIENT_ID,
+    refreshTokenAction: async () => {
+      console.error("Cannot refresh token on server-side");
+      return emptyAccessToken;
+    },
   });
   return next({ context: { spotifyAuth } });
 });

@@ -1,5 +1,5 @@
 import { PlayerIconGradient } from "~/components/icons/IconDefs";
-import type { Repeat } from "~/lib/client/player/player-store";
+import type { Repeat } from "~/lib/client/player/store/player-state";
 import {
   getIconDefIds,
   hrefForId,

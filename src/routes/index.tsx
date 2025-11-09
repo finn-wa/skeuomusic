@@ -9,12 +9,10 @@ export const Route = createFileRoute("/")({
 
 export default function Home() {
   const navigate = useNavigate({ from: "/" });
-  const authContext = useAuthContext();
+  const spotifyAuth = useAuthContext().requiredSpotifyAuth;
 
   async function logInWithSpotify() {
-    const accessToken = await authContext
-      .spotifyAuth()
-      .getOrCreateAccessToken();
+    const accessToken = await spotifyAuth().getOrCreateAccessToken();
     if (isEmptyAccessToken(accessToken) || accessToken.expires! <= Date.now()) {
       console.log("home: user cancelled?");
     } else {

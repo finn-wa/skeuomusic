@@ -57,6 +57,7 @@ export default function PlaybackTimeline() {
 
     onCleanup(() => clearTimer());
   });
+  import.meta.hot?.dispose(() => clearTimer());
 
   return (
     <>
