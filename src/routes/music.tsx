@@ -1,7 +1,6 @@
 import { createFileRoute, Outlet } from "@tanstack/solid-router";
 import { createSignal, onCleanup, onMount } from "solid-js";
 import {
-  initSpotifyPlayer,
   type SpotifyPlayer,
   spotifyAlbumsApi,
   spotifyArtistsApi,
@@ -21,33 +20,19 @@ export const Route = createFileRoute("/music")({
 
 /** Layout route that provides MusicContext */
 export default function Music() {
-  const { requiredSpotifyAuth } = useAuthContext();
+  const authContext = useAuthContext();
+  const requiredSpotifyAuth = authContext.requiredSpotifyAuth;
 
   const playerStore = createPlayerStore();
-
-  let spotifyPlayer: SpotifyPlayer | undefined;
-  const spotifyPlayerAccessor = () => {
-    if (spotifyPlayer == null) {
-      const SpotifyPlayer = initSpotifyPlayer(window);
-      spotifyPlayer = new SpotifyPlayer({
-        name: "skeuomusic",
-        getOAuthToken: (provideToken) => {
-          return requiredSpotifyAuth()
-            .getAccessToken()
-            .then((token) => {
-              provideToken(token!.access_token);
-            });
-        },
-        enableMediaSession: true,
-      });
-    }
-    return spotifyPlayer;
-  };
+  const [spotifyPlayer, setSpotifyPlayer] = createSignal<
+    SpotifyPlayer | undefined
+  >();
 
   const musicContext: MusicContext = {
     playerStore,
     spotify: {
-      player: spotifyPlayerAccessor,
+      webPlayer: spotifyPlayer,
+      setWebPlayer: setSpotifyPlayer,
       api: {
         albums: () => spotifyAlbumsApi(requiredSpotifyAuth()),
         artists: () => spotifyArtistsApi(requiredSpotifyAuth()),
@@ -57,7 +42,10 @@ export default function Music() {
       },
     },
   };
-  const spotifyPlayerAdapter = createSpotifyPlayerAdapter(musicContext);
+  const spotifyPlayerAdapter = createSpotifyPlayerAdapter(
+    authContext,
+    musicContext,
+  );
   playerStore.listeners.add(spotifyPlayerAdapter);
 
   const [syncInterval, setSyncInterval] = createSignal<number | undefined>();
@@ -80,8 +68,6 @@ export default function Music() {
     setSyncInterval(newSyncInterval as unknown as number);
     onCleanup(() => clearSyncInterval());
   });
-
-  onCleanup(() => playerStore.listeners.remove(spotifyPlayerAdapter));
 
   return (
     <MusicContext.Provider value={musicContext}>

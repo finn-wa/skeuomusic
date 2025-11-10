@@ -24,6 +24,7 @@ export function createPlayerStore(): PlayerStore {
     repeat: "off",
     shuffle: false,
     volume: 50,
+    device: { kind: "none" },
   });
   const stateUpdater = new PlayerStateUpdater(state, setState);
   const listeners = new PlayerActionListenerManager();

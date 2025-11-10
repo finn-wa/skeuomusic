@@ -1,7 +1,10 @@
 import { createEffect, createSignal, onCleanup } from "solid-js";
 import { RangeInput } from "~/components/range-input/RangeInput";
 import { useMusicContext } from "~/lib/client/music-context";
-import { formatTrackTimeSecs } from "~/lib/client/music-utils";
+import {
+  formatTrackTimeSecs,
+  getCurrentTrackTime,
+} from "~/lib/client/music-utils";
 
 export default function PlaybackTimeline() {
   const { state, action, dispatch } = useMusicContext().playerStore;
@@ -48,11 +51,7 @@ export default function PlaybackTimeline() {
       if (playedAt == null || state.song == null) {
         return;
       }
-      if (!state.playing) {
-        setTimeMs(playedAt.trackMs);
-        return;
-      }
-      setTimeMs(Date.now() - playedAt.epochMs + playedAt.trackMs);
+      setTimeMs(getCurrentTrackTime(state.playing, playedAt));
     }, 1000);
 
     onCleanup(() => clearTimer());

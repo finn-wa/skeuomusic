@@ -1,5 +1,6 @@
 import { HOURS_S, MINS_MS, MINS_S, SECS_MS } from "../constants";
 import type { Track } from "../types";
+import type { PlayerState } from "./player/store/player-state";
 
 /** Returns the total runtime of the tracks in minutes */
 export function getRuntimeMins(tracks: Pick<Track, "durationMs">[]): number {
@@ -28,4 +29,14 @@ export function formatTrackTimeSecs(durationSecs: number) {
 
 export function formatArtists(artists: { name: string }[]): string {
   return artists.map((artist) => artist.name).join(", ");
+}
+
+export function getCurrentTrackTime(
+  playing: boolean,
+  playedAt: NonNullable<PlayerState["playedAt"]>,
+) {
+  if (playing) {
+    return Date.now() - playedAt.epochMs + playedAt.trackMs;
+  }
+  return playedAt.trackMs;
 }

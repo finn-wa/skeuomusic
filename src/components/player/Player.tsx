@@ -8,21 +8,15 @@ import { VolumeControlPanel } from "./volume-control-panel/VolumeControlPanel";
 
 export function Player() {
   const musicContext = useMusicContext();
-  const { state } = musicContext.playerStore;
+  const { state, dispatch, action } = musicContext.playerStore;
   const [isOverlayShown, setOverlayShown] = createSignal(true);
 
   onMount(async () => {
-    const player = musicContext.spotify.player();
-    player.addListener("ready", ({ device_id }) => {
-      console.log("Ready with Device ID", device_id);
-    });
-
-    player.addListener("not_ready", ({ device_id }) => {
-      console.log("Device ID has gone offline", device_id);
-    });
-    const success = await player.connect();
-    if (!success) {
-      throw new Error("Failed to connect to playback SDK");
+    if (
+      state.device.kind === "none" ||
+      (state.device.id == null && !state.device.local)
+    ) {
+      dispatch(action.setDevice({ kind: "spotify", local: true }));
     }
   });
 

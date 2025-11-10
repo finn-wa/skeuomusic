@@ -9,6 +9,17 @@ export type PlayerState = {
   repeat: Repeat;
   /** As a percentage (0-100) */
   volume: number;
+  device: PlaybackDevice;
 };
+
+export type PlaybackDevice =
+  | {
+      kind: "spotify";
+      local: boolean;
+      id?: string;
+    }
+  | {
+      kind: "none";
+    };
 
 export type Repeat = "off" | "track" | "context";

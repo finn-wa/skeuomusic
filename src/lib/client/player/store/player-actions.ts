@@ -1,5 +1,5 @@
 import type { Song } from "../../../types";
-import type { PlayerState, Repeat } from "./player-state";
+import type { PlaybackDevice, PlayerState, Repeat } from "./player-state";
 
 export type PlayerActionKind =
   | "play"
@@ -11,6 +11,7 @@ export type PlayerActionKind =
   | "seek"
   | "setRepeat"
   | "setShuffle"
+  | "setDevice"
   | "requestSync"
   | "syncExternalState";
 
@@ -30,6 +31,7 @@ export const PlayerActionFactory = {
   previous: () => ({ kind: "previous" }),
   setRepeat: (repeat: Repeat) => ({ kind: "setRepeat", repeat }),
   setShuffle: (shuffle: boolean) => ({ kind: "setShuffle", shuffle }),
+  setDevice: (device: PlaybackDevice) => ({ kind: "setDevice", device }),
   requestSync: () => ({ kind: "requestSync" }),
   syncExternalState: (state: Partial<PlayerState>) => ({
     kind: "syncExternalState",

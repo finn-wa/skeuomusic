@@ -23,13 +23,12 @@ I have fond memories of using it on my first smart device, the [4th generation i
 - "Play Next" and "Play Last" queueing system. I had this functionality on my jailbroken iPod via [Cyueue](https://cydia.saurik.com/info/com.saurik.cyueue/), but I may decide to use a different UI.
 - Add support for local files. I'd support Apple Music if they didn't charge 100 USD for the privilege of using their API.
 
-### Notes
-
-- Bun server capabilities: https://bun.com/blog/bun-v1.3
-- Useful for reverse-engineering colour opacity: https://codepen.io/quyenvsp/pen/jOLBBmX
-
 # To Do
 
+- play albums/playlists
+- check how changing spotify device externally behaves
+- fix HMR breaking playback sdk link
+- add "play on this device" button
 - add screenshots
 - pass player ID from playback sdk in if no active device
 - requestSync shouldn't be needed, client can manage that?
@@ -41,3 +40,8 @@ I have fond memories of using it on my first smart device, the [4th generation i
 - make player component back arrow pretty
 - add local file playback
 - fetch more spotify library items
+
+### Notes
+
+- Bun server capabilities: https://bun.com/blog/bun-v1.3
+- Useful for reverse-engineering colour opacity: https://codepen.io/quyenvsp/pen/jOLBBmX
