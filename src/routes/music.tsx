@@ -11,7 +11,7 @@ import {
 } from "spotify-api-client";
 import { useAuthContext } from "~/lib/client/auth-context";
 import { MusicContext } from "~/lib/client/music-context";
-import { createSpotifyPlayerClient } from "~/lib/client/player/client/spotify-player-client";
+import { createSpotifyPlayerAdapter } from "~/lib/client/player/adapter/spotify-player-adapter";
 import { createPlayerStore } from "~/lib/client/player/store/player-store";
 import { SECS_MS } from "~/lib/constants";
 
@@ -57,8 +57,8 @@ export default function Music() {
       },
     },
   };
-  const playerClient = createSpotifyPlayerClient(musicContext);
-  playerStore.listeners.add(playerClient);
+  const spotifyPlayerAdapter = createSpotifyPlayerAdapter(musicContext);
+  playerStore.listeners.add(spotifyPlayerAdapter);
 
   const [syncInterval, setSyncInterval] = createSignal<number | undefined>();
   const clearSyncInterval = () => {
@@ -81,7 +81,7 @@ export default function Music() {
     onCleanup(() => clearSyncInterval());
   });
 
-  onCleanup(() => playerStore.listeners.remove(playerClient));
+  onCleanup(() => playerStore.listeners.remove(spotifyPlayerAdapter));
 
   return (
     <MusicContext.Provider value={musicContext}>

@@ -33,9 +33,11 @@ I have fond memories of using it on my first smart device, the [4th generation i
 - add screenshots
 - pass player ID from playback sdk in if no active device
 - requestSync shouldn't be needed, client can manage that?
+- use playback sdk events for player store sync when active
 - there should probably only be one active listener at a time?
   otherwise we get double ups in requests
 - scroll position memory for tab navigation
 - make login page pretty
 - make player component back arrow pretty
 - add local file playback
+- fetch more spotify library items

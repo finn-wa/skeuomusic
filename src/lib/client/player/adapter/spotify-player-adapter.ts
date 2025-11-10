@@ -106,7 +106,7 @@ export const SpotifyPlayerEffects: {
   },
 };
 
-export function createSpotifyPlayerClient(
+export function createSpotifyPlayerAdapter(
   musicContext: MusicContext,
 ): PlayerActionListener {
   const { spotify, playerStore } = musicContext;
@@ -132,7 +132,7 @@ export function createSpotifyPlayerClient(
       ) => Promise<void>;
       await actionEffect(spotify.api.player(), action);
     } catch (error) {
-      console.error("Error in SpotifyPlayerClient");
+      console.error("Error in SpotifyPlayerAdapter");
       return { success: false, error };
     }
     return { success: true };
