@@ -31,7 +31,11 @@ export const PlayerActionFactory = {
   previous: () => ({ kind: "previous" }),
   setRepeat: (repeat: Repeat) => ({ kind: "setRepeat", repeat }),
   setShuffle: (shuffle: boolean) => ({ kind: "setShuffle", shuffle }),
-  setDevice: (device: PlaybackDevice) => ({ kind: "setDevice", device }),
+  setDevice: (device: PlaybackDevice, thenPlay?: Song) => ({
+    kind: "setDevice",
+    device,
+    thenPlay,
+  }),
   requestSync: () => ({ kind: "requestSync" }),
   syncExternalState: (state: Partial<PlayerState>) => ({
     kind: "syncExternalState",

@@ -97,6 +97,9 @@ class SpotifyPlayerAdapter {
     pause: () => this.playerApi().pauseAUsersPlayback(),
     setSong: (action) => {
       if (action.song == null) {
+        if (this.store.state.playing) {
+          this.store.dispatch(this.store.action.pause());
+        }
         return;
       }
       return this.playerApi().startAUsersPlayback({
@@ -199,7 +202,7 @@ class SpotifyPlayerAdapter {
     }
     if (device.id == null) {
       if (device.local) {
-        return this.initWebPlayer();
+        await this.initWebPlayer();
       }
       return this.disconnectFromSpotify();
     }

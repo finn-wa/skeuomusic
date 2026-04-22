@@ -25,6 +25,11 @@ I have fond memories of using it on my first smart device, the [4th generation i
 
 # To Do
 
+- manage current device in spotify-player-adapter
+  - should init local player if there is none
+  - figure out which actions require a device ID
+  - perhaps those actions will have to be saved for replay when device connects (i.e. setSong)
+  - or the UI prevents triggering those things until device is connected
 - play albums/playlists
 - check how changing spotify device externally behaves
 - fix HMR breaking playback sdk link
