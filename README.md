@@ -48,5 +48,4 @@ I have fond memories of using it on my first smart device, the [4th generation i
 
 ### Notes
 
-- Bun server capabilities: https://bun.com/blog/bun-v1.3
 - Useful for reverse-engineering colour opacity: https://codepen.io/quyenvsp/pen/jOLBBmX

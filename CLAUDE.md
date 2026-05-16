@@ -8,25 +8,25 @@ A skeuomorphic Spotify music player web app styled after iOS 6's Music app, buil
 
 ## Commands
 
-Uses **Bun** as the package manager (not npm/pnpm).
+Uses **pnpm** as the package manager.
 
 ```bash
-bun run dev          # Start HTTPS dev server on localhost:3000
-bun run build        # Vite build + TypeScript type-check (tsc --noEmit)
-bun run test         # Run tests once with Vitest
-bun run test-watch   # Vitest in watch mode
-bun run test-ui      # Vitest with browser UI
+pnpm run dev          # Start HTTPS dev server on localhost:3000
+pnpm run build        # Vite build + TypeScript type-check (tsc --noEmit)
+pnpm run test         # Run tests once with Vitest
+pnpm run test-ui      # Vitest with browser UI
 
 # Linting & formatting via Biome
-bunx biome check .
-bunx biome check --write .
+pnpm biome check .
+pnpm biome check --write .
 ```
 
-Run a single test file: `bun run test -- path/to/file.test.ts`
+Run a single test file: `pnpm run test -- path/to/file.test.ts`
 
 ## Environment setup
 
 Copy `.env.template` to `.env`. Required vars:
+
 - `PUBLIC_SPOTIFY_CLIENT_ID` — Spotify OAuth app client ID (exposed to client)
 - `SPOTIFY_CLIENT_SECRET` — Spotify OAuth secret (server-only)
 - `SESSION_SECRET` — generate with `openssl rand -base64 32`
@@ -39,6 +39,7 @@ The dev server runs on HTTPS because Spotify's Web Playback SDK requires a secur
 ### Routing (TanStack Start, file-based)
 
 `src/routes/` mirrors URL structure:
+
 - `__root.tsx` — root layout, provides `AuthContext`
 - `index.tsx` — login/landing page
 - `music.tsx` — authenticated app shell; creates and provides `MusicContext` (playerStore + Spotify APIs)
@@ -68,7 +69,7 @@ The dev server runs on HTTPS because Spotify's Web Playback SDK requires a secur
 ### Contexts
 
 - **`AuthContext`** (`src/lib/client/auth-context.ts`) — provided at root; manages `SpotifyAuth` token lifecycle
-- **`MusicContext`** (`src/lib/client/music-context.ts`) — provided in `music.tsx`; bundles `playerStore` and typed Spotify API accessors (`albums`, `artists`, `player`, `playlists`, `tracks`)
+- **`MusicContext`** (`src/lib/client/music-context.ts`) — provided in `music.tsx`; pnpmdles `playerStore` and typed Spotify API accessors (`albums`, `artists`, `player`, `playlists`, `tracks`)
 
 Use `useMusicContext()` / `useAuthContext()` inside components.
 
@@ -77,8 +78,8 @@ Use `useMusicContext()` / `useAuthContext()` inside components.
 `spotify-api-client/` is a local package generated from Spotify's OpenAPI spec. To regenerate:
 
 ```bash
-bun run spotify-api-client:update    # re-download spec
-bun run spotify-api-client:generate  # regenerate client code
+pnpm run spotify-api-client:update    # re-download spec
+pnpm run spotify-api-client:generate  # regenerate client code
 ```
 
 Import from `"spotify-api-client"` — path alias `~/*` maps to `./src/*`.
