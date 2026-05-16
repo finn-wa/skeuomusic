@@ -10,7 +10,7 @@ I have fond memories of using it on my first smart device, the [4th generation i
 ### Tech
 
 - Written in SolidJS with TanStack Router.
-- Uses the Spotify API.
+- Uses the Spotify API: Note this is likely broken due to Spotify's recent gutting of their public API.
 
 ### Features
 
