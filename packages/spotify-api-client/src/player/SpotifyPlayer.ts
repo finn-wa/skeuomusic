@@ -136,8 +136,8 @@ export function initSpotifyPlayer(
         enableMediaSession: options.enableMediaSession,
       };
       this.isLoaded = isLoaded.then(() => {
-        (msgDispatcher.listen(hostWindow, this._handleMessages),
-          this._sendMessage(messages.init(this._options)));
+        msgDispatcher.listen(hostWindow, this._handleMessages);
+        this._sendMessage(messages.init(this._options));
       });
     }
 

@@ -79,7 +79,7 @@ describe("GenericCache", () => {
       async () => {
         return { test: "test", expires: expiry };
       },
-      async (item) => {
+      async () => {
         return { test: "test2", expires: Date.now() + 10 * (60 * 1000) };
       },
     );
@@ -100,7 +100,7 @@ describe("GenericCache", () => {
       async () => {
         return { test: "test", expires: expiry };
       },
-      async (item) => {
+      async () => {
         throw new Error("Should not be called");
       },
     );
@@ -121,7 +121,7 @@ describe("GenericCache", () => {
       async () => {
         return { test: "test", expires: expiry };
       },
-      async (item) => {
+      async () => {
         return { test: "test2", expires: Date.now() + 10 * (60 * 1000) };
       },
     );
@@ -140,7 +140,7 @@ describe("GenericCache", () => {
       async () => {
         return { test: "test", expires: expiry };
       },
-      async (item) => {
+      async () => {
         throw new Error("Test error");
       },
     );
@@ -159,7 +159,7 @@ describe("GenericCache", () => {
       async () => {
         return { test: "test", expires: expiry };
       },
-      async (item) => {
+      async () => {
         throw new Error("Test error");
       },
     );
@@ -182,7 +182,7 @@ describe("GenericCache", () => {
       async () => {
         return { test: "test", expires: expiry };
       },
-      async (item) => {
+      async () => {
         renewCalled = true;
         throw new Error("Should not be called");
       },

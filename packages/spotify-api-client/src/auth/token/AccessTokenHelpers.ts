@@ -1,6 +1,5 @@
 import type { Cachable } from "../caching/types.js";
 import type { AccessToken } from "./AccessToken.js";
-import { Crypto } from "./Crypto.js";
 
 export async function refreshCachedAccessToken(
   clientId: string,
@@ -62,14 +61,11 @@ export function generateCodeVerifier(length: number) {
 
 export async function generateCodeChallenge(codeVerifier: string) {
   const data = new TextEncoder().encode(codeVerifier);
-  const digest = await Crypto.current.subtle.digest("SHA-256", data);
+  const digest = await window.crypto.subtle.digest("SHA-256", data);
 
   const digestBytes = [...new Uint8Array(digest)];
-  const hasBuffer = typeof Buffer !== "undefined";
 
-  const digestAsBase64 = hasBuffer
-    ? Buffer.from(digest).toString("base64")
-    : btoa(String.fromCharCode.apply(null, digestBytes));
+  const digestAsBase64 = btoa(String.fromCharCode.apply(null, digestBytes));
 
   return digestAsBase64
     .replace(/\+/g, "-")

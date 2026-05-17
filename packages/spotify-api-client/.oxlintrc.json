@@ -3,6 +3,5 @@
   "categories": {
     "correctness": "error"
   },
-  "options": { "typeAware": true, "typeCheck": true },
   "ignorePatterns": ["src/openapi/**", "openapi/client/**"]
 }
