@@ -27,16 +27,9 @@ import * as runtime from "../runtime";
 import type {
   EpisodeObject,
   GetAnAlbum401Response,
-  GetMultipleEpisodes200Response,
   PagingSavedEpisodeObject,
   PagingSimplifiedEpisodeObject,
-  RemoveEpisodesUserRequest,
-  SaveEpisodesUserRequest,
 } from "../models/index";
-
-export interface EpisodesApiCheckUsersSavedEpisodesRequest {
-  ids: string;
-}
 
 export interface EpisodesApiGetAShowsEpisodesRequest {
   id: string;
@@ -50,99 +43,13 @@ export interface EpisodesApiGetAnEpisodeRequest {
   market?: string;
 }
 
-export interface EpisodesApiGetMultipleEpisodesRequest {
-  ids: string;
-  market?: string;
-}
-
 export interface EpisodesApiGetUsersSavedEpisodesRequest {
   market?: string;
   limit?: number;
   offset?: number;
 }
 
-export interface EpisodesApiRemoveEpisodesUserOperationRequest {
-  ids: string;
-  removeEpisodesUserRequest?: RemoveEpisodesUserRequest;
-}
-
-export interface EpisodesApiSaveEpisodesUserOperationRequest {
-  ids: string;
-  saveEpisodesUserRequest?: SaveEpisodesUserRequest;
-}
-
 export class EpisodesApi extends runtime.BaseAPI {
-  /**
-   * Check if one or more episodes is already saved in the current Spotify
-   * user's 'Your Episodes' library. **Note:** This endpoint is deprecated. Use
-   * [Check User's Saved
-   * Items](/documentation/web-api/reference/check-library-contains) instead.
-   * Check User's Saved Episodes
-   *
-   * @deprecated
-   */
-  async checkUsersSavedEpisodesRaw(
-    requestParameters: EpisodesApiCheckUsersSavedEpisodesRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<Array<boolean>>> {
-    if (requestParameters["ids"] == null) {
-      throw new runtime.RequiredError(
-        "ids",
-        'Required parameter "ids" was null or undefined when calling checkUsersSavedEpisodes().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["ids"] != null) {
-      queryParameters["ids"] = requestParameters["ids"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["user-library-read"],
-      );
-    }
-
-    let urlPath = `/me/episodes/contains`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse<any>(response);
-  }
-
-  /**
-   * Check if one or more episodes is already saved in the current Spotify
-   * user's 'Your Episodes' library. **Note:** This endpoint is deprecated. Use
-   * [Check User's Saved
-   * Items](/documentation/web-api/reference/check-library-contains) instead.
-   * Check User's Saved Episodes
-   *
-   * @deprecated
-   */
-  async checkUsersSavedEpisodes(
-    requestParameters: EpisodesApiCheckUsersSavedEpisodesRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<Array<boolean>> {
-    const response = await this.checkUsersSavedEpisodesRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
   /**
    * Get Spotify catalog information about an show’s episodes. Optional
    * parameters can be used to limit the number of episodes returned. Get Show
@@ -284,75 +191,6 @@ export class EpisodesApi extends runtime.BaseAPI {
   }
 
   /**
-   * Get Spotify catalog information for several episodes based on their Spotify
-   * IDs. Get Several Episodes
-   *
-   * @deprecated
-   */
-  async getMultipleEpisodesRaw(
-    requestParameters: EpisodesApiGetMultipleEpisodesRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<GetMultipleEpisodes200Response>> {
-    if (requestParameters["ids"] == null) {
-      throw new runtime.RequiredError(
-        "ids",
-        'Required parameter "ids" was null or undefined when calling getMultipleEpisodes().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["ids"] != null) {
-      queryParameters["ids"] = requestParameters["ids"];
-    }
-
-    if (requestParameters["market"] != null) {
-      queryParameters["market"] = requestParameters["market"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["user-read-playback-position"],
-      );
-    }
-
-    let urlPath = `/episodes`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * Get Spotify catalog information for several episodes based on their Spotify
-   * IDs. Get Several Episodes
-   *
-   * @deprecated
-   */
-  async getMultipleEpisodes(
-    requestParameters: EpisodesApiGetMultipleEpisodesRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<GetMultipleEpisodes200Response> {
-    const response = await this.getMultipleEpisodesRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
    * Get a list of the episodes saved in the current Spotify user's library. Get
    * User's Saved Episodes
    */
@@ -412,141 +250,5 @@ export class EpisodesApi extends runtime.BaseAPI {
       initOverrides,
     );
     return await response.value();
-  }
-
-  /**
-   * Remove one or more episodes from the current user's library. **Note:** This
-   * endpoint is deprecated. Use [Remove Items from
-   * Library](/documentation/web-api/reference/remove-library-items) instead.
-   * Remove User's Saved Episodes
-   *
-   * @deprecated
-   */
-  async removeEpisodesUserRaw(
-    requestParameters: EpisodesApiRemoveEpisodesUserOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<void>> {
-    if (requestParameters["ids"] == null) {
-      throw new runtime.RequiredError(
-        "ids",
-        'Required parameter "ids" was null or undefined when calling removeEpisodesUser().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["ids"] != null) {
-      queryParameters["ids"] = requestParameters["ids"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    headerParameters["Content-Type"] = "application/json";
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["user-library-modify"],
-      );
-    }
-
-    let urlPath = `/me/episodes`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-        body: requestParameters["removeEpisodesUserRequest"],
-      },
-      initOverrides,
-    );
-
-    return new runtime.VoidApiResponse(response);
-  }
-
-  /**
-   * Remove one or more episodes from the current user's library. **Note:** This
-   * endpoint is deprecated. Use [Remove Items from
-   * Library](/documentation/web-api/reference/remove-library-items) instead.
-   * Remove User's Saved Episodes
-   *
-   * @deprecated
-   */
-  async removeEpisodesUser(
-    requestParameters: EpisodesApiRemoveEpisodesUserOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<void> {
-    await this.removeEpisodesUserRaw(requestParameters, initOverrides);
-  }
-
-  /**
-   * Save one or more episodes to the current user's library. **Note:** This
-   * endpoint is deprecated. Use [Save Items to
-   * Library](/documentation/web-api/reference/save-library-items) instead. Save
-   * Episodes for Current User
-   *
-   * @deprecated
-   */
-  async saveEpisodesUserRaw(
-    requestParameters: EpisodesApiSaveEpisodesUserOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<void>> {
-    if (requestParameters["ids"] == null) {
-      throw new runtime.RequiredError(
-        "ids",
-        'Required parameter "ids" was null or undefined when calling saveEpisodesUser().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["ids"] != null) {
-      queryParameters["ids"] = requestParameters["ids"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    headerParameters["Content-Type"] = "application/json";
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["user-library-modify"],
-      );
-    }
-
-    let urlPath = `/me/episodes`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PUT",
-        headers: headerParameters,
-        query: queryParameters,
-        body: requestParameters["saveEpisodesUserRequest"],
-      },
-      initOverrides,
-    );
-
-    return new runtime.VoidApiResponse(response);
-  }
-
-  /**
-   * Save one or more episodes to the current user's library. **Note:** This
-   * endpoint is deprecated. Use [Save Items to
-   * Library](/documentation/web-api/reference/save-library-items) instead. Save
-   * Episodes for Current User
-   *
-   * @deprecated
-   */
-  async saveEpisodesUser(
-    requestParameters: EpisodesApiSaveEpisodesUserOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<void> {
-    await this.saveEpisodesUserRaw(requestParameters, initOverrides);
   }
 }

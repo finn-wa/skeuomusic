@@ -2,9 +2,9 @@
 /* eslint-disable */
 /**
  * @export
- * @interface AddTracksToPlaylistRequest
+ * @interface AddItemsToPlaylistRequest
  */
-export interface AddTracksToPlaylistRequest {
+export interface AddItemsToPlaylistRequest {
   [key: string]: any | any;
   /**
    * A JSON array of the [Spotify
@@ -15,7 +15,7 @@ export interface AddTracksToPlaylistRequest {
    * be added in one request. _**Note**: if the `uris` parameter is present in
    * the query string, any URIs listed here in the body will be ignored._
    *
-   * @memberof AddTracksToPlaylistRequest
+   * @memberof AddItemsToPlaylistRequest
    * @type {string[]}
    */
   uris?: Array<string>;
@@ -28,7 +28,7 @@ export interface AddTracksToPlaylistRequest {
    * ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh","spotify:track:1301WleyT98MSxVHPZCA6M"],
    * "position": 3}`
    *
-   * @memberof AddTracksToPlaylistRequest
+   * @memberof AddItemsToPlaylistRequest
    * @type {number}
    */
   position?: number;
@@ -2925,42 +2925,6 @@ export interface ExternalUrlObject {
 }
 /**
  * @export
- * @interface FollowArtistsUsersRequest
- */
-export interface FollowArtistsUsersRequest {
-  [key: string]: any | any;
-  /**
-   * A JSON array of the artist or user [Spotify
-   * IDs](/documentation/web-api/concepts/spotify-uris-ids). For example:
-   * `{ids:["74ASZWbe4lXaubB36ztrGX", "08td7MxkoHQkXnWAYD8d6Q"]}`. A maximum of
-   * 50 IDs can be sent in one request. _**Note**: if the `ids` parameter is
-   * present in the query string, any IDs listed here in the body will be
-   * ignored._
-   *
-   * @memberof FollowArtistsUsersRequest
-   * @type {string[]}
-   */
-  ids: Array<string>;
-}
-/**
- * @export
- * @interface FollowPlaylistRequest
- */
-export interface FollowPlaylistRequest {
-  [key: string]: any | any;
-  /**
-   * Defaults to `true`. If `true` the playlist will be included in user's
-   * public playlists (added to profile), if `false` it will remain private. For
-   * more about public/private status, see [Working with
-   * Playlists](/documentation/web-api/concepts/playlists)
-   *
-   * @memberof FollowPlaylistRequest
-   * @type {boolean}
-   */
-  _public?: boolean;
-}
-/**
- * @export
  * @interface FollowersObject
  */
 export interface FollowersObject {
@@ -3004,93 +2968,6 @@ export interface GetAnAlbum401Response {
 }
 /**
  * @export
- * @interface GetAnArtistsTopTracks200Response
- */
-export interface GetAnArtistsTopTracks200Response {
-  /**
-   * @memberof GetAnArtistsTopTracks200Response
-   * @type {TrackObject[]}
-   */
-  tracks: Array<TrackObject>;
-}
-/**
- * @export
- * @interface GetAvailableMarkets200Response
- */
-export interface GetAvailableMarkets200Response {
-  /**
-   * @memberof GetAvailableMarkets200Response
-   * @type {string[]}
-   */
-  markets?: Array<string>;
-}
-/**
- * @export
- * @interface GetCategories200Response
- */
-export interface GetCategories200Response {
-  /**
-   * @memberof GetCategories200Response
-   * @type {GetCategories200ResponseCategories}
-   */
-  categories: GetCategories200ResponseCategories;
-}
-/**
- * @export
- * @interface GetCategories200ResponseCategories
- */
-export interface GetCategories200ResponseCategories {
-  /**
-   * A link to the Web API endpoint returning the full result of the request
-   *
-   * @memberof GetCategories200ResponseCategories
-   * @type {string}
-   */
-  href: string;
-  /**
-   * The maximum number of items in the response (as set in the query or by
-   * default).
-   *
-   * @memberof GetCategories200ResponseCategories
-   * @type {number}
-   */
-  limit: number;
-  /**
-   * URL to the next page of items. ( `null` if none)
-   *
-   * @memberof GetCategories200ResponseCategories
-   * @type {string}
-   */
-  next: string | null;
-  /**
-   * The offset of the items returned (as set in the query or by default)
-   *
-   * @memberof GetCategories200ResponseCategories
-   * @type {number}
-   */
-  offset: number;
-  /**
-   * URL to the previous page of items. ( `null` if none)
-   *
-   * @memberof GetCategories200ResponseCategories
-   * @type {string}
-   */
-  previous: string | null;
-  /**
-   * The total number of items available to return.
-   *
-   * @memberof GetCategories200ResponseCategories
-   * @type {number}
-   */
-  total: number;
-  /**
-   * @memberof GetCategories200ResponseCategories
-   * @type {CategoryObject[]}
-   */
-  items: Array<CategoryObject>;
-}
-/**
- * @export
  * @interface GetFollowed200Response
  */
 export interface GetFollowed200Response {
@@ -3099,105 +2976,6 @@ export interface GetFollowed200Response {
    * @type {CursorPagingSimplifiedArtistObject}
    */
   artists: CursorPagingSimplifiedArtistObject;
-}
-/**
- * @export
- * @interface GetMultipleAlbums200Response
- */
-export interface GetMultipleAlbums200Response {
-  /**
-   * @memberof GetMultipleAlbums200Response
-   * @type {AlbumObject[]}
-   */
-  albums: Array<AlbumObject>;
-}
-/**
- * @export
- * @interface GetMultipleArtists200Response
- */
-export interface GetMultipleArtists200Response {
-  /**
-   * @memberof GetMultipleArtists200Response
-   * @type {ArtistObject[]}
-   */
-  artists: Array<ArtistObject>;
-}
-/**
- * @export
- * @interface GetMultipleAudiobooks200Response
- */
-export interface GetMultipleAudiobooks200Response {
-  /**
-   * @memberof GetMultipleAudiobooks200Response
-   * @type {AudiobookObject[]}
-   */
-  audiobooks: Array<AudiobookObject>;
-}
-/**
- * @export
- * @interface GetMultipleEpisodes200Response
- */
-export interface GetMultipleEpisodes200Response {
-  /**
-   * @memberof GetMultipleEpisodes200Response
-   * @type {EpisodeObject[]}
-   */
-  episodes: Array<EpisodeObject>;
-}
-/**
- * @export
- * @interface GetMultipleShows200Response
- */
-export interface GetMultipleShows200Response {
-  /**
-   * @memberof GetMultipleShows200Response
-   * @type {SimplifiedShowObject[]}
-   */
-  shows: Array<SimplifiedShowObject>;
-}
-/**
- * @export
- * @interface GetNewReleases200Response
- */
-export interface GetNewReleases200Response {
-  /**
-   * @memberof GetNewReleases200Response
-   * @type {PagingSimplifiedAlbumObject}
-   */
-  albums: PagingSimplifiedAlbumObject;
-}
-/**
- * @export
- * @interface GetRecommendationGenres200Response
- */
-export interface GetRecommendationGenres200Response {
-  /**
-   * @memberof GetRecommendationGenres200Response
-   * @type {string[]}
-   */
-  genres: Array<string>;
-}
-/**
- * @export
- * @interface GetSeveralAudioFeatures200Response
- */
-export interface GetSeveralAudioFeatures200Response {
-  /**
-   * @memberof GetSeveralAudioFeatures200Response
-   * @type {AudioFeaturesObject[]}
-   */
-  audio_features: Array<AudioFeaturesObject>;
-}
-/**
- * @export
- * @interface GetSeveralChapters200Response
- */
-export interface GetSeveralChapters200Response {
-  /**
-   * @memberof GetSeveralChapters200Response
-   * @type {ChapterObject[]}
-   */
-  chapters: Array<ChapterObject>;
 }
 /**
  * @export
@@ -3225,6 +3003,192 @@ export interface ImageObject {
    * @type {number}
    */
   width: number | null;
+}
+/**
+ * @export
+ * @interface InlineObject
+ */
+export interface InlineObject {
+  /**
+   * @memberof InlineObject
+   * @type {AlbumObject[]}
+   */
+  albums: Array<AlbumObject>;
+}
+/**
+ * @export
+ * @interface InlineObject1
+ */
+export interface InlineObject1 {
+  /**
+   * @memberof InlineObject1
+   * @type {AudiobookObject[]}
+   */
+  audiobooks: Array<AudiobookObject>;
+}
+/**
+ * @export
+ * @interface InlineObject10
+ */
+export interface InlineObject10 {
+  /**
+   * @memberof InlineObject10
+   * @type {SimplifiedShowObject[]}
+   */
+  shows: Array<SimplifiedShowObject>;
+}
+/**
+ * @export
+ * @interface InlineObject11
+ */
+export interface InlineObject11 {
+  /**
+   * @memberof InlineObject11
+   * @type {string[]}
+   */
+  markets?: Array<string>;
+}
+/**
+ * @export
+ * @interface InlineObject2
+ */
+export interface InlineObject2 {
+  /**
+   * @memberof InlineObject2
+   * @type {ChapterObject[]}
+   */
+  chapters: Array<ChapterObject>;
+}
+/**
+ * @export
+ * @interface InlineObject3
+ */
+export interface InlineObject3 {
+  /**
+   * @memberof InlineObject3
+   * @type {PagingSimplifiedAlbumObject}
+   */
+  albums: PagingSimplifiedAlbumObject;
+}
+/**
+ * @export
+ * @interface InlineObject4
+ */
+export interface InlineObject4 {
+  /**
+   * @memberof InlineObject4
+   * @type {InlineObject4Categories}
+   */
+  categories: InlineObject4Categories;
+}
+/**
+ * @export
+ * @interface InlineObject4Categories
+ */
+export interface InlineObject4Categories {
+  /**
+   * A link to the Web API endpoint returning the full result of the request
+   *
+   * @memberof InlineObject4Categories
+   * @type {string}
+   */
+  href: string;
+  /**
+   * The maximum number of items in the response (as set in the query or by
+   * default).
+   *
+   * @memberof InlineObject4Categories
+   * @type {number}
+   */
+  limit: number;
+  /**
+   * URL to the next page of items. ( `null` if none)
+   *
+   * @memberof InlineObject4Categories
+   * @type {string}
+   */
+  next: string | null;
+  /**
+   * The offset of the items returned (as set in the query or by default)
+   *
+   * @memberof InlineObject4Categories
+   * @type {number}
+   */
+  offset: number;
+  /**
+   * URL to the previous page of items. ( `null` if none)
+   *
+   * @memberof InlineObject4Categories
+   * @type {string}
+   */
+  previous: string | null;
+  /**
+   * The total number of items available to return.
+   *
+   * @memberof InlineObject4Categories
+   * @type {number}
+   */
+  total: number;
+  /**
+   * @memberof InlineObject4Categories
+   * @type {CategoryObject[]}
+   */
+  items: Array<CategoryObject>;
+}
+/**
+ * @export
+ * @interface InlineObject5
+ */
+export interface InlineObject5 {
+  /**
+   * @memberof InlineObject5
+   * @type {ArtistObject[]}
+   */
+  artists: Array<ArtistObject>;
+}
+/**
+ * @export
+ * @interface InlineObject6
+ */
+export interface InlineObject6 {
+  /**
+   * @memberof InlineObject6
+   * @type {AudioFeaturesObject[]}
+   */
+  audio_features: Array<AudioFeaturesObject>;
+}
+/**
+ * @export
+ * @interface InlineObject7
+ */
+export interface InlineObject7 {
+  /**
+   * @memberof InlineObject7
+   * @type {EpisodeObject[]}
+   */
+  episodes: Array<EpisodeObject>;
+}
+/**
+ * @export
+ * @interface InlineObject8
+ */
+export interface InlineObject8 {
+  /**
+   * @memberof InlineObject8
+   * @type {string[]}
+   */
+  genres: Array<string>;
+}
+/**
+ * @export
+ * @interface InlineObject9
+ */
+export interface InlineObject9 {
+  /**
+   * @memberof InlineObject9
+   * @type {TrackObject[]}
+   */
+  tracks: Array<TrackObject>;
 }
 /**
  * @export
@@ -4847,24 +4811,6 @@ export interface RecommendationsObject {
 }
 /**
  * @export
- * @interface RemoveEpisodesUserRequest
- */
-export interface RemoveEpisodesUserRequest {
-  [key: string]: any | any;
-  /**
-   * A JSON array of the [Spotify
-   * IDs](/documentation/web-api/concepts/spotify-uris-ids). <br/>A maximum of
-   * 50 items can be specified in one request. _**Note**: if the `ids` parameter
-   * is present in the query string, any IDs listed here in the body will be
-   * ignored._
-   *
-   * @memberof RemoveEpisodesUserRequest
-   * @type {string[]}
-   */
-  ids?: Array<string>;
-}
-/**
- * @export
  * @interface RemoveItemsPlaylistRequest
  */
 export interface RemoveItemsPlaylistRequest {
@@ -4877,9 +4823,9 @@ export interface RemoveItemsPlaylistRequest {
    * be sent at once.
    *
    * @memberof RemoveItemsPlaylistRequest
-   * @type {RemoveTracksPlaylistRequestTracksInner[]}
+   * @type {RemoveItemsPlaylistRequestItemsInner[]}
    */
-  items: Array<RemoveTracksPlaylistRequestTracksInner>;
+  items: Array<RemoveItemsPlaylistRequestItemsInner>;
   /**
    * The playlist's snapshot ID against which you want to make the changes. The
    * API will validate that the specified items exist and in the specified
@@ -4893,71 +4839,43 @@ export interface RemoveItemsPlaylistRequest {
 }
 /**
  * @export
- * @interface RemoveTracksPlaylistRequest
+ * @interface RemoveItemsPlaylistRequestItemsInner
  */
-export interface RemoveTracksPlaylistRequest {
-  /**
-   * An array of objects containing [Spotify
-   * URIs](/documentation/web-api/concepts/spotify-uris-ids) of the tracks or
-   * episodes to remove. For example: `{ "tracks": [{ "uri":
-   * "spotify:track:4iV5W9uYEdYUVa79Axb7Rh" },{ "uri":
-   * "spotify:track:1301WleyT98MSxVHPZCA6M" }] }`. A maximum of 100 objects can
-   * be sent at once.
-   *
-   * @memberof RemoveTracksPlaylistRequest
-   * @type {RemoveTracksPlaylistRequestTracksInner[]}
-   */
-  tracks: Array<RemoveTracksPlaylistRequestTracksInner>;
-  /**
-   * The playlist's snapshot ID against which you want to make the changes. The
-   * API will validate that the specified items exist and in the specified
-   * positions and make the changes, even if more recent changes have been made
-   * to the playlist.
-   *
-   * @memberof RemoveTracksPlaylistRequest
-   * @type {string}
-   */
-  snapshot_id?: string;
-}
-/**
- * @export
- * @interface RemoveTracksPlaylistRequestTracksInner
- */
-export interface RemoveTracksPlaylistRequestTracksInner {
+export interface RemoveItemsPlaylistRequestItemsInner {
   /**
    * Spotify URI
    *
-   * @memberof RemoveTracksPlaylistRequestTracksInner
+   * @memberof RemoveItemsPlaylistRequestItemsInner
    * @type {string}
    */
   uri?: string;
 }
 /**
  * @export
- * @interface ReorderOrReplacePlaylistsTracks200Response
+ * @interface ReorderOrReplacePlaylistsItems200Response
  */
-export interface ReorderOrReplacePlaylistsTracks200Response {
+export interface ReorderOrReplacePlaylistsItems200Response {
   /**
-   * @memberof ReorderOrReplacePlaylistsTracks200Response
+   * @memberof ReorderOrReplacePlaylistsItems200Response
    * @type {string}
    */
   snapshot_id?: string;
 }
 /**
  * @export
- * @interface ReorderOrReplacePlaylistsTracksRequest
+ * @interface ReorderOrReplacePlaylistsItemsRequest
  */
-export interface ReorderOrReplacePlaylistsTracksRequest {
+export interface ReorderOrReplacePlaylistsItemsRequest {
   [key: string]: any | any;
   /**
-   * @memberof ReorderOrReplacePlaylistsTracksRequest
+   * @memberof ReorderOrReplacePlaylistsItemsRequest
    * @type {string[]}
    */
   uris?: Array<string>;
   /**
    * The position of the first item to be reordered.
    *
-   * @memberof ReorderOrReplacePlaylistsTracksRequest
+   * @memberof ReorderOrReplacePlaylistsItemsRequest
    * @type {number}
    */
   range_start?: number;
@@ -4970,7 +4888,7 @@ export interface ReorderOrReplacePlaylistsTracksRequest {
    * items to the start of the playlist, set _range_start_ to 9, and
    * _insert_before_ to 0.
    *
-   * @memberof ReorderOrReplacePlaylistsTracksRequest
+   * @memberof ReorderOrReplacePlaylistsItemsRequest
    * @type {number}
    */
   insert_before?: number;
@@ -4981,14 +4899,14 @@ export interface ReorderOrReplacePlaylistsTracksRequest {
    * items at index 9-10 to the start of the playlist, _range_start_ is set to
    * 9, and _range_length_ is set to 2.
    *
-   * @memberof ReorderOrReplacePlaylistsTracksRequest
+   * @memberof ReorderOrReplacePlaylistsItemsRequest
    * @type {number}
    */
   range_length?: number;
   /**
    * The playlist's snapshot ID against which you want to make the changes.
    *
-   * @memberof ReorderOrReplacePlaylistsTracksRequest
+   * @memberof ReorderOrReplacePlaylistsItemsRequest
    * @type {string}
    */
   snapshot_id?: string;
@@ -5012,117 +4930,6 @@ export interface ResumePointObject {
    * @type {number}
    */
   resume_position_ms?: number;
-}
-/**
- * @export
- * @interface SaveAlbumsUserRequest
- */
-export interface SaveAlbumsUserRequest {
-  [key: string]: any | any;
-  /**
-   * A JSON array of the [Spotify
-   * IDs](/documentation/web-api/concepts/spotify-uris-ids). For example:
-   * `["4iV5W9uYEdYUVa79Axb7Rh", "1301WleyT98MSxVHPZCA6M"]`<br/>A maximum of 50
-   * items can be specified in one request. _**Note**: if the `ids` parameter is
-   * present in the query string, any IDs listed here in the body will be
-   * ignored._
-   *
-   * @memberof SaveAlbumsUserRequest
-   * @type {string[]}
-   */
-  ids?: Array<string>;
-}
-/**
- * @export
- * @interface SaveEpisodesUserRequest
- */
-export interface SaveEpisodesUserRequest {
-  [key: string]: any | any;
-  /**
-   * A JSON array of the [Spotify
-   * IDs](/documentation/web-api/concepts/spotify-uris-ids). <br/>A maximum of
-   * 50 items can be specified in one request. _**Note**: if the `ids` parameter
-   * is present in the query string, any IDs listed here in the body will be
-   * ignored._
-   *
-   * @memberof SaveEpisodesUserRequest
-   * @type {string[]}
-   */
-  ids: Array<string>;
-}
-/**
- * @export
- * @interface SaveShowsUserRequest
- */
-export interface SaveShowsUserRequest {
-  /**
-   * A JSON array of the [Spotify
-   * IDs](https://developer.spotify.com/documentation/web-api/#spotify-uris-and-ids).
-   * A maximum of 50 items can be specified in one request. _Note: if the `ids`
-   * parameter is present in the query string, any IDs listed here in the body
-   * will be ignored._
-   *
-   * @memberof SaveShowsUserRequest
-   * @type {string[]}
-   */
-  ids?: Array<string>;
-}
-/**
- * @export
- * @interface SaveTracksUserRequest
- */
-export interface SaveTracksUserRequest {
-  [key: string]: any | any;
-  /**
-   * A JSON array of the [Spotify
-   * IDs](/documentation/web-api/concepts/spotify-uris-ids). For example:
-   * `["4iV5W9uYEdYUVa79Axb7Rh", "1301WleyT98MSxVHPZCA6M"]`<br/>A maximum of 50
-   * items can be specified in one request. _**Note**: if the `timestamped_ids`
-   * is present in the body, any IDs listed in the query parameters (deprecated)
-   * or the `ids` field in the body will be ignored._
-   *
-   * @memberof SaveTracksUserRequest
-   * @type {string[]}
-   */
-  ids: Array<string>;
-  /**
-   * A JSON array of objects containing track IDs with their corresponding
-   * timestamps. Each object must include a track ID and an `added_at`
-   * timestamp. This allows you to specify when tracks were added to maintain a
-   * specific chronological order in the user's library.<br/>A maximum of 50
-   * items can be specified in one request. _**Note**: if the `timestamped_ids`
-   * is present in the body, any IDs listed in the query parameters (deprecated)
-   * or the `ids` field in the body will be ignored._
-   *
-   * @memberof SaveTracksUserRequest
-   * @type {SaveTracksUserRequestTimestampedIdsInner[]}
-   */
-  timestamped_ids?: Array<SaveTracksUserRequestTimestampedIdsInner>;
-}
-/**
- * @export
- * @interface SaveTracksUserRequestTimestampedIdsInner
- */
-export interface SaveTracksUserRequestTimestampedIdsInner {
-  /**
-   * The [Spotify ID](/documentation/web-api/concepts/spotify-uris-ids) for the
-   * track.
-   *
-   * @memberof SaveTracksUserRequestTimestampedIdsInner
-   * @type {string}
-   */
-  id: string;
-  /**
-   * The timestamp when the track was added to the library. Use ISO 8601 format
-   * with UTC timezone (e.g., `2023-01-15T14:30:00Z`). You can specify past
-   * timestamps to insert tracks at specific positions in the library's
-   * chronological order. The API uses minute-level granularity for ordering,
-   * though the timestamp supports millisecond precision.
-   *
-   * @memberof SaveTracksUserRequestTimestampedIdsInner
-   * @type {string}
-   */
-  added_at: string;
 }
 /**
  * @export
@@ -7219,23 +7026,4 @@ export interface TransferAUsersPlaybackRequest {
    * @type {boolean}
    */
   play?: boolean;
-}
-/**
- * @export
- * @interface UnfollowArtistsUsersRequest
- */
-export interface UnfollowArtistsUsersRequest {
-  [key: string]: any | any;
-  /**
-   * A JSON array of the artist or user [Spotify
-   * IDs](/documentation/web-api/concepts/spotify-uris-ids). For example:
-   * `{ids:["74ASZWbe4lXaubB36ztrGX", "08td7MxkoHQkXnWAYD8d6Q"]}`. A maximum of
-   * 50 IDs can be sent in one request. _**Note**: if the `ids` parameter is
-   * present in the query string, any IDs listed here in the body will be
-   * ignored._
-   *
-   * @memberof UnfollowArtistsUsersRequest
-   * @type {string[]}
-   */
-  ids?: Array<string>;
 }

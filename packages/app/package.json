@@ -27,11 +27,12 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/node": "catalog:",
     "@vitest/ui": "4.0.4",
+    "dotenv": "17.2.3",
     "jsdom": "27.0.1",
     "typescript": "catalog:",
     "vite": "^7.1.12",
     "vite-plugin-solid": "2.11.10",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "4.0.4"
+    "vitest": "catalog:"
   }
 }

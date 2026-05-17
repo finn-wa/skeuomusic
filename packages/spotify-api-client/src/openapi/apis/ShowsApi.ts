@@ -26,16 +26,10 @@
 import * as runtime from "../runtime";
 import type {
   GetAnAlbum401Response,
-  GetMultipleShows200Response,
   PagingSavedShowObject,
   PagingSimplifiedEpisodeObject,
-  SaveShowsUserRequest,
   ShowObject,
 } from "../models/index";
-
-export interface ShowsApiCheckUsersSavedShowsRequest {
-  ids: string;
-}
 
 export interface ShowsApiGetAShowRequest {
   id: string;
@@ -49,97 +43,12 @@ export interface ShowsApiGetAShowsEpisodesRequest {
   offset?: number;
 }
 
-export interface ShowsApiGetMultipleShowsRequest {
-  ids: string;
-  market?: string;
-}
-
 export interface ShowsApiGetUsersSavedShowsRequest {
   limit?: number;
   offset?: number;
 }
 
-export interface ShowsApiRemoveShowsUserRequest {
-  ids: string;
-  market?: string;
-  saveShowsUserRequest?: SaveShowsUserRequest;
-}
-
-export interface ShowsApiSaveShowsUserOperationRequest {
-  ids: string;
-  saveShowsUserRequest?: SaveShowsUserRequest;
-}
-
 export class ShowsApi extends runtime.BaseAPI {
-  /**
-   * Check if one or more shows is already saved in the current Spotify user's
-   * library. **Note:** This endpoint is deprecated. Use [Check User's Saved
-   * Items](/documentation/web-api/reference/check-library-contains) instead.
-   * Check User's Saved Shows
-   *
-   * @deprecated
-   */
-  async checkUsersSavedShowsRaw(
-    requestParameters: ShowsApiCheckUsersSavedShowsRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<Array<boolean>>> {
-    if (requestParameters["ids"] == null) {
-      throw new runtime.RequiredError(
-        "ids",
-        'Required parameter "ids" was null or undefined when calling checkUsersSavedShows().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["ids"] != null) {
-      queryParameters["ids"] = requestParameters["ids"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["user-library-read"],
-      );
-    }
-
-    let urlPath = `/me/shows/contains`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse<any>(response);
-  }
-
-  /**
-   * Check if one or more shows is already saved in the current Spotify user's
-   * library. **Note:** This endpoint is deprecated. Use [Check User's Saved
-   * Items](/documentation/web-api/reference/check-library-contains) instead.
-   * Check User's Saved Shows
-   *
-   * @deprecated
-   */
-  async checkUsersSavedShows(
-    requestParameters: ShowsApiCheckUsersSavedShowsRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<Array<boolean>> {
-    const response = await this.checkUsersSavedShowsRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
   /**
    * Get Spotify catalog information for a single show identified by its unique
    * Spotify ID. Get Show
@@ -278,75 +187,6 @@ export class ShowsApi extends runtime.BaseAPI {
   }
 
   /**
-   * Get Spotify catalog information for several shows based on their Spotify
-   * IDs. Get Several Shows
-   *
-   * @deprecated
-   */
-  async getMultipleShowsRaw(
-    requestParameters: ShowsApiGetMultipleShowsRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<GetMultipleShows200Response>> {
-    if (requestParameters["ids"] == null) {
-      throw new runtime.RequiredError(
-        "ids",
-        'Required parameter "ids" was null or undefined when calling getMultipleShows().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["market"] != null) {
-      queryParameters["market"] = requestParameters["market"];
-    }
-
-    if (requestParameters["ids"] != null) {
-      queryParameters["ids"] = requestParameters["ids"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        [],
-      );
-    }
-
-    let urlPath = `/shows`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * Get Spotify catalog information for several shows based on their Spotify
-   * IDs. Get Several Shows
-   *
-   * @deprecated
-   */
-  async getMultipleShows(
-    requestParameters: ShowsApiGetMultipleShowsRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<GetMultipleShows200Response> {
-    const response = await this.getMultipleShowsRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
    * Get a list of shows saved in the current Spotify user's library. Optional
    * parameters can be used to limit the number of shows returned. Get User's
    * Saved Shows
@@ -404,145 +244,5 @@ export class ShowsApi extends runtime.BaseAPI {
       initOverrides,
     );
     return await response.value();
-  }
-
-  /**
-   * Delete one or more shows from current Spotify user's library. **Note:**
-   * This endpoint is deprecated. Use [Remove Items from
-   * Library](/documentation/web-api/reference/remove-library-items) instead.
-   * Remove User's Saved Shows
-   *
-   * @deprecated
-   */
-  async removeShowsUserRaw(
-    requestParameters: ShowsApiRemoveShowsUserRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<void>> {
-    if (requestParameters["ids"] == null) {
-      throw new runtime.RequiredError(
-        "ids",
-        'Required parameter "ids" was null or undefined when calling removeShowsUser().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["ids"] != null) {
-      queryParameters["ids"] = requestParameters["ids"];
-    }
-
-    if (requestParameters["market"] != null) {
-      queryParameters["market"] = requestParameters["market"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    headerParameters["Content-Type"] = "application/json";
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["user-library-modify"],
-      );
-    }
-
-    let urlPath = `/me/shows`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-        body: requestParameters["saveShowsUserRequest"],
-      },
-      initOverrides,
-    );
-
-    return new runtime.VoidApiResponse(response);
-  }
-
-  /**
-   * Delete one or more shows from current Spotify user's library. **Note:**
-   * This endpoint is deprecated. Use [Remove Items from
-   * Library](/documentation/web-api/reference/remove-library-items) instead.
-   * Remove User's Saved Shows
-   *
-   * @deprecated
-   */
-  async removeShowsUser(
-    requestParameters: ShowsApiRemoveShowsUserRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<void> {
-    await this.removeShowsUserRaw(requestParameters, initOverrides);
-  }
-
-  /**
-   * Save one or more shows to current Spotify user's library. **Note:** This
-   * endpoint is deprecated. Use [Save Items to
-   * Library](/documentation/web-api/reference/save-library-items) instead. Save
-   * Shows for Current User
-   *
-   * @deprecated
-   */
-  async saveShowsUserRaw(
-    requestParameters: ShowsApiSaveShowsUserOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<void>> {
-    if (requestParameters["ids"] == null) {
-      throw new runtime.RequiredError(
-        "ids",
-        'Required parameter "ids" was null or undefined when calling saveShowsUser().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["ids"] != null) {
-      queryParameters["ids"] = requestParameters["ids"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    headerParameters["Content-Type"] = "application/json";
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["user-library-modify"],
-      );
-    }
-
-    let urlPath = `/me/shows`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PUT",
-        headers: headerParameters,
-        query: queryParameters,
-        body: requestParameters["saveShowsUserRequest"],
-      },
-      initOverrides,
-    );
-
-    return new runtime.VoidApiResponse(response);
-  }
-
-  /**
-   * Save one or more shows to current Spotify user's library. **Note:** This
-   * endpoint is deprecated. Use [Save Items to
-   * Library](/documentation/web-api/reference/save-library-items) instead. Save
-   * Shows for Current User
-   *
-   * @deprecated
-   */
-  async saveShowsUser(
-    requestParameters: ShowsApiSaveShowsUserOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<void> {
-    await this.saveShowsUserRaw(requestParameters, initOverrides);
   }
 }

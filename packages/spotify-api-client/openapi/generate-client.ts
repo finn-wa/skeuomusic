@@ -1,7 +1,16 @@
 import { spawnSync } from "node:child_process";
 import { cpSync, mkdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
+import YAML from "yaml";
 
 const cwd = "./openapi";
+
+interface OpenApiSchema {
+  paths: {
+    [path: string]: {
+      [method: string]: Record<string, unknown>;
+    };
+  };
+}
 
 async function downloadOpenApiSpec() {
   console.log(
@@ -11,10 +20,29 @@ async function downloadOpenApiSpec() {
   const specUrl =
     "https://raw.githubusercontent.com/sonallux/spotify-web-api/refs/heads/main/fixed-spotify-open-api.yml";
   const openApiYml = await fetch(specUrl).then((res) => res.text());
-  writeFileSync("./openapi/spec/spotify.yml", openApiYml, {
+
+  const spec: OpenApiSchema = YAML.parse(openApiYml);
+  const processedSpec = processOpenApiSpec(spec);
+  writeFileSync("./openapi/spec/spotify.yml", YAML.stringify(processedSpec), {
     encoding: "utf8",
   });
   console.log("(1/3) Done.");
+}
+
+function processOpenApiSpec(spec: OpenApiSchema): OpenApiSchema {
+  const withoutDeprecatedPaths: OpenApiSchema["paths"] = {};
+  for (const [path, methods] of Object.entries(spec.paths)) {
+    const filtered: { [method: string]: Record<string, unknown> } = {};
+    for (const [method, def] of Object.entries(methods)) {
+      if (!def["deprecated"]) {
+        filtered[method] = def;
+      }
+    }
+    if (Object.keys(filtered).length > 0) {
+      withoutDeprecatedPaths[path] = filtered;
+    }
+  }
+  return { ...spec, paths: withoutDeprecatedPaths };
 }
 
 function generateClient() {
@@ -39,14 +67,6 @@ function saveGeneratedSourceCode() {
   cpSync(`${cwd}/client/src`, `${cwd}/client/openapi`, { recursive: true });
   // Then move the copy into ./src
   renameSync(`${cwd}/client/openapi`, "./src/openapi");
-
-  console.log("Formatting generated files...");
-  const fmtResult = spawnSync("node_modules/.bin/oxfmt", ["./src/openapi"], {
-    stdio: "inherit",
-  });
-  if (fmtResult.error != null) {
-    throw fmtResult.error;
-  }
   console.log("(3/3) Done.");
 }
 

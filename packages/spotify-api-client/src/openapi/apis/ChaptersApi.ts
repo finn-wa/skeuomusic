@@ -27,7 +27,6 @@ import * as runtime from "../runtime";
 import type {
   ChapterObject,
   GetAnAlbum401Response,
-  GetSeveralChapters200Response,
   PagingSimplifiedChapterObject,
 } from "../models/index";
 
@@ -41,11 +40,6 @@ export interface ChaptersApiGetAudiobookChaptersRequest {
   market?: string;
   limit?: number;
   offset?: number;
-}
-
-export interface ChaptersApiGetSeveralChaptersRequest {
-  ids: string;
-  market?: string;
 }
 
 export class ChaptersApi extends runtime.BaseAPI {
@@ -185,77 +179,6 @@ export class ChaptersApi extends runtime.BaseAPI {
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
   ): Promise<PagingSimplifiedChapterObject> {
     const response = await this.getAudiobookChaptersRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
-   * Get Spotify catalog information for several audiobook chapters identified
-   * by their Spotify IDs. Chapters are only available within the US, UK,
-   * Canada, Ireland, New Zealand and Australia markets. Get Several Chapters
-   *
-   * @deprecated
-   */
-  async getSeveralChaptersRaw(
-    requestParameters: ChaptersApiGetSeveralChaptersRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<GetSeveralChapters200Response>> {
-    if (requestParameters["ids"] == null) {
-      throw new runtime.RequiredError(
-        "ids",
-        'Required parameter "ids" was null or undefined when calling getSeveralChapters().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["ids"] != null) {
-      queryParameters["ids"] = requestParameters["ids"];
-    }
-
-    if (requestParameters["market"] != null) {
-      queryParameters["market"] = requestParameters["market"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        [],
-      );
-    }
-
-    let urlPath = `/chapters`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * Get Spotify catalog information for several audiobook chapters identified
-   * by their Spotify IDs. Chapters are only available within the US, UK,
-   * Canada, Ireland, New Zealand and Australia markets. Get Several Chapters
-   *
-   * @deprecated
-   */
-  async getSeveralChapters(
-    requestParameters: ChaptersApiGetSeveralChaptersRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<GetSeveralChapters200Response> {
-    const response = await this.getSeveralChaptersRaw(
       requestParameters,
       initOverrides,
     );

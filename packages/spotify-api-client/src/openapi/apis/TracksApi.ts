@@ -25,42 +25,23 @@
 
 import * as runtime from "../runtime";
 import type {
-  AddTracksToPlaylistRequest,
-  AudioAnalysisObject,
-  AudioFeaturesObject,
+  AddItemsToPlaylistRequest,
   GetAnAlbum401Response,
-  GetAnArtistsTopTracks200Response,
-  GetSeveralAudioFeatures200Response,
   PagingPlaylistTrackObject,
   PagingSavedTrackObject,
   PagingSimplifiedTrackObject,
   PagingTrackObject,
-  RecommendationsObject,
   RemoveItemsPlaylistRequest,
-  RemoveTracksPlaylistRequest,
-  ReorderOrReplacePlaylistsTracks200Response,
-  ReorderOrReplacePlaylistsTracksRequest,
-  SaveAlbumsUserRequest,
-  SaveTracksUserRequest,
+  ReorderOrReplacePlaylistsItems200Response,
+  ReorderOrReplacePlaylistsItemsRequest,
   TrackObject,
 } from "../models/index";
 
-export interface TracksApiAddItemsToPlaylistRequest {
+export interface TracksApiAddItemsToPlaylistOperationRequest {
   playlistId: string;
   position?: number;
   uris?: string;
-  addTracksToPlaylistRequest?: AddTracksToPlaylistRequest;
-}
-
-export interface TracksApiAddTracksToPlaylistOperationRequest {
-  playlistId: string;
-  position?: number;
-  uris?: string;
-  addTracksToPlaylistRequest?: AddTracksToPlaylistRequest;
-}
-
-export interface TracksApiCheckUsersSavedTracksRequest {
-  ids: string;
+  addItemsToPlaylistRequest?: AddItemsToPlaylistRequest;
 }
 
 export interface TracksApiGetAnAlbumsTracksRequest {
@@ -70,19 +51,6 @@ export interface TracksApiGetAnAlbumsTracksRequest {
   offset?: number;
 }
 
-export interface TracksApiGetAnArtistsTopTracksRequest {
-  id: string;
-  market?: string;
-}
-
-export interface TracksApiGetAudioAnalysisRequest {
-  id: string;
-}
-
-export interface TracksApiGetAudioFeaturesRequest {
-  id: string;
-}
-
 export interface TracksApiGetPlaylistsItemsRequest {
   playlistId: string;
   market?: string;
@@ -90,74 +58,6 @@ export interface TracksApiGetPlaylistsItemsRequest {
   limit?: number;
   offset?: number;
   additionalTypes?: string;
-}
-
-export interface TracksApiGetPlaylistsTracksRequest {
-  playlistId: string;
-  market?: string;
-  fields?: string;
-  limit?: number;
-  offset?: number;
-  additionalTypes?: string;
-}
-
-export interface TracksApiGetRecommendationsRequest {
-  limit?: number;
-  market?: string;
-  seedArtists?: string;
-  seedGenres?: string;
-  seedTracks?: string;
-  minAcousticness?: number;
-  maxAcousticness?: number;
-  targetAcousticness?: number;
-  minDanceability?: number;
-  maxDanceability?: number;
-  targetDanceability?: number;
-  minDurationMs?: number;
-  maxDurationMs?: number;
-  targetDurationMs?: number;
-  minEnergy?: number;
-  maxEnergy?: number;
-  targetEnergy?: number;
-  minInstrumentalness?: number;
-  maxInstrumentalness?: number;
-  targetInstrumentalness?: number;
-  minKey?: number;
-  maxKey?: number;
-  targetKey?: number;
-  minLiveness?: number;
-  maxLiveness?: number;
-  targetLiveness?: number;
-  minLoudness?: number;
-  maxLoudness?: number;
-  targetLoudness?: number;
-  minMode?: number;
-  maxMode?: number;
-  targetMode?: number;
-  minPopularity?: number;
-  maxPopularity?: number;
-  targetPopularity?: number;
-  minSpeechiness?: number;
-  maxSpeechiness?: number;
-  targetSpeechiness?: number;
-  minTempo?: number;
-  maxTempo?: number;
-  targetTempo?: number;
-  minTimeSignature?: number;
-  maxTimeSignature?: number;
-  targetTimeSignature?: number;
-  minValence?: number;
-  maxValence?: number;
-  targetValence?: number;
-}
-
-export interface TracksApiGetSeveralAudioFeaturesRequest {
-  ids: string;
-}
-
-export interface TracksApiGetSeveralTracksRequest {
-  ids: string;
-  market?: string;
 }
 
 export interface TracksApiGetTrackRequest {
@@ -182,38 +82,18 @@ export interface TracksApiRemoveItemsPlaylistOperationRequest {
   removeItemsPlaylistRequest?: RemoveItemsPlaylistRequest;
 }
 
-export interface TracksApiRemoveTracksPlaylistOperationRequest {
-  playlistId: string;
-  removeTracksPlaylistRequest?: RemoveTracksPlaylistRequest;
-}
-
-export interface TracksApiRemoveTracksUserRequest {
-  ids: string;
-  saveAlbumsUserRequest?: SaveAlbumsUserRequest;
-}
-
-export interface TracksApiReorderOrReplacePlaylistsItemsRequest {
+export interface TracksApiReorderOrReplacePlaylistsItemsOperationRequest {
   playlistId: string;
   uris?: string;
-  reorderOrReplacePlaylistsTracksRequest?: ReorderOrReplacePlaylistsTracksRequest;
-}
-
-export interface TracksApiReorderOrReplacePlaylistsTracksOperationRequest {
-  playlistId: string;
-  uris?: string;
-  reorderOrReplacePlaylistsTracksRequest?: ReorderOrReplacePlaylistsTracksRequest;
-}
-
-export interface TracksApiSaveTracksUserOperationRequest {
-  saveTracksUserRequest?: SaveTracksUserRequest;
+  reorderOrReplacePlaylistsItemsRequest?: ReorderOrReplacePlaylistsItemsRequest;
 }
 
 export class TracksApi extends runtime.BaseAPI {
   /** Add one or more items to a user's playlist. Add Items to Playlist */
   async addItemsToPlaylistRaw(
-    requestParameters: TracksApiAddItemsToPlaylistRequest,
+    requestParameters: TracksApiAddItemsToPlaylistOperationRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<ReorderOrReplacePlaylistsTracks200Response>> {
+  ): Promise<runtime.ApiResponse<ReorderOrReplacePlaylistsItems200Response>> {
     if (requestParameters["playlistId"] == null) {
       throw new runtime.RequiredError(
         "playlistId",
@@ -255,7 +135,7 @@ export class TracksApi extends runtime.BaseAPI {
         method: "POST",
         headers: headerParameters,
         query: queryParameters,
-        body: requestParameters["addTracksToPlaylistRequest"],
+        body: requestParameters["addItemsToPlaylistRequest"],
       },
       initOverrides,
     );
@@ -265,161 +145,10 @@ export class TracksApi extends runtime.BaseAPI {
 
   /** Add one or more items to a user's playlist. Add Items to Playlist */
   async addItemsToPlaylist(
-    requestParameters: TracksApiAddItemsToPlaylistRequest,
+    requestParameters: TracksApiAddItemsToPlaylistOperationRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<ReorderOrReplacePlaylistsTracks200Response> {
+  ): Promise<ReorderOrReplacePlaylistsItems200Response> {
     const response = await this.addItemsToPlaylistRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
-   * **Deprecated:** Use [Add Items to
-   * Playlist](/documentation/web-api/reference/add-items-to-playlist) instead.
-   * Add one or more items to a user's playlist. Add Items to Playlist
-   * [DEPRECATED]
-   *
-   * @deprecated
-   */
-  async addTracksToPlaylistRaw(
-    requestParameters: TracksApiAddTracksToPlaylistOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<ReorderOrReplacePlaylistsTracks200Response>> {
-    if (requestParameters["playlistId"] == null) {
-      throw new runtime.RequiredError(
-        "playlistId",
-        'Required parameter "playlistId" was null or undefined when calling addTracksToPlaylist().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["position"] != null) {
-      queryParameters["position"] = requestParameters["position"];
-    }
-
-    if (requestParameters["uris"] != null) {
-      queryParameters["uris"] = requestParameters["uris"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    headerParameters["Content-Type"] = "application/json";
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["playlist-modify-public", "playlist-modify-private"],
-      );
-    }
-
-    let urlPath = `/playlists/{playlist_id}/tracks`;
-    urlPath = urlPath.replace(
-      `{${"playlist_id"}}`,
-      encodeURIComponent(String(requestParameters["playlistId"])),
-    );
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: requestParameters["addTracksToPlaylistRequest"],
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * **Deprecated:** Use [Add Items to
-   * Playlist](/documentation/web-api/reference/add-items-to-playlist) instead.
-   * Add one or more items to a user's playlist. Add Items to Playlist
-   * [DEPRECATED]
-   *
-   * @deprecated
-   */
-  async addTracksToPlaylist(
-    requestParameters: TracksApiAddTracksToPlaylistOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<ReorderOrReplacePlaylistsTracks200Response> {
-    const response = await this.addTracksToPlaylistRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
-   * Check if one or more tracks is already saved in the current Spotify user's
-   * 'Your Music' library. **Note:** This endpoint is deprecated. Use [Check
-   * User's Saved
-   * Items](/documentation/web-api/reference/check-library-contains) instead.
-   * Check User's Saved Tracks
-   *
-   * @deprecated
-   */
-  async checkUsersSavedTracksRaw(
-    requestParameters: TracksApiCheckUsersSavedTracksRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<Array<boolean>>> {
-    if (requestParameters["ids"] == null) {
-      throw new runtime.RequiredError(
-        "ids",
-        'Required parameter "ids" was null or undefined when calling checkUsersSavedTracks().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["ids"] != null) {
-      queryParameters["ids"] = requestParameters["ids"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["user-library-read"],
-      );
-    }
-
-    let urlPath = `/me/tracks/contains`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse<any>(response);
-  }
-
-  /**
-   * Check if one or more tracks is already saved in the current Spotify user's
-   * 'Your Music' library. **Note:** This endpoint is deprecated. Use [Check
-   * User's Saved
-   * Items](/documentation/web-api/reference/check-library-contains) instead.
-   * Check User's Saved Tracks
-   *
-   * @deprecated
-   */
-  async checkUsersSavedTracks(
-    requestParameters: TracksApiCheckUsersSavedTracksRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<Array<boolean>> {
-    const response = await this.checkUsersSavedTracksRaw(
       requestParameters,
       initOverrides,
     );
@@ -495,207 +224,6 @@ export class TracksApi extends runtime.BaseAPI {
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
   ): Promise<PagingSimplifiedTrackObject> {
     const response = await this.getAnAlbumsTracksRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
-   * Get Spotify catalog information about an artist's top tracks by country.
-   * Get Artist's Top Tracks
-   *
-   * @deprecated
-   */
-  async getAnArtistsTopTracksRaw(
-    requestParameters: TracksApiGetAnArtistsTopTracksRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<GetAnArtistsTopTracks200Response>> {
-    if (requestParameters["id"] == null) {
-      throw new runtime.RequiredError(
-        "id",
-        'Required parameter "id" was null or undefined when calling getAnArtistsTopTracks().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["market"] != null) {
-      queryParameters["market"] = requestParameters["market"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        [],
-      );
-    }
-
-    let urlPath = `/artists/{id}/top-tracks`;
-    urlPath = urlPath.replace(
-      `{${"id"}}`,
-      encodeURIComponent(String(requestParameters["id"])),
-    );
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * Get Spotify catalog information about an artist's top tracks by country.
-   * Get Artist's Top Tracks
-   *
-   * @deprecated
-   */
-  async getAnArtistsTopTracks(
-    requestParameters: TracksApiGetAnArtistsTopTracksRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<GetAnArtistsTopTracks200Response> {
-    const response = await this.getAnArtistsTopTracksRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
-   * Get a low-level audio analysis for a track in the Spotify catalog. The
-   * audio analysis describes the track’s structure and musical content,
-   * including rhythm, pitch, and timbre. Get Track's Audio Analysis
-   *
-   * @deprecated
-   */
-  async getAudioAnalysisRaw(
-    requestParameters: TracksApiGetAudioAnalysisRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<AudioAnalysisObject>> {
-    if (requestParameters["id"] == null) {
-      throw new runtime.RequiredError(
-        "id",
-        'Required parameter "id" was null or undefined when calling getAudioAnalysis().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        [],
-      );
-    }
-
-    let urlPath = `/audio-analysis/{id}`;
-    urlPath = urlPath.replace(
-      `{${"id"}}`,
-      encodeURIComponent(String(requestParameters["id"])),
-    );
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * Get a low-level audio analysis for a track in the Spotify catalog. The
-   * audio analysis describes the track’s structure and musical content,
-   * including rhythm, pitch, and timbre. Get Track's Audio Analysis
-   *
-   * @deprecated
-   */
-  async getAudioAnalysis(
-    requestParameters: TracksApiGetAudioAnalysisRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<AudioAnalysisObject> {
-    const response = await this.getAudioAnalysisRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
-   * Get audio feature information for a single track identified by its unique
-   * Spotify ID. Get Track's Audio Features
-   *
-   * @deprecated
-   */
-  async getAudioFeaturesRaw(
-    requestParameters: TracksApiGetAudioFeaturesRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<AudioFeaturesObject>> {
-    if (requestParameters["id"] == null) {
-      throw new runtime.RequiredError(
-        "id",
-        'Required parameter "id" was null or undefined when calling getAudioFeatures().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        [],
-      );
-    }
-
-    let urlPath = `/audio-features/{id}`;
-    urlPath = urlPath.replace(
-      `{${"id"}}`,
-      encodeURIComponent(String(requestParameters["id"])),
-    );
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * Get audio feature information for a single track identified by its unique
-   * Spotify ID. Get Track's Audio Features
-   *
-   * @deprecated
-   */
-  async getAudioFeatures(
-    requestParameters: TracksApiGetAudioFeaturesRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<AudioFeaturesObject> {
-    const response = await this.getAudioFeaturesRaw(
       requestParameters,
       initOverrides,
     );
@@ -784,495 +312,6 @@ export class TracksApi extends runtime.BaseAPI {
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
   ): Promise<PagingPlaylistTrackObject> {
     const response = await this.getPlaylistsItemsRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
-   * **Deprecated:** Use [Get Playlist
-   * Items](/documentation/web-api/reference/get-playlists-items) instead. Get
-   * full details of the items of a playlist owned by a Spotify user. Get
-   * Playlist Items [DEPRECATED]
-   *
-   * @deprecated
-   */
-  async getPlaylistsTracksRaw(
-    requestParameters: TracksApiGetPlaylistsTracksRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<PagingPlaylistTrackObject>> {
-    if (requestParameters["playlistId"] == null) {
-      throw new runtime.RequiredError(
-        "playlistId",
-        'Required parameter "playlistId" was null or undefined when calling getPlaylistsTracks().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["market"] != null) {
-      queryParameters["market"] = requestParameters["market"];
-    }
-
-    if (requestParameters["fields"] != null) {
-      queryParameters["fields"] = requestParameters["fields"];
-    }
-
-    if (requestParameters["limit"] != null) {
-      queryParameters["limit"] = requestParameters["limit"];
-    }
-
-    if (requestParameters["offset"] != null) {
-      queryParameters["offset"] = requestParameters["offset"];
-    }
-
-    if (requestParameters["additionalTypes"] != null) {
-      queryParameters["additional_types"] =
-        requestParameters["additionalTypes"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["playlist-read-private"],
-      );
-    }
-
-    let urlPath = `/playlists/{playlist_id}/tracks`;
-    urlPath = urlPath.replace(
-      `{${"playlist_id"}}`,
-      encodeURIComponent(String(requestParameters["playlistId"])),
-    );
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * **Deprecated:** Use [Get Playlist
-   * Items](/documentation/web-api/reference/get-playlists-items) instead. Get
-   * full details of the items of a playlist owned by a Spotify user. Get
-   * Playlist Items [DEPRECATED]
-   *
-   * @deprecated
-   */
-  async getPlaylistsTracks(
-    requestParameters: TracksApiGetPlaylistsTracksRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<PagingPlaylistTrackObject> {
-    const response = await this.getPlaylistsTracksRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
-   * Recommendations are generated based on the available information for a
-   * given seed entity and matched against similar artists and tracks. If there
-   * is sufficient information about the provided seeds, a list of tracks will
-   * be returned together with pool size details. For artists and tracks that
-   * are very new or obscure there might not be enough data to generate a list
-   * of tracks. Get Recommendations
-   *
-   * @deprecated
-   */
-  async getRecommendationsRaw(
-    requestParameters: TracksApiGetRecommendationsRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<RecommendationsObject>> {
-    const queryParameters: any = {};
-
-    if (requestParameters["limit"] != null) {
-      queryParameters["limit"] = requestParameters["limit"];
-    }
-
-    if (requestParameters["market"] != null) {
-      queryParameters["market"] = requestParameters["market"];
-    }
-
-    if (requestParameters["seedArtists"] != null) {
-      queryParameters["seed_artists"] = requestParameters["seedArtists"];
-    }
-
-    if (requestParameters["seedGenres"] != null) {
-      queryParameters["seed_genres"] = requestParameters["seedGenres"];
-    }
-
-    if (requestParameters["seedTracks"] != null) {
-      queryParameters["seed_tracks"] = requestParameters["seedTracks"];
-    }
-
-    if (requestParameters["minAcousticness"] != null) {
-      queryParameters["min_acousticness"] =
-        requestParameters["minAcousticness"];
-    }
-
-    if (requestParameters["maxAcousticness"] != null) {
-      queryParameters["max_acousticness"] =
-        requestParameters["maxAcousticness"];
-    }
-
-    if (requestParameters["targetAcousticness"] != null) {
-      queryParameters["target_acousticness"] =
-        requestParameters["targetAcousticness"];
-    }
-
-    if (requestParameters["minDanceability"] != null) {
-      queryParameters["min_danceability"] =
-        requestParameters["minDanceability"];
-    }
-
-    if (requestParameters["maxDanceability"] != null) {
-      queryParameters["max_danceability"] =
-        requestParameters["maxDanceability"];
-    }
-
-    if (requestParameters["targetDanceability"] != null) {
-      queryParameters["target_danceability"] =
-        requestParameters["targetDanceability"];
-    }
-
-    if (requestParameters["minDurationMs"] != null) {
-      queryParameters["min_duration_ms"] = requestParameters["minDurationMs"];
-    }
-
-    if (requestParameters["maxDurationMs"] != null) {
-      queryParameters["max_duration_ms"] = requestParameters["maxDurationMs"];
-    }
-
-    if (requestParameters["targetDurationMs"] != null) {
-      queryParameters["target_duration_ms"] =
-        requestParameters["targetDurationMs"];
-    }
-
-    if (requestParameters["minEnergy"] != null) {
-      queryParameters["min_energy"] = requestParameters["minEnergy"];
-    }
-
-    if (requestParameters["maxEnergy"] != null) {
-      queryParameters["max_energy"] = requestParameters["maxEnergy"];
-    }
-
-    if (requestParameters["targetEnergy"] != null) {
-      queryParameters["target_energy"] = requestParameters["targetEnergy"];
-    }
-
-    if (requestParameters["minInstrumentalness"] != null) {
-      queryParameters["min_instrumentalness"] =
-        requestParameters["minInstrumentalness"];
-    }
-
-    if (requestParameters["maxInstrumentalness"] != null) {
-      queryParameters["max_instrumentalness"] =
-        requestParameters["maxInstrumentalness"];
-    }
-
-    if (requestParameters["targetInstrumentalness"] != null) {
-      queryParameters["target_instrumentalness"] =
-        requestParameters["targetInstrumentalness"];
-    }
-
-    if (requestParameters["minKey"] != null) {
-      queryParameters["min_key"] = requestParameters["minKey"];
-    }
-
-    if (requestParameters["maxKey"] != null) {
-      queryParameters["max_key"] = requestParameters["maxKey"];
-    }
-
-    if (requestParameters["targetKey"] != null) {
-      queryParameters["target_key"] = requestParameters["targetKey"];
-    }
-
-    if (requestParameters["minLiveness"] != null) {
-      queryParameters["min_liveness"] = requestParameters["minLiveness"];
-    }
-
-    if (requestParameters["maxLiveness"] != null) {
-      queryParameters["max_liveness"] = requestParameters["maxLiveness"];
-    }
-
-    if (requestParameters["targetLiveness"] != null) {
-      queryParameters["target_liveness"] = requestParameters["targetLiveness"];
-    }
-
-    if (requestParameters["minLoudness"] != null) {
-      queryParameters["min_loudness"] = requestParameters["minLoudness"];
-    }
-
-    if (requestParameters["maxLoudness"] != null) {
-      queryParameters["max_loudness"] = requestParameters["maxLoudness"];
-    }
-
-    if (requestParameters["targetLoudness"] != null) {
-      queryParameters["target_loudness"] = requestParameters["targetLoudness"];
-    }
-
-    if (requestParameters["minMode"] != null) {
-      queryParameters["min_mode"] = requestParameters["minMode"];
-    }
-
-    if (requestParameters["maxMode"] != null) {
-      queryParameters["max_mode"] = requestParameters["maxMode"];
-    }
-
-    if (requestParameters["targetMode"] != null) {
-      queryParameters["target_mode"] = requestParameters["targetMode"];
-    }
-
-    if (requestParameters["minPopularity"] != null) {
-      queryParameters["min_popularity"] = requestParameters["minPopularity"];
-    }
-
-    if (requestParameters["maxPopularity"] != null) {
-      queryParameters["max_popularity"] = requestParameters["maxPopularity"];
-    }
-
-    if (requestParameters["targetPopularity"] != null) {
-      queryParameters["target_popularity"] =
-        requestParameters["targetPopularity"];
-    }
-
-    if (requestParameters["minSpeechiness"] != null) {
-      queryParameters["min_speechiness"] = requestParameters["minSpeechiness"];
-    }
-
-    if (requestParameters["maxSpeechiness"] != null) {
-      queryParameters["max_speechiness"] = requestParameters["maxSpeechiness"];
-    }
-
-    if (requestParameters["targetSpeechiness"] != null) {
-      queryParameters["target_speechiness"] =
-        requestParameters["targetSpeechiness"];
-    }
-
-    if (requestParameters["minTempo"] != null) {
-      queryParameters["min_tempo"] = requestParameters["minTempo"];
-    }
-
-    if (requestParameters["maxTempo"] != null) {
-      queryParameters["max_tempo"] = requestParameters["maxTempo"];
-    }
-
-    if (requestParameters["targetTempo"] != null) {
-      queryParameters["target_tempo"] = requestParameters["targetTempo"];
-    }
-
-    if (requestParameters["minTimeSignature"] != null) {
-      queryParameters["min_time_signature"] =
-        requestParameters["minTimeSignature"];
-    }
-
-    if (requestParameters["maxTimeSignature"] != null) {
-      queryParameters["max_time_signature"] =
-        requestParameters["maxTimeSignature"];
-    }
-
-    if (requestParameters["targetTimeSignature"] != null) {
-      queryParameters["target_time_signature"] =
-        requestParameters["targetTimeSignature"];
-    }
-
-    if (requestParameters["minValence"] != null) {
-      queryParameters["min_valence"] = requestParameters["minValence"];
-    }
-
-    if (requestParameters["maxValence"] != null) {
-      queryParameters["max_valence"] = requestParameters["maxValence"];
-    }
-
-    if (requestParameters["targetValence"] != null) {
-      queryParameters["target_valence"] = requestParameters["targetValence"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        [],
-      );
-    }
-
-    let urlPath = `/recommendations`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * Recommendations are generated based on the available information for a
-   * given seed entity and matched against similar artists and tracks. If there
-   * is sufficient information about the provided seeds, a list of tracks will
-   * be returned together with pool size details. For artists and tracks that
-   * are very new or obscure there might not be enough data to generate a list
-   * of tracks. Get Recommendations
-   *
-   * @deprecated
-   */
-  async getRecommendations(
-    requestParameters: TracksApiGetRecommendationsRequest = {},
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<RecommendationsObject> {
-    const response = await this.getRecommendationsRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
-   * Get audio features for multiple tracks based on their Spotify IDs. Get
-   * Several Tracks' Audio Features
-   *
-   * @deprecated
-   */
-  async getSeveralAudioFeaturesRaw(
-    requestParameters: TracksApiGetSeveralAudioFeaturesRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<GetSeveralAudioFeatures200Response>> {
-    if (requestParameters["ids"] == null) {
-      throw new runtime.RequiredError(
-        "ids",
-        'Required parameter "ids" was null or undefined when calling getSeveralAudioFeatures().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["ids"] != null) {
-      queryParameters["ids"] = requestParameters["ids"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        [],
-      );
-    }
-
-    let urlPath = `/audio-features`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * Get audio features for multiple tracks based on their Spotify IDs. Get
-   * Several Tracks' Audio Features
-   *
-   * @deprecated
-   */
-  async getSeveralAudioFeatures(
-    requestParameters: TracksApiGetSeveralAudioFeaturesRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<GetSeveralAudioFeatures200Response> {
-    const response = await this.getSeveralAudioFeaturesRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
-   * Get Spotify catalog information for multiple tracks based on their Spotify
-   * IDs. Get Several Tracks
-   *
-   * @deprecated
-   */
-  async getSeveralTracksRaw(
-    requestParameters: TracksApiGetSeveralTracksRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<GetAnArtistsTopTracks200Response>> {
-    if (requestParameters["ids"] == null) {
-      throw new runtime.RequiredError(
-        "ids",
-        'Required parameter "ids" was null or undefined when calling getSeveralTracks().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["market"] != null) {
-      queryParameters["market"] = requestParameters["market"];
-    }
-
-    if (requestParameters["ids"] != null) {
-      queryParameters["ids"] = requestParameters["ids"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        [],
-      );
-    }
-
-    let urlPath = `/tracks`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * Get Spotify catalog information for multiple tracks based on their Spotify
-   * IDs. Get Several Tracks
-   *
-   * @deprecated
-   */
-  async getSeveralTracks(
-    requestParameters: TracksApiGetSeveralTracksRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<GetAnArtistsTopTracks200Response> {
-    const response = await this.getSeveralTracksRaw(
       requestParameters,
       initOverrides,
     );
@@ -1469,7 +508,7 @@ export class TracksApi extends runtime.BaseAPI {
   async removeItemsPlaylistRaw(
     requestParameters: TracksApiRemoveItemsPlaylistOperationRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<ReorderOrReplacePlaylistsTracks200Response>> {
+  ): Promise<runtime.ApiResponse<ReorderOrReplacePlaylistsItems200Response>> {
     if (requestParameters["playlistId"] == null) {
       throw new runtime.RequiredError(
         "playlistId",
@@ -1515,152 +554,12 @@ export class TracksApi extends runtime.BaseAPI {
   async removeItemsPlaylist(
     requestParameters: TracksApiRemoveItemsPlaylistOperationRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<ReorderOrReplacePlaylistsTracks200Response> {
+  ): Promise<ReorderOrReplacePlaylistsItems200Response> {
     const response = await this.removeItemsPlaylistRaw(
       requestParameters,
       initOverrides,
     );
     return await response.value();
-  }
-
-  /**
-   * **Deprecated:** Use [Remove Playlist
-   * Items](/documentation/web-api/reference/remove-items-playlist) instead.
-   * Remove one or more items from a user's playlist. Remove Playlist Items
-   * [DEPRECATED]
-   *
-   * @deprecated
-   */
-  async removeTracksPlaylistRaw(
-    requestParameters: TracksApiRemoveTracksPlaylistOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<ReorderOrReplacePlaylistsTracks200Response>> {
-    if (requestParameters["playlistId"] == null) {
-      throw new runtime.RequiredError(
-        "playlistId",
-        'Required parameter "playlistId" was null or undefined when calling removeTracksPlaylist().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    headerParameters["Content-Type"] = "application/json";
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["playlist-modify-public", "playlist-modify-private"],
-      );
-    }
-
-    let urlPath = `/playlists/{playlist_id}/tracks`;
-    urlPath = urlPath.replace(
-      `{${"playlist_id"}}`,
-      encodeURIComponent(String(requestParameters["playlistId"])),
-    );
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-        body: requestParameters["removeTracksPlaylistRequest"],
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * **Deprecated:** Use [Remove Playlist
-   * Items](/documentation/web-api/reference/remove-items-playlist) instead.
-   * Remove one or more items from a user's playlist. Remove Playlist Items
-   * [DEPRECATED]
-   *
-   * @deprecated
-   */
-  async removeTracksPlaylist(
-    requestParameters: TracksApiRemoveTracksPlaylistOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<ReorderOrReplacePlaylistsTracks200Response> {
-    const response = await this.removeTracksPlaylistRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
-   * Remove one or more tracks from the current user's 'Your Music' library.
-   * **Note:** This endpoint is deprecated. Use [Remove Items from
-   * Library](/documentation/web-api/reference/remove-library-items) instead.
-   * Remove User's Saved Tracks
-   *
-   * @deprecated
-   */
-  async removeTracksUserRaw(
-    requestParameters: TracksApiRemoveTracksUserRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<void>> {
-    if (requestParameters["ids"] == null) {
-      throw new runtime.RequiredError(
-        "ids",
-        'Required parameter "ids" was null or undefined when calling removeTracksUser().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["ids"] != null) {
-      queryParameters["ids"] = requestParameters["ids"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    headerParameters["Content-Type"] = "application/json";
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["user-library-modify"],
-      );
-    }
-
-    let urlPath = `/me/tracks`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-        body: requestParameters["saveAlbumsUserRequest"],
-      },
-      initOverrides,
-    );
-
-    return new runtime.VoidApiResponse(response);
-  }
-
-  /**
-   * Remove one or more tracks from the current user's 'Your Music' library.
-   * **Note:** This endpoint is deprecated. Use [Remove Items from
-   * Library](/documentation/web-api/reference/remove-library-items) instead.
-   * Remove User's Saved Tracks
-   *
-   * @deprecated
-   */
-  async removeTracksUser(
-    requestParameters: TracksApiRemoveTracksUserRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<void> {
-    await this.removeTracksUserRaw(requestParameters, initOverrides);
   }
 
   /**
@@ -1675,9 +574,9 @@ export class TracksApi extends runtime.BaseAPI {
    * applied together in a single request. Update Playlist Items
    */
   async reorderOrReplacePlaylistsItemsRaw(
-    requestParameters: TracksApiReorderOrReplacePlaylistsItemsRequest,
+    requestParameters: TracksApiReorderOrReplacePlaylistsItemsOperationRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<ReorderOrReplacePlaylistsTracks200Response>> {
+  ): Promise<runtime.ApiResponse<ReorderOrReplacePlaylistsItems200Response>> {
     if (requestParameters["playlistId"] == null) {
       throw new runtime.RequiredError(
         "playlistId",
@@ -1715,7 +614,7 @@ export class TracksApi extends runtime.BaseAPI {
         method: "PUT",
         headers: headerParameters,
         query: queryParameters,
-        body: requestParameters["reorderOrReplacePlaylistsTracksRequest"],
+        body: requestParameters["reorderOrReplacePlaylistsItemsRequest"],
       },
       initOverrides,
     );
@@ -1735,162 +634,13 @@ export class TracksApi extends runtime.BaseAPI {
    * applied together in a single request. Update Playlist Items
    */
   async reorderOrReplacePlaylistsItems(
-    requestParameters: TracksApiReorderOrReplacePlaylistsItemsRequest,
+    requestParameters: TracksApiReorderOrReplacePlaylistsItemsOperationRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<ReorderOrReplacePlaylistsTracks200Response> {
+  ): Promise<ReorderOrReplacePlaylistsItems200Response> {
     const response = await this.reorderOrReplacePlaylistsItemsRaw(
       requestParameters,
       initOverrides,
     );
     return await response.value();
-  }
-
-  /**
-   * **Deprecated:** Use [Update Playlist
-   * Items](/documentation/web-api/reference/reorder-or-replace-playlists-items)
-   * instead. Either reorder or replace items in a playlist depending on the
-   * request's parameters. To reorder items, include `range_start`,
-   * `insert_before`, `range_length` and `snapshot_id` in the request's body. To
-   * replace items, include `uris` as either a query parameter or in the
-   * request's body. Replacing items in a playlist will overwrite its existing
-   * items. This operation can be used for replacing or clearing items in a
-   * playlist. <br/> **Note**: Replace and reorder are mutually exclusive
-   * operations which share the same endpoint, but have different parameters.
-   * These operations can't be applied together in a single request. Update
-   * Playlist Items [DEPRECATED]
-   *
-   * @deprecated
-   */
-  async reorderOrReplacePlaylistsTracksRaw(
-    requestParameters: TracksApiReorderOrReplacePlaylistsTracksOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<ReorderOrReplacePlaylistsTracks200Response>> {
-    if (requestParameters["playlistId"] == null) {
-      throw new runtime.RequiredError(
-        "playlistId",
-        'Required parameter "playlistId" was null or undefined when calling reorderOrReplacePlaylistsTracks().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["uris"] != null) {
-      queryParameters["uris"] = requestParameters["uris"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    headerParameters["Content-Type"] = "application/json";
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["playlist-modify-public", "playlist-modify-private"],
-      );
-    }
-
-    let urlPath = `/playlists/{playlist_id}/tracks`;
-    urlPath = urlPath.replace(
-      `{${"playlist_id"}}`,
-      encodeURIComponent(String(requestParameters["playlistId"])),
-    );
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PUT",
-        headers: headerParameters,
-        query: queryParameters,
-        body: requestParameters["reorderOrReplacePlaylistsTracksRequest"],
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * **Deprecated:** Use [Update Playlist
-   * Items](/documentation/web-api/reference/reorder-or-replace-playlists-items)
-   * instead. Either reorder or replace items in a playlist depending on the
-   * request's parameters. To reorder items, include `range_start`,
-   * `insert_before`, `range_length` and `snapshot_id` in the request's body. To
-   * replace items, include `uris` as either a query parameter or in the
-   * request's body. Replacing items in a playlist will overwrite its existing
-   * items. This operation can be used for replacing or clearing items in a
-   * playlist. <br/> **Note**: Replace and reorder are mutually exclusive
-   * operations which share the same endpoint, but have different parameters.
-   * These operations can't be applied together in a single request. Update
-   * Playlist Items [DEPRECATED]
-   *
-   * @deprecated
-   */
-  async reorderOrReplacePlaylistsTracks(
-    requestParameters: TracksApiReorderOrReplacePlaylistsTracksOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<ReorderOrReplacePlaylistsTracks200Response> {
-    const response = await this.reorderOrReplacePlaylistsTracksRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
-   * Save one or more tracks to the current user's 'Your Music' library.
-   * **Note:** This endpoint is deprecated. Use [Save Items to
-   * Library](/documentation/web-api/reference/save-library-items) instead. Save
-   * Tracks for Current User
-   *
-   * @deprecated
-   */
-  async saveTracksUserRaw(
-    requestParameters: TracksApiSaveTracksUserOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<void>> {
-    const queryParameters: any = {};
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    headerParameters["Content-Type"] = "application/json";
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["user-library-modify"],
-      );
-    }
-
-    let urlPath = `/me/tracks`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PUT",
-        headers: headerParameters,
-        query: queryParameters,
-        body: requestParameters["saveTracksUserRequest"],
-      },
-      initOverrides,
-    );
-
-    return new runtime.VoidApiResponse(response);
-  }
-
-  /**
-   * Save one or more tracks to the current user's 'Your Music' library.
-   * **Note:** This endpoint is deprecated. Use [Save Items to
-   * Library](/documentation/web-api/reference/save-library-items) instead. Save
-   * Tracks for Current User
-   *
-   * @deprecated
-   */
-  async saveTracksUser(
-    requestParameters: TracksApiSaveTracksUserOperationRequest = {},
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<void> {
-    await this.saveTracksUserRaw(requestParameters, initOverrides);
   }
 }

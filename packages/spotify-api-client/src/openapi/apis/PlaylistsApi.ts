@@ -25,34 +25,24 @@
 
 import * as runtime from "../runtime";
 import type {
-  AddTracksToPlaylistRequest,
+  AddItemsToPlaylistRequest,
   ChangePlaylistDetailsRequest,
   CreatePlaylistRequest,
-  FollowPlaylistRequest,
   GetAnAlbum401Response,
   ImageObject,
-  PagingFeaturedPlaylistObject,
   PagingPlaylistObject,
   PagingPlaylistTrackObject,
   PlaylistObject,
   RemoveItemsPlaylistRequest,
-  RemoveTracksPlaylistRequest,
-  ReorderOrReplacePlaylistsTracks200Response,
-  ReorderOrReplacePlaylistsTracksRequest,
+  ReorderOrReplacePlaylistsItems200Response,
+  ReorderOrReplacePlaylistsItemsRequest,
 } from "../models/index";
 
-export interface PlaylistsApiAddItemsToPlaylistRequest {
+export interface PlaylistsApiAddItemsToPlaylistOperationRequest {
   playlistId: string;
   position?: number;
   uris?: string;
-  addTracksToPlaylistRequest?: AddTracksToPlaylistRequest;
-}
-
-export interface PlaylistsApiAddTracksToPlaylistOperationRequest {
-  playlistId: string;
-  position?: number;
-  uris?: string;
-  addTracksToPlaylistRequest?: AddTracksToPlaylistRequest;
+  addItemsToPlaylistRequest?: AddItemsToPlaylistRequest;
 }
 
 export interface PlaylistsApiChangePlaylistDetailsOperationRequest {
@@ -60,44 +50,11 @@ export interface PlaylistsApiChangePlaylistDetailsOperationRequest {
   changePlaylistDetailsRequest?: ChangePlaylistDetailsRequest;
 }
 
-export interface PlaylistsApiCheckIfUserFollowsPlaylistRequest {
-  playlistId: string;
-  ids?: string;
-}
-
 export interface PlaylistsApiCreatePlaylistOperationRequest {
   createPlaylistRequest?: CreatePlaylistRequest;
 }
 
-export interface PlaylistsApiCreatePlaylistForUserRequest {
-  userId: string;
-  createPlaylistRequest?: CreatePlaylistRequest;
-}
-
-export interface PlaylistsApiFollowPlaylistOperationRequest {
-  playlistId: string;
-  followPlaylistRequest?: FollowPlaylistRequest;
-}
-
-export interface PlaylistsApiGetACategoriesPlaylistsRequest {
-  categoryId: string;
-  limit?: number;
-  offset?: number;
-}
-
 export interface PlaylistsApiGetAListOfCurrentUsersPlaylistsRequest {
-  limit?: number;
-  offset?: number;
-}
-
-export interface PlaylistsApiGetFeaturedPlaylistsRequest {
-  locale?: string;
-  limit?: number;
-  offset?: number;
-}
-
-export interface PlaylistsApiGetListUsersPlaylistsRequest {
-  userId: string;
   limit?: number;
   offset?: number;
 }
@@ -122,39 +79,15 @@ export interface PlaylistsApiGetPlaylistsItemsRequest {
   additionalTypes?: string;
 }
 
-export interface PlaylistsApiGetPlaylistsTracksRequest {
-  playlistId: string;
-  market?: string;
-  fields?: string;
-  limit?: number;
-  offset?: number;
-  additionalTypes?: string;
-}
-
 export interface PlaylistsApiRemoveItemsPlaylistOperationRequest {
   playlistId: string;
   removeItemsPlaylistRequest?: RemoveItemsPlaylistRequest;
 }
 
-export interface PlaylistsApiRemoveTracksPlaylistOperationRequest {
-  playlistId: string;
-  removeTracksPlaylistRequest?: RemoveTracksPlaylistRequest;
-}
-
-export interface PlaylistsApiReorderOrReplacePlaylistsItemsRequest {
+export interface PlaylistsApiReorderOrReplacePlaylistsItemsOperationRequest {
   playlistId: string;
   uris?: string;
-  reorderOrReplacePlaylistsTracksRequest?: ReorderOrReplacePlaylistsTracksRequest;
-}
-
-export interface PlaylistsApiReorderOrReplacePlaylistsTracksOperationRequest {
-  playlistId: string;
-  uris?: string;
-  reorderOrReplacePlaylistsTracksRequest?: ReorderOrReplacePlaylistsTracksRequest;
-}
-
-export interface PlaylistsApiUnfollowPlaylistRequest {
-  playlistId: string;
+  reorderOrReplacePlaylistsItemsRequest?: ReorderOrReplacePlaylistsItemsRequest;
 }
 
 export interface PlaylistsApiUploadCustomPlaylistCoverRequest {
@@ -165,9 +98,9 @@ export interface PlaylistsApiUploadCustomPlaylistCoverRequest {
 export class PlaylistsApi extends runtime.BaseAPI {
   /** Add one or more items to a user's playlist. Add Items to Playlist */
   async addItemsToPlaylistRaw(
-    requestParameters: PlaylistsApiAddItemsToPlaylistRequest,
+    requestParameters: PlaylistsApiAddItemsToPlaylistOperationRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<ReorderOrReplacePlaylistsTracks200Response>> {
+  ): Promise<runtime.ApiResponse<ReorderOrReplacePlaylistsItems200Response>> {
     if (requestParameters["playlistId"] == null) {
       throw new runtime.RequiredError(
         "playlistId",
@@ -209,7 +142,7 @@ export class PlaylistsApi extends runtime.BaseAPI {
         method: "POST",
         headers: headerParameters,
         query: queryParameters,
-        body: requestParameters["addTracksToPlaylistRequest"],
+        body: requestParameters["addItemsToPlaylistRequest"],
       },
       initOverrides,
     );
@@ -219,90 +152,10 @@ export class PlaylistsApi extends runtime.BaseAPI {
 
   /** Add one or more items to a user's playlist. Add Items to Playlist */
   async addItemsToPlaylist(
-    requestParameters: PlaylistsApiAddItemsToPlaylistRequest,
+    requestParameters: PlaylistsApiAddItemsToPlaylistOperationRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<ReorderOrReplacePlaylistsTracks200Response> {
+  ): Promise<ReorderOrReplacePlaylistsItems200Response> {
     const response = await this.addItemsToPlaylistRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
-   * **Deprecated:** Use [Add Items to
-   * Playlist](/documentation/web-api/reference/add-items-to-playlist) instead.
-   * Add one or more items to a user's playlist. Add Items to Playlist
-   * [DEPRECATED]
-   *
-   * @deprecated
-   */
-  async addTracksToPlaylistRaw(
-    requestParameters: PlaylistsApiAddTracksToPlaylistOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<ReorderOrReplacePlaylistsTracks200Response>> {
-    if (requestParameters["playlistId"] == null) {
-      throw new runtime.RequiredError(
-        "playlistId",
-        'Required parameter "playlistId" was null or undefined when calling addTracksToPlaylist().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["position"] != null) {
-      queryParameters["position"] = requestParameters["position"];
-    }
-
-    if (requestParameters["uris"] != null) {
-      queryParameters["uris"] = requestParameters["uris"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    headerParameters["Content-Type"] = "application/json";
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["playlist-modify-public", "playlist-modify-private"],
-      );
-    }
-
-    let urlPath = `/playlists/{playlist_id}/tracks`;
-    urlPath = urlPath.replace(
-      `{${"playlist_id"}}`,
-      encodeURIComponent(String(requestParameters["playlistId"])),
-    );
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: requestParameters["addTracksToPlaylistRequest"],
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * **Deprecated:** Use [Add Items to
-   * Playlist](/documentation/web-api/reference/add-items-to-playlist) instead.
-   * Add one or more items to a user's playlist. Add Items to Playlist
-   * [DEPRECATED]
-   *
-   * @deprecated
-   */
-  async addTracksToPlaylist(
-    requestParameters: PlaylistsApiAddTracksToPlaylistOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<ReorderOrReplacePlaylistsTracks200Response> {
-    const response = await this.addTracksToPlaylistRaw(
       requestParameters,
       initOverrides,
     );
@@ -370,79 +223,6 @@ export class PlaylistsApi extends runtime.BaseAPI {
   }
 
   /**
-   * Check to see if the current user is following a specified playlist.
-   * **Note:** This endpoint is deprecated. Use [Check User's Saved
-   * Items](/documentation/web-api/reference/check-library-contains) instead.
-   * Check if Current User Follows Playlist
-   *
-   * @deprecated
-   */
-  async checkIfUserFollowsPlaylistRaw(
-    requestParameters: PlaylistsApiCheckIfUserFollowsPlaylistRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<Array<boolean>>> {
-    if (requestParameters["playlistId"] == null) {
-      throw new runtime.RequiredError(
-        "playlistId",
-        'Required parameter "playlistId" was null or undefined when calling checkIfUserFollowsPlaylist().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["ids"] != null) {
-      queryParameters["ids"] = requestParameters["ids"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        [],
-      );
-    }
-
-    let urlPath = `/playlists/{playlist_id}/followers/contains`;
-    urlPath = urlPath.replace(
-      `{${"playlist_id"}}`,
-      encodeURIComponent(String(requestParameters["playlistId"])),
-    );
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse<any>(response);
-  }
-
-  /**
-   * Check to see if the current user is following a specified playlist.
-   * **Note:** This endpoint is deprecated. Use [Check User's Saved
-   * Items](/documentation/web-api/reference/check-library-contains) instead.
-   * Check if Current User Follows Playlist
-   *
-   * @deprecated
-   */
-  async checkIfUserFollowsPlaylist(
-    requestParameters: PlaylistsApiCheckIfUserFollowsPlaylistRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<Array<boolean>> {
-    const response = await this.checkIfUserFollowsPlaylistRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
    * Create a playlist for the current Spotify user. (The playlist will be empty
    * until you [add
    * tracks](/documentation/web-api/reference/add-tracks-to-playlist).) Each
@@ -493,223 +273,6 @@ export class PlaylistsApi extends runtime.BaseAPI {
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
   ): Promise<PlaylistObject> {
     const response = await this.createPlaylistRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
-   * **Deprecated**: Use [Create
-   * Playlist](/documentation/web-api/reference/create-playlist) instead. Create
-   * a playlist for a Spotify user. (The playlist will be empty until you [add
-   * tracks](/documentation/web-api/reference/add-tracks-to-playlist).) Each
-   * user is generally limited to a maximum of 11000 playlists. Create Playlist
-   * for user
-   *
-   * @deprecated
-   */
-  async createPlaylistForUserRaw(
-    requestParameters: PlaylistsApiCreatePlaylistForUserRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<PlaylistObject>> {
-    if (requestParameters["userId"] == null) {
-      throw new runtime.RequiredError(
-        "userId",
-        'Required parameter "userId" was null or undefined when calling createPlaylistForUser().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    headerParameters["Content-Type"] = "application/json";
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["playlist-modify-public", "playlist-modify-private"],
-      );
-    }
-
-    let urlPath = `/users/{user_id}/playlists`;
-    urlPath = urlPath.replace(
-      `{${"user_id"}}`,
-      encodeURIComponent(String(requestParameters["userId"])),
-    );
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "POST",
-        headers: headerParameters,
-        query: queryParameters,
-        body: requestParameters["createPlaylistRequest"],
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * **Deprecated**: Use [Create
-   * Playlist](/documentation/web-api/reference/create-playlist) instead. Create
-   * a playlist for a Spotify user. (The playlist will be empty until you [add
-   * tracks](/documentation/web-api/reference/add-tracks-to-playlist).) Each
-   * user is generally limited to a maximum of 11000 playlists. Create Playlist
-   * for user
-   *
-   * @deprecated
-   */
-  async createPlaylistForUser(
-    requestParameters: PlaylistsApiCreatePlaylistForUserRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<PlaylistObject> {
-    const response = await this.createPlaylistForUserRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
-   * Add the current user as a follower of a playlist. **Note:** This endpoint
-   * is deprecated. Use [Save Items to
-   * Library](/documentation/web-api/reference/save-library-items) instead.
-   * Follow Playlist
-   *
-   * @deprecated
-   */
-  async followPlaylistRaw(
-    requestParameters: PlaylistsApiFollowPlaylistOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<void>> {
-    if (requestParameters["playlistId"] == null) {
-      throw new runtime.RequiredError(
-        "playlistId",
-        'Required parameter "playlistId" was null or undefined when calling followPlaylist().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    headerParameters["Content-Type"] = "application/json";
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["playlist-modify-public", "playlist-modify-private"],
-      );
-    }
-
-    let urlPath = `/playlists/{playlist_id}/followers`;
-    urlPath = urlPath.replace(
-      `{${"playlist_id"}}`,
-      encodeURIComponent(String(requestParameters["playlistId"])),
-    );
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PUT",
-        headers: headerParameters,
-        query: queryParameters,
-        body: requestParameters["followPlaylistRequest"],
-      },
-      initOverrides,
-    );
-
-    return new runtime.VoidApiResponse(response);
-  }
-
-  /**
-   * Add the current user as a follower of a playlist. **Note:** This endpoint
-   * is deprecated. Use [Save Items to
-   * Library](/documentation/web-api/reference/save-library-items) instead.
-   * Follow Playlist
-   *
-   * @deprecated
-   */
-  async followPlaylist(
-    requestParameters: PlaylistsApiFollowPlaylistOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<void> {
-    await this.followPlaylistRaw(requestParameters, initOverrides);
-  }
-
-  /**
-   * Get a list of Spotify playlists tagged with a particular category. Get
-   * Category's Playlists
-   *
-   * @deprecated
-   */
-  async getACategoriesPlaylistsRaw(
-    requestParameters: PlaylistsApiGetACategoriesPlaylistsRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<PagingFeaturedPlaylistObject>> {
-    if (requestParameters["categoryId"] == null) {
-      throw new runtime.RequiredError(
-        "categoryId",
-        'Required parameter "categoryId" was null or undefined when calling getACategoriesPlaylists().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["limit"] != null) {
-      queryParameters["limit"] = requestParameters["limit"];
-    }
-
-    if (requestParameters["offset"] != null) {
-      queryParameters["offset"] = requestParameters["offset"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        [],
-      );
-    }
-
-    let urlPath = `/browse/categories/{category_id}/playlists`;
-    urlPath = urlPath.replace(
-      `{${"category_id"}}`,
-      encodeURIComponent(String(requestParameters["categoryId"])),
-    );
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * Get a list of Spotify playlists tagged with a particular category. Get
-   * Category's Playlists
-   *
-   * @deprecated
-   */
-  async getACategoriesPlaylists(
-    requestParameters: PlaylistsApiGetACategoriesPlaylistsRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<PagingFeaturedPlaylistObject> {
-    const response = await this.getACategoriesPlaylistsRaw(
       requestParameters,
       initOverrides,
     );
@@ -768,145 +331,6 @@ export class PlaylistsApi extends runtime.BaseAPI {
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
   ): Promise<PagingPlaylistObject> {
     const response = await this.getAListOfCurrentUsersPlaylistsRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
-   * Get a list of Spotify featured playlists (shown, for example, on a Spotify
-   * player's 'Browse' tab). Get Featured Playlists
-   *
-   * @deprecated
-   */
-  async getFeaturedPlaylistsRaw(
-    requestParameters: PlaylistsApiGetFeaturedPlaylistsRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<PagingFeaturedPlaylistObject>> {
-    const queryParameters: any = {};
-
-    if (requestParameters["locale"] != null) {
-      queryParameters["locale"] = requestParameters["locale"];
-    }
-
-    if (requestParameters["limit"] != null) {
-      queryParameters["limit"] = requestParameters["limit"];
-    }
-
-    if (requestParameters["offset"] != null) {
-      queryParameters["offset"] = requestParameters["offset"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        [],
-      );
-    }
-
-    let urlPath = `/browse/featured-playlists`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * Get a list of Spotify featured playlists (shown, for example, on a Spotify
-   * player's 'Browse' tab). Get Featured Playlists
-   *
-   * @deprecated
-   */
-  async getFeaturedPlaylists(
-    requestParameters: PlaylistsApiGetFeaturedPlaylistsRequest = {},
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<PagingFeaturedPlaylistObject> {
-    const response = await this.getFeaturedPlaylistsRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
-   * Get a list of the playlists owned or followed by a Spotify user. Get User's
-   * Playlists
-   *
-   * @deprecated
-   */
-  async getListUsersPlaylistsRaw(
-    requestParameters: PlaylistsApiGetListUsersPlaylistsRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<PagingPlaylistObject>> {
-    if (requestParameters["userId"] == null) {
-      throw new runtime.RequiredError(
-        "userId",
-        'Required parameter "userId" was null or undefined when calling getListUsersPlaylists().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["limit"] != null) {
-      queryParameters["limit"] = requestParameters["limit"];
-    }
-
-    if (requestParameters["offset"] != null) {
-      queryParameters["offset"] = requestParameters["offset"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["playlist-read-private", "playlist-read-collaborative"],
-      );
-    }
-
-    let urlPath = `/users/{user_id}/playlists`;
-    urlPath = urlPath.replace(
-      `{${"user_id"}}`,
-      encodeURIComponent(String(requestParameters["userId"])),
-    );
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * Get a list of the playlists owned or followed by a Spotify user. Get User's
-   * Playlists
-   *
-   * @deprecated
-   */
-  async getListUsersPlaylists(
-    requestParameters: PlaylistsApiGetListUsersPlaylistsRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<PagingPlaylistObject> {
-    const response = await this.getListUsersPlaylistsRaw(
       requestParameters,
       initOverrides,
     );
@@ -1130,101 +554,11 @@ export class PlaylistsApi extends runtime.BaseAPI {
     return await response.value();
   }
 
-  /**
-   * **Deprecated:** Use [Get Playlist
-   * Items](/documentation/web-api/reference/get-playlists-items) instead. Get
-   * full details of the items of a playlist owned by a Spotify user. Get
-   * Playlist Items [DEPRECATED]
-   *
-   * @deprecated
-   */
-  async getPlaylistsTracksRaw(
-    requestParameters: PlaylistsApiGetPlaylistsTracksRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<PagingPlaylistTrackObject>> {
-    if (requestParameters["playlistId"] == null) {
-      throw new runtime.RequiredError(
-        "playlistId",
-        'Required parameter "playlistId" was null or undefined when calling getPlaylistsTracks().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["market"] != null) {
-      queryParameters["market"] = requestParameters["market"];
-    }
-
-    if (requestParameters["fields"] != null) {
-      queryParameters["fields"] = requestParameters["fields"];
-    }
-
-    if (requestParameters["limit"] != null) {
-      queryParameters["limit"] = requestParameters["limit"];
-    }
-
-    if (requestParameters["offset"] != null) {
-      queryParameters["offset"] = requestParameters["offset"];
-    }
-
-    if (requestParameters["additionalTypes"] != null) {
-      queryParameters["additional_types"] =
-        requestParameters["additionalTypes"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["playlist-read-private"],
-      );
-    }
-
-    let urlPath = `/playlists/{playlist_id}/tracks`;
-    urlPath = urlPath.replace(
-      `{${"playlist_id"}}`,
-      encodeURIComponent(String(requestParameters["playlistId"])),
-    );
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * **Deprecated:** Use [Get Playlist
-   * Items](/documentation/web-api/reference/get-playlists-items) instead. Get
-   * full details of the items of a playlist owned by a Spotify user. Get
-   * Playlist Items [DEPRECATED]
-   *
-   * @deprecated
-   */
-  async getPlaylistsTracks(
-    requestParameters: PlaylistsApiGetPlaylistsTracksRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<PagingPlaylistTrackObject> {
-    const response = await this.getPlaylistsTracksRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
   /** Remove one or more items from a user's playlist. Remove Playlist Items */
   async removeItemsPlaylistRaw(
     requestParameters: PlaylistsApiRemoveItemsPlaylistOperationRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<ReorderOrReplacePlaylistsTracks200Response>> {
+  ): Promise<runtime.ApiResponse<ReorderOrReplacePlaylistsItems200Response>> {
     if (requestParameters["playlistId"] == null) {
       throw new runtime.RequiredError(
         "playlistId",
@@ -1270,80 +604,8 @@ export class PlaylistsApi extends runtime.BaseAPI {
   async removeItemsPlaylist(
     requestParameters: PlaylistsApiRemoveItemsPlaylistOperationRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<ReorderOrReplacePlaylistsTracks200Response> {
+  ): Promise<ReorderOrReplacePlaylistsItems200Response> {
     const response = await this.removeItemsPlaylistRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
-   * **Deprecated:** Use [Remove Playlist
-   * Items](/documentation/web-api/reference/remove-items-playlist) instead.
-   * Remove one or more items from a user's playlist. Remove Playlist Items
-   * [DEPRECATED]
-   *
-   * @deprecated
-   */
-  async removeTracksPlaylistRaw(
-    requestParameters: PlaylistsApiRemoveTracksPlaylistOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<ReorderOrReplacePlaylistsTracks200Response>> {
-    if (requestParameters["playlistId"] == null) {
-      throw new runtime.RequiredError(
-        "playlistId",
-        'Required parameter "playlistId" was null or undefined when calling removeTracksPlaylist().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    headerParameters["Content-Type"] = "application/json";
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["playlist-modify-public", "playlist-modify-private"],
-      );
-    }
-
-    let urlPath = `/playlists/{playlist_id}/tracks`;
-    urlPath = urlPath.replace(
-      `{${"playlist_id"}}`,
-      encodeURIComponent(String(requestParameters["playlistId"])),
-    );
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-        body: requestParameters["removeTracksPlaylistRequest"],
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * **Deprecated:** Use [Remove Playlist
-   * Items](/documentation/web-api/reference/remove-items-playlist) instead.
-   * Remove one or more items from a user's playlist. Remove Playlist Items
-   * [DEPRECATED]
-   *
-   * @deprecated
-   */
-  async removeTracksPlaylist(
-    requestParameters: PlaylistsApiRemoveTracksPlaylistOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<ReorderOrReplacePlaylistsTracks200Response> {
-    const response = await this.removeTracksPlaylistRaw(
       requestParameters,
       initOverrides,
     );
@@ -1362,9 +624,9 @@ export class PlaylistsApi extends runtime.BaseAPI {
    * applied together in a single request. Update Playlist Items
    */
   async reorderOrReplacePlaylistsItemsRaw(
-    requestParameters: PlaylistsApiReorderOrReplacePlaylistsItemsRequest,
+    requestParameters: PlaylistsApiReorderOrReplacePlaylistsItemsOperationRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<ReorderOrReplacePlaylistsTracks200Response>> {
+  ): Promise<runtime.ApiResponse<ReorderOrReplacePlaylistsItems200Response>> {
     if (requestParameters["playlistId"] == null) {
       throw new runtime.RequiredError(
         "playlistId",
@@ -1402,7 +664,7 @@ export class PlaylistsApi extends runtime.BaseAPI {
         method: "PUT",
         headers: headerParameters,
         query: queryParameters,
-        body: requestParameters["reorderOrReplacePlaylistsTracksRequest"],
+        body: requestParameters["reorderOrReplacePlaylistsItemsRequest"],
       },
       initOverrides,
     );
@@ -1422,171 +684,14 @@ export class PlaylistsApi extends runtime.BaseAPI {
    * applied together in a single request. Update Playlist Items
    */
   async reorderOrReplacePlaylistsItems(
-    requestParameters: PlaylistsApiReorderOrReplacePlaylistsItemsRequest,
+    requestParameters: PlaylistsApiReorderOrReplacePlaylistsItemsOperationRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<ReorderOrReplacePlaylistsTracks200Response> {
+  ): Promise<ReorderOrReplacePlaylistsItems200Response> {
     const response = await this.reorderOrReplacePlaylistsItemsRaw(
       requestParameters,
       initOverrides,
     );
     return await response.value();
-  }
-
-  /**
-   * **Deprecated:** Use [Update Playlist
-   * Items](/documentation/web-api/reference/reorder-or-replace-playlists-items)
-   * instead. Either reorder or replace items in a playlist depending on the
-   * request's parameters. To reorder items, include `range_start`,
-   * `insert_before`, `range_length` and `snapshot_id` in the request's body. To
-   * replace items, include `uris` as either a query parameter or in the
-   * request's body. Replacing items in a playlist will overwrite its existing
-   * items. This operation can be used for replacing or clearing items in a
-   * playlist. <br/> **Note**: Replace and reorder are mutually exclusive
-   * operations which share the same endpoint, but have different parameters.
-   * These operations can't be applied together in a single request. Update
-   * Playlist Items [DEPRECATED]
-   *
-   * @deprecated
-   */
-  async reorderOrReplacePlaylistsTracksRaw(
-    requestParameters: PlaylistsApiReorderOrReplacePlaylistsTracksOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<ReorderOrReplacePlaylistsTracks200Response>> {
-    if (requestParameters["playlistId"] == null) {
-      throw new runtime.RequiredError(
-        "playlistId",
-        'Required parameter "playlistId" was null or undefined when calling reorderOrReplacePlaylistsTracks().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["uris"] != null) {
-      queryParameters["uris"] = requestParameters["uris"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    headerParameters["Content-Type"] = "application/json";
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["playlist-modify-public", "playlist-modify-private"],
-      );
-    }
-
-    let urlPath = `/playlists/{playlist_id}/tracks`;
-    urlPath = urlPath.replace(
-      `{${"playlist_id"}}`,
-      encodeURIComponent(String(requestParameters["playlistId"])),
-    );
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PUT",
-        headers: headerParameters,
-        query: queryParameters,
-        body: requestParameters["reorderOrReplacePlaylistsTracksRequest"],
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * **Deprecated:** Use [Update Playlist
-   * Items](/documentation/web-api/reference/reorder-or-replace-playlists-items)
-   * instead. Either reorder or replace items in a playlist depending on the
-   * request's parameters. To reorder items, include `range_start`,
-   * `insert_before`, `range_length` and `snapshot_id` in the request's body. To
-   * replace items, include `uris` as either a query parameter or in the
-   * request's body. Replacing items in a playlist will overwrite its existing
-   * items. This operation can be used for replacing or clearing items in a
-   * playlist. <br/> **Note**: Replace and reorder are mutually exclusive
-   * operations which share the same endpoint, but have different parameters.
-   * These operations can't be applied together in a single request. Update
-   * Playlist Items [DEPRECATED]
-   *
-   * @deprecated
-   */
-  async reorderOrReplacePlaylistsTracks(
-    requestParameters: PlaylistsApiReorderOrReplacePlaylistsTracksOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<ReorderOrReplacePlaylistsTracks200Response> {
-    const response = await this.reorderOrReplacePlaylistsTracksRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
-   * Remove the current user as a follower of a playlist. **Note:** This
-   * endpoint is deprecated. Use [Remove Items from
-   * Library](/documentation/web-api/reference/remove-library-items) instead.
-   * Unfollow Playlist
-   *
-   * @deprecated
-   */
-  async unfollowPlaylistRaw(
-    requestParameters: PlaylistsApiUnfollowPlaylistRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<void>> {
-    if (requestParameters["playlistId"] == null) {
-      throw new runtime.RequiredError(
-        "playlistId",
-        'Required parameter "playlistId" was null or undefined when calling unfollowPlaylist().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["playlist-modify-public", "playlist-modify-private"],
-      );
-    }
-
-    let urlPath = `/playlists/{playlist_id}/followers`;
-    urlPath = urlPath.replace(
-      `{${"playlist_id"}}`,
-      encodeURIComponent(String(requestParameters["playlistId"])),
-    );
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.VoidApiResponse(response);
-  }
-
-  /**
-   * Remove the current user as a follower of a playlist. **Note:** This
-   * endpoint is deprecated. Use [Remove Items from
-   * Library](/documentation/web-api/reference/remove-library-items) instead.
-   * Unfollow Playlist
-   *
-   * @deprecated
-   */
-  async unfollowPlaylist(
-    requestParameters: PlaylistsApiUnfollowPlaylistRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<void> {
-    await this.unfollowPlaylistRaw(requestParameters, initOverrides);
   }
 
   /**

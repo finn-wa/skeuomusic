@@ -27,14 +27,9 @@ import * as runtime from "../runtime";
 import type {
   AudiobookObject,
   GetAnAlbum401Response,
-  GetMultipleAudiobooks200Response,
   PagingSavedAudiobookObject,
   PagingSimplifiedChapterObject,
 } from "../models/index";
-
-export interface AudiobooksApiCheckUsersSavedAudiobooksRequest {
-  ids: string;
-}
 
 export interface AudiobooksApiGetAnAudiobookRequest {
   id: string;
@@ -48,94 +43,12 @@ export interface AudiobooksApiGetAudiobookChaptersRequest {
   offset?: number;
 }
 
-export interface AudiobooksApiGetMultipleAudiobooksRequest {
-  ids: string;
-  market?: string;
-}
-
 export interface AudiobooksApiGetUsersSavedAudiobooksRequest {
   limit?: number;
   offset?: number;
 }
 
-export interface AudiobooksApiRemoveAudiobooksUserRequest {
-  ids: string;
-}
-
-export interface AudiobooksApiSaveAudiobooksUserRequest {
-  ids: string;
-}
-
 export class AudiobooksApi extends runtime.BaseAPI {
-  /**
-   * Check if one or more audiobooks are already saved in the current Spotify
-   * user's library. **Note:** This endpoint is deprecated. Use [Check User's
-   * Saved Items](/documentation/web-api/reference/check-library-contains)
-   * instead. Check User's Saved Audiobooks
-   *
-   * @deprecated
-   */
-  async checkUsersSavedAudiobooksRaw(
-    requestParameters: AudiobooksApiCheckUsersSavedAudiobooksRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<Array<boolean>>> {
-    if (requestParameters["ids"] == null) {
-      throw new runtime.RequiredError(
-        "ids",
-        'Required parameter "ids" was null or undefined when calling checkUsersSavedAudiobooks().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["ids"] != null) {
-      queryParameters["ids"] = requestParameters["ids"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["user-library-read"],
-      );
-    }
-
-    let urlPath = `/me/audiobooks/contains`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse<any>(response);
-  }
-
-  /**
-   * Check if one or more audiobooks are already saved in the current Spotify
-   * user's library. **Note:** This endpoint is deprecated. Use [Check User's
-   * Saved Items](/documentation/web-api/reference/check-library-contains)
-   * instead. Check User's Saved Audiobooks
-   *
-   * @deprecated
-   */
-  async checkUsersSavedAudiobooks(
-    requestParameters: AudiobooksApiCheckUsersSavedAudiobooksRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<Array<boolean>> {
-    const response = await this.checkUsersSavedAudiobooksRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
   /**
    * Get Spotify catalog information for a single audiobook. Audiobooks are only
    * available within the US, UK, Canada, Ireland, New Zealand and Australia
@@ -279,77 +192,6 @@ export class AudiobooksApi extends runtime.BaseAPI {
   }
 
   /**
-   * Get Spotify catalog information for several audiobooks identified by their
-   * Spotify IDs. Audiobooks are only available within the US, UK, Canada,
-   * Ireland, New Zealand and Australia markets. Get Several Audiobooks
-   *
-   * @deprecated
-   */
-  async getMultipleAudiobooksRaw(
-    requestParameters: AudiobooksApiGetMultipleAudiobooksRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<GetMultipleAudiobooks200Response>> {
-    if (requestParameters["ids"] == null) {
-      throw new runtime.RequiredError(
-        "ids",
-        'Required parameter "ids" was null or undefined when calling getMultipleAudiobooks().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["ids"] != null) {
-      queryParameters["ids"] = requestParameters["ids"];
-    }
-
-    if (requestParameters["market"] != null) {
-      queryParameters["market"] = requestParameters["market"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        [],
-      );
-    }
-
-    let urlPath = `/audiobooks`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * Get Spotify catalog information for several audiobooks identified by their
-   * Spotify IDs. Audiobooks are only available within the US, UK, Canada,
-   * Ireland, New Zealand and Australia markets. Get Several Audiobooks
-   *
-   * @deprecated
-   */
-  async getMultipleAudiobooks(
-    requestParameters: AudiobooksApiGetMultipleAudiobooksRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<GetMultipleAudiobooks200Response> {
-    const response = await this.getMultipleAudiobooksRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
    * Get a list of the audiobooks saved in the current Spotify user's 'Your
    * Music' library. Get User's Saved Audiobooks
    */
@@ -405,135 +247,5 @@ export class AudiobooksApi extends runtime.BaseAPI {
       initOverrides,
     );
     return await response.value();
-  }
-
-  /**
-   * Remove one or more audiobooks from the Spotify user's library. **Note:**
-   * This endpoint is deprecated. Use [Remove Items from
-   * Library](/documentation/web-api/reference/remove-library-items) instead.
-   * Remove User's Saved Audiobooks
-   *
-   * @deprecated
-   */
-  async removeAudiobooksUserRaw(
-    requestParameters: AudiobooksApiRemoveAudiobooksUserRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<void>> {
-    if (requestParameters["ids"] == null) {
-      throw new runtime.RequiredError(
-        "ids",
-        'Required parameter "ids" was null or undefined when calling removeAudiobooksUser().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["ids"] != null) {
-      queryParameters["ids"] = requestParameters["ids"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["user-library-modify"],
-      );
-    }
-
-    let urlPath = `/me/audiobooks`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.VoidApiResponse(response);
-  }
-
-  /**
-   * Remove one or more audiobooks from the Spotify user's library. **Note:**
-   * This endpoint is deprecated. Use [Remove Items from
-   * Library](/documentation/web-api/reference/remove-library-items) instead.
-   * Remove User's Saved Audiobooks
-   *
-   * @deprecated
-   */
-  async removeAudiobooksUser(
-    requestParameters: AudiobooksApiRemoveAudiobooksUserRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<void> {
-    await this.removeAudiobooksUserRaw(requestParameters, initOverrides);
-  }
-
-  /**
-   * Save one or more audiobooks to the current Spotify user's library.
-   * **Note:** This endpoint is deprecated. Use [Save Items to
-   * Library](/documentation/web-api/reference/save-library-items) instead. Save
-   * Audiobooks for Current User
-   *
-   * @deprecated
-   */
-  async saveAudiobooksUserRaw(
-    requestParameters: AudiobooksApiSaveAudiobooksUserRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<void>> {
-    if (requestParameters["ids"] == null) {
-      throw new runtime.RequiredError(
-        "ids",
-        'Required parameter "ids" was null or undefined when calling saveAudiobooksUser().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["ids"] != null) {
-      queryParameters["ids"] = requestParameters["ids"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["user-library-modify"],
-      );
-    }
-
-    let urlPath = `/me/audiobooks`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PUT",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.VoidApiResponse(response);
-  }
-
-  /**
-   * Save one or more audiobooks to the current Spotify user's library.
-   * **Note:** This endpoint is deprecated. Use [Save Items to
-   * Library](/documentation/web-api/reference/save-library-items) instead. Save
-   * Audiobooks for Current User
-   *
-   * @deprecated
-   */
-  async saveAudiobooksUser(
-    requestParameters: AudiobooksApiSaveAudiobooksUserRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<void> {
-    await this.saveAudiobooksUserRaw(requestParameters, initOverrides);
   }
 }

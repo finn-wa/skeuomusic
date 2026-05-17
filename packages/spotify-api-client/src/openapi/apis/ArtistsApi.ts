@@ -26,26 +26,11 @@
 import * as runtime from "../runtime";
 import type {
   ArtistObject,
-  FollowArtistsUsersRequest,
   GetAnAlbum401Response,
-  GetAnArtistsTopTracks200Response,
   GetFollowed200Response,
-  GetMultipleArtists200Response,
   PagingArtistDiscographyAlbumObject,
   PagingArtistObject,
-  UnfollowArtistsUsersRequest,
 } from "../models/index";
-
-export interface ArtistsApiCheckCurrentUserFollowsRequest {
-  type: CheckCurrentUserFollowsTypeEnum;
-  ids: string;
-}
-
-export interface ArtistsApiFollowArtistsUsersOperationRequest {
-  type: FollowArtistsUsersOperationTypeEnum;
-  ids: string;
-  followArtistsUsersRequest?: FollowArtistsUsersRequest;
-}
 
 export interface ArtistsApiGetAnArtistRequest {
   id: string;
@@ -59,23 +44,10 @@ export interface ArtistsApiGetAnArtistsAlbumsRequest {
   offset?: number;
 }
 
-export interface ArtistsApiGetAnArtistsRelatedArtistsRequest {
-  id: string;
-}
-
-export interface ArtistsApiGetAnArtistsTopTracksRequest {
-  id: string;
-  market?: string;
-}
-
 export interface ArtistsApiGetFollowedRequest {
   type: GetFollowedTypeEnum;
   after?: string;
   limit?: number;
-}
-
-export interface ArtistsApiGetMultipleArtistsRequest {
-  ids: string;
 }
 
 export interface ArtistsApiGetUsersTopArtistsRequest {
@@ -84,172 +56,7 @@ export interface ArtistsApiGetUsersTopArtistsRequest {
   offset?: number;
 }
 
-export interface ArtistsApiUnfollowArtistsUsersOperationRequest {
-  type: UnfollowArtistsUsersOperationTypeEnum;
-  ids: string;
-  unfollowArtistsUsersRequest?: UnfollowArtistsUsersRequest;
-}
-
 export class ArtistsApi extends runtime.BaseAPI {
-  /**
-   * Check to see if the current user is following one or more artists or other
-   * Spotify users. **Note:** This endpoint is deprecated. Use [Check User's
-   * Saved Items](/documentation/web-api/reference/check-library-contains)
-   * instead. Check If User Follows Artists or Users
-   *
-   * @deprecated
-   */
-  async checkCurrentUserFollowsRaw(
-    requestParameters: ArtistsApiCheckCurrentUserFollowsRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<Array<boolean>>> {
-    if (requestParameters["type"] == null) {
-      throw new runtime.RequiredError(
-        "type",
-        'Required parameter "type" was null or undefined when calling checkCurrentUserFollows().',
-      );
-    }
-
-    if (requestParameters["ids"] == null) {
-      throw new runtime.RequiredError(
-        "ids",
-        'Required parameter "ids" was null or undefined when calling checkCurrentUserFollows().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["type"] != null) {
-      queryParameters["type"] = requestParameters["type"];
-    }
-
-    if (requestParameters["ids"] != null) {
-      queryParameters["ids"] = requestParameters["ids"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["user-follow-read"],
-      );
-    }
-
-    let urlPath = `/me/following/contains`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse<any>(response);
-  }
-
-  /**
-   * Check to see if the current user is following one or more artists or other
-   * Spotify users. **Note:** This endpoint is deprecated. Use [Check User's
-   * Saved Items](/documentation/web-api/reference/check-library-contains)
-   * instead. Check If User Follows Artists or Users
-   *
-   * @deprecated
-   */
-  async checkCurrentUserFollows(
-    requestParameters: ArtistsApiCheckCurrentUserFollowsRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<Array<boolean>> {
-    const response = await this.checkCurrentUserFollowsRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
-   * Add the current user as a follower of one or more artists or other Spotify
-   * users. **Note:** This endpoint is deprecated. Use [Save Items to
-   * Library](/documentation/web-api/reference/save-library-items) instead.
-   * Follow Artists or Users
-   *
-   * @deprecated
-   */
-  async followArtistsUsersRaw(
-    requestParameters: ArtistsApiFollowArtistsUsersOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<void>> {
-    if (requestParameters["type"] == null) {
-      throw new runtime.RequiredError(
-        "type",
-        'Required parameter "type" was null or undefined when calling followArtistsUsers().',
-      );
-    }
-
-    if (requestParameters["ids"] == null) {
-      throw new runtime.RequiredError(
-        "ids",
-        'Required parameter "ids" was null or undefined when calling followArtistsUsers().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["type"] != null) {
-      queryParameters["type"] = requestParameters["type"];
-    }
-
-    if (requestParameters["ids"] != null) {
-      queryParameters["ids"] = requestParameters["ids"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    headerParameters["Content-Type"] = "application/json";
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["user-follow-modify"],
-      );
-    }
-
-    let urlPath = `/me/following`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "PUT",
-        headers: headerParameters,
-        query: queryParameters,
-        body: requestParameters["followArtistsUsersRequest"],
-      },
-      initOverrides,
-    );
-
-    return new runtime.VoidApiResponse(response);
-  }
-
-  /**
-   * Add the current user as a follower of one or more artists or other Spotify
-   * users. **Note:** This endpoint is deprecated. Use [Save Items to
-   * Library](/documentation/web-api/reference/save-library-items) instead.
-   * Follow Artists or Users
-   *
-   * @deprecated
-   */
-  async followArtistsUsers(
-    requestParameters: ArtistsApiFollowArtistsUsersOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<void> {
-    await this.followArtistsUsersRaw(requestParameters, initOverrides);
-  }
-
   /**
    * Get Spotify catalog information for a single artist identified by their
    * unique Spotify ID. Get Artist
@@ -388,142 +195,6 @@ export class ArtistsApi extends runtime.BaseAPI {
     return await response.value();
   }
 
-  /**
-   * Get Spotify catalog information about artists similar to a given artist.
-   * Similarity is based on analysis of the Spotify community's listening
-   * history. Get Artist's Related Artists
-   *
-   * @deprecated
-   */
-  async getAnArtistsRelatedArtistsRaw(
-    requestParameters: ArtistsApiGetAnArtistsRelatedArtistsRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<GetMultipleArtists200Response>> {
-    if (requestParameters["id"] == null) {
-      throw new runtime.RequiredError(
-        "id",
-        'Required parameter "id" was null or undefined when calling getAnArtistsRelatedArtists().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        [],
-      );
-    }
-
-    let urlPath = `/artists/{id}/related-artists`;
-    urlPath = urlPath.replace(
-      `{${"id"}}`,
-      encodeURIComponent(String(requestParameters["id"])),
-    );
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * Get Spotify catalog information about artists similar to a given artist.
-   * Similarity is based on analysis of the Spotify community's listening
-   * history. Get Artist's Related Artists
-   *
-   * @deprecated
-   */
-  async getAnArtistsRelatedArtists(
-    requestParameters: ArtistsApiGetAnArtistsRelatedArtistsRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<GetMultipleArtists200Response> {
-    const response = await this.getAnArtistsRelatedArtistsRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
-   * Get Spotify catalog information about an artist's top tracks by country.
-   * Get Artist's Top Tracks
-   *
-   * @deprecated
-   */
-  async getAnArtistsTopTracksRaw(
-    requestParameters: ArtistsApiGetAnArtistsTopTracksRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<GetAnArtistsTopTracks200Response>> {
-    if (requestParameters["id"] == null) {
-      throw new runtime.RequiredError(
-        "id",
-        'Required parameter "id" was null or undefined when calling getAnArtistsTopTracks().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["market"] != null) {
-      queryParameters["market"] = requestParameters["market"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        [],
-      );
-    }
-
-    let urlPath = `/artists/{id}/top-tracks`;
-    urlPath = urlPath.replace(
-      `{${"id"}}`,
-      encodeURIComponent(String(requestParameters["id"])),
-    );
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * Get Spotify catalog information about an artist's top tracks by country.
-   * Get Artist's Top Tracks
-   *
-   * @deprecated
-   */
-  async getAnArtistsTopTracks(
-    requestParameters: ArtistsApiGetAnArtistsTopTracksRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<GetAnArtistsTopTracks200Response> {
-    const response = await this.getAnArtistsTopTracksRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
   /** Get the current user's followed artists. Get Followed Artists */
   async getFollowedRaw(
     requestParameters: ArtistsApiGetFollowedRequest,
@@ -581,71 +252,6 @@ export class ArtistsApi extends runtime.BaseAPI {
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
   ): Promise<GetFollowed200Response> {
     const response = await this.getFollowedRaw(
-      requestParameters,
-      initOverrides,
-    );
-    return await response.value();
-  }
-
-  /**
-   * Get Spotify catalog information for several artists based on their Spotify
-   * IDs. Get Several Artists
-   *
-   * @deprecated
-   */
-  async getMultipleArtistsRaw(
-    requestParameters: ArtistsApiGetMultipleArtistsRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<GetMultipleArtists200Response>> {
-    if (requestParameters["ids"] == null) {
-      throw new runtime.RequiredError(
-        "ids",
-        'Required parameter "ids" was null or undefined when calling getMultipleArtists().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["ids"] != null) {
-      queryParameters["ids"] = requestParameters["ids"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        [],
-      );
-    }
-
-    let urlPath = `/artists`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "GET",
-        headers: headerParameters,
-        query: queryParameters,
-      },
-      initOverrides,
-    );
-
-    return new runtime.JSONApiResponse(response);
-  }
-
-  /**
-   * Get Spotify catalog information for several artists based on their Spotify
-   * IDs. Get Several Artists
-   *
-   * @deprecated
-   */
-  async getMultipleArtists(
-    requestParameters: ArtistsApiGetMultipleArtistsRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<GetMultipleArtists200Response> {
-    const response = await this.getMultipleArtistsRaw(
       requestParameters,
       initOverrides,
     );
@@ -713,111 +319,11 @@ export class ArtistsApi extends runtime.BaseAPI {
     );
     return await response.value();
   }
-
-  /**
-   * Remove the current user as a follower of one or more artists or other
-   * Spotify users. **Note:** This endpoint is deprecated. Use [Remove Items
-   * from Library](/documentation/web-api/reference/remove-library-items)
-   * instead. Unfollow Artists or Users
-   *
-   * @deprecated
-   */
-  async unfollowArtistsUsersRaw(
-    requestParameters: ArtistsApiUnfollowArtistsUsersOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<runtime.ApiResponse<void>> {
-    if (requestParameters["type"] == null) {
-      throw new runtime.RequiredError(
-        "type",
-        'Required parameter "type" was null or undefined when calling unfollowArtistsUsers().',
-      );
-    }
-
-    if (requestParameters["ids"] == null) {
-      throw new runtime.RequiredError(
-        "ids",
-        'Required parameter "ids" was null or undefined when calling unfollowArtistsUsers().',
-      );
-    }
-
-    const queryParameters: any = {};
-
-    if (requestParameters["type"] != null) {
-      queryParameters["type"] = requestParameters["type"];
-    }
-
-    if (requestParameters["ids"] != null) {
-      queryParameters["ids"] = requestParameters["ids"];
-    }
-
-    const headerParameters: runtime.HTTPHeaders = {};
-
-    headerParameters["Content-Type"] = "application/json";
-
-    if (this.configuration && this.configuration.accessToken) {
-      // oauth required
-      headerParameters["Authorization"] = await this.configuration.accessToken(
-        "oauth_2_0",
-        ["user-follow-modify"],
-      );
-    }
-
-    let urlPath = `/me/following`;
-
-    const response = await this.request(
-      {
-        path: urlPath,
-        method: "DELETE",
-        headers: headerParameters,
-        query: queryParameters,
-        body: requestParameters["unfollowArtistsUsersRequest"],
-      },
-      initOverrides,
-    );
-
-    return new runtime.VoidApiResponse(response);
-  }
-
-  /**
-   * Remove the current user as a follower of one or more artists or other
-   * Spotify users. **Note:** This endpoint is deprecated. Use [Remove Items
-   * from Library](/documentation/web-api/reference/remove-library-items)
-   * instead. Unfollow Artists or Users
-   *
-   * @deprecated
-   */
-  async unfollowArtistsUsers(
-    requestParameters: ArtistsApiUnfollowArtistsUsersOperationRequest,
-    initOverrides?: RequestInit | runtime.InitOverrideFunction,
-  ): Promise<void> {
-    await this.unfollowArtistsUsersRaw(requestParameters, initOverrides);
-  }
 }
 
-/** @export */
-export const CheckCurrentUserFollowsTypeEnum = {
-  Artist: "artist",
-  User: "user",
-} as const;
-export type CheckCurrentUserFollowsTypeEnum =
-  (typeof CheckCurrentUserFollowsTypeEnum)[keyof typeof CheckCurrentUserFollowsTypeEnum];
-/** @export */
-export const FollowArtistsUsersOperationTypeEnum = {
-  Artist: "artist",
-  User: "user",
-} as const;
-export type FollowArtistsUsersOperationTypeEnum =
-  (typeof FollowArtistsUsersOperationTypeEnum)[keyof typeof FollowArtistsUsersOperationTypeEnum];
 /** @export */
 export const GetFollowedTypeEnum = {
   Artist: "artist",
 } as const;
 export type GetFollowedTypeEnum =
   (typeof GetFollowedTypeEnum)[keyof typeof GetFollowedTypeEnum];
-/** @export */
-export const UnfollowArtistsUsersOperationTypeEnum = {
-  Artist: "artist",
-  User: "user",
-} as const;
-export type UnfollowArtistsUsersOperationTypeEnum =
-  (typeof UnfollowArtistsUsersOperationTypeEnum)[keyof typeof UnfollowArtistsUsersOperationTypeEnum];
