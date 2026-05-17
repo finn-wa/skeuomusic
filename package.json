@@ -12,6 +12,7 @@
     "test": "vitest run",
     "test-watch": "vitest",
     "test-ui": "vitest --ui",
+    "prepare": "git config core.hooksPath .git-hooks",
     "spotify-api-client:update": "bun run spotify-api-client/download-spec.ts",
     "spotify-api-client:generate": "openapi-generator-cli generate"
   },
@@ -33,6 +34,7 @@
     "@vitest/ui": "4.0.4",
     "dotenv": "17.2.3",
     "jsdom": "27.0.1",
+    "lint-staged": "^17.0.4",
     "oxfmt": "^0.50.0",
     "oxlint": "^1.65.0",
     "oxlint-tsgolint": "^0.22.1",
@@ -41,5 +43,8 @@
     "vite-plugin-solid": "2.11.10",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "4.0.4"
+  },
+  "lint-staged": {
+    "*": "oxfmt"
   }
 }
