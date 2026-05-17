@@ -19,4 +19,6 @@ export const LoadingPage = () => <PageMessage message="Loading..." />;
 
 export const ErrorPage = ({
   message = "An error occurred",
-}: { message?: string }) => <PageMessage message={message} />;
+}: {
+  message?: string;
+}) => <PageMessage message={message} />;

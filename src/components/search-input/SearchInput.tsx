@@ -1,8 +1,6 @@
 import type { Signal } from "solid-js";
 
-export default function SearchInput(props: {
-  query: Signal<string>;
-}) {
+export default function SearchInput(props: { query: Signal<string> }) {
   const [query, setQuery] = props.query;
   return (
     <form class="search-container" on:submit={(e) => e.preventDefault()}>

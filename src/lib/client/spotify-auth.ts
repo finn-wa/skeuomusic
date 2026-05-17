@@ -28,11 +28,14 @@ export function createSpotifyAuth(
   };
   const cacheKey = AuthorizationCodeWithPKCEStrategy.cacheKey;
   cachingStrategy.addUpdateListener(cacheKey, updateListener);
-  cachingStrategy.get<SpotifyAccessToken>(cacheKey).then((token) => {
-    if (token != null) {
-      return updateListener(token);
-    }
-  }).catch(err => console.error("Failed to post Spotify token ", err))
+  cachingStrategy
+    .get<SpotifyAccessToken>(cacheKey)
+    .then((token) => {
+      if (token != null) {
+        return updateListener(token);
+      }
+    })
+    .catch((err) => console.error("Failed to post Spotify token ", err));
   return spotifyAuthViaCodeWithPkce({
     clientId: import.meta.env.PUBLIC_SPOTIFY_CLIENT_ID,
     redirectUri: `${origin}/redirect/spotify`,

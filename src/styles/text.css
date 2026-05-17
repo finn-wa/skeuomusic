@@ -4,8 +4,8 @@ body {
     sans-serif;
   font-weight: bold;
   font-feature-settings:
-    'liga' 1,
-    'calt' 1; /* fix for Chrome */
+    "liga" 1,
+    "calt" 1; /* fix for Chrome */
 }
 
 h1,

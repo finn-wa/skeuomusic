@@ -1,15 +1,15 @@
-@import './styles/alphabet-index.css';
-@import './styles/skeuomorphic.css';
-@import './styles/header.css';
-@import './styles/list.css';
-@import './styles/navbar.css';
-@import './styles/nav-arrow.css';
-@import './styles/page-msg.css';
-@import './styles/player.css';
-@import './styles/search.css';
-@import './styles/text.css';
-@import './styles/utils.css';
-@import './styles/variables.css';
+@import "./styles/alphabet-index.css";
+@import "./styles/skeuomorphic.css";
+@import "./styles/header.css";
+@import "./styles/list.css";
+@import "./styles/navbar.css";
+@import "./styles/nav-arrow.css";
+@import "./styles/page-msg.css";
+@import "./styles/player.css";
+@import "./styles/search.css";
+@import "./styles/text.css";
+@import "./styles/utils.css";
+@import "./styles/variables.css";
 
 :root {
   background-color: var(--bg-color);

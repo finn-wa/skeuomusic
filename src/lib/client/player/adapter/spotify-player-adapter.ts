@@ -249,7 +249,8 @@ class SpotifyPlayerAdapter {
             .getAccessToken()
             .then((token) => {
               provideToken(token!.access_token);
-            }).catch(err => console.error('Failed to get access token ', err)) 
+            })
+            .catch((err) => console.error("Failed to get access token ", err));
         },
         enableMediaSession: true,
       });

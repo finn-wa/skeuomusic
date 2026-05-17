@@ -1,8 +1,11 @@
 {
   "name": "skeuomusic",
+  "type": "module",
+  "sideEffects": false,
   "scripts": {
     "dev": "vite dev",
     "build": "vite build && tsc --noEmit",
+    "fmt": "oxfmt",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "start": "vite start",
@@ -12,8 +15,14 @@
     "spotify-api-client:update": "bun run spotify-api-client/download-spec.ts",
     "spotify-api-client:generate": "openapi-generator-cli generate"
   },
-  "type": "module",
-  "sideEffects": false,
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.2.8",
+    "@tanstack/solid-router": "1.131.27",
+    "@tanstack/solid-router-devtools": "1.131.27",
+    "@tanstack/solid-start": "1.131.27",
+    "solid-js": "1.9.9",
+    "spotify-api-client": "link:../spotify-api-client"
+  },
   "devDependencies": {
     "@biomejs/biome": "2.3.1",
     "@openapitools/openapi-generator-cli": "^2.25.0",
@@ -24,6 +33,7 @@
     "@vitest/ui": "4.0.4",
     "dotenv": "17.2.3",
     "jsdom": "27.0.1",
+    "oxfmt": "^0.50.0",
     "oxlint": "^1.65.0",
     "oxlint-tsgolint": "^0.22.1",
     "typescript": "6.0.3",
@@ -31,13 +41,5 @@
     "vite-plugin-solid": "2.11.10",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "4.0.4"
-  },
-  "dependencies": {
-    "@fontsource-variable/inter": "^5.2.8",
-    "@tanstack/solid-router": "1.131.27",
-    "@tanstack/solid-router-devtools": "1.131.27",
-    "@tanstack/solid-start": "1.131.27",
-    "solid-js": "1.9.9",
-    "spotify-api-client": "link:../spotify-api-client"
   }
 }

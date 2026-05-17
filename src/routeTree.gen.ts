@@ -8,339 +8,339 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createServerRootRoute } from '@tanstack/solid-start/server'
+import { createServerRootRoute } from "@tanstack/solid-start/server";
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as MusicRouteImport } from './routes/music'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as RedirectSpotifyRouteImport } from './routes/redirect.spotify'
-import { Route as MusicLibraryRouteImport } from './routes/music/library'
-import { Route as MusicPlayerIndexRouteImport } from './routes/music/player/index'
-import { Route as MusicLibrarySongsRouteImport } from './routes/music/library/songs'
-import { Route as MusicLibraryMoreRouteImport } from './routes/music/library/more'
-import { Route as MusicLibraryPlaylistsIndexRouteImport } from './routes/music/library/playlists/index'
-import { Route as MusicLibraryArtistsIndexRouteImport } from './routes/music/library/artists/index'
-import { Route as MusicLibraryAlbumsIndexRouteImport } from './routes/music/library/albums/index'
-import { Route as MusicLibraryArtistsArtistIdRouteImport } from './routes/music/library/artists/$artistId'
-import { Route as MusicLibraryAlbumsAlbumIdRouteImport } from './routes/music/library/albums/$albumId'
-import { Route as MusicLibraryArtistsArtistIdAlbumIdRouteImport } from './routes/music/library/artists/$artistId_.$albumId'
-import { ServerRoute as ApiSpotifyAuthServerRouteImport } from './routes/api/spotify/auth'
+import { Route as rootRouteImport } from "./routes/__root";
+import { Route as MusicRouteImport } from "./routes/music";
+import { Route as IndexRouteImport } from "./routes/index";
+import { Route as RedirectSpotifyRouteImport } from "./routes/redirect.spotify";
+import { Route as MusicLibraryRouteImport } from "./routes/music/library";
+import { Route as MusicPlayerIndexRouteImport } from "./routes/music/player/index";
+import { Route as MusicLibrarySongsRouteImport } from "./routes/music/library/songs";
+import { Route as MusicLibraryMoreRouteImport } from "./routes/music/library/more";
+import { Route as MusicLibraryPlaylistsIndexRouteImport } from "./routes/music/library/playlists/index";
+import { Route as MusicLibraryArtistsIndexRouteImport } from "./routes/music/library/artists/index";
+import { Route as MusicLibraryAlbumsIndexRouteImport } from "./routes/music/library/albums/index";
+import { Route as MusicLibraryArtistsArtistIdRouteImport } from "./routes/music/library/artists/$artistId";
+import { Route as MusicLibraryAlbumsAlbumIdRouteImport } from "./routes/music/library/albums/$albumId";
+import { Route as MusicLibraryArtistsArtistIdAlbumIdRouteImport } from "./routes/music/library/artists/$artistId_.$albumId";
+import { ServerRoute as ApiSpotifyAuthServerRouteImport } from "./routes/api/spotify/auth";
 
-const rootServerRouteImport = createServerRootRoute()
+const rootServerRouteImport = createServerRootRoute();
 
 const MusicRoute = MusicRouteImport.update({
-  id: '/music',
-  path: '/music',
+  id: "/music",
+  path: "/music",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const RedirectSpotifyRoute = RedirectSpotifyRouteImport.update({
-  id: '/redirect/spotify',
-  path: '/redirect/spotify',
+  id: "/redirect/spotify",
+  path: "/redirect/spotify",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const MusicLibraryRoute = MusicLibraryRouteImport.update({
-  id: '/library',
-  path: '/library',
+  id: "/library",
+  path: "/library",
   getParentRoute: () => MusicRoute,
-} as any)
+} as any);
 const MusicPlayerIndexRoute = MusicPlayerIndexRouteImport.update({
-  id: '/player/',
-  path: '/player/',
+  id: "/player/",
+  path: "/player/",
   getParentRoute: () => MusicRoute,
-} as any)
+} as any);
 const MusicLibrarySongsRoute = MusicLibrarySongsRouteImport.update({
-  id: '/songs',
-  path: '/songs',
+  id: "/songs",
+  path: "/songs",
   getParentRoute: () => MusicLibraryRoute,
-} as any)
+} as any);
 const MusicLibraryMoreRoute = MusicLibraryMoreRouteImport.update({
-  id: '/more',
-  path: '/more',
+  id: "/more",
+  path: "/more",
   getParentRoute: () => MusicLibraryRoute,
-} as any)
+} as any);
 const MusicLibraryPlaylistsIndexRoute =
   MusicLibraryPlaylistsIndexRouteImport.update({
-    id: '/playlists/',
-    path: '/playlists/',
+    id: "/playlists/",
+    path: "/playlists/",
     getParentRoute: () => MusicLibraryRoute,
-  } as any)
+  } as any);
 const MusicLibraryArtistsIndexRoute =
   MusicLibraryArtistsIndexRouteImport.update({
-    id: '/artists/',
-    path: '/artists/',
+    id: "/artists/",
+    path: "/artists/",
     getParentRoute: () => MusicLibraryRoute,
-  } as any)
+  } as any);
 const MusicLibraryAlbumsIndexRoute = MusicLibraryAlbumsIndexRouteImport.update({
-  id: '/albums/',
-  path: '/albums/',
+  id: "/albums/",
+  path: "/albums/",
   getParentRoute: () => MusicLibraryRoute,
-} as any)
+} as any);
 const MusicLibraryArtistsArtistIdRoute =
   MusicLibraryArtistsArtistIdRouteImport.update({
-    id: '/artists/$artistId',
-    path: '/artists/$artistId',
+    id: "/artists/$artistId",
+    path: "/artists/$artistId",
     getParentRoute: () => MusicLibraryRoute,
-  } as any)
+  } as any);
 const MusicLibraryAlbumsAlbumIdRoute =
   MusicLibraryAlbumsAlbumIdRouteImport.update({
-    id: '/albums/$albumId',
-    path: '/albums/$albumId',
+    id: "/albums/$albumId",
+    path: "/albums/$albumId",
     getParentRoute: () => MusicLibraryRoute,
-  } as any)
+  } as any);
 const MusicLibraryArtistsArtistIdAlbumIdRoute =
   MusicLibraryArtistsArtistIdAlbumIdRouteImport.update({
-    id: '/artists/$artistId_/$albumId',
-    path: '/artists/$artistId/$albumId',
+    id: "/artists/$artistId_/$albumId",
+    path: "/artists/$artistId/$albumId",
     getParentRoute: () => MusicLibraryRoute,
-  } as any)
+  } as any);
 const ApiSpotifyAuthServerRoute = ApiSpotifyAuthServerRouteImport.update({
-  id: '/api/spotify/auth',
-  path: '/api/spotify/auth',
+  id: "/api/spotify/auth",
+  path: "/api/spotify/auth",
   getParentRoute: () => rootServerRouteImport,
-} as any)
+} as any);
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/music': typeof MusicRouteWithChildren
-  '/music/library': typeof MusicLibraryRouteWithChildren
-  '/redirect/spotify': typeof RedirectSpotifyRoute
-  '/music/library/more': typeof MusicLibraryMoreRoute
-  '/music/library/songs': typeof MusicLibrarySongsRoute
-  '/music/player': typeof MusicPlayerIndexRoute
-  '/music/library/albums/$albumId': typeof MusicLibraryAlbumsAlbumIdRoute
-  '/music/library/artists/$artistId': typeof MusicLibraryArtistsArtistIdRoute
-  '/music/library/albums': typeof MusicLibraryAlbumsIndexRoute
-  '/music/library/artists': typeof MusicLibraryArtistsIndexRoute
-  '/music/library/playlists': typeof MusicLibraryPlaylistsIndexRoute
-  '/music/library/artists/$artistId/$albumId': typeof MusicLibraryArtistsArtistIdAlbumIdRoute
+  "/": typeof IndexRoute;
+  "/music": typeof MusicRouteWithChildren;
+  "/music/library": typeof MusicLibraryRouteWithChildren;
+  "/redirect/spotify": typeof RedirectSpotifyRoute;
+  "/music/library/more": typeof MusicLibraryMoreRoute;
+  "/music/library/songs": typeof MusicLibrarySongsRoute;
+  "/music/player": typeof MusicPlayerIndexRoute;
+  "/music/library/albums/$albumId": typeof MusicLibraryAlbumsAlbumIdRoute;
+  "/music/library/artists/$artistId": typeof MusicLibraryArtistsArtistIdRoute;
+  "/music/library/albums": typeof MusicLibraryAlbumsIndexRoute;
+  "/music/library/artists": typeof MusicLibraryArtistsIndexRoute;
+  "/music/library/playlists": typeof MusicLibraryPlaylistsIndexRoute;
+  "/music/library/artists/$artistId/$albumId": typeof MusicLibraryArtistsArtistIdAlbumIdRoute;
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/music': typeof MusicRouteWithChildren
-  '/music/library': typeof MusicLibraryRouteWithChildren
-  '/redirect/spotify': typeof RedirectSpotifyRoute
-  '/music/library/more': typeof MusicLibraryMoreRoute
-  '/music/library/songs': typeof MusicLibrarySongsRoute
-  '/music/player': typeof MusicPlayerIndexRoute
-  '/music/library/albums/$albumId': typeof MusicLibraryAlbumsAlbumIdRoute
-  '/music/library/artists/$artistId': typeof MusicLibraryArtistsArtistIdRoute
-  '/music/library/albums': typeof MusicLibraryAlbumsIndexRoute
-  '/music/library/artists': typeof MusicLibraryArtistsIndexRoute
-  '/music/library/playlists': typeof MusicLibraryPlaylistsIndexRoute
-  '/music/library/artists/$artistId/$albumId': typeof MusicLibraryArtistsArtistIdAlbumIdRoute
+  "/": typeof IndexRoute;
+  "/music": typeof MusicRouteWithChildren;
+  "/music/library": typeof MusicLibraryRouteWithChildren;
+  "/redirect/spotify": typeof RedirectSpotifyRoute;
+  "/music/library/more": typeof MusicLibraryMoreRoute;
+  "/music/library/songs": typeof MusicLibrarySongsRoute;
+  "/music/player": typeof MusicPlayerIndexRoute;
+  "/music/library/albums/$albumId": typeof MusicLibraryAlbumsAlbumIdRoute;
+  "/music/library/artists/$artistId": typeof MusicLibraryArtistsArtistIdRoute;
+  "/music/library/albums": typeof MusicLibraryAlbumsIndexRoute;
+  "/music/library/artists": typeof MusicLibraryArtistsIndexRoute;
+  "/music/library/playlists": typeof MusicLibraryPlaylistsIndexRoute;
+  "/music/library/artists/$artistId/$albumId": typeof MusicLibraryArtistsArtistIdAlbumIdRoute;
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/music': typeof MusicRouteWithChildren
-  '/music/library': typeof MusicLibraryRouteWithChildren
-  '/redirect/spotify': typeof RedirectSpotifyRoute
-  '/music/library/more': typeof MusicLibraryMoreRoute
-  '/music/library/songs': typeof MusicLibrarySongsRoute
-  '/music/player/': typeof MusicPlayerIndexRoute
-  '/music/library/albums/$albumId': typeof MusicLibraryAlbumsAlbumIdRoute
-  '/music/library/artists/$artistId': typeof MusicLibraryArtistsArtistIdRoute
-  '/music/library/albums/': typeof MusicLibraryAlbumsIndexRoute
-  '/music/library/artists/': typeof MusicLibraryArtistsIndexRoute
-  '/music/library/playlists/': typeof MusicLibraryPlaylistsIndexRoute
-  '/music/library/artists/$artistId_/$albumId': typeof MusicLibraryArtistsArtistIdAlbumIdRoute
+  __root__: typeof rootRouteImport;
+  "/": typeof IndexRoute;
+  "/music": typeof MusicRouteWithChildren;
+  "/music/library": typeof MusicLibraryRouteWithChildren;
+  "/redirect/spotify": typeof RedirectSpotifyRoute;
+  "/music/library/more": typeof MusicLibraryMoreRoute;
+  "/music/library/songs": typeof MusicLibrarySongsRoute;
+  "/music/player/": typeof MusicPlayerIndexRoute;
+  "/music/library/albums/$albumId": typeof MusicLibraryAlbumsAlbumIdRoute;
+  "/music/library/artists/$artistId": typeof MusicLibraryArtistsArtistIdRoute;
+  "/music/library/albums/": typeof MusicLibraryAlbumsIndexRoute;
+  "/music/library/artists/": typeof MusicLibraryArtistsIndexRoute;
+  "/music/library/playlists/": typeof MusicLibraryPlaylistsIndexRoute;
+  "/music/library/artists/$artistId_/$albumId": typeof MusicLibraryArtistsArtistIdAlbumIdRoute;
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
+  fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
-    | '/'
-    | '/music'
-    | '/music/library'
-    | '/redirect/spotify'
-    | '/music/library/more'
-    | '/music/library/songs'
-    | '/music/player'
-    | '/music/library/albums/$albumId'
-    | '/music/library/artists/$artistId'
-    | '/music/library/albums'
-    | '/music/library/artists'
-    | '/music/library/playlists'
-    | '/music/library/artists/$artistId/$albumId'
-  fileRoutesByTo: FileRoutesByTo
+    | "/"
+    | "/music"
+    | "/music/library"
+    | "/redirect/spotify"
+    | "/music/library/more"
+    | "/music/library/songs"
+    | "/music/player"
+    | "/music/library/albums/$albumId"
+    | "/music/library/artists/$artistId"
+    | "/music/library/albums"
+    | "/music/library/artists"
+    | "/music/library/playlists"
+    | "/music/library/artists/$artistId/$albumId";
+  fileRoutesByTo: FileRoutesByTo;
   to:
-    | '/'
-    | '/music'
-    | '/music/library'
-    | '/redirect/spotify'
-    | '/music/library/more'
-    | '/music/library/songs'
-    | '/music/player'
-    | '/music/library/albums/$albumId'
-    | '/music/library/artists/$artistId'
-    | '/music/library/albums'
-    | '/music/library/artists'
-    | '/music/library/playlists'
-    | '/music/library/artists/$artistId/$albumId'
+    | "/"
+    | "/music"
+    | "/music/library"
+    | "/redirect/spotify"
+    | "/music/library/more"
+    | "/music/library/songs"
+    | "/music/player"
+    | "/music/library/albums/$albumId"
+    | "/music/library/artists/$artistId"
+    | "/music/library/albums"
+    | "/music/library/artists"
+    | "/music/library/playlists"
+    | "/music/library/artists/$artistId/$albumId";
   id:
-    | '__root__'
-    | '/'
-    | '/music'
-    | '/music/library'
-    | '/redirect/spotify'
-    | '/music/library/more'
-    | '/music/library/songs'
-    | '/music/player/'
-    | '/music/library/albums/$albumId'
-    | '/music/library/artists/$artistId'
-    | '/music/library/albums/'
-    | '/music/library/artists/'
-    | '/music/library/playlists/'
-    | '/music/library/artists/$artistId_/$albumId'
-  fileRoutesById: FileRoutesById
+    | "__root__"
+    | "/"
+    | "/music"
+    | "/music/library"
+    | "/redirect/spotify"
+    | "/music/library/more"
+    | "/music/library/songs"
+    | "/music/player/"
+    | "/music/library/albums/$albumId"
+    | "/music/library/artists/$artistId"
+    | "/music/library/albums/"
+    | "/music/library/artists/"
+    | "/music/library/playlists/"
+    | "/music/library/artists/$artistId_/$albumId";
+  fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  MusicRoute: typeof MusicRouteWithChildren
-  RedirectSpotifyRoute: typeof RedirectSpotifyRoute
+  IndexRoute: typeof IndexRoute;
+  MusicRoute: typeof MusicRouteWithChildren;
+  RedirectSpotifyRoute: typeof RedirectSpotifyRoute;
 }
 export interface FileServerRoutesByFullPath {
-  '/api/spotify/auth': typeof ApiSpotifyAuthServerRoute
+  "/api/spotify/auth": typeof ApiSpotifyAuthServerRoute;
 }
 export interface FileServerRoutesByTo {
-  '/api/spotify/auth': typeof ApiSpotifyAuthServerRoute
+  "/api/spotify/auth": typeof ApiSpotifyAuthServerRoute;
 }
 export interface FileServerRoutesById {
-  __root__: typeof rootServerRouteImport
-  '/api/spotify/auth': typeof ApiSpotifyAuthServerRoute
+  __root__: typeof rootServerRouteImport;
+  "/api/spotify/auth": typeof ApiSpotifyAuthServerRoute;
 }
 export interface FileServerRouteTypes {
-  fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths: '/api/spotify/auth'
-  fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/api/spotify/auth'
-  id: '__root__' | '/api/spotify/auth'
-  fileServerRoutesById: FileServerRoutesById
+  fileServerRoutesByFullPath: FileServerRoutesByFullPath;
+  fullPaths: "/api/spotify/auth";
+  fileServerRoutesByTo: FileServerRoutesByTo;
+  to: "/api/spotify/auth";
+  id: "__root__" | "/api/spotify/auth";
+  fileServerRoutesById: FileServerRoutesById;
 }
 export interface RootServerRouteChildren {
-  ApiSpotifyAuthServerRoute: typeof ApiSpotifyAuthServerRoute
+  ApiSpotifyAuthServerRoute: typeof ApiSpotifyAuthServerRoute;
 }
 
-declare module '@tanstack/solid-router' {
+declare module "@tanstack/solid-router" {
   interface FileRoutesByPath {
-    '/music': {
-      id: '/music'
-      path: '/music'
-      fullPath: '/music'
-      preLoaderRoute: typeof MusicRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/redirect/spotify': {
-      id: '/redirect/spotify'
-      path: '/redirect/spotify'
-      fullPath: '/redirect/spotify'
-      preLoaderRoute: typeof RedirectSpotifyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/music/library': {
-      id: '/music/library'
-      path: '/library'
-      fullPath: '/music/library'
-      preLoaderRoute: typeof MusicLibraryRouteImport
-      parentRoute: typeof MusicRoute
-    }
-    '/music/player/': {
-      id: '/music/player/'
-      path: '/player'
-      fullPath: '/music/player'
-      preLoaderRoute: typeof MusicPlayerIndexRouteImport
-      parentRoute: typeof MusicRoute
-    }
-    '/music/library/songs': {
-      id: '/music/library/songs'
-      path: '/songs'
-      fullPath: '/music/library/songs'
-      preLoaderRoute: typeof MusicLibrarySongsRouteImport
-      parentRoute: typeof MusicLibraryRoute
-    }
-    '/music/library/more': {
-      id: '/music/library/more'
-      path: '/more'
-      fullPath: '/music/library/more'
-      preLoaderRoute: typeof MusicLibraryMoreRouteImport
-      parentRoute: typeof MusicLibraryRoute
-    }
-    '/music/library/playlists/': {
-      id: '/music/library/playlists/'
-      path: '/playlists'
-      fullPath: '/music/library/playlists'
-      preLoaderRoute: typeof MusicLibraryPlaylistsIndexRouteImport
-      parentRoute: typeof MusicLibraryRoute
-    }
-    '/music/library/artists/': {
-      id: '/music/library/artists/'
-      path: '/artists'
-      fullPath: '/music/library/artists'
-      preLoaderRoute: typeof MusicLibraryArtistsIndexRouteImport
-      parentRoute: typeof MusicLibraryRoute
-    }
-    '/music/library/albums/': {
-      id: '/music/library/albums/'
-      path: '/albums'
-      fullPath: '/music/library/albums'
-      preLoaderRoute: typeof MusicLibraryAlbumsIndexRouteImport
-      parentRoute: typeof MusicLibraryRoute
-    }
-    '/music/library/artists/$artistId': {
-      id: '/music/library/artists/$artistId'
-      path: '/artists/$artistId'
-      fullPath: '/music/library/artists/$artistId'
-      preLoaderRoute: typeof MusicLibraryArtistsArtistIdRouteImport
-      parentRoute: typeof MusicLibraryRoute
-    }
-    '/music/library/albums/$albumId': {
-      id: '/music/library/albums/$albumId'
-      path: '/albums/$albumId'
-      fullPath: '/music/library/albums/$albumId'
-      preLoaderRoute: typeof MusicLibraryAlbumsAlbumIdRouteImport
-      parentRoute: typeof MusicLibraryRoute
-    }
-    '/music/library/artists/$artistId_/$albumId': {
-      id: '/music/library/artists/$artistId_/$albumId'
-      path: '/artists/$artistId/$albumId'
-      fullPath: '/music/library/artists/$artistId/$albumId'
-      preLoaderRoute: typeof MusicLibraryArtistsArtistIdAlbumIdRouteImport
-      parentRoute: typeof MusicLibraryRoute
-    }
+    "/music": {
+      id: "/music";
+      path: "/music";
+      fullPath: "/music";
+      preLoaderRoute: typeof MusicRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/": {
+      id: "/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof IndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/redirect/spotify": {
+      id: "/redirect/spotify";
+      path: "/redirect/spotify";
+      fullPath: "/redirect/spotify";
+      preLoaderRoute: typeof RedirectSpotifyRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/music/library": {
+      id: "/music/library";
+      path: "/library";
+      fullPath: "/music/library";
+      preLoaderRoute: typeof MusicLibraryRouteImport;
+      parentRoute: typeof MusicRoute;
+    };
+    "/music/player/": {
+      id: "/music/player/";
+      path: "/player";
+      fullPath: "/music/player";
+      preLoaderRoute: typeof MusicPlayerIndexRouteImport;
+      parentRoute: typeof MusicRoute;
+    };
+    "/music/library/songs": {
+      id: "/music/library/songs";
+      path: "/songs";
+      fullPath: "/music/library/songs";
+      preLoaderRoute: typeof MusicLibrarySongsRouteImport;
+      parentRoute: typeof MusicLibraryRoute;
+    };
+    "/music/library/more": {
+      id: "/music/library/more";
+      path: "/more";
+      fullPath: "/music/library/more";
+      preLoaderRoute: typeof MusicLibraryMoreRouteImport;
+      parentRoute: typeof MusicLibraryRoute;
+    };
+    "/music/library/playlists/": {
+      id: "/music/library/playlists/";
+      path: "/playlists";
+      fullPath: "/music/library/playlists";
+      preLoaderRoute: typeof MusicLibraryPlaylistsIndexRouteImport;
+      parentRoute: typeof MusicLibraryRoute;
+    };
+    "/music/library/artists/": {
+      id: "/music/library/artists/";
+      path: "/artists";
+      fullPath: "/music/library/artists";
+      preLoaderRoute: typeof MusicLibraryArtistsIndexRouteImport;
+      parentRoute: typeof MusicLibraryRoute;
+    };
+    "/music/library/albums/": {
+      id: "/music/library/albums/";
+      path: "/albums";
+      fullPath: "/music/library/albums";
+      preLoaderRoute: typeof MusicLibraryAlbumsIndexRouteImport;
+      parentRoute: typeof MusicLibraryRoute;
+    };
+    "/music/library/artists/$artistId": {
+      id: "/music/library/artists/$artistId";
+      path: "/artists/$artistId";
+      fullPath: "/music/library/artists/$artistId";
+      preLoaderRoute: typeof MusicLibraryArtistsArtistIdRouteImport;
+      parentRoute: typeof MusicLibraryRoute;
+    };
+    "/music/library/albums/$albumId": {
+      id: "/music/library/albums/$albumId";
+      path: "/albums/$albumId";
+      fullPath: "/music/library/albums/$albumId";
+      preLoaderRoute: typeof MusicLibraryAlbumsAlbumIdRouteImport;
+      parentRoute: typeof MusicLibraryRoute;
+    };
+    "/music/library/artists/$artistId_/$albumId": {
+      id: "/music/library/artists/$artistId_/$albumId";
+      path: "/artists/$artistId/$albumId";
+      fullPath: "/music/library/artists/$artistId/$albumId";
+      preLoaderRoute: typeof MusicLibraryArtistsArtistIdAlbumIdRouteImport;
+      parentRoute: typeof MusicLibraryRoute;
+    };
   }
 }
-declare module '@tanstack/solid-start/server' {
+declare module "@tanstack/solid-start/server" {
   interface ServerFileRoutesByPath {
-    '/api/spotify/auth': {
-      id: '/api/spotify/auth'
-      path: '/api/spotify/auth'
-      fullPath: '/api/spotify/auth'
-      preLoaderRoute: typeof ApiSpotifyAuthServerRouteImport
-      parentRoute: typeof rootServerRouteImport
-    }
+    "/api/spotify/auth": {
+      id: "/api/spotify/auth";
+      path: "/api/spotify/auth";
+      fullPath: "/api/spotify/auth";
+      preLoaderRoute: typeof ApiSpotifyAuthServerRouteImport;
+      parentRoute: typeof rootServerRouteImport;
+    };
   }
 }
 
 interface MusicLibraryRouteChildren {
-  MusicLibraryMoreRoute: typeof MusicLibraryMoreRoute
-  MusicLibrarySongsRoute: typeof MusicLibrarySongsRoute
-  MusicLibraryAlbumsAlbumIdRoute: typeof MusicLibraryAlbumsAlbumIdRoute
-  MusicLibraryArtistsArtistIdRoute: typeof MusicLibraryArtistsArtistIdRoute
-  MusicLibraryAlbumsIndexRoute: typeof MusicLibraryAlbumsIndexRoute
-  MusicLibraryArtistsIndexRoute: typeof MusicLibraryArtistsIndexRoute
-  MusicLibraryPlaylistsIndexRoute: typeof MusicLibraryPlaylistsIndexRoute
-  MusicLibraryArtistsArtistIdAlbumIdRoute: typeof MusicLibraryArtistsArtistIdAlbumIdRoute
+  MusicLibraryMoreRoute: typeof MusicLibraryMoreRoute;
+  MusicLibrarySongsRoute: typeof MusicLibrarySongsRoute;
+  MusicLibraryAlbumsAlbumIdRoute: typeof MusicLibraryAlbumsAlbumIdRoute;
+  MusicLibraryArtistsArtistIdRoute: typeof MusicLibraryArtistsArtistIdRoute;
+  MusicLibraryAlbumsIndexRoute: typeof MusicLibraryAlbumsIndexRoute;
+  MusicLibraryArtistsIndexRoute: typeof MusicLibraryArtistsIndexRoute;
+  MusicLibraryPlaylistsIndexRoute: typeof MusicLibraryPlaylistsIndexRoute;
+  MusicLibraryArtistsArtistIdAlbumIdRoute: typeof MusicLibraryArtistsArtistIdAlbumIdRoute;
 }
 
 const MusicLibraryRouteChildren: MusicLibraryRouteChildren = {
@@ -353,35 +353,35 @@ const MusicLibraryRouteChildren: MusicLibraryRouteChildren = {
   MusicLibraryPlaylistsIndexRoute: MusicLibraryPlaylistsIndexRoute,
   MusicLibraryArtistsArtistIdAlbumIdRoute:
     MusicLibraryArtistsArtistIdAlbumIdRoute,
-}
+};
 
 const MusicLibraryRouteWithChildren = MusicLibraryRoute._addFileChildren(
   MusicLibraryRouteChildren,
-)
+);
 
 interface MusicRouteChildren {
-  MusicLibraryRoute: typeof MusicLibraryRouteWithChildren
-  MusicPlayerIndexRoute: typeof MusicPlayerIndexRoute
+  MusicLibraryRoute: typeof MusicLibraryRouteWithChildren;
+  MusicPlayerIndexRoute: typeof MusicPlayerIndexRoute;
 }
 
 const MusicRouteChildren: MusicRouteChildren = {
   MusicLibraryRoute: MusicLibraryRouteWithChildren,
   MusicPlayerIndexRoute: MusicPlayerIndexRoute,
-}
+};
 
-const MusicRouteWithChildren = MusicRoute._addFileChildren(MusicRouteChildren)
+const MusicRouteWithChildren = MusicRoute._addFileChildren(MusicRouteChildren);
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   MusicRoute: MusicRouteWithChildren,
   RedirectSpotifyRoute: RedirectSpotifyRoute,
-}
+};
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();
 const rootServerRouteChildren: RootServerRouteChildren = {
   ApiSpotifyAuthServerRoute: ApiSpotifyAuthServerRoute,
-}
+};
 export const serverRouteTree = rootServerRouteImport
   ._addFileChildren(rootServerRouteChildren)
-  ._addFileTypes<FileServerRouteTypes>()
+  ._addFileTypes<FileServerRouteTypes>();

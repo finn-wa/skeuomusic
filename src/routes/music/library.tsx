@@ -6,9 +6,7 @@ export const Route = createFileRoute("/music/library")({
   component: MusicLibrary,
 });
 
-/**
- * Provides header and nav tab bar for /music/library routes
- */
+/** Provides header and nav tab bar for /music/library routes */
 export default function MusicLibrary() {
   return (
     <>
