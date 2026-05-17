@@ -30,9 +30,9 @@ export function createSpotifyAuth(
   cachingStrategy.addUpdateListener(cacheKey, updateListener);
   cachingStrategy.get<SpotifyAccessToken>(cacheKey).then((token) => {
     if (token != null) {
-      updateListener(token);
+      return updateListener(token);
     }
-  });
+  }).catch(err => console.error("Failed to post Spotify token ", err))
   return spotifyAuthViaCodeWithPkce({
     clientId: import.meta.env.PUBLIC_SPOTIFY_CLIENT_ID,
     redirectUri: `${origin}/redirect/spotify`,

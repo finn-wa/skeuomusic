@@ -1,3 +1,4 @@
+// oxlint-disable typescript/unbound-method
 import { render } from "@solidjs/testing-library";
 import userEvent from "@testing-library/user-event";
 import { createSignal } from "solid-js";

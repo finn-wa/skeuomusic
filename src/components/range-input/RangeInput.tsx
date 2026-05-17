@@ -18,6 +18,8 @@ export function RangeInput(rawProps: RangeInputProps) {
     setKnobPosition(props.value);
   });
 
+  // Set via SolidJS ref
+  // oxlint-disable-next-line no-unassigned-vars
   let slider!: HTMLDivElement;
 
   function setKnobPosition(newValue: number) {

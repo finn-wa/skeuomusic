@@ -42,7 +42,6 @@ export const PlayerActionFactory = {
     state,
   }),
 } as const satisfies {
-  // biome-ignore lint/suspicious/noExplicitAny: it's necessary
   [K in PlayerActionKind]: (...params: any[]) => { kind: K };
 };
 

@@ -3,6 +3,8 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build && tsc --noEmit",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
     "start": "vite start",
     "test": "vitest run",
     "test-watch": "vitest",
@@ -22,7 +24,9 @@
     "@vitest/ui": "4.0.4",
     "dotenv": "17.2.3",
     "jsdom": "27.0.1",
-    "typescript": "5.9.3",
+    "oxlint": "^1.65.0",
+    "oxlint-tsgolint": "^0.22.1",
+    "typescript": "6.0.3",
     "vite": "^7.1.12",
     "vite-plugin-solid": "2.11.10",
     "vite-tsconfig-paths": "^5.1.4",
@@ -34,6 +38,6 @@
     "@tanstack/solid-router-devtools": "1.131.27",
     "@tanstack/solid-start": "1.131.27",
     "solid-js": "1.9.9",
-    "spotify-api-client": "link:spotify-api-client"
+    "spotify-api-client": "link:../spotify-api-client"
   }
 }

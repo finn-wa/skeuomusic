@@ -27,6 +27,8 @@ export default function NavArrowButton(initialProps: NavArrowButtonProps) {
   const [mounted, setMounted] = createSignal<boolean>(false);
   onMount(() => setMounted(true));
 
+  // Set via SolidJS ref
+  // oxlint-disable-next-line no-unassigned-vars
   let textElement!: HTMLSpanElement;
   const textWidth = () => {
     const textContent = props.text;
@@ -59,7 +61,6 @@ export default function NavArrowButton(initialProps: NavArrowButtonProps) {
     <Show when={!props.hide && props.text != null && props.href != null}>
       <Link
         to={props.href}
-        // biome-ignore lint/suspicious/noExplicitAny: Required for relative navigation to work
         from={currentLocation() as any}
         class={`nav-arrow ${props.direction} ${props.kind} text-truncate`}
       >
