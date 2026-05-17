@@ -1,5 +1,5 @@
 packages:
-  - "packages/app"
+  - "packages/*"
 
 allowBuilds:
   "@nestjs/core": false

@@ -19,7 +19,7 @@
     "@tanstack/solid-router-devtools": "1.131.27",
     "@tanstack/solid-start": "1.131.27",
     "solid-js": "1.9.9",
-    "spotify-api-client": "link:../spotify-api-client"
+    "spotify-api-client": "workspace:*"
   },
   "devDependencies": {
     "@solidjs/testing-library": "^0.8.10",
