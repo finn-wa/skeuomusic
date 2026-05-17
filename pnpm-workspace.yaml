@@ -1,3 +1,6 @@
+packages:
+  - "packages/app"
+
 allowBuilds:
   "@nestjs/core": false
   "@openapitools/openapi-generator-cli": true
