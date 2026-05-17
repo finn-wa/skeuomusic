@@ -2,7 +2,6 @@
   "name": "skeuomusic-monorepo",
   "private": true,
   "devDependencies": {
-    "dotenv": "17.2.3",
     "lint-staged": "^17.0.4",
     "oxfmt": "^0.50.0",
     "oxlint": "^1.65.0",
@@ -10,5 +9,17 @@
   },
   "lint-staged": {
     "*": "oxfmt"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.1.2",
+      "onFail": "warn"
+    },
+    "runtime": {
+      "name": "node",
+      "version": "^24",
+      "onFail": "warn"
+    }
   }
 }
