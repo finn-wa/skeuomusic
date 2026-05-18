@@ -1,6 +1,10 @@
 {
   "name": "skeuomusic-monorepo",
   "private": true,
+  "scripts": {
+    "lint": "oxlint",
+    "fmt": "oxfmt"
+  },
   "devDependencies": {
     "lint-staged": "^17.0.4",
     "oxfmt": "^0.50.0",
