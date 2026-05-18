@@ -4,11 +4,37 @@ import YAML from "yaml";
 
 const cwd = "./openapi";
 
+interface SchemaRef {
+  $ref: string;
+}
+
+interface SchemaProperty {
+  type?: string;
+  enum?: string[];
+  properties?: Record<string, SchemaProperty>;
+  allOf?: Array<SchemaRef | SchemaProperty>;
+  oneOf?: Array<SchemaRef>;
+  discriminator?: {
+    propertyName: string;
+    mapping?: Record<string, string>;
+  };
+  items?: SchemaProperty;
+}
+
+interface ComponentSchema {
+  type?: string;
+  properties?: Record<string, SchemaProperty>;
+  allOf?: Array<SchemaRef | ComponentSchema>;
+}
+
 interface OpenApiSchema {
   paths: {
     [path: string]: {
       [method: string]: Record<string, unknown>;
     };
+  };
+  components: {
+    schemas: Record<string, ComponentSchema>;
   };
 }
 
@@ -42,7 +68,113 @@ function processOpenApiSpec(spec: OpenApiSchema): OpenApiSchema {
       withoutDeprecatedPaths[path] = filtered;
     }
   }
-  return { ...spec, paths: withoutDeprecatedPaths };
+
+  const fixedSchemas: OpenApiSchema["components"]["schemas"] = {};
+  for (const [name, schema] of Object.entries(spec.components.schemas)) {
+    if (!schema.properties) {
+      fixedSchemas[name] = schema;
+      continue;
+    }
+    const fixedProps = Object.fromEntries(
+      Object.entries(schema.properties).map(([propName, prop]) => [
+        propName,
+        withDiscriminatorMapping(spec.components.schemas, prop),
+      ]),
+    );
+    fixedSchemas[name] = { ...schema, properties: fixedProps };
+  }
+
+  return {
+    ...spec,
+    paths: withoutDeprecatedPaths,
+    components: { ...spec.components, schemas: fixedSchemas },
+  };
+}
+
+function resolveEnumForProperty(
+  schemas: Record<string, ComponentSchema>,
+  schemaRef: string,
+  propertyName: string,
+): string[] {
+  const schemaName = schemaRef.split("/").pop()!;
+  const schema = schemas[schemaName];
+  if (!schema) return [];
+
+  if (schema.properties?.[propertyName]?.enum) {
+    return schema.properties[propertyName].enum!;
+  }
+
+  if (schema.allOf) {
+    for (const entry of schema.allOf) {
+      if ("$ref" in entry) {
+        const enums = resolveEnumForProperty(schemas, entry.$ref, propertyName);
+        if (enums.length > 0) return enums;
+      } else if (
+        "properties" in entry &&
+        entry.properties?.[propertyName]?.enum
+      ) {
+        return entry.properties[propertyName].enum!;
+      }
+    }
+  }
+
+  return [];
+}
+
+function buildDiscriminatorMapping(
+  schemas: Record<string, ComponentSchema>,
+  oneOf: Array<SchemaRef>,
+  propertyName: string,
+): Record<string, string> {
+  const mapping: Record<string, string> = {};
+  for (const ref of oneOf) {
+    for (const val of resolveEnumForProperty(schemas, ref.$ref, propertyName)) {
+      mapping[val] = ref.$ref;
+    }
+  }
+  return mapping;
+}
+
+function withDiscriminatorMapping(
+  schemas: Record<string, ComponentSchema>,
+  prop: SchemaProperty,
+): SchemaProperty {
+  if (prop.oneOf && prop.discriminator && !prop.discriminator.mapping) {
+    const mapping = buildDiscriminatorMapping(
+      schemas,
+      prop.oneOf,
+      prop.discriminator.propertyName,
+    );
+    if (Object.keys(mapping).length > 0) {
+      return {
+        ...prop,
+        discriminator: { ...prop.discriminator!, mapping },
+      };
+    }
+  }
+
+  if (
+    prop.items?.oneOf &&
+    prop.items.discriminator &&
+    !prop.items.discriminator.mapping
+  ) {
+    const mapping = buildDiscriminatorMapping(
+      schemas,
+      prop.items.oneOf,
+      prop.items.discriminator.propertyName,
+    );
+    if (Object.keys(mapping).length > 0) {
+      return {
+        ...prop,
+        items: {
+          ...prop.items!,
+          discriminator: { ...prop.items!.discriminator!, mapping },
+        },
+      };
+    }
+  }
+
+  return prop;
 }
 
 function generateClient() {

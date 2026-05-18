@@ -160,6 +160,7 @@ export interface WebPlaybackTrack {
   uri: string;
   media_type: "audio" | "video";
   type: "track" | "episode" | "ad";
+  // oxlint-disable-next-line typescript/no-redundant-type-constituents
   content_type: "music" | string;
   track_type: "audio" | "video";
   linked_from: {

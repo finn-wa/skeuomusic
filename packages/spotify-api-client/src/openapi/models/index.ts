@@ -4435,16 +4435,16 @@ export interface PlaylistTrackObject {
  * @export
  */
 export type PlaylistTrackObjectItem =
-  | ({ type: "EpisodeObject" } & EpisodeObject)
-  | ({ type: "TrackObject" } & TrackObject);
+  | ({ type: "episode" } & EpisodeObject)
+  | ({ type: "track" } & TrackObject);
 /**
  * @type PlaylistTrackObjectTrack **Deprecated:** Use `item` instead.
  *   Information about the track or episode.
  * @export
  */
 export type PlaylistTrackObjectTrack =
-  | ({ type: "EpisodeObject" } & EpisodeObject)
-  | ({ type: "TrackObject" } & TrackObject);
+  | ({ type: "episode" } & EpisodeObject)
+  | ({ type: "track" } & TrackObject);
 /**
  * @export
  * @interface PlaylistTracksRefObject
@@ -4728,15 +4728,15 @@ export interface QueueObject {
  * @export
  */
 export type QueueObjectCurrentlyPlaying =
-  | ({ type: "EpisodeObject" } & EpisodeObject)
-  | ({ type: "TrackObject" } & TrackObject);
+  | ({ type: "episode" } & EpisodeObject)
+  | ({ type: "track" } & TrackObject);
 /**
  * @type QueueObjectQueueInner
  * @export
  */
 export type QueueObjectQueueInner =
-  | ({ type: "EpisodeObject" } & EpisodeObject)
-  | ({ type: "TrackObject" } & TrackObject);
+  | ({ type: "episode" } & EpisodeObject)
+  | ({ type: "track" } & TrackObject);
 /**
  * @export
  * @interface RecommendationSeedObject

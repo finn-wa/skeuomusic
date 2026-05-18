@@ -73,7 +73,7 @@ export default class ImplicitGrantStrategy implements SpotifyAuth {
     const authUrl =
       "https://accounts.spotify.com/authorize?" + params.toString();
 
-    this.configuration!.redirectionStrategy.redirect(authUrl);
+    await this.configuration!.redirectionStrategy.redirect(authUrl);
     return emptyAccessToken;
   }
 }

@@ -4,13 +4,10 @@ import {
   ArtistsApi,
   AudiobooksApi,
   type BaseAPI,
-  CategoriesApi,
   ChaptersApi,
   Configuration,
   EpisodesApi,
-  GenresApi,
   LibraryApi,
-  MarketsApi,
   PlayerApi,
   PlaylistsApi,
   SearchApi,
@@ -41,23 +38,14 @@ export const spotifyArtistsApi = (authStrategy: SpotifyAuth) =>
 export const spotifyAudiobooksApi = (authStrategy: SpotifyAuth) =>
   spotifyApiClient(AudiobooksApi, authStrategy);
 
-export const spotifyCategoriesApi = (authStrategy: SpotifyAuth) =>
-  spotifyApiClient(CategoriesApi, authStrategy);
-
 export const spotifyChaptersApi = (authStrategy: SpotifyAuth) =>
   spotifyApiClient(ChaptersApi, authStrategy);
 
 export const spotifyEpisodesApi = (authStrategy: SpotifyAuth) =>
   spotifyApiClient(EpisodesApi, authStrategy);
 
-export const spotifyGenresApi = (authStrategy: SpotifyAuth) =>
-  spotifyApiClient(GenresApi, authStrategy);
-
 export const spotifyLibraryApi = (authStrategy: SpotifyAuth) =>
   spotifyApiClient(LibraryApi, authStrategy);
-
-export const spotifyMarketsApi = (authStrategy: SpotifyAuth) =>
-  spotifyApiClient(MarketsApi, authStrategy);
 
 export const spotifyPlayerApi = (authStrategy: SpotifyAuth) =>
   spotifyApiClient(PlayerApi, authStrategy);

@@ -61,7 +61,7 @@ export type SpotifyPlayerOptions = {
    * provided with a callback parameter. You will need to execute this with a
    * valid access_token string for a Spotify Premium user.
    */
-  getOAuthToken(cb: (token: string) => void): void;
+  getOAuthToken: (cb: (token: string) => void) => void;
   /**
    * The default volume of the player. Represented as a decimal between 0 and 1.
    * Default value is 1.
@@ -159,11 +159,19 @@ export function initSpotifyPlayer(
     }
 
     private _onGetToken(_e: unknown, ref: number): void {
-      const getOauthToken = this._options.getOAuthToken;
-      if ("function" == typeof getOauthToken) {
-        new Promise(getOauthToken).then((token) => {
-          this._sendMessage(messages.token(token, ref));
-        });
+      if ("function" == typeof this._options.getOAuthToken) {
+        new Promise(this._options.getOAuthToken)
+          .then((token) => {
+            this._sendMessage(messages.token(token, ref));
+          })
+          .catch((error) => {
+            const playerError = new PlayerError(
+              Errors.INVALID_OAUTH,
+              "Error in getOAuthToken",
+            );
+            playerError.cause = error;
+            throw playerError;
+          });
         return;
       }
       if (!this._getListeners(AnthemEvents.PLAYER_INIT_ERROR).length) {
@@ -246,7 +254,12 @@ export function initSpotifyPlayer(
     }
 
     /** Create a new event listener in the Web Playback SDK. Alias for Player#on. */
-    addListener = this.on;
+    addListener<T extends AnthemEventType>(
+      eventType: T,
+      listener: AnthemEventListener[T],
+    ): boolean {
+      return this.on(eventType, listener);
+    }
 
     /**
      * Remove an event listener in the Web Playback SDK.

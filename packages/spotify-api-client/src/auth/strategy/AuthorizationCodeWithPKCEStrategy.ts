@@ -67,7 +67,7 @@ export default class AuthorizationCodeWithPKCEStrategy implements SpotifyAuth {
       return token;
     }
 
-    this.redirectToSpotify();
+    await this.redirectToSpotify();
     return emptyAccessToken; // Redirected away at this point, just make TypeScript happy :)
   }
 
