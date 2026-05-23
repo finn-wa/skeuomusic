@@ -1,0 +1,93 @@
+:root {
+  --i-px: clamp(1px, calc(100vh / 960), 6px);
+  --i-2px: calc(var(--i-px) * 2);
+  --bg-color: #e9eaec;
+  --text-color: #424242;
+  --spacer-1: 0.25rem;
+  --spacer-2: 0.5rem;
+  --spacer-3: 1rem;
+  --spacer-4: 2rem;
+
+  /* colors picked from screenshots */
+  /* Bar gradients have slight noise applied to them! */
+  --header-gradient-top: #f6f6f6;
+  --header-gradient-bottom: #dfdfdf;
+  --header-font-color: #474747;
+  /* drop shadow below header - taken from album page. 3px  */
+  --header-shadow-color: #656565;
+  --header-btn-primary-text-color: #fff;
+  --header-btn-primary-gradient-top: #787878;
+  --header-btn-primary-gradient-bottom: #484848;
+  --header-btn-secondary-text-color: var(--header-font-color);
+  --header-btn-secondary-gradient-top: #e8e8e8;
+  --header-btn-secondary-gradient-bottom: #d3d3d3;
+  --header-btn-player-gradient-top: #1e1e1e;
+  --header-btn-player-gradient-bottom: #141414;
+
+  --text-emboss-glow: 0px 1px 0px #fff;
+  --text-emboss-shadow: 0px -1px 0px hsl(0 0 0 / 0.5);
+
+  --album-title-font-color: #2d2d2d;
+  --album-subtitle-font-color: #777777;
+  --album-odd-track-bg-color: #dedede;
+  --album-even-track-bg-color: #eaeaea;
+  --album-track-font-color: #424242;
+  --album-header-gradient-top: #9a9a9a;
+  --album-header-gradient-bottom: var(--album-even-track-bg-color);
+
+  --list-item-bg-color: #e9eaec;
+  --list-item-font-color: #474747;
+  --list-item-font-color-2: #898989;
+  --list-item-height: 3.625rem;
+  --list-index-font-color: #808080;
+  --list-index-bg-hover: hsl(0 0 0 / 0.1);
+  --list-index-bg-focus: hsl(0 0 0 / 0.2);
+  /* also textured */
+  --list-section-gradient-top: #cececf;
+  --list-section-gradient-bottom: #bdbdbd;
+  --list-section-emboss-top: #e3e3e3;
+  --list-section-emboss-bottom: #a4a5a6;
+  --list-section-font-color: #595959;
+
+  --page-msg-font-color: #808080;
+
+  --navbar-gradient-top: #f8f8f8;
+  --navbar-gradient-mid: #e5e6e7;
+  --navbar-gradient-bottom: #dddddd;
+  --navbar-border-top-color: #cecece;
+  --navbar-shadow-color: hsl(0 0 0 / 0.2);
+  --nav-tab-selected-bg-gradient-light: #cecece;
+  --nav-tab-selected-bg-gradient-dark: #949495;
+  --nav-tab-font-color: #474747;
+
+  --emboss-top-color: #ffffff;
+  --emboss-bottom-color: #c6c7c9;
+  --emboss-left-color: hsl(0 0 0 / 0.2);
+  --emboss-right-color: hsl(0 0 100% / 0.7);
+  --emboss-border-style: 2px solid;
+  --emboss-border-left: var(--emboss-border-style) var(--emboss-left-color);
+  --emboss-border-right: var(--emboss-border-style) var(--emboss-right-color);
+  --emboss-border-top: var(--emboss-border-style) var(--emboss-top-color);
+  --emboss-border-bottom: var(--emboss-border-style) var(--emboss-bottom-color);
+
+  --search-gradient-top: #d9d9d9;
+  --search-gradient-bottom: #c0c0c2;
+  /* It's actually a cutout gradient */
+  --search-icon-color: #838485;
+
+  --player-header-border-gradient-high: #747474;
+  --player-header-border-gradient-low: #232323;
+  --player-header-gradient-top: #212121;
+  --player-header-gradient-bottom: #050505;
+  --player-header-title-color: #fff;
+  --player-header-subtitle-color: #9f9f9f;
+  --player-header-btn-gradient-top: #1e1e1e;
+  --player-header-btn-gradient-bottom: #141414;
+  --player-icon-gradient-top: #e0dfdf;
+  --player-icon-gradient-bottom: #969696;
+
+  --panel-height: 4.125rem;
+  --player-overlay-height: 5.75rem;
+  --player-overlay-track-number-color: #c1c1c1;
+  --player-overlay-track-timestamp-color: #adadad;
+}

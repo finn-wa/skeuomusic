@@ -1,0 +1,50 @@
+nav.bar {
+  display: flex;
+  flex-wrap: nowrap;
+  flex: 0 0 auto;
+  padding: 0;
+  border-top: var(--i-px) solid var(--navbar-border-top-color);
+  background: linear-gradient(
+    to bottom,
+    var(--navbar-gradient-top),
+    var(--navbar-gradient-mid) 33%,
+    var(--navbar-gradient-bottom)
+  );
+  box-shadow: 0px calc(var(--i-px) * -2) calc(var(--i-px) * 8) 0px var(--navbar-shadow-color);
+}
+
+.tab {
+  flex: 1;
+  display: block;
+  height: var(--panel-height);
+
+  > .tab-border {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-left: var(--emboss-border-left);
+    border-right: var(--emboss-border-right);
+    box-sizing: border-box;
+    flex-direction: column;
+    padding-top: 0.125rem;
+    > small {
+      padding: 0.25rem;
+    }
+  }
+}
+
+.tab.selected {
+  box-shadow: inset 0px 6px 15px 2px hsl(0 0 0 / 0.3);
+
+  > .tab-border {
+    /* Make light emboss border more transparent */
+    border-right: var(--emboss-border-style) hsl(0 0 100% / 0.1);
+  }
+
+  + .tab > .tab-border {
+    /* Make dark emboss border more opaque on tab to right */
+    border-left: var(--emboss-border-style) hsl(0 0 0 / 0.3);
+  }
+}

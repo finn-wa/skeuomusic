@@ -1,0 +1,56 @@
+.nav-arrow {
+  background-color: transparent;
+  display: flex;
+  position: relative;
+  flex-wrap: nowrap;
+  margin: 0;
+  max-width: max(33%, 200px);
+  overflow: hidden;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+
+  &.primary {
+    color: var(--header-btn-primary-text-color);
+    text-shadow: var(--text-emboss-shadow);
+    --header-btn-gradient-top: var(--header-btn-primary-gradient-top);
+    --header-btn-gradient-bottom: var(--header-btn-primary-gradient-bottom);
+  }
+
+  &.secondary {
+    color: var(--header-btn-secondary-text-color);
+    text-shadow: var(--text-emboss-glow);
+    --header-btn-gradient-top: var(--header-btn-secondary-gradient-top);
+    --header-btn-gradient-bottom: var(--header-btn-secondary-gradient-bottom);
+  }
+
+  &.player {
+    color: var(--header-btn-secondary-text-color);
+    text-shadow: var(--text-emboss-glow);
+    --header-btn-gradient-top: var(--player-header-btn-gradient-top);
+    --header-btn-gradient-bottom: var(--player-header-btn-gradient-bottom);
+  }
+
+  &.left {
+    padding-left: var(--spacer-3);
+    padding-right: var(--spacer-2);
+  }
+
+  &.right {
+    padding-left: var(--spacer-2);
+    padding-right: var(--spacer-3);
+  }
+
+  > svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+.nav-arrow-text {
+  max-width: max(33%, 175px);
+  min-width: 1rem;
+  font-size: 1rem;
+  z-index: 3;
+}
