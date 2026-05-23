@@ -12,27 +12,15 @@ Uses **pnpm** as the package manager.
 
 ```bash
 pnpm run dev          # Start HTTPS dev server on localhost:3000
-pnpm run build        # Vite build + TypeScript type-check (tsc --noEmit)
+pnpm run build        # Vite build
 pnpm run test         # Run tests once with Vitest
-pnpm run test-ui      # Vitest with browser UI
 
-# Linting & formatting via Biome
-pnpm biome check .
-pnpm biome check --write .
+# Linting & formatting via oxc
+pnpm fmt # Runs oxfmt
+pnpm lint # Runs oxlint
 ```
 
 Run a single test file: `pnpm run test -- path/to/file.test.ts`
-
-## Environment setup
-
-Copy `.env.template` to `.env`. Required vars:
-
-- `PUBLIC_SPOTIFY_CLIENT_ID` — Spotify OAuth app client ID (exposed to client)
-- `SPOTIFY_CLIENT_SECRET` — Spotify OAuth secret (server-only)
-- `SESSION_SECRET` — generate with `openssl rand -base64 32`
-- `HTTPS_CERT_PATH` / `HTTPS_KEY_PATH` — paths to self-signed certs in `cert/`
-
-The dev server runs on HTTPS because Spotify's Web Playback SDK requires a secure context.
 
 ## Architecture
 
@@ -73,17 +61,6 @@ The dev server runs on HTTPS because Spotify's Web Playback SDK requires a secur
 
 Use `useMusicContext()` / `useAuthContext()` inside components.
 
-### Spotify API client
-
-`spotify-api-client/` is a local package generated from Spotify's OpenAPI spec. To regenerate:
-
-```bash
-pnpm run spotify-api-client:update    # re-download spec
-pnpm run spotify-api-client:generate  # regenerate client code
-```
-
-Import from `"spotify-api-client"` — path alias `~/*` maps to `./src/*`.
-
 ### Server/client split
 
 - `src/lib/server/` — server-only code (session management, direct Spotify data fetching)
@@ -92,4 +69,4 @@ Import from `"spotify-api-client"` — path alias `~/*` maps to `./src/*`.
 
 ### Styling
 
-Pure CSS modules in `src/styles/`. The skeuomorphic iOS 6 aesthetic is the point — prefer CSS over component libraries. Biome enforces double quotes and space indentation.
+Pure CSS modules in `src/styles/`. The skeuomorphic iOS 6 aesthetic is the point — prefer CSS over component libraries.

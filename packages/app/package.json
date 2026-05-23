@@ -4,7 +4,9 @@
   "sideEffects": false,
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build && tsc --noEmit",
+    "build": "vite build",
+    "fmt": "oxfmt",
+    "lint": "oxlint",
     "start": "vite start",
     "test": "vitest run",
     "test-watch": "vitest",
