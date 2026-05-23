@@ -1,11 +1,12 @@
+import Welcome from "@/components/welcome/welcome";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({ component: App });
 
 function App() {
   return (
-    <main>
-      <h1>welcome to skeuomusic</h1>
+    <main className="login-container">
+      <Welcome />
     </main>
   );
 }

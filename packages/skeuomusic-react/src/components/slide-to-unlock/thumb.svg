@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 125 100">
+  <defs>
+    <linearGradient
+      id="thumbStroke"
+      x1="65"
+      x2="65"
+      y1="6"
+      y2="91"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop offset="0" stop-color="#fff" />
+      <stop offset=".33" stop-color="#e6e6e6" />
+      <stop offset=".66" stop-color="#d3d3d3" />
+      <stop offset="1" stop-color="#acacac" />
+    </linearGradient>
+    <linearGradient
+      id="thumbFill"
+      x1="65"
+      x2="65"
+      y1="6"
+      y2="91"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop offset="0" stop-color="#fefefe" />
+      <stop offset="1" stop-color="#a3a3a3" />
+    </linearGradient>
+    <linearGradient
+      id="thumbBackground"
+      x1="61"
+      x2="61"
+      y1="25"
+      y2="72"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop offset="0" stop-color="#b5b5b5" />
+      <stop offset="1" stop-color="#595959" />
+    </linearGradient>
+    <filter id="innerShadow" width="1.1" x="-.041" y="-.069" color-interpolation-filters="sRGB">
+      <feFlood flood-color="#000" result="flood" />
+      <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="1.5" />
+      <feOffset dy="1" in="blur" result="offset" />
+      <feComposite in="flood" in2="offset" operator="in" result="comp1" />
+      <feComposite in="SourceGraphic" in2="comp1" result="comp2" />
+    </filter>
+    <filter id="glow" width="1.1" height="1.1" x="-.025" y="-.033" color-interpolation-filters="sRGB">
+      <feFlood flood-color="#f1f1f1" result="flood" />
+      <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="1" />
+      <feOffset dy="1" in="blur" result="offset" />
+      <feComposite in="flood" in2="offset" operator="out" result="comp1" />
+      <feComposite in="comp1" in2="SourceGraphic" operator="atop" result="comp2" />
+    </filter>
+    <filter id="outerShadow" width="1.1" x="-.053" y="-.07" color-interpolation-filters="sRGB">
+      <feFlood flood-color="#000" flood-opacity=".8" result="flood" />
+      <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="2.5" />
+      <feOffset dy="3" in="blur" result="offset" />
+      <feComposite in="flood" in2="offset" operator="in" result="comp1" />
+      <feComposite in="SourceGraphic" in2="comp1" result="comp2" />
+    </filter>
+    <clipPath id="b">
+      <rect width="116" height="88" x="5" y="5" fill-opacity="0" stroke-width="0" ry="17" />
+    </clipPath>
+  </defs>
+  <rect width="114" height="86" x="6" y="6" filter="url(#outerShadow)" ry="17" />
+  <g clip-path="url(#b)">
+    <rect width="90" height="63" x="18" y="17" fill="url(#thumbBackground)" ry="0" />
+    <path
+      d="M20 24v52h88V24zm47 1 32 24-32 24V61H33V38h34z"
+      filter="url(#innerShadow)"
+      style="mix-blend-mode: normal"
+    />
+    <path
+      fill="url(#thumbFill)"
+      stroke="url(#thumbStroke)"
+      stroke-linejoin="round"
+      d="M22 5C12.7 5 5 12.5 5 22v53c0 9.3 7.5 17 17 17h81c9.3 0 17-7.5 17-17V22c0-9.3-7.5-17-17-17zm45 20 32 24-32 24V61H33V38h34z"
+      filter="url(#glow)"
+      style="mix-blend-mode: normal"
+    />
+    <rect width="116" height="44" x="5" y="5" fill="#fff" fill-opacity=".25" rx="0" ry="0" />
+  </g>
+</svg>

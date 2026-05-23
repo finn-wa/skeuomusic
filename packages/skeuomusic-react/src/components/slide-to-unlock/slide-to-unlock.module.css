@@ -1,0 +1,79 @@
+.wh100 {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.slider {
+  --range-percent: 0%;
+  --track-height: 2rem;
+  --track-gradient-top: hsl(0 0 0 / 0.1);
+  --track-gradient-bottom: hsl(0 0 0 / 0.05);
+  --track-border-top-width: 0px;
+  --track-border-top-color: black;
+  --track-border-bottom-width: 0px;
+  --track-border-bottom-color: black;
+  --track-border-side: 0px solid transparent;
+  --progress-gradient-top: #e5e6e7;
+  --progress-gradient-bottom: #949596;
+
+  height: 2.5rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  .range {
+    opacity: 0;
+  }
+
+  .track {
+    height: var(--track-height);
+    top: calc(50% - (var(--track-height) / 2));
+    background: linear-gradient(to bottom, var(--track-gradient-top), var(--track-gradient-bottom));
+    box-sizing: border-box;
+    border-radius: 3px;
+    border-left: var(--track-border-side);
+    border-right: var(--track-border-side);
+    border-bottom: var(--track-border-bottom-width) solid var(--track-border-bottom-color);
+    border-top: var(--track-border-top-width) solid var(--track-border-top-color);
+  }
+
+  .progress {
+    height: var(--track-height);
+    top: calc(50% - (var(--track-height) / 2));
+    left: 0;
+    width: var(--range-percent);
+    background: linear-gradient(
+      to bottom,
+      var(--progress-gradient-top),
+      var(--progress-gradient-bottom)
+    );
+    border-radius: 3px;
+  }
+
+  /* Sets size of the element and bounds for thumb movement */
+  .bounds {
+    pointer-events: none;
+    flex: 1 1;
+    position: relative;
+    height: 100%;
+    margin: 0 calc(var(--track-height) / 2.5);
+  }
+
+  .thumb {
+    position: absolute;
+    top: calc(50% - (var(--track-height) / 2));
+    bottom: 0;
+    left: var(--range-percent);
+    border-radius: 3px;
+    width: calc(var(--track-height) * 2);
+    height: var(--track-height);
+    margin: 0 calc(var(--track-height) / -2);
+  }
+}

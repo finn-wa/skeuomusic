@@ -8,6 +8,8 @@
   --spacer-3: 1rem;
   --spacer-4: 2rem;
 
+  --page-width: 47rem;
+
   /* colors picked from screenshots */
   /* Bar gradients have slight noise applied to them! */
   --header-gradient-top: #f6f6f6;
