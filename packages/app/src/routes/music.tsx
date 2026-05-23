@@ -7,7 +7,7 @@ import {
   spotifyPlayerApi,
   spotifyPlaylistsApi,
   spotifyTracksApi,
-} from "spotify-api-client";
+} from "spotify-web-client";
 import { useAuthContext } from "~/lib/client/auth-context";
 import { MusicContext } from "~/lib/client/music-context";
 import { createSpotifyPlayerAdapter } from "~/lib/client/player/adapter/spotify-player-adapter";

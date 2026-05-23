@@ -9,10 +9,7 @@ export default class GenericCache implements CachingStrategy {
 
   constructor(
     private storage: CacheStore,
-    private updateFunctions: Map<
-      string,
-      (item: any) => Promise<Cachable>
-    > = new Map(),
+    private updateFunctions: Map<string, (item: any) => Promise<Cachable>> = new Map(),
     private autoRenewInterval: number = 0,
     private autoRenewWindow: number = 2 * 60 * 1000, // Two minutes
   ) {
@@ -26,10 +23,7 @@ export default class GenericCache implements CachingStrategy {
    * removed. Listeners will not be called for cache items that expire on
    * access.
    */
-  public addUpdateListener<T>(
-    cacheKey: string,
-    listener: (value: T | null) => void,
-  ): void {
+  public addUpdateListener<T>(cacheKey: string, listener: (value: T | null) => void): void {
     const existingListeners = this.updateListeners[cacheKey];
     if (existingListeners == null) {
       this.updateListeners[cacheKey] = [listener];
@@ -40,10 +34,7 @@ export default class GenericCache implements CachingStrategy {
     }
   }
 
-  public removeUpdateListener<T>(
-    cacheKey: string,
-    listener: (value: T | null) => void,
-  ): void {
+  public removeUpdateListener<T>(cacheKey: string, listener: (value: T | null) => void): void {
     const listeners = this.updateListeners[cacheKey];
     if (listeners == null || listeners.length === 0) {
       return;
@@ -81,10 +72,7 @@ export default class GenericCache implements CachingStrategy {
     let asString = this.storage.get(cacheKey);
     let cachedItem: T & Cachable = asString ? JSON.parse(asString) : null;
 
-    if (
-      this.itemDueToExpire(cachedItem) &&
-      this.updateFunctions.has(cacheKey)
-    ) {
+    if (this.itemDueToExpire(cachedItem) && this.updateFunctions.has(cacheKey)) {
       const updateFunction = this.updateFunctions.get(cacheKey);
       await this.tryUpdateItem(cacheKey, cachedItem, updateFunction!);
 
@@ -97,10 +85,7 @@ export default class GenericCache implements CachingStrategy {
       return null;
     }
 
-    if (
-      cachedItem.expires &&
-      (cachedItem.expires === -1 || cachedItem.expires <= Date.now())
-    ) {
+    if (cachedItem.expires && (cachedItem.expires === -1 || cachedItem.expires <= Date.now())) {
       this.remove(cacheKey);
       return null;
     }

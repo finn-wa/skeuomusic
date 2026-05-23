@@ -5,7 +5,7 @@ import {
   spotifyArtistsApi,
   spotifyPlaylistsApi,
   spotifyTracksApi,
-} from "spotify-api-client";
+} from "spotify-web-client";
 import { loggingMiddleware } from "../middleware/logging";
 import { spotifyApiMiddleware } from "../middleware/spotify-auth";
 import type {

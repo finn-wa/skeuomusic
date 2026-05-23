@@ -11,7 +11,7 @@ import type {
   PlaylistsApi,
   SpotifyPlayer,
   TracksApi,
-} from "spotify-api-client";
+} from "spotify-web-client";
 import type { PlayerStore } from "./player/store/player-store";
 
 export type SpotifyContext = {

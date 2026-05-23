@@ -1,31 +1,18 @@
 import { Errors } from "./enums/Errors";
-import {
-  type AnthemEventListener,
-  AnthemEvents,
-  type AnthemEventType,
-} from "./enums/Events";
+import { type AnthemEventListener, AnthemEvents, type AnthemEventType } from "./enums/Events";
 import { Messages, type MessageType } from "./enums/Messages";
 import { PlayerError } from "./error/PlayerError";
 import type { Message } from "./shared/Message";
-import {
-  type MessageCallback,
-  MessageDispatcher,
-} from "./shared/MessageDispatcher";
+import { type MessageCallback, MessageDispatcher } from "./shared/MessageDispatcher";
 import { messages } from "./shared/MessageFactory";
-import {
-  createPromiseResolver,
-  type PromiseResolver,
-} from "./shared/PromiseResolver";
+import { createPromiseResolver, type PromiseResolver } from "./shared/PromiseResolver";
 import type { WebPlaybackState } from "./types";
 
 const defaultIframeFactory = (hostWindow: Window) => (src: string) => {
   const id = "spotify-playback-sdk-container";
   const existingIframe = hostWindow.document.getElementById(id);
   if (existingIframe != null) {
-    if (
-      existingIframe instanceof HTMLIFrameElement &&
-      existingIframe.contentWindow != null
-    ) {
+    if (existingIframe instanceof HTMLIFrameElement && existingIframe.contentWindow != null) {
       console.log("Connecting to existing Spotify playback iframe...");
       return existingIframe.contentWindow;
     }
@@ -124,8 +111,7 @@ export function initSpotifyPlayer(
       [Messages.VOLUME]: this._onVolume.bind(this),
     };
     private readonly _connectionRequests: RequestMap<boolean> = {};
-    private readonly _getCurrentStateRequests: RequestMap<WebPlaybackState | null> =
-      {};
+    private readonly _getCurrentStateRequests: RequestMap<WebPlaybackState | null> = {};
     private readonly _getVolumeRequests: RequestMap<number> = {};
 
     constructor(options: SpotifyPlayerOptions) {
@@ -153,9 +139,9 @@ export function initSpotifyPlayer(
 
     private _onEvent(e: { name: MessageType; eventData: unknown }): void {
       const name = e.name;
-      this._getListeners(
-        AnthemEvents[name as keyof typeof AnthemEvents],
-      ).forEach((listener) => listener(e.eventData as any));
+      this._getListeners(AnthemEvents[name as keyof typeof AnthemEvents]).forEach((listener) =>
+        listener(e.eventData as any),
+      );
     }
 
     private _onGetToken(_e: unknown, ref: number): void {
@@ -165,20 +151,14 @@ export function initSpotifyPlayer(
             this._sendMessage(messages.token(token, ref));
           })
           .catch((error) => {
-            const playerError = new PlayerError(
-              Errors.INVALID_OAUTH,
-              "Error in getOAuthToken",
-            );
+            const playerError = new PlayerError(Errors.INVALID_OAUTH, "Error in getOAuthToken");
             playerError.cause = error;
             throw playerError;
           });
         return;
       }
       if (!this._getListeners(AnthemEvents.PLAYER_INIT_ERROR).length) {
-        throw new PlayerError(
-          Errors.INVALID_OAUTH,
-          "getOAuthToken is not a function",
-        );
+        throw new PlayerError(Errors.INVALID_OAUTH, "getOAuthToken is not a function");
       }
       this._onEvent({
         name: Messages.PLAYER_INIT_ERROR,
@@ -194,10 +174,7 @@ export function initSpotifyPlayer(
       }
     }
 
-    private _onCurrentState(e: {
-      ref: number;
-      state: WebPlaybackState | null;
-    }): void {
+    private _onCurrentState(e: { ref: number; state: WebPlaybackState | null }): void {
       const request = this._getCurrentStateRequests[e.ref];
       if (request != null) {
         request.resolve(e.state);
@@ -242,10 +219,7 @@ export function initSpotifyPlayer(
     }
 
     /** Create a new event listener in the Web Playback SDK. */
-    on<T extends AnthemEventType>(
-      eventType: T,
-      listener: AnthemEventListener[T],
-    ): boolean {
+    on<T extends AnthemEventType>(eventType: T, listener: AnthemEventListener[T]): boolean {
       if (this._eventListeners[eventType].includes(listener)) {
         return false;
       }
@@ -281,9 +255,7 @@ export function initSpotifyPlayer(
       }
       const listeners = this._eventListeners[eventName];
       if (listeners?.length) {
-        this._eventListeners[eventName] = listeners.filter(
-          (x) => x !== listener,
-        ) as any[];
+        this._eventListeners[eventName] = listeners.filter((x) => x !== listener) as any[];
       }
       return true;
     }
@@ -382,9 +354,7 @@ export function initSpotifyPlayer(
   };
 }
 
-type SpotifyPlayerWithPrivateFields = InstanceType<
-  ReturnType<typeof initSpotifyPlayer>
->;
+type SpotifyPlayerWithPrivateFields = InstanceType<ReturnType<typeof initSpotifyPlayer>>;
 
 /** Provides an API for interacting with the Spotify Web Playback SDK. */
 export type SpotifyPlayer = {

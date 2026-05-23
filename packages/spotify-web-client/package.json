@@ -1,5 +1,5 @@
 {
-  "name": "spotify-api-client",
+  "name": "spotify-web-client",
   "version": "2.0.0",
   "private": true,
   "files": [

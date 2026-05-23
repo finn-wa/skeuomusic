@@ -1,5 +1,5 @@
 import { createServerFileRoute } from "@tanstack/solid-start/server";
-import type { SpotifyAccessToken } from "spotify-api-client";
+import type { SpotifyAccessToken } from "spotify-web-client";
 import { useSpotifySession } from "~/lib/server/session";
 
 /** Receives postback from Spotify auth */

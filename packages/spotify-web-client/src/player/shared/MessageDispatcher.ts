@@ -1,11 +1,7 @@
 import { Messages, type MessageType } from "../enums/Messages";
 import type { Message, MessageEvent, MessageWithId } from "./Message";
 
-export type MessageCallback = (
-  topic: MessageType,
-  data: unknown,
-  seq: number,
-) => void;
+export type MessageCallback = (topic: MessageType, data: unknown, seq: number) => void;
 
 export class MessageDispatcher {
   constructor(
@@ -27,11 +23,7 @@ export class MessageDispatcher {
   };
 
   private isMessageEvent(e: any): e is MessageEvent {
-    return (
-      e != null &&
-      e.data?.type === Messages.SPOTIFY_MESSAGE &&
-      e.data.body?.topic != null
-    );
+    return e != null && e.data?.type === Messages.SPOTIFY_MESSAGE && e.data.body?.topic != null;
   }
 
   listen(e: Window, t: MessageCallback) {

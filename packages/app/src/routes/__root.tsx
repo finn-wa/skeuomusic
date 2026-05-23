@@ -4,7 +4,7 @@ import appCss from "~/global.css?url";
 import { AuthContext } from "~/lib/client/auth-context";
 
 import "@fontsource-variable/inter";
-import type { SpotifyAuth } from "spotify-api-client";
+import type { SpotifyAuth } from "spotify-web-client";
 import { createSpotifyAuth } from "~/lib/client/spotify-auth";
 
 export const Route = createRootRoute({

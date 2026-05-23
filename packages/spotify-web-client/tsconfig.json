@@ -17,8 +17,5 @@
   },
   "include": [],
   // For IDE integration, not for composite builds
-  "references": [
-    { "path": "./tsconfig.build.json" },
-    { "path": "./tsconfig.src.json" }
-  ]
+  "references": [{ "path": "./tsconfig.build.json" }, { "path": "./tsconfig.src.json" }]
 }

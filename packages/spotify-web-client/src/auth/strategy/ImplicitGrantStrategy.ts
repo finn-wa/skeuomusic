@@ -2,10 +2,7 @@ import type { CachingStrategy } from "../caching/CachingStrategy.js";
 import type { SpotifyAuthConfig } from "../SpotifyAuthConfig.js";
 import type { AccessToken } from "../token/AccessToken.js";
 import { emptyAccessToken } from "../token/AccessToken.js";
-import {
-  refreshCachedAccessToken,
-  toCachableAccessToken,
-} from "../token/AccessTokenHelpers.js";
+import { refreshCachedAccessToken, toCachableAccessToken } from "../token/AccessTokenHelpers.js";
 import type { SpotifyAuth } from "./AuthStrategy.js";
 
 export default class ImplicitGrantStrategy implements SpotifyAuth {
@@ -37,9 +34,7 @@ export default class ImplicitGrantStrategy implements SpotifyAuth {
   }
 
   public async getAccessToken(): Promise<AccessToken | null> {
-    const token = await this.cache.get<AccessToken>(
-      ImplicitGrantStrategy.cacheKey,
-    );
+    const token = await this.cache.get<AccessToken>(ImplicitGrantStrategy.cacheKey);
     return token;
   }
 
@@ -70,8 +65,7 @@ export default class ImplicitGrantStrategy implements SpotifyAuth {
     params.append("redirect_uri", this.redirectUri);
     params.append("scope", scope);
 
-    const authUrl =
-      "https://accounts.spotify.com/authorize?" + params.toString();
+    const authUrl = "https://accounts.spotify.com/authorize?" + params.toString();
 
     await this.configuration!.redirectionStrategy.redirect(authUrl);
     return emptyAccessToken;

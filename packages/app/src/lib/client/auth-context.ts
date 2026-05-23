@@ -4,7 +4,7 @@ import {
   type Setter,
   useContext,
 } from "solid-js";
-import type { SpotifyAuth } from "spotify-api-client";
+import type { SpotifyAuth } from "spotify-web-client";
 
 export type AuthContext = {
   spotifyAuth: Accessor<SpotifyAuth | undefined>;

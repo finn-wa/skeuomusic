@@ -5,7 +5,7 @@ dist
 .netlify
 .tanstack
 app.config.timestamp_*.js
-spotify-api-client/generated
+spotify-web-client/generated
 
 # Environment
 .env

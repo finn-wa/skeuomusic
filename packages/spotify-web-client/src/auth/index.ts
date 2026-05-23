@@ -18,8 +18,7 @@ export function getDefaultCachingStrategy(autoRenewConfig?: AutoRenewConfig) {
 }
 
 export function spotifyAuthConfig(overrides: Partial<SpotifyAuthConfig> = {}) {
-  const cachingStrategy =
-    overrides.cachingStrategy ?? getDefaultCachingStrategy();
+  const cachingStrategy = overrides.cachingStrategy ?? getDefaultCachingStrategy();
   const redirectionStrategy =
     overrides.redirectionStrategy ?? new DocumentLocationRedirectionStrategy();
   return {
@@ -83,15 +82,8 @@ export function spotifyAuthViaProvidedAccessToken(
   accessToken: AccessToken,
   config: {
     clientId: string;
-    refreshTokenAction?: (
-      clientId: string,
-      token: AccessToken,
-    ) => Promise<AccessToken>;
+    refreshTokenAction?: (clientId: string, token: AccessToken) => Promise<AccessToken>;
   },
 ) {
-  return new ProvidedAccessTokenStrategy(
-    config.clientId,
-    accessToken,
-    config.refreshTokenAction,
-  );
+  return new ProvidedAccessTokenStrategy(config.clientId, accessToken, config.refreshTokenAction);
 }

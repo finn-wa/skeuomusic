@@ -39,10 +39,7 @@ export default class ProvidedAccessTokenStrategy implements SpotifyAuth {
 
   public async getOrCreateAccessToken(): Promise<AccessToken> {
     if (this.accessToken.expires && this.accessToken.expires <= Date.now()) {
-      const refreshed = await this.refreshTokenAction(
-        this.clientId,
-        this.accessToken,
-      );
+      const refreshed = await this.refreshTokenAction(this.clientId, this.accessToken);
       this.accessToken = refreshed;
     }
 

@@ -11,9 +11,7 @@
     "test": "vitest run",
     "test-watch": "vitest",
     "test-ui": "vitest --ui",
-    "prepare": "git config core.hooksPath .git-hooks",
-    "spotify-api-client:update": "bun run spotify-api-client/download-spec.ts",
-    "spotify-api-client:generate": "openapi-generator-cli generate"
+    "prepare": "git config core.hooksPath .git-hooks"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.2.8",
@@ -21,7 +19,7 @@
     "@tanstack/solid-router-devtools": "1.131.27",
     "@tanstack/solid-start": "1.131.27",
     "solid-js": "1.9.9",
-    "spotify-api-client": "workspace:*"
+    "spotify-web-client": "workspace:*"
   },
   "devDependencies": {
     "@solidjs/testing-library": "^0.8.10",

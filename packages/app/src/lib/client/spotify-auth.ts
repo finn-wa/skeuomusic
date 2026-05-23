@@ -4,7 +4,7 @@ import {
   type SpotifyAccessToken,
   type SpotifyAuth,
   spotifyAuthViaCodeWithPkce,
-} from "spotify-api-client";
+} from "spotify-web-client";
 import { SPOTIFY_SCOPES } from "../constants";
 
 export function createSpotifyAuth(

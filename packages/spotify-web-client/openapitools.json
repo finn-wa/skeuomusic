@@ -10,7 +10,7 @@
         "inputSpec": "./openapi/spec/spotify.yml",
         "enablePostProcessFile": false,
         "additionalProperties": {
-          "npmName": "generated-spotify-api-client",
+          "npmName": "generated-spotify-web-client",
           "legacyDiscriminatorBehavior": false,
           "prefixParameterInterfaces": true,
           "supportsES6": true,

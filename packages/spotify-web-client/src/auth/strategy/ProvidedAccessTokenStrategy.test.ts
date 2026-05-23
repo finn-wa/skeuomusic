@@ -3,10 +3,7 @@ import ProvidedAccessTokenStrategy from "./ProvidedAccessTokenStrategy";
 
 describe("ProvidedAccessTokenStrategy", () => {
   it("getAccesToken, no expires property provided, generates one", async () => {
-    const sut = new ProvidedAccessTokenStrategy(
-      "some-client-id",
-      tokenWithoutExpiresProperty(),
-    );
+    const sut = new ProvidedAccessTokenStrategy("some-client-id", tokenWithoutExpiresProperty());
     const token = await sut.getAccessToken();
 
     expect(token!.expires).toBeDefined();
@@ -16,10 +13,7 @@ describe("ProvidedAccessTokenStrategy", () => {
     const now = Date.now();
     const providedToken = tokenWithoutExpiresProperty();
 
-    const sut = new ProvidedAccessTokenStrategy(
-      "some-client-id",
-      providedToken,
-    );
+    const sut = new ProvidedAccessTokenStrategy("some-client-id", providedToken);
     const token = await sut.getAccessToken();
 
     expect(token!.expires).toBeGreaterThan(now + providedToken.expires_in);
@@ -28,10 +22,7 @@ describe("ProvidedAccessTokenStrategy", () => {
   it("getOrCreateAccessToken, expiry in the future, returns token stored in instance", async () => {
     const providedToken = validToken("original", 60 * 1000);
 
-    const sut = new ProvidedAccessTokenStrategy(
-      "some-client-id",
-      providedToken,
-    );
+    const sut = new ProvidedAccessTokenStrategy("some-client-id", providedToken);
     const token = await sut.getOrCreateAccessToken();
 
     expect(token!.access_token).toBe("original");
@@ -41,13 +32,9 @@ describe("ProvidedAccessTokenStrategy", () => {
     const refreshedTokenValue = "refreshed";
     const providedToken = expiredAccessToken();
 
-    const sut = new ProvidedAccessTokenStrategy(
-      "some-client-id",
-      providedToken,
-      () => {
-        return Promise.resolve(validToken(refreshedTokenValue));
-      },
-    );
+    const sut = new ProvidedAccessTokenStrategy("some-client-id", providedToken, () => {
+      return Promise.resolve(validToken(refreshedTokenValue));
+    });
 
     const token = await sut.getOrCreateAccessToken();
 

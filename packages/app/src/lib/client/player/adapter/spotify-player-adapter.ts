@@ -5,8 +5,8 @@ import {
   type TrackObject,
   type WebPlaybackInstance,
   type WebPlaybackState,
-} from "spotify-api-client";
-import { AnthemEvents } from "spotify-api-client/src/player/enums/Events";
+} from "spotify-web-client";
+import { AnthemEvents } from "spotify-web-client/src/player/enums/Events";
 import type { AuthContext } from "../../auth-context";
 import type { MusicContext, SpotifyContext } from "../../music-context";
 import { getCurrentTrackTime } from "../../music-utils";

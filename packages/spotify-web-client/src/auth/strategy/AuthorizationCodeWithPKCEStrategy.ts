@@ -17,8 +17,7 @@ interface CachedVerifier extends Cachable {
 }
 
 export default class AuthorizationCodeWithPKCEStrategy implements SpotifyAuth {
-  public static readonly cacheKey =
-    "spotify-sdk:AuthorizationCodeWithPKCEStrategy:token";
+  public static readonly cacheKey = "spotify-sdk:AuthorizationCodeWithPKCEStrategy:token";
 
   protected get cache(): CachingStrategy {
     return this.configuration.cachingStrategy;
@@ -47,9 +46,7 @@ export default class AuthorizationCodeWithPKCEStrategy implements SpotifyAuth {
   }
 
   public async getAccessToken(): Promise<AccessToken | null> {
-    const token = await this.cache.get<AccessToken>(
-      AuthorizationCodeWithPKCEStrategy.cacheKey,
-    );
+    const token = await this.cache.get<AccessToken>(AuthorizationCodeWithPKCEStrategy.cacheKey);
     return token;
   }
 
@@ -81,17 +78,12 @@ export default class AuthorizationCodeWithPKCEStrategy implements SpotifyAuth {
     };
     this.cache.setCacheItem("spotify-sdk:verifier", singleUseVerifier);
 
-    const redirectTarget = await this.generateRedirectUrlForUser(
-      this.scopes,
-      challenge,
-    );
+    const redirectTarget = await this.generateRedirectUrlForUser(this.scopes, challenge);
     await this.configuration!.redirectionStrategy.redirect(redirectTarget);
   }
 
   private async verifyAndExchangeCode(code: string) {
-    const cachedItem = await this.cache.get<CachedVerifier>(
-      "spotify-sdk:verifier",
-    );
+    const cachedItem = await this.cache.get<CachedVerifier>("spotify-sdk:verifier");
     const verifier = cachedItem?.verifier;
 
     if (!verifier) {
@@ -114,10 +106,7 @@ export default class AuthorizationCodeWithPKCEStrategy implements SpotifyAuth {
     window.history.replaceState({}, document.title, newUrl);
   }
 
-  protected async generateRedirectUrlForUser(
-    scopes: string[],
-    challenge: string,
-  ) {
+  protected async generateRedirectUrlForUser(scopes: string[], challenge: string) {
     const scope = scopes.join(" ");
 
     const params = new URLSearchParams();
@@ -131,10 +120,7 @@ export default class AuthorizationCodeWithPKCEStrategy implements SpotifyAuth {
     return `https://accounts.spotify.com/authorize?${params.toString()}`;
   }
 
-  protected async exchangeCodeForToken(
-    code: string,
-    verifier: string,
-  ): Promise<AccessToken> {
+  protected async exchangeCodeForToken(code: string, verifier: string): Promise<AccessToken> {
     const params = new URLSearchParams();
     params.append("client_id", this.clientId);
     params.append("grant_type", "authorization_code");
@@ -151,9 +137,7 @@ export default class AuthorizationCodeWithPKCEStrategy implements SpotifyAuth {
     const text = await result.text();
 
     if (!result.ok) {
-      throw new Error(
-        `Failed to exchange code for token: ${result.statusText}, ${text}`,
-      );
+      throw new Error(`Failed to exchange code for token: ${result.statusText}, ${text}`);
     }
 
     const json: AccessToken = JSON.parse(text);

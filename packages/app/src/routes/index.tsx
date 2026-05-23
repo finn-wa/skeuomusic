@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/solid-router";
-import { isEmptyAccessToken } from "spotify-api-client";
+import { isEmptyAccessToken } from "spotify-web-client";
 import { useAuthContext } from "~/lib/client/auth-context";
 import { INITIAL_SCROLL_ID } from "~/lib/constants";
 

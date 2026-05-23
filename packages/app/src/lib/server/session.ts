@@ -1,5 +1,5 @@
 import { useSession } from "@tanstack/solid-start/server";
-import type { SpotifyAccessToken } from "spotify-api-client";
+import type { SpotifyAccessToken } from "spotify-web-client";
 
 export type SpotifySession = {
   token?: SpotifyAccessToken & Required<Pick<SpotifyAccessToken, "expires">>;

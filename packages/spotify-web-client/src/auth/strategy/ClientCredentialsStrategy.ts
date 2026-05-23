@@ -5,8 +5,7 @@ import { toCachableAccessToken } from "../token/AccessTokenHelpers.js";
 import type { SpotifyAuth } from "./AuthStrategy.js";
 
 export default class ClientCredentialsStrategy implements SpotifyAuth {
-  public static readonly cacheKey =
-    "spotify-sdk:ClientCredentialsStrategy:token";
+  public static readonly cacheKey = "spotify-sdk:ClientCredentialsStrategy:token";
 
   private get cache(): CachingStrategy {
     return this.configuration.cachingStrategy;
@@ -36,9 +35,7 @@ export default class ClientCredentialsStrategy implements SpotifyAuth {
   }
 
   public async getAccessToken(): Promise<AccessToken | null> {
-    const token = await this.cache.get<AccessToken>(
-      ClientCredentialsStrategy.cacheKey,
-    );
+    const token = await this.cache.get<AccessToken>(ClientCredentialsStrategy.cacheKey);
     return token;
   }
 
