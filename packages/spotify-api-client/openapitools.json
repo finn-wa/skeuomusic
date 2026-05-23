@@ -8,6 +8,7 @@
         "generatorName": "typescript-fetch",
         "output": "./openapi/client",
         "inputSpec": "./openapi/spec/spotify.yml",
+        "enablePostProcessFile": false,
         "additionalProperties": {
           "npmName": "generated-spotify-api-client",
           "legacyDiscriminatorBehavior": false,

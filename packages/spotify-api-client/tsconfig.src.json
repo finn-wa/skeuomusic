@@ -4,7 +4,9 @@
     // Environment setup & latest features
     "lib": ["ESNext", "DOM"],
     "noImplicitOverride": false,
-    "types": []
+    "types": [],
+    "module": "esnext",
+    "moduleResolution": "bundler"
   },
   "include": ["./src"]
 }
