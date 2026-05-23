@@ -4,7 +4,7 @@
 
 pnpm workspace monorepo with two packages:
 
-- **`packages/app`** — the skeuomusic SolidJS web app (see its own `CLAUDE.md` for full details)
+- **`packages/skeuomusic`** — the skeuomusic SolidJS web app (see its own `CLAUDE.md` for full details)
 - **`packages/spotify-web-client`** — TypeScript Spotify API client consumed by the app as `spotify-web-client: workspace:*`
 
 ## Commands

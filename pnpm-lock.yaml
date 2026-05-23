@@ -33,7 +33,7 @@ importers:
         specifier: ^0.22.1
         version: 0.22.1
 
-  packages/app:
+  packages/skeuomusic:
     dependencies:
       '@fontsource-variable/inter':
         specifier: ^5.2.8
