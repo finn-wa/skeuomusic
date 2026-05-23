@@ -10,7 +10,9 @@
   "main": "src/index.ts",
   "types": "src/index.ts",
   "scripts": {
-    "generate-client": "node openapi/generate-client.ts"
+    "fmt": "oxfmt",
+    "generate-client": "node openapi/generate-client.ts",
+    "lint": "oxlint"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "2.23.1",
