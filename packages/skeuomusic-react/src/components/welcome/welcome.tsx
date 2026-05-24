@@ -4,7 +4,7 @@ export default function Welcome() {
   return (
     <>
       <h1>Skeuomusic</h1>
-      <SlideToUnlock />
+      <SlideToUnlock onUnlock={() => console.log("welcome")} />
     </>
   );
 }
