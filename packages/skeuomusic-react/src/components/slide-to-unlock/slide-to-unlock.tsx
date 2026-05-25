@@ -7,6 +7,7 @@ import type { PointerEvent } from "react";
 export default function SlideToUnlock({ onUnlock }: { onUnlock: () => void }) {
   const thumbRef = useRef<HTMLImageElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLSpanElement>(null);
   const bounds = useRef({ left: 0, right: 100 });
 
   /**
@@ -18,7 +19,16 @@ export default function SlideToUnlock({ onUnlock }: { onUnlock: () => void }) {
     return boundedX - bounds.current.left;
   }
 
+  function getProgress() {
+    const currentTranslate = parseFloat(thumbRef.current!.style.translate || "0");
+    const maxTranslate = bounds.current.right - bounds.current.left;
+    return currentTranslate / maxTranslate;
+  }
+
   function onPointerDown(event: PointerEvent<HTMLImageElement>): void {
+    // Remove text shine while dragging
+    textRef.current!.classList = `${styles.text} ${styles.static}`;
+
     // |---|                    trackLeft
     // |-----------|            thumbLeft
     // |--------------|         event.clientX
@@ -45,17 +55,20 @@ export default function SlideToUnlock({ onUnlock }: { onUnlock: () => void }) {
     }
     const transformX = getTranslate(event);
     thumbRef.current!.style.translate = `${transformX}px`;
+    textRef.current!.style.opacity = String(1 - getProgress());
   }
 
   function onPointerUp(): void {
-    const currentTranslate = parseFloat(thumbRef.current!.style.translate || "0");
-    const maxTranslate = bounds.current.right - bounds.current.left;
-    if (Math.ceil(currentTranslate) >= maxTranslate) {
+    // Resume showing the text animation
+    textRef.current!.classList = `${styles.text} ${styles.animated}`;
+    textRef.current!.style.opacity = "1";
+    const progress = getProgress();
+    if (Math.ceil(progress * 100) >= 100) {
       onUnlock();
       return;
     }
     // Return thumb to start with transition proportional to how far it has to travel
-    const transitionTime = Math.round((200 * currentTranslate) / maxTranslate);
+    const transitionTime = Math.round(progress * 200);
     thumbRef.current!.style.transition = `translate ${transitionTime}ms ease-in`;
     thumbRef.current!.style.translate = "0";
   }
@@ -63,7 +76,11 @@ export default function SlideToUnlock({ onUnlock }: { onUnlock: () => void }) {
   return (
     <div className={styles.slider}>
       <div className={styles.wh100}>
-        <div ref={trackRef} className={`${styles.track} ${styles.wh100}`} />
+        <div ref={trackRef} className={`${styles.track} ${styles.wh100}`}>
+          <span ref={textRef} className={`${styles.text} ${styles.animated}`}>
+            slide to unlock
+          </span>
+        </div>
         <div className={styles.bounds} draggable={false}>
           <img
             ref={thumbRef}
