@@ -59,14 +59,14 @@ export default function SlideToUnlock({ onUnlock }: { onUnlock: () => void }) {
   }
 
   function onPointerUp(): void {
-    // Resume showing the text animation
-    textRef.current!.classList = `${styles.text} ${styles.animated}`;
-    textRef.current!.style.opacity = "1";
     const progress = getProgress();
     if (Math.ceil(progress * 100) >= 100) {
       onUnlock();
       return;
     }
+    // Resume showing the text animation
+    textRef.current!.classList = `${styles.text} ${styles.animated}`;
+    textRef.current!.style.opacity = "1";
     // Return thumb to start with transition proportional to how far it has to travel
     const transitionTime = Math.round(progress * 200);
     thumbRef.current!.style.transition = `translate ${transitionTime}ms ease-in`;
