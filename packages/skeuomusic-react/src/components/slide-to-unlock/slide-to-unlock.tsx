@@ -3,23 +3,20 @@ import styles from "./slide-to-unlock.module.css";
 import thumb from "./thumb.svg";
 import type { PointerEvent } from "react";
 
+export interface SlideToUnlockProps {
+  text?: string;
+  onUnlock: () => void;
+}
+
 /** iOS 6 lock-screen-style slide to unlock component */
-export default function SlideToUnlock({ onUnlock }: { onUnlock: () => void }) {
+export default function SlideToUnlock({ onUnlock, text = "slide to unlock" }: SlideToUnlockProps) {
   const thumbRef = useRef<HTMLImageElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLSpanElement>(null);
   const bounds = useRef({ left: 0, right: 100 });
 
-  /**
-   * Calculates the thumb translate property to simulate dragging.
-   * Note bounds must be set before calling this function.
-   */
-  function getTranslate(event: PointerEvent<HTMLImageElement>): number {
-    const boundedX = Math.max(Math.min(event.clientX, bounds.current.right), bounds.current.left);
-    return boundedX - bounds.current.left;
-  }
-
-  function getProgress() {
+  /** Returns slide progress as a decimal between 0 and 1 */
+  function getProgress(): number {
     const currentTranslate = parseFloat(thumbRef.current!.style.translate || "0");
     const maxTranslate = bounds.current.right - bounds.current.left;
     return currentTranslate / maxTranslate;
@@ -42,8 +39,6 @@ export default function SlideToUnlock({ onUnlock }: { onUnlock: () => void }) {
       left: trackRect.left + thumbOffset,
       right: trackRect.right - (thumbRect.width - thumbOffset),
     };
-    const transformX = getTranslate(event);
-    thumbRef.current!.style.translate = `${transformX}px`;
     thumbRef.current!.style.transition = "none";
     // keep drag alive outside element
     thumbRef.current!.setPointerCapture(event.pointerId);
@@ -53,9 +48,10 @@ export default function SlideToUnlock({ onUnlock }: { onUnlock: () => void }) {
     if (event.buttons === 0) {
       return;
     }
-    const transformX = getTranslate(event);
+    const boundedX = Math.max(Math.min(event.clientX, bounds.current.right), bounds.current.left);
+    const transformX = boundedX - bounds.current.left;
     thumbRef.current!.style.translate = `${transformX}px`;
-    textRef.current!.style.opacity = String(1 - getProgress());
+    textRef.current!.style.opacity = String(Math.max(0, 0.75 - getProgress()));
   }
 
   function onPointerUp(): void {
@@ -78,7 +74,7 @@ export default function SlideToUnlock({ onUnlock }: { onUnlock: () => void }) {
       <div className={styles.wh100}>
         <div ref={trackRef} className={`${styles.track} ${styles.wh100}`}>
           <span ref={textRef} className={`${styles.text} ${styles.animated}`}>
-            slide to unlock
+            {text}
           </span>
         </div>
         <div className={styles.bounds} draggable={false}>
