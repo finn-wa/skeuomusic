@@ -4,10 +4,10 @@ import thumbSvg from "./thumb.svg";
 import type { PointerEvent } from "react";
 import unlockSound from "./unlock.webm";
 
-export interface SlideToUnlockProps {
+export type SlideToUnlockProps = {
   text?: string;
   onUnlock: () => void;
-}
+};
 
 /** iOS 6 lock-screen-style slide to unlock component */
 export default function SlideToUnlock({ onUnlock, text = "slide to unlock" }: SlideToUnlockProps) {
@@ -148,6 +148,7 @@ export default function SlideToUnlock({ onUnlock, text = "slide to unlock" }: Sl
             onPointerMove={onPointerMove}
             onPointerUp={onPointerUp}
             onPointerCancel={onPointerUp}
+            alt=""
           />
         </div>
       </div>
