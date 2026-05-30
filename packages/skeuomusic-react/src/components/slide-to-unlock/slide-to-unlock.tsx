@@ -1,7 +1,8 @@
 import { useRef } from "react";
 import styles from "./slide-to-unlock.module.css";
-import thumb from "./thumb.svg";
+import thumbSvg from "./thumb.svg";
 import type { PointerEvent } from "react";
+import unlockSound from "./unlock.webm";
 
 export interface SlideToUnlockProps {
   text?: string;
@@ -14,6 +15,13 @@ export default function SlideToUnlock({ onUnlock, text = "slide to unlock" }: Sl
   const trackRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLSpanElement>(null);
   const bounds = useRef({ left: 0, right: 100 });
+
+  function unlock() {
+    new Audio(unlockSound).play().catch((error) => {
+      console.error("Failed to play unlock audio", error);
+    });
+    onUnlock();
+  }
 
   /** Returns slide progress as a decimal between 0 and 1 */
   function getProgress(): number {
@@ -57,7 +65,7 @@ export default function SlideToUnlock({ onUnlock, text = "slide to unlock" }: Sl
   function onPointerUp(): void {
     const progress = getProgress();
     if (Math.ceil(progress * 100) >= 100) {
-      onUnlock();
+      unlock();
       return;
     }
     // Resume showing the text animation
@@ -81,7 +89,7 @@ export default function SlideToUnlock({ onUnlock, text = "slide to unlock" }: Sl
           <img
             ref={thumbRef}
             className={styles.thumb}
-            src={thumb}
+            src={thumbSvg}
             draggable={false}
             onPointerDown={onPointerDown}
             onPointerMove={onPointerMove}

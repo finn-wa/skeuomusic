@@ -9,7 +9,6 @@
   background-image: radial-gradient(circle at 50% 30%, #7b7b7b, #000 80%);
 
   h1 {
-    margin-bottom: 10rem;
     font-size: 4em;
     background-clip: text;
     color: transparent;
@@ -18,5 +17,9 @@
     -webkit-text-stroke: 0.5px #ebebeb;
     filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.5));
     font-weight: 500;
+  }
+
+  img.music-icon {
+    margin-bottom: 2rem;
   }
 }

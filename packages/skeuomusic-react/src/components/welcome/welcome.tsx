@@ -1,9 +1,10 @@
 import SlideToUnlock from "../slide-to-unlock/slide-to-unlock";
+import musicIcon from "./music.svg";
 
 export default function Welcome() {
   return (
     <>
-      <h1>Skeuomusic</h1>
+      <img className="music-icon" style={{ marginBottom: "2rem" }} height={256} src={musicIcon} />
       <SlideToUnlock onUnlock={() => console.log("welcome")} />
     </>
   );
