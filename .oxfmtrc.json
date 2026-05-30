@@ -4,6 +4,7 @@
   "printWidth": 80,
   "jsdoc": {
     "keepUnparsableExampleIndent": true,
-    "preferCodeFences": true
+    "preferCodeFences": true,
+    "lineWrappingStyle": "balance"
   }
 }

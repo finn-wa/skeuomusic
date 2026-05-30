@@ -62,6 +62,14 @@
   }
 
   .text {
+    appearance: none;
+    background: none;
+    border: none;
+    outline: none;
+
+    &:focus-visible {
+      outline: revert;
+    }
     text-shadow: none;
     background-size: 200% 100%;
     background-clip: text;
@@ -71,7 +79,6 @@
     margin-bottom: 1px;
     text-align: center;
     font-weight: 200;
-    user-select: none;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -95,9 +102,11 @@
     flex: 1 1;
     position: relative;
     height: 100%;
+    pointer-events: none;
   }
 
   .thumb {
+    pointer-events: auto;
     position: absolute;
     top: calc(50% - (var(--track-height) / 2));
     bottom: 0;
