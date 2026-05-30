@@ -1,6 +1,7 @@
 import * as matchers from "@testing-library/jest-dom/matchers";
 import type { TestingLibraryMatchers } from "@testing-library/jest-dom/matchers";
-import { expect } from "vitest";
+import { cleanup } from "@testing-library/react";
+import { afterEach, expect, vi } from "vitest";
 
 declare module "vitest" {
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -8,3 +9,9 @@ declare module "vitest" {
 }
 
 expect.extend(matchers);
+
+afterEach(() => {
+  cleanup();
+  vi.resetAllMocks();
+  vi.unstubAllGlobals();
+});

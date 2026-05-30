@@ -1,5 +1,8 @@
 {
   "permissions": {
-    "allow": ["Bash(pnpm lint *)"]
+    "allow": [
+      "Bash(pnpm --filter skeuomusic-react lint *)",
+      "Bash(pnpm --filter skeuomusic-react test *)"
+    ]
   }
 }

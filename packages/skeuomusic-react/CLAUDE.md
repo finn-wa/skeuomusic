@@ -60,7 +60,17 @@ Defined in `tsconfig.json` paths and resolved by Vite via `tsconfigPaths`.
 
 ### Testing
 
-Vitest + jsdom + Testing Library (`@testing-library/react`, `@testing-library/jest-dom`). Test files live next to the component they test (`.test.tsx`). The setup file at `src/test-setup.ts` extends `expect` with jest-dom matchers.
+Vitest + jsdom + Testing Library (`@testing-library/react`, `@testing-library/jest-dom`). Test files live next to the component they test (`.test.tsx`).
+
+**Setup file** (`src/test/setup.ts`): extends `expect` with jest-dom matchers and runs after each test:
+
+- `cleanup()` — unmounts React trees
+- `vi.resetAllMocks()` — resets mock call history and implementations
+- `vi.unstubAllGlobals()` — restores any globals stubbed with `vi.stubGlobal`
+
+**Shared mocks** live in `src/test/mocks/`:
+
+- `link.tsx` — `MockLink`: a plain `<a href>` replacement for TanStack Router's `<Link>`
 
 ### Shared utilities
 

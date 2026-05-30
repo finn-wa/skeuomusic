@@ -1,5 +1,5 @@
-import { render, screen, fireEvent, cleanup } from "@testing-library/react";
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import SlideToUnlock from "./slide-to-unlock";
 
 // Arrow functions cannot be used as constructors, so we need a regular function here.
@@ -14,11 +14,6 @@ function makeAudioMock(play = vi.fn<() => void>().mockResolvedValue(undefined)) 
 beforeEach(() => {
   const { AudioMock } = makeAudioMock();
   vi.stubGlobal("Audio", AudioMock);
-});
-
-afterEach(() => {
-  cleanup();
-  vi.unstubAllGlobals();
 });
 
 describe("SlideToUnlock", () => {

@@ -1,6 +1,6 @@
 import { INITIAL_SCROLL_ID } from "@/shared/constants";
 import { Link } from "@tanstack/react-router";
-import { useState, type PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
 
 export type TabButtonProps = PropsWithChildren<{
   route: string;
@@ -8,15 +8,12 @@ export type TabButtonProps = PropsWithChildren<{
 }>;
 
 export default function NavTab({ route, label, children }: TabButtonProps) {
-  const [clicked, setClicked] = useState(false);
-
   return (
     <Link
       to={route}
       className="tab"
       activeProps={{ className: "selected" }}
-      hash={clicked ? undefined : INITIAL_SCROLL_ID}
-      onClick={() => setTimeout(() => setClicked(true), 0)}
+      hash={INITIAL_SCROLL_ID}
     >
       <div className="tab-border">
         {children}
