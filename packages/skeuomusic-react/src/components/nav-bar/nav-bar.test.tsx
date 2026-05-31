@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import NavBar from "./nav-bar";
+import { NAV_TAB_ORDER } from "@/router";
 
 vi.mock("@tanstack/react-router", async (importOriginal) => {
   const actual = await importOriginal<typeof import("@tanstack/react-router")>();
@@ -14,9 +15,16 @@ describe("NavBar", () => {
     expect(screen.getByRole("navigation")).toBeInTheDocument();
   });
 
-  it("renders 5 tabs", () => {
+  it("renders tabs in the order specified by the router", () => {
     render(<NavBar />);
-    expect(screen.getAllByRole("link")).toHaveLength(5);
+    const linkEls = screen.getAllByRole("link");
+    const actualPaths = linkEls.map((el, i) => {
+      const href = el.attributes.getNamedItem("href")?.value;
+      expect(href).toBeTruthy();
+      return { path: href!.slice(0, href!.indexOf("#")), index: i };
+    });
+    const expectedPaths = Object.entries(NAV_TAB_ORDER).map(([path, index]) => ({ path, index }));
+    expect(actualPaths).toEqual(expectedPaths);
   });
 });
 

@@ -11,7 +11,7 @@ function MusicLibrary() {
   return (
     <>
       <Header />
-      <div className="content-frame">
+      <div id="library-content" className="content-frame">
         <Outlet />
       </div>
       <NavBar />

@@ -1,0 +1,63 @@
+#library-content {
+  view-transition-name: library;
+}
+
+html {
+  --view-transition: 150ms ease-in-out;
+}
+
+/* Slide Left Transition */
+html:active-view-transition-type(slide-left) {
+  &::view-transition-old(library) {
+    animation: var(--view-transition) both slide-out-left;
+  }
+  &::view-transition-new(library) {
+    animation: var(--view-transition) both slide-in-left;
+  }
+}
+
+@keyframes slide-out-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Slide Right Transition */
+html:active-view-transition-type(slide-right) {
+  &::view-transition-old(library) {
+    animation: var(--view-transition) both slide-out-right;
+  }
+  &::view-transition-new(library) {
+    animation: var(--view-transition) both slide-in-right;
+  }
+}
+
+@keyframes slide-out-right {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}

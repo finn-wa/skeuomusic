@@ -11,6 +11,7 @@
 @import "./styles/text.css";
 @import "./styles/utils.css";
 @import "./styles/variables.css";
+@import "./styles/view-transitions.css";
 
 :root {
   background-color: var(--bg-color);
