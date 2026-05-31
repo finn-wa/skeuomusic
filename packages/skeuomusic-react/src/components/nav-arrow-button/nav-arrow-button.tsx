@@ -1,7 +1,7 @@
 import { estimateTextWidth } from "@/shared/font-width";
 import { urlForId } from "@/shared/svg-utils";
 import { Link, useLocation } from "@tanstack/react-router";
-import { useId, useRef } from "react";
+import { useId, useLayoutEffect, useRef, useState } from "react";
 
 export type NavArrowButtonProps = {
   text?: string;
@@ -19,19 +19,27 @@ export default function NavArrowButton({
   hide = false,
 }: NavArrowButtonProps) {
   const textRef = useRef<HTMLSpanElement>(null);
+  const [textWidth, setTextWidth] = useState(() =>
+    estimateTextWidth("interVariable16px700w", text ?? ""),
+  );
   const currentLocation = useLocation({ select: (state) => state.href });
   const id = useId();
   const arrowId = `arrow-${id}`;
   const clipId = `clip-${id}`;
   const bgId = `bg-${id}`;
   const shadowId = `shadow-${id}`;
+
+  useLayoutEffect(() => {
+    if (textRef.current) {
+      setTextWidth(textRef.current.clientWidth);
+    }
+  }, [text]);
+
   // TODO : Now Playing text is a bit smaller and it has a line break
   // perhaps support using child prop for text via foreignObject
   if (hide || text == null || href == null) {
     return <></>;
   }
-  const textWidth =
-    textRef.current?.clientWidth ?? estimateTextWidth("interVariable16px700w", text);
   const svgPadding = Math.min(Math.max(textWidth, 16), 175);
   const width = svgPadding + 24;
   return (

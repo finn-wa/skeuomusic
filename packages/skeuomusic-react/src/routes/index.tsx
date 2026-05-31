@@ -5,8 +5,8 @@ export const Route = createFileRoute("/")({ component: App });
 
 function App() {
   return (
-    <main className="login-container">
+    <div className="login-container">
       <Welcome />
-    </main>
+    </div>
   );
 }

@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import NavArrowButton from "./nav-arrow-button";
-import { estimateTextWidth } from "@/shared/font-width";
 
 vi.mock("@tanstack/react-router", async (importOriginal) => {
   const actual = await importOriginal<typeof import("@tanstack/react-router")>();
@@ -94,11 +93,10 @@ describe("kind prop", () => {
 });
 
 describe("SVG sizing", () => {
-  it("SVG width accounts for text", () => {
+  it("SVG width uses clientWidth after mount", () => {
+    vi.spyOn(HTMLElement.prototype, "clientWidth", "get").mockReturnValue(80);
     const { container } = render(<NavArrowButton {...defaultProps} text="Artists" />);
-    const svg = container.querySelector("svg");
-    const widthAttr = svg?.getAttribute("width") ?? "";
-    const widthValue = parseFloat(widthAttr);
-    expect(widthValue).toBeCloseTo(24 + estimateTextWidth("interVariable16px700w", "Artists"));
+    const widthValue = parseFloat(container.querySelector("svg")?.getAttribute("width") ?? "");
+    expect(widthValue).toBe(80 + 24);
   });
 });

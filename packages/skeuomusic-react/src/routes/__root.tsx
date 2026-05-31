@@ -1,54 +1,5 @@
-import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
-
-import appCss from "../global.css?url";
+import { Outlet, createRootRoute } from "@tanstack/react-router";
 
 export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      {
-        charSet: "utf-8",
-      },
-      {
-        name: "viewport",
-        content: "width=device-width, initial-scale=1",
-      },
-      {
-        title: "Skeuomusic",
-      },
-    ],
-    links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-      { rel: "icon", href: "/favicon.ico", sizes: "32x32" },
-      { rel: "icon", href: "/icon.svg", type: "image/svg+xml" },
-    ],
-  }),
-  shellComponent: RootDocument,
+  component: () => <Outlet />,
 });
-
-function RootDocument({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        {children}
-        {/* <TanStackDevtools
-          config={{
-            position: "bottom-right",
-          }}
-          plugins={[
-            {
-              name: "Tanstack Router",
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-          ]}
-        /> */}
-        <Scripts />
-      </body>
-    </html>
-  );
-}

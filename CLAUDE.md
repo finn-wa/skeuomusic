@@ -17,8 +17,9 @@ pnpm lint   # oxlint across the workspace
 pnpm fmt    # oxfmt across the workspace
 
 # Run from a package directory for package-specific tasks, or use --filter with package name
-pnpm --filter skeuomusic run dev          # start HTTPS dev server in app
-pnpm --filter skeuomusic run test         # run Vitest tests once
+pnpm --filter skeuomusic dev          # start HTTPS dev server in app
+pnpm --filter skeuomusic test         # run Vitest tests once
+pnpm --filter skeuomusic-react test src/path/to-file.test.tsx # run tests for a specific file
 pnpm --filter spotify-web-client run generate-client  # regenerate OpenAPI client
 ```
 

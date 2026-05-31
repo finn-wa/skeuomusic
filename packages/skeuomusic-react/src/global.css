@@ -19,14 +19,18 @@
 }
 
 body {
-  margin: 0;
-  box-sizing: border-box;
   height: 100dvh;
   width: 100dvw;
+  overflow: hidden;
+  margin: 0;
+  box-sizing: border-box;
+  text-shadow: var(--text-emboss-glow);
+}
+
+main {
+  height: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-  text-shadow: var(--text-emboss-glow);
 }
 
 a {
