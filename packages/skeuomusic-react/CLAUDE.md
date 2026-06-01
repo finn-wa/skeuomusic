@@ -20,7 +20,7 @@ pnpm fmt   # Runs oxfmt
 pnpm lint  # Runs oxlint
 ```
 
-Run a single test file: `pnpm run test -- path/to/file.test.tsx`
+Run a single test file: `pnpm run test path/to/file.test.tsx` (no `--` — passing `--` routes the path to pnpm rather than Vitest, breaking file filtering)
 
 ## Architecture
 
