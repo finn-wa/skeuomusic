@@ -5,15 +5,13 @@ import musicIcon from "./music.svg";
 export default function Welcome() {
   const navigate = useNavigate({ from: "/" });
   return (
-    <>
-      <img
-        className="music-icon"
-        style={{ marginBottom: "2rem" }}
-        height={256}
-        src={musicIcon}
-        alt="skeuomusic"
+    <div id="unlock-container">
+      <img id="unlock-logo" height={256} src={musicIcon} alt="skeuomusic" />
+      <SlideToUnlock
+        onUnlock={() =>
+          navigate({ to: "/music/library/artists", viewTransition: { types: ["unlock"] } })
+        }
       />
-      <SlideToUnlock onUnlock={() => navigate({ to: "/music/library" })} />
-    </>
+    </div>
   );
 }

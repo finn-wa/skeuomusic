@@ -18,12 +18,12 @@ beforeEach(() => {
 
 describe("SlideToUnlock", () => {
   it("renders the default text", () => {
-    render(<SlideToUnlock onUnlock={vi.fn<() => void>()} />);
+    render(<SlideToUnlock onUnlock={() => {}} />);
     expect(screen.getByRole("button", { name: /slide to unlock/i })).toBeInTheDocument();
   });
 
   it("renders custom text via the text prop", () => {
-    render(<SlideToUnlock onUnlock={vi.fn<() => void>()} text="slide to set up" />);
+    render(<SlideToUnlock onUnlock={() => {}} text="slide to set up" />);
     expect(screen.getByRole("button", { name: /slide to set up/i })).toBeInTheDocument();
   });
 
@@ -31,15 +31,24 @@ describe("SlideToUnlock", () => {
     const onUnlock = vi.fn<() => void>();
     render(<SlideToUnlock onUnlock={onUnlock} />);
     expect(onUnlock).not.toHaveBeenCalled();
-    fireEvent.click(screen.getByRole("button", { name: /slide to unlock/i }));
-    expect(onUnlock).toHaveBeenCalledOnce();
+    const thumbEl = screen.getByRole("button", { name: /slide to unlock/i });
+    fireEvent.click(thumbEl);
+    // Manually simulate the transition end (of thumb sliding to the end of the track)
+    screen
+      .getByTestId("unlock-thumb")
+      .dispatchEvent(new TransitionEvent("transitionend", { bubbles: true }));
+    expect(onUnlock).toHaveBeenCalled();
   });
 
   it("plays an audio effect when the text button is clicked", () => {
     const { AudioMock, play } = makeAudioMock();
     vi.stubGlobal("Audio", AudioMock);
-    render(<SlideToUnlock onUnlock={vi.fn<() => void>()} />);
+    render(<SlideToUnlock onUnlock={() => {}} />);
     fireEvent.click(screen.getByRole("button", { name: /slide to unlock/i }));
+    // Manually simulate the transition end (of thumb sliding to the end of the track)
+    screen
+      .getByTestId("unlock-thumb")
+      .dispatchEvent(new TransitionEvent("transitionend", { bubbles: true }));
     expect(play).toHaveBeenCalledOnce();
   });
 });

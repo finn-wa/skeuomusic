@@ -32,14 +32,14 @@ export default function SlideToUnlock({ onUnlock, text = "slide to unlock" }: Sl
 
   /** Triggers an unlock, sliding the thumb to the end of the track. */
   function animatedUnlock() {
-    const progress = getProgress();
-    // Move thumb to end with transition proportional to how far it has to travel
-    const transitionTime = Math.round((1 - progress) * 150);
-    setThumbPosition(getBounds().right, `${transitionTime}ms ease-in`);
-
     setTextAnimation("static");
     setTextOpacity(0, true);
-    unlock();
+    const progress = getProgress();
+    // Move thumb to end with transition proportional to how far it has to travel
+    // Unlock once the transition completes
+    thumbRef.current!.addEventListener("transitionend", unlock, { once: true });
+    const transitionTime = Math.round((1 - progress) * 150);
+    setThumbPosition(getBounds().right, `${transitionTime}ms ease-in`);
   }
 
   /** Returns slide progress as a decimal between 0 and 1 */
@@ -127,7 +127,7 @@ export default function SlideToUnlock({ onUnlock, text = "slide to unlock" }: Sl
   }
 
   return (
-    <div className={styles.slider}>
+    <div id="unlock-slider" className={styles.slider}>
       <div className={styles.wh100}>
         <div ref={trackRef} className={`${styles.track} ${styles.wh100}`}>
           <button
@@ -140,6 +140,7 @@ export default function SlideToUnlock({ onUnlock, text = "slide to unlock" }: Sl
         </div>
         <div className={styles.bounds} draggable={false}>
           <img
+            data-testid="unlock-thumb"
             ref={thumbRef}
             className={styles.thumb}
             src={thumbSvg}
