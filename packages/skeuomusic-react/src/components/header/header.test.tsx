@@ -1,6 +1,6 @@
 import { SKEUOMUSIC } from "@/shared/constants";
 import { useRouterState } from "@tanstack/react-router";
-import { render, screen } from "@testing-library/react";
+import { render } from "vitest-browser-react";
 import { describe, expect, it, vi } from "vitest";
 import type { NavArrowButtonProps } from "../nav-arrow-button/nav-arrow-button";
 import Header, { HeaderComponent } from "./header";
@@ -19,41 +19,45 @@ vi.mock("@tanstack/react-router", async (importOriginal) => {
 });
 
 describe("HeaderComponent", () => {
-  it("renders the default title when no title prop is given", () => {
-    render(<HeaderComponent />);
-    expect(screen.getByRole("heading")).toHaveTextContent(SKEUOMUSIC);
+  it("renders the default title when no title prop is given", async () => {
+    const screen = await render(<HeaderComponent />);
+    await expect.element(screen.getByRole("heading")).toHaveTextContent(SKEUOMUSIC);
   });
 
-  it("renders a custom title", () => {
-    render(<HeaderComponent title="Artists" />);
-    expect(screen.getByRole("heading")).toHaveTextContent("Artists");
+  it("renders a custom title", async () => {
+    const screen = await render(<HeaderComponent title="Artists" />);
+    await expect.element(screen.getByRole("heading")).toHaveTextContent("Artists");
   });
 
-  it("does not render a left arrow when backButton is not provided", () => {
-    render(<HeaderComponent />);
-    expect(screen.queryByTestId("nav-arrow-left")).not.toBeInTheDocument();
+  it("does not render a left arrow when backButton is not provided", async () => {
+    const screen = await render(<HeaderComponent />);
+    await expect.element(screen.getByTestId("nav-arrow-left")).not.toBeInTheDocument();
   });
 
-  it("renders a left arrow with the correct label when backButton is provided", () => {
-    render(<HeaderComponent backButton={{ label: "Library" }} />);
-    expect(screen.getByTestId("nav-arrow-left")).toHaveTextContent("Library");
+  it("renders a left arrow with the correct label when backButton is provided", async () => {
+    const screen = await render(<HeaderComponent backButton={{ label: "Library" }} />);
+    await expect.element(screen.getByTestId("nav-arrow-left")).toHaveTextContent("Library");
   });
 
-  it("defaults the back button href to '..' when no href is given", () => {
-    render(<HeaderComponent backButton={{ label: "Library" }} />);
-    expect(screen.getByTestId("nav-arrow-left")).toHaveAttribute("href", "..");
+  it("defaults the back button href to '..' when no href is given", async () => {
+    const screen = await render(<HeaderComponent backButton={{ label: "Library" }} />);
+    await expect.element(screen.getByTestId("nav-arrow-left")).toHaveAttribute("href", "..");
   });
 
-  it("uses the provided href for the back button", () => {
-    render(<HeaderComponent backButton={{ label: "Library", href: "/music/library" }} />);
-    expect(screen.getByTestId("nav-arrow-left")).toHaveAttribute("href", "/music/library");
+  it("uses the provided href for the back button", async () => {
+    const screen = await render(
+      <HeaderComponent backButton={{ label: "Library", href: "/music/library" }} />,
+    );
+    await expect
+      .element(screen.getByTestId("nav-arrow-left"))
+      .toHaveAttribute("href", "/music/library");
   });
 
-  it("always renders the Now Playing right arrow linking to /music/player", () => {
-    render(<HeaderComponent />);
+  it("always renders the Now Playing right arrow linking to /music/player", async () => {
+    const screen = await render(<HeaderComponent />);
     const nowPlaying = screen.getByTestId("nav-arrow-right");
-    expect(nowPlaying).toBeInTheDocument();
-    expect(nowPlaying).toHaveAttribute("href", "/music/player");
+    await expect.element(nowPlaying).toBeInTheDocument();
+    await expect.element(nowPlaying).toHaveAttribute("href", "/music/player");
   });
 });
 
@@ -64,31 +68,31 @@ describe("Header (router integration)", () => {
     mockUseRouterState.mockImplementation(({ select }: any) => select({ matches: [{ context }] }));
   }
 
-  it("falls back to defaults when the last match has no context", () => {
+  it("falls back to defaults when the last match has no context", async () => {
     setupRouterState(undefined);
-    render(<Header />);
-    expect(screen.getByRole("heading")).toHaveTextContent(SKEUOMUSIC);
-    expect(screen.queryByTestId("nav-arrow-left")).not.toBeInTheDocument();
+    const screen = await render(<Header />);
+    await expect.element(screen.getByRole("heading")).toHaveTextContent(SKEUOMUSIC);
+    await expect.element(screen.getByTestId("nav-arrow-left")).not.toBeInTheDocument();
   });
 
-  it("falls back to defaults when the last match context has no header key", () => {
+  it("falls back to defaults when the last match context has no header key", async () => {
     setupRouterState({ someOtherKey: true });
-    render(<Header />);
-    expect(screen.getByRole("heading")).toHaveTextContent(SKEUOMUSIC);
-    expect(screen.queryByTestId("nav-arrow-left")).not.toBeInTheDocument();
+    const screen = await render(<Header />);
+    await expect.element(screen.getByRole("heading")).toHaveTextContent(SKEUOMUSIC);
+    await expect.element(screen.getByTestId("nav-arrow-left")).not.toBeInTheDocument();
   });
 
-  it("renders the title from route context header", () => {
+  it("renders the title from route context header", async () => {
     setupRouterState({ header: { title: "Albums" } });
-    render(<Header />);
-    expect(screen.getByRole("heading")).toHaveTextContent("Albums");
+    const screen = await render(<Header />);
+    await expect.element(screen.getByRole("heading")).toHaveTextContent("Albums");
   });
 
-  it("renders the back button from route context header", () => {
+  it("renders the back button from route context header", async () => {
     setupRouterState({ header: { backButton: { label: "Library", href: "/music/library" } } });
-    render(<Header />);
+    const screen = await render(<Header />);
     const backButton = screen.getByTestId("nav-arrow-left");
-    expect(backButton).toHaveTextContent("Library");
-    expect(backButton).toHaveAttribute("href", "/music/library");
+    await expect.element(backButton).toHaveTextContent("Library");
+    await expect.element(backButton).toHaveAttribute("href", "/music/library");
   });
 });

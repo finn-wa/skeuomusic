@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "vitest-browser-react";
 import { describe, expect, it, vi } from "vitest";
 import ErrorBoundary from "./error-boundary";
 
@@ -13,74 +13,74 @@ function suppressConsoleError() {
 
 describe("ErrorBoundary", () => {
   describe("normal render", () => {
-    it("renders children when no error is thrown", () => {
-      render(
+    it("renders children when no error is thrown", async () => {
+      const screen = await render(
         <ErrorBoundary name="test" fallback={<p>Error</p>}>
           <span>Hello</span>
         </ErrorBoundary>,
       );
-      expect(screen.getByText("Hello")).toBeInTheDocument();
+      await expect.element(screen.getByText("Hello")).toBeInTheDocument();
     });
 
-    it("does not render the fallback when no error is thrown", () => {
-      render(
+    it("does not render the fallback when no error is thrown", async () => {
+      const screen = await render(
         <ErrorBoundary name="test" fallback={<p>Error</p>}>
           <span>Hello</span>
         </ErrorBoundary>,
       );
-      expect(screen.queryByText("Error")).not.toBeInTheDocument();
+      await expect.element(screen.getByText("Error")).not.toBeInTheDocument();
     });
   });
 
   describe("fallback rendering", () => {
-    it("renders a ReactNode fallback when a child throws", () => {
+    it("renders a ReactNode fallback when a child throws", async () => {
       suppressConsoleError();
-      render(
+      const screen = await render(
         <ErrorBoundary name="test" fallback={<p>Something went wrong</p>}>
           <Throws error={new Error("boom")} />
         </ErrorBoundary>,
       );
-      expect(screen.getByText("Something went wrong")).toBeInTheDocument();
+      await expect.element(screen.getByText("Something went wrong")).toBeInTheDocument();
     });
 
-    it("renders a function fallback with the caught error", () => {
+    it("renders a function fallback with the caught error", async () => {
       suppressConsoleError();
       const error = new Error("boom");
-      render(
+      const screen = await render(
         <ErrorBoundary name="test" fallback={({ error }) => <p>{String(error)}</p>}>
           <Throws error={error} />
         </ErrorBoundary>,
       );
-      expect(screen.getByText("Error: boom")).toBeInTheDocument();
+      await expect.element(screen.getByText("Error: boom")).toBeInTheDocument();
     });
 
-    it("passes non-Error values through to a function fallback", () => {
+    it("passes non-Error values through to a function fallback", async () => {
       suppressConsoleError();
-      render(
+      const screen = await render(
         <ErrorBoundary name="test" fallback={({ error }) => <p>{String(error)}</p>}>
           <Throws error="string error" />
         </ErrorBoundary>,
       );
-      expect(screen.getByText("string error")).toBeInTheDocument();
+      await expect.element(screen.getByText("string error")).toBeInTheDocument();
     });
 
-    it("stops rendering children after an error", () => {
+    it("stops rendering children after an error", async () => {
       suppressConsoleError();
-      render(
+      const screen = await render(
         <ErrorBoundary name="test" fallback={<p>Fallback</p>}>
           <Throws error={new Error("boom")} />
         </ErrorBoundary>,
       );
-      expect(screen.queryByText("Hello")).not.toBeInTheDocument();
+      await expect.element(screen.getByText("Hello")).not.toBeInTheDocument();
     });
   });
 
   describe("onError callback", () => {
-    it("calls onError with the error and info when provided", () => {
+    it("calls onError with the error and info when provided", async () => {
       suppressConsoleError();
       const onError = vi.fn<() => void>();
       const error = new Error("boom");
-      render(
+      await render(
         <ErrorBoundary name="test" fallback={<p>Error</p>} onError={onError}>
           <Throws error={error} />
         </ErrorBoundary>,
@@ -92,9 +92,9 @@ describe("ErrorBoundary", () => {
       );
     });
 
-    it("does not call anything when onError is omitted", () => {
+    it("does not call anything when onError is omitted", async () => {
       const consoleSpy = vi.spyOn(console, "error");
-      render(
+      await render(
         <ErrorBoundary name="test" fallback={<p>Error</p>}>
           <Throws error={new Error("boom")} />
         </ErrorBoundary>,
@@ -103,10 +103,10 @@ describe("ErrorBoundary", () => {
       expect(calls).not.toContain(expect.stringContaining("ErrorBoundary:"));
     });
 
-    it("logs to console.error with the boundary name and stack when onError is 'log'", () => {
+    it("logs to console.error with the boundary name and stack when onError is 'log'", async () => {
       const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
       const error = new Error("boom");
-      render(
+      await render(
         <ErrorBoundary name="my-boundary" fallback={<p>Error</p>} onError="log">
           <Throws error={error} />
         </ErrorBoundary>,

@@ -60,13 +60,42 @@ Defined in `tsconfig.json` paths and resolved by Vite via `tsconfigPaths`.
 
 ### Testing
 
-Vitest + jsdom + Testing Library (`@testing-library/react`, `@testing-library/jest-dom`). Test files live next to the component they test (`.test.tsx`).
+Vitest Browser Mode (Chromium via Playwright) + `vitest-browser-react`. Tests run in a real browser — CSS and layout are computed, no JSDOM approximation. Test files live next to the component they test (`.test.tsx`).
 
-**Setup file** (`src/test/setup.ts`): extends `expect` with jest-dom matchers and runs after each test:
+**Rendering**: `render()` from `vitest-browser-react` is async and returns a `screen` with Locator-based queries.
 
-- `cleanup()` — unmounts React trees
-- `vi.resetAllMocks()` — resets mock call history and implementations
-- `vi.unstubAllGlobals()` — restores any globals stubbed with `vi.stubGlobal`
+```ts
+import { render } from "vitest-browser-react";
+
+const screen = await render(<MyComponent />);
+await expect.element(screen.getByRole("button")).toBeInTheDocument();
+```
+
+**User interaction**: `userEvent` from `vitest/browser`.
+
+```ts
+import { userEvent } from "vitest/browser";
+
+await userEvent.click(screen.getByRole("button"));
+await userEvent.fill(screen.getByRole("textbox"), "hello");
+```
+
+**Async assertions**: use `expect.poll` when an assertion depends on async side effects (e.g. CSS transitions, timers). Pass a callback that returns the value to assert on — do not pass the value directly or it will be evaluated once rather than polled.
+
+```ts
+// Poll a DOM query until the element appears
+await expect.poll(() => document.querySelector(".element")).toBeTruthy();
+
+// Poll a spy — wrap in () => so the spy isn't called by the poller
+await expect.poll(() => mockFn).toHaveBeenCalled();
+```
+
+**Notes**:
+
+- `getByRole`, `getByText`, etc. return Locators — assert with `await expect.element(locator)`
+- No `queryBy*` methods exist; use `getBy*` with `.not.toBeInTheDocument()` for absence checks
+- `getByTitle` does not match SVG `<title>` elements in browser mode; use `container.querySelector("svg title")` instead
+- DOM element assertions (e.g. on `container.querySelector(...)`) are synchronous — Vitest provides these matchers natively
 
 **Shared mocks** live in `src/test/mocks/`:
 
