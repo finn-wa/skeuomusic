@@ -1,8 +1,7 @@
 import { render } from "vitest-browser-react";
-import { userEvent } from "vitest/browser";
+import { page, userEvent } from "vitest/browser";
 import { describe, it, expect, vi } from "vitest";
 import SearchInput from "./search-input";
-import "@/styles/search.css";
 
 describe("SearchInput", () => {
   it("renders a search input with a Search placeholder", async () => {
@@ -57,5 +56,17 @@ describe("SearchInput", () => {
     await userEvent.click(screen.getByRole("button", { name: "Clear search" }));
     await expect.element(input).toHaveValue("");
     expect(onQueryChanged).toHaveBeenLastCalledWith("");
+  });
+
+  it("should match screenshot without input", { tags: "visual" }, async () => {
+    const screen = await render(<SearchInput onQueryChanged={() => {}} />);
+    await expect(screen.getByTestId("search")).toMatchScreenshot("search-input");
+  });
+
+  it("should match screenshot with input", { tags: "visual" }, async () => {
+    const screen = await render(<SearchInput onQueryChanged={() => {}} />);
+    const input = screen.getByRole("searchbox", { name: "Search" });
+    await userEvent.fill(input, "radiohead");
+    await expect(screen.getByTestId("search")).toMatchScreenshot("search-input-filled");
   });
 });

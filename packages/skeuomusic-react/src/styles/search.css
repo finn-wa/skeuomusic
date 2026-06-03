@@ -40,3 +40,8 @@
 .search-input:placeholder-shown ~ .search-clear-button {
   display: none;
 }
+
+[type="search"]::-webkit-search-cancel-button,
+[type="search"]::-webkit-search-decoration {
+  appearance: none;
+}

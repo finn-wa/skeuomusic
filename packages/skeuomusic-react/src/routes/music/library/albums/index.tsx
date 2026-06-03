@@ -1,5 +1,6 @@
 import ErrorBoundary from "@/components/error-boundary/error-boundary";
 import PageMessage, { ErrorPage, LoadingPage } from "@/components/page-message/page-message";
+import SearchInput from "@/components/search-input/search-input";
 import { PRELOAD_STALE_TIME, STALE_TIME } from "@/shared/constants";
 import type { Album } from "@/shared/types";
 import { createFileRoute } from "@tanstack/react-router";
@@ -28,7 +29,7 @@ function ItemsComponent({ itemsPromise }: { itemsPromise: Promise<unknown[]> }) 
   return <PageMessage message={`I love having ${items.length} items`} />;
 }
 
-export function AlbumsComponent() {
+function AlbumsComponent() {
   const loaderData = Route.useLoaderData();
   return (
     <ErrorBoundary
@@ -36,6 +37,7 @@ export function AlbumsComponent() {
       fallback={<ErrorPage message="An unexpected error occurred" />}
       onError="log"
     >
+      <SearchInput onQueryChanged={() => {}} />
       <Suspense name="LoadAlbums" fallback={<LoadingPage />}>
         <ItemsComponent itemsPromise={loaderData.albums} />
       </Suspense>

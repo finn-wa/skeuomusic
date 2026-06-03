@@ -1,0 +1,106 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xml:space="preserve"
+  width="40"
+  height="40"
+  viewBox="0 0 40 40"
+>
+  <defs>
+    <filter
+      id="b"
+      width="1.505"
+      height="1.617"
+      x="-.253"
+      y="-.267"
+      style="color-interpolation-filters: sRGB"
+    >
+      <feFlood flood-color="#000" flood-opacity=".503" result="flood" />
+      <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="2" />
+      <feOffset dy="1" in="blur" result="offset" />
+      <feComposite in="flood" in2="offset" operator="out" result="comp1" />
+      <feComposite in="comp1" in2="SourceGraphic" operator="atop" result="fbSourceGraphic" />
+      <feColorMatrix
+        in="fbSourceGraphic"
+        result="fbSourceGraphicAlpha"
+        values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+      />
+      <feFlood flood-color="#fff" flood-opacity=".498" result="flood" />
+      <feGaussianBlur in="fbSourceGraphic" result="blur" stdDeviation="2" />
+      <feOffset dy="2" in="blur" result="offset" />
+      <feComposite in="flood" in2="offset" operator="in" result="comp1" />
+      <feComposite in="fbSourceGraphic" in2="comp1" result="comp2" />
+    </filter>
+    <filter
+      id="e"
+      width="1.252"
+      height="1.321"
+      x="-.126"
+      y="-.133"
+      style="color-interpolation-filters: sRGB"
+    >
+      <feFlood flood-color="#fff" flood-opacity="1" result="flood" />
+      <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation=".5" />
+      <feOffset dy=".5" in="blur" result="offset" />
+      <feComposite in="flood" in2="offset" operator="out" result="comp1" />
+      <feComposite in="comp1" in2="SourceGraphic" operator="atop" result="fbSourceGraphic" />
+      <feColorMatrix
+        in="fbSourceGraphic"
+        result="fbSourceGraphicAlpha"
+        values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
+      />
+      <feFlood flood-color="#fff" flood-opacity="1" result="flood" />
+      <feGaussianBlur in="fbSourceGraphic" result="blur" stdDeviation=".5" />
+      <feOffset dy=".5" in="blur" result="offset" />
+      <feComposite in="flood" in2="offset" operator="out" result="comp1" />
+      <feComposite in="comp1" in2="fbSourceGraphic" operator="atop" result="comp2" />
+    </filter>
+    <filter
+      id="d"
+      width="1.504"
+      height="1.641"
+      x="-.252"
+      y="-.265"
+      style="color-interpolation-filters: sRGB"
+    >
+      <feFlood flood-color="#000" flood-opacity=".498" result="flood" />
+      <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="2" />
+      <feOffset dy="2" in="blur" result="offset" />
+      <feComposite in="flood" in2="offset" operator="in" result="comp1" />
+      <feComposite in="SourceGraphic" in2="comp1" result="comp2" />
+    </filter>
+    <linearGradient id="a">
+      <stop offset="0" style="stop-color: #808081; stop-opacity: 1" />
+      <stop offset="1" style="stop-color: #e0e0e0; stop-opacity: 1" />
+    </linearGradient>
+    <linearGradient
+      xlink:href="#a"
+      id="c"
+      x1="8"
+      x2="8"
+      y1="0"
+      y2="16"
+      gradientTransform="matrix(2.375 0 0 2.25 1 2)"
+      gradientUnits="userSpaceOnUse"
+    />
+  </defs>
+  <title>Clear</title>
+  <path
+    d="M20 38a19 18 0 1 0 0-36 19 18 0 0 0 0 36"
+    style="display: inline; fill: #fff; stroke-width: 0.999998; filter: url(#b); fill-opacity: 1"
+  />
+  <path
+    d="M20 38a19 18 0 1 0 0-36 19 18 0 0 0 0 36"
+    style="display: inline; fill: url(#c); stroke-width: 0.999998; filter: url(#b)"
+  />
+  <path
+    d="M11.023 11.495a1.781 1.688 0 0 1 2.517 0l6.46 6.12 6.46-6.12a1.781 1.688 0 1 1 2.517 2.385L22.518 20l6.46 6.12a1.781 1.688 0 1 1-2.517 2.385L20 22.385l-6.46 6.12a1.781 1.688 0 0 1-2.517-2.385l6.46-6.12-6.46-6.12a1.781 1.688 0 0 1 0-2.385"
+    style="display: inline; fill: #000; fill-opacity: 1; stroke-width: 1.02797; filter: url(#d)"
+    transform="matrix(.96624 0 0 .9794 .581 .737)"
+  />
+  <path
+    d="M11.023 11.495a1.781 1.688 0 0 1 2.517 0l6.46 6.12 6.46-6.12a1.781 1.688 0 1 1 2.517 2.385L22.518 20l6.46 6.12a1.781 1.688 0 1 1-2.517 2.385L20 22.385l-6.46 6.12a1.781 1.688 0 0 1-2.517-2.385l6.46-6.12-6.46-6.12a1.781 1.688 0 0 1 0-2.385"
+    style="display: inline; fill: #e9eaec; fill-opacity: 1; stroke-width: 1.02797; filter: url(#e)"
+    transform="matrix(.96624 0 0 .9794 .581 .737)"
+  />
+</svg>

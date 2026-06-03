@@ -26,6 +26,7 @@ body {
   margin: 0;
   box-sizing: border-box;
   text-shadow: var(--text-emboss-glow);
+  caret-color: #426bf2;
 }
 
 main {
