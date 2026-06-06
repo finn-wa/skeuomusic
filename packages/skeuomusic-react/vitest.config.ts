@@ -11,10 +11,10 @@ export default defineConfig({
     clearMocks: true,
     unstubGlobals: true,
     browser: {
+      headless: true,
       enabled: true,
       provider: playwright(),
       instances: [{ browser: "chromium" }],
-      headless: false,
       viewport: { width: 427, height: 640 },
     },
     tags: [

@@ -1,5 +1,5 @@
 import { render } from "vitest-browser-react";
-import { page, userEvent } from "vitest/browser";
+import { userEvent } from "vitest/browser";
 import { describe, it, expect, vi } from "vitest";
 import SearchInput from "./search-input";
 
@@ -66,7 +66,7 @@ describe("SearchInput", () => {
   it("should match screenshot with input", { tags: "visual" }, async () => {
     const screen = await render(<SearchInput onQueryChanged={() => {}} />);
     const input = screen.getByRole("searchbox", { name: "Search" });
-    await userEvent.fill(input, "radiohead");
+    await userEvent.fill(input, "Freddy");
     await expect(screen.getByTestId("search")).toMatchScreenshot("search-input-filled");
   });
 });

@@ -8,7 +8,7 @@
 }
 
 .search-input {
-  padding: var(--spacer-2) 2.25rem;
+  padding: var(--spacer-2) 2.125rem;
   margin: var(--spacer-2);
   border: 0 solid;
   border-radius: 9999px;

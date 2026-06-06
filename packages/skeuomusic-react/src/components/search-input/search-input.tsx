@@ -19,8 +19,8 @@ export default function SearchInput({ onQueryChanged }: SearchInputProps) {
       <img
         src={searchIcon}
         className="search-icon"
-        width="28px"
-        height="28px"
+        width="24px"
+        height="24px"
         alt="Magnifying glass icon"
       />
       <input
@@ -38,7 +38,7 @@ export default function SearchInput({ onQueryChanged }: SearchInputProps) {
         aria-label="Clear search"
         data-testid="clearSearch"
       >
-        <img src={clearSearchIcon} width="28px" height="28px" alt="Clear icon" />
+        <img src={clearSearchIcon} width="24px" height="24px" alt="Clear icon" />
       </button>
     </form>
   );
