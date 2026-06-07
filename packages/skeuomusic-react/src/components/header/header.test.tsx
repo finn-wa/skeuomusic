@@ -1,9 +1,9 @@
 import { SKEUOMUSIC } from "@/shared/constants";
-import { useRouterState } from "@tanstack/react-router";
 import { render } from "vitest-browser-react";
 import { describe, expect, it, vi } from "vitest";
 import type { NavArrowButtonProps } from "../nav-arrow-button/nav-arrow-button";
 import Header, { HeaderComponent } from "./header";
+import { renderWithRouter } from "@/test/router-utils";
 
 vi.mock("../nav-arrow-button/nav-arrow-button", () => ({
   default: ({ text, href, direction }: NavArrowButtonProps) => (
@@ -12,11 +12,6 @@ vi.mock("../nav-arrow-button/nav-arrow-button", () => ({
     </a>
   ),
 }));
-
-vi.mock("@tanstack/react-router", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("@tanstack/react-router")>();
-  return { ...actual, useRouterState: vi.fn<(typeof actual)["useRouterState"]>() };
-});
 
 describe("HeaderComponent", () => {
   it("renders the default title when no title prop is given", async () => {
@@ -62,35 +57,27 @@ describe("HeaderComponent", () => {
 });
 
 describe("Header (router integration)", () => {
-  const mockUseRouterState = vi.mocked(useRouterState);
-
-  function setupRouterState(context: Record<string, unknown> | undefined) {
-    mockUseRouterState.mockImplementation(({ select }: any) => select({ matches: [{ context }] }));
-  }
-
   it("falls back to defaults when the last match has no context", async () => {
-    setupRouterState(undefined);
-    const screen = await render(<Header />);
+    const screen = await renderWithRouter(<Header />);
     await expect.element(screen.getByRole("heading")).toHaveTextContent(SKEUOMUSIC);
     await expect.element(screen.getByTestId("nav-arrow-left")).not.toBeInTheDocument();
   });
 
   it("falls back to defaults when the last match context has no header key", async () => {
-    setupRouterState({ someOtherKey: true });
-    const screen = await render(<Header />);
+    const screen = await renderWithRouter(<Header />, { someOtherKey: true });
     await expect.element(screen.getByRole("heading")).toHaveTextContent(SKEUOMUSIC);
     await expect.element(screen.getByTestId("nav-arrow-left")).not.toBeInTheDocument();
   });
 
   it("renders the title from route context header", async () => {
-    setupRouterState({ header: { title: "Albums" } });
-    const screen = await render(<Header />);
+    const screen = await renderWithRouter(<Header />, { header: { title: "Albums" } });
     await expect.element(screen.getByRole("heading")).toHaveTextContent("Albums");
   });
 
   it("renders the back button from route context header", async () => {
-    setupRouterState({ header: { backButton: { label: "Library", href: "/music/library" } } });
-    const screen = await render(<Header />);
+    const screen = await renderWithRouter(<Header />, {
+      header: { backButton: { label: "Library", href: "/music/library" } },
+    });
     const backButton = screen.getByTestId("nav-arrow-left");
     await expect.element(backButton).toHaveTextContent("Library");
     await expect.element(backButton).toHaveAttribute("href", "/music/library");

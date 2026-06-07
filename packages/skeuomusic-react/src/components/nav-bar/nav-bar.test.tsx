@@ -1,22 +1,16 @@
-import { render } from "vitest-browser-react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import NavBar from "./nav-bar";
 import { NAV_TAB_ORDER } from "@/router";
-
-vi.mock("@tanstack/react-router", async (importOriginal) => {
-  const actual = await importOriginal<typeof import("@tanstack/react-router")>();
-  const { MockLink } = await import("@/test/mocks/link");
-  return { ...actual, Link: MockLink };
-});
+import { renderWithRouter } from "@/test/router-utils";
 
 describe("NavBar", () => {
   it("renders a nav element", async () => {
-    const screen = await render(<NavBar />);
+    const screen = await renderWithRouter(<NavBar />);
     await expect.element(screen.getByRole("navigation")).toBeInTheDocument();
   });
 
   it("renders tabs in the order specified by the router", async () => {
-    const { container } = await render(<NavBar />);
+    const { container } = await renderWithRouter(<NavBar />);
     const linkEls = Array.from(container.querySelectorAll("a[href]"));
     const actualPaths = linkEls.map((el, i) => {
       const href = el.getAttribute("href")!;
@@ -35,7 +29,7 @@ describe("NavBar", () => {
       ["Albums", "/music/library/albums#1"],
       ["More", "/music/library/more#1"],
     ])('"%s" tab links to the correct route', async (label, route) => {
-      const screen = await render(<NavBar />);
+      const screen = await renderWithRouter(<NavBar />);
       await expect
         .element(screen.getByRole("link", { name: new RegExp(label, "i") }))
         .toHaveAttribute("href", route);
@@ -44,7 +38,7 @@ describe("NavBar", () => {
     it.each(["Playlists", "Artists", "Songs", "Albums", "More"])(
       '"%s" icon is rendered',
       async (iconTitle) => {
-        const { container } = await render(<NavBar />);
+        const { container } = await renderWithRouter(<NavBar />);
         const svgTitles = Array.from(container.querySelectorAll("svg title"));
         expect(svgTitles.some((t) => t.textContent === iconTitle)).toBe(true);
       },
@@ -52,7 +46,7 @@ describe("NavBar", () => {
   });
 
   it("should match screenshot", { tags: "visual" }, async () => {
-    const screen = await render(<NavBar />);
+    const screen = await renderWithRouter(<NavBar />);
     await expect(screen.getByRole("navigation")).toMatchScreenshot("nav-bar");
   });
 });
