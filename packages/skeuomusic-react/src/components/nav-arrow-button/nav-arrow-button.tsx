@@ -47,6 +47,7 @@ export default function NavArrowButton({
       to={href}
       from={currentLocation as any}
       className={`nav-arrow ${direction} ${kind} text-truncate`}
+      data-testid={`nav-arrow-${direction}`}
     >
       <span ref={textRef} className="nav-arrow-text text-truncate">
         {text}

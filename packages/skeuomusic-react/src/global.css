@@ -29,7 +29,7 @@ body {
   caret-color: #426bf2;
 }
 
-main {
+#app {
   height: 100%;
   display: flex;
   flex-direction: column;

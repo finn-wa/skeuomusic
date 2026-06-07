@@ -14,7 +14,7 @@ export default function NavTab({ route, label, children }: TabButtonProps) {
     <Link
       to={route}
       className="tab"
-      activeProps={{ className: "selected" }}
+      activeProps={{ className: "selected", "aria-current": "page" }}
       hash={clicked ? undefined : INITIAL_SCROLL_ID}
       onClick={() => setTimeout(() => setClicked(true), 0)}
     >
