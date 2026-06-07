@@ -26,28 +26,33 @@ describe("NavBar", () => {
     const expectedPaths = Object.entries(NAV_TAB_ORDER).map(([path, index]) => ({ path, index }));
     expect(actualPaths).toEqual(expectedPaths);
   });
-});
 
-describe("tabs", () => {
-  it.each([
-    ["Playlists", "/music/library/playlists#1"],
-    ["Artists", "/music/library/artists#1"],
-    ["Songs", "/music/library/songs#1"],
-    ["Albums", "/music/library/albums#1"],
-    ["More", "/music/library/more#1"],
-  ])('"%s" tab links to the correct route', async (label, route) => {
-    const screen = await render(<NavBar />);
-    await expect
-      .element(screen.getByRole("link", { name: new RegExp(label, "i") }))
-      .toHaveAttribute("href", route);
+  describe("tabs", () => {
+    it.each([
+      ["Playlists", "/music/library/playlists#1"],
+      ["Artists", "/music/library/artists#1"],
+      ["Songs", "/music/library/songs#1"],
+      ["Albums", "/music/library/albums#1"],
+      ["More", "/music/library/more#1"],
+    ])('"%s" tab links to the correct route', async (label, route) => {
+      const screen = await render(<NavBar />);
+      await expect
+        .element(screen.getByRole("link", { name: new RegExp(label, "i") }))
+        .toHaveAttribute("href", route);
+    });
+
+    it.each(["Playlists", "Artists", "Songs", "Albums", "More"])(
+      '"%s" icon is rendered',
+      async (iconTitle) => {
+        const { container } = await render(<NavBar />);
+        const svgTitles = Array.from(container.querySelectorAll("svg title"));
+        expect(svgTitles.some((t) => t.textContent === iconTitle)).toBe(true);
+      },
+    );
   });
 
-  it.each(["Playlists", "Artists", "Songs", "Albums", "More"])(
-    '"%s" icon is rendered',
-    async (iconTitle) => {
-      const { container } = await render(<NavBar />);
-      const svgTitles = Array.from(container.querySelectorAll("svg title"));
-      expect(svgTitles.some((t) => t.textContent === iconTitle)).toBe(true);
-    },
-  );
+  it("should match screenshot", { tags: "visual" }, async () => {
+    const screen = await render(<NavBar />);
+    await expect(screen.getByRole("navigation")).toMatchScreenshot("nav-bar");
+  });
 });

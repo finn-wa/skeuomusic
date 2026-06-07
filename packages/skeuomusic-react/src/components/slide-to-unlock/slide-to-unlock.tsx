@@ -127,7 +127,7 @@ export default function SlideToUnlock({ onUnlock, text = "slide to unlock" }: Sl
   }
 
   return (
-    <div id="unlock-slider" className={styles.slider}>
+    <div id="unlock-slider" data-testid="unlock-slider" className={styles.slider}>
       <div className={styles.wh100}>
         <div ref={trackRef} className={`${styles.track} ${styles.wh100}`}>
           <button
