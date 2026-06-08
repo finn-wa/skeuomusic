@@ -37,7 +37,10 @@ async function getLatestCommitHash(): Promise<string> {
       },
     },
   )
-    .then((res) => res.json() as Promise<{ sha: string; commit: { author: { date: string } } }[]>)
+    .then(
+      (res) =>
+        res.json() as Promise<{ sha: string; commit: { author: { date: string } } }[]>,
+    )
     .then((body) => {
       if (body.length === 0) {
         throw new Error("No commits returned from GitHub");

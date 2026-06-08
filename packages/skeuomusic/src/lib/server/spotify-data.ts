@@ -8,13 +8,7 @@ import {
 } from "spotify-web-client";
 import { loggingMiddleware } from "../middleware/logging";
 import { spotifyApiMiddleware } from "../middleware/spotify-auth";
-import type {
-  Album,
-  AlbumWithTracklist,
-  Artist,
-  Playlist,
-  Song,
-} from "../types";
+import type { Album, AlbumWithTracklist, Artist, Playlist, Song } from "../types";
 
 async function tryRequest<T>(requestFn: () => Promise<T>) {
   try {
@@ -32,9 +26,7 @@ export const getAlbums = createServerFn({ method: "GET" })
   .middleware([loggingMiddleware, spotifyApiMiddleware])
   .handler(async ({ context }): Promise<Album[]> => {
     const albumsApi = spotifyAlbumsApi(context.spotifyAuth);
-    const response = await tryRequest(() =>
-      albumsApi.getUsersSavedAlbums({ limit: 50 }),
-    );
+    const response = await tryRequest(() => albumsApi.getUsersSavedAlbums({ limit: 50 }));
     return response.items.map((item) => {
       const album = item.album!;
       return {
@@ -93,9 +85,7 @@ export const getArtist = createServerFn({ method: "GET" })
   .validator((data: string) => data)
   .handler(async ({ context, data }): Promise<Artist> => {
     const artistsApi = spotifyArtistsApi(context.spotifyAuth);
-    const response = await tryRequest(() =>
-      artistsApi.getAnArtist({ id: data }),
-    );
+    const response = await tryRequest(() => artistsApi.getAnArtist({ id: data }));
     return { id: response.id!, name: response.name! };
   });
 
@@ -113,9 +103,7 @@ export const getSongs = createServerFn({ method: "GET" })
   .middleware([loggingMiddleware, spotifyApiMiddleware])
   .handler(async ({ context }): Promise<Song[]> => {
     const tracksApi = spotifyTracksApi(context.spotifyAuth);
-    const response = await tryRequest(() =>
-      tracksApi.getUsersSavedTracks({ limit: 50 }),
-    );
+    const response = await tryRequest(() => tracksApi.getUsersSavedTracks({ limit: 50 }));
     return response.items.map((item) => {
       const track = item.track!;
       return {

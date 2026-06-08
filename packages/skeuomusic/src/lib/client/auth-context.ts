@@ -1,9 +1,4 @@
-import {
-  type Accessor,
-  createContext,
-  type Setter,
-  useContext,
-} from "solid-js";
+import { type Accessor, createContext, type Setter, useContext } from "solid-js";
 import type { SpotifyAuth } from "spotify-web-client";
 
 export type AuthContext = {

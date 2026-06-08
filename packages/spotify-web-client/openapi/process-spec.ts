@@ -8,7 +8,10 @@ import {
 } from "openapi3-ts/oas30";
 type SchemaOrRef = SchemaObject | ReferenceObject;
 
-export function processOpenApiSpec(spec: OpenAPIObject, commitHash: string): OpenAPIObject {
+export function processOpenApiSpec(
+  spec: OpenAPIObject,
+  commitHash: string,
+): OpenAPIObject {
   const originalSchemas = spec?.components?.schemas;
   if (originalSchemas == null) {
     throw new Error(`Schemas are missing from the downloaded spec`);
@@ -73,7 +76,9 @@ function processPaths(paths: PathsObject): PathsObject {
   return withoutDeprecatedPaths;
 }
 
-function processSchemas(schemas: Record<string, SchemaOrRef>): Record<string, SchemaOrRef> {
+function processSchemas(
+  schemas: Record<string, SchemaOrRef>,
+): Record<string, SchemaOrRef> {
   const fixedSchemas = mapObjectValues(schemas, (schema, name) =>
     processSchema(schemas, schema, name),
   );
@@ -99,7 +104,9 @@ function processSchemas(schemas: Record<string, SchemaOrRef>): Record<string, Sc
     }
   }
   for (const [ref, discriminatorProps] of refsToDiscriminatorProps.entries()) {
-    console.log(`Adding required properties to ${ref}: ${[...discriminatorProps].join(", ")}`);
+    console.log(
+      `Adding required properties to ${ref}: ${[...discriminatorProps].join(", ")}`,
+    );
     const referencedSchema = resolveSchemaRef(fixedSchemas, ref);
     referencedSchema.required = getRequiredWithProperties(
       referencedSchema.required,
@@ -120,8 +127,9 @@ function processSchema(
   }
   const fixedSchema = { ...schema };
   if (fixedSchema.properties != null) {
-    fixedSchema.properties = mapObjectValues(fixedSchema.properties, (nestedSchema, schemaName) =>
-      processSchema(schemas, nestedSchema, schemaName),
+    fixedSchema.properties = mapObjectValues(
+      fixedSchema.properties,
+      (nestedSchema, schemaName) => processSchema(schemas, nestedSchema, schemaName),
     );
   }
   if (fixedSchema.items != null) {
@@ -241,7 +249,9 @@ function resolveSchemaRef(
   const schemaName = schemaRef.slice(lastSlashIndex + 1);
   const schema = schemas[schemaName];
   if (schema == null) {
-    throw new Error(`Failed to find schema at with name ${schemaName} for ref ${schemaRef}`);
+    throw new Error(
+      `Failed to find schema at with name ${schemaName} for ref ${schemaRef}`,
+    );
   }
   if (isReferenceObject(schema)) {
     if (depth >= 10) {

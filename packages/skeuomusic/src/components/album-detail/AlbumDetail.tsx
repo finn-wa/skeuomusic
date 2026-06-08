@@ -39,9 +39,7 @@ export default function AlbumDetail(props: AlbumDetailProps) {
         </div>
       </div>
       <ol class="tracklist">
-        <For each={props.album.tracks}>
-          {(track) => <AlbumTrack track={track} />}
-        </For>
+        <For each={props.album.tracks}>{(track) => <AlbumTrack track={track} />}</For>
       </ol>
     </>
   );

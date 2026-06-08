@@ -1,11 +1,6 @@
 import { PlayerIconGradient } from "~/components/icons/IconDefs";
 import type { Repeat } from "~/lib/client/player/store/player-state";
-import {
-  getIconDefIds,
-  hrefForId,
-  urlForId,
-  viewBox,
-} from "~/lib/client/svg-utils";
+import { getIconDefIds, hrefForId, urlForId, viewBox } from "~/lib/client/svg-utils";
 
 export function RepeatIcon(props: { height: string; state: Repeat }) {
   const ids = {
@@ -31,10 +26,7 @@ export function RepeatIcon(props: { height: string; state: Repeat }) {
         />
         <clipPath id={ids.clipId}>
           <use href={urls.arrowHref} />
-          <use
-            href={urls.arrowHref}
-            transform="translate(40,42) scale(-1,-1)"
-          />
+          <use href={urls.arrowHref} transform="translate(40,42) scale(-1,-1)" />
         </clipPath>
 
         <filter id={ids.shadow} height="150%" width="150%" x="-25%" y="-25%">
@@ -53,12 +45,7 @@ export function RepeatIcon(props: { height: string; state: Repeat }) {
         <use href={urls.arrowHref} transform="translate(40,42) scale(-1,-1)" />
       </g>
 
-      <rect
-        width="40"
-        height="40"
-        fill={urls.gradientUrl}
-        clip-path={urls.clipUrl}
-      />
+      <rect width="40" height="40" fill={urls.gradientUrl} clip-path={urls.clipUrl} />
     </svg>
   );
 }

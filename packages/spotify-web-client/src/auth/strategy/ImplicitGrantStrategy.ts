@@ -2,7 +2,10 @@ import type { CachingStrategy } from "../caching/CachingStrategy.js";
 import type { SpotifyAuthConfig } from "../SpotifyAuthConfig.js";
 import type { AccessToken } from "../token/AccessToken.js";
 import { emptyAccessToken } from "../token/AccessToken.js";
-import { refreshCachedAccessToken, toCachableAccessToken } from "../token/AccessTokenHelpers.js";
+import {
+  refreshCachedAccessToken,
+  toCachableAccessToken,
+} from "../token/AccessTokenHelpers.js";
 import type { SpotifyAuth } from "./AuthStrategy.js";
 
 export default class ImplicitGrantStrategy implements SpotifyAuth {

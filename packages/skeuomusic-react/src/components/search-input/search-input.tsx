@@ -15,7 +15,11 @@ export default function SearchInput({ onQueryChanged }: SearchInputProps) {
   }
 
   return (
-    <form className="search-container" onSubmit={(e) => e.preventDefault()} data-testid="search">
+    <form
+      className="search-container"
+      onSubmit={(e) => e.preventDefault()}
+      data-testid="search"
+    >
       <img
         src={searchIcon}
         className="search-icon"

@@ -37,11 +37,7 @@ export default function Songs() {
               items={resolvedSongs}
               namePlural="songs"
               itemRenderer={(song, hide) => (
-                <SongListItem
-                  song={song}
-                  hide={hide}
-                  click={() => playSong(song)}
-                />
+                <SongListItem song={song} hide={hide} click={() => playSong(song)} />
               )}
             />
           )}

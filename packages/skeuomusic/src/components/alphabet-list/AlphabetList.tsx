@@ -42,12 +42,11 @@ function groupItems<T extends Item>(sortedItems: SortableItem<T>[]) {
   return groups;
 }
 
-export default function AlphabetList<T extends Item>(
-  initialProps: AlphabetListProps<T>,
-) {
-  const defaultItemRenderer: NonNullable<
-    AlphabetListProps<T>["itemRenderer"]
-  > = (item, hide) => <ListItem name={item.name} hide={hide} />;
+export default function AlphabetList<T extends Item>(initialProps: AlphabetListProps<T>) {
+  const defaultItemRenderer: NonNullable<AlphabetListProps<T>["itemRenderer"]> = (
+    item,
+    hide,
+  ) => <ListItem name={item.name} hide={hide} />;
   const props = mergeProps({ itemRenderer: defaultItemRenderer }, initialProps);
 
   const searchSignal = createSignal("");
@@ -63,8 +62,7 @@ export default function AlphabetList<T extends Item>(
   const itemGroups = () => groupItems(sortedItems());
 
   const capitalisedNamePlural =
-    (props.namePlural[0]?.toUpperCase() ?? "") +
-    (props.namePlural.substring(1) ?? "");
+    (props.namePlural[0]?.toUpperCase() ?? "") + (props.namePlural.substring(1) ?? "");
 
   /** Set of item keys that match the current query */
   const visibleItems = createMemo(() => {
@@ -88,11 +86,7 @@ export default function AlphabetList<T extends Item>(
             when={visibleItems().size > 0}
             fallback={
               <PageMessage
-                message={
-                  props.items.length > 0
-                    ? "No results"
-                    : `No ${props.namePlural}`
-                }
+                message={props.items.length > 0 ? "No results" : `No ${props.namePlural}`}
               />
             }
           >
@@ -124,12 +118,7 @@ export default function AlphabetList<T extends Item>(
                         <For each={items()}>
                           {({ key, value }) => (
                             // Wrap in JSX so it reacts to updates: https://docs.solidjs.com/reference/components/show#render-function
-                            <>
-                              {props.itemRenderer(
-                                value,
-                                !visibleItems().has(key),
-                              )}
-                            </>
+                            <>{props.itemRenderer(value, !visibleItems().has(key))}</>
                           )}
                         </For>
                       </ul>
@@ -141,8 +130,7 @@ export default function AlphabetList<T extends Item>(
             <Show when={!props.hideItemCount}>
               <div class="list-footer">
                 <span class="page-msg">
-                  {visibleItems().size}{" "}
-                  {search() ? "Results" : capitalisedNamePlural}
+                  {visibleItems().size} {search() ? "Results" : capitalisedNamePlural}
                 </span>
               </div>
             </Show>

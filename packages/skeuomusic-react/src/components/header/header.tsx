@@ -27,7 +27,11 @@ export function HeaderComponent({ backButton, title = SKEUOMUSIC }: HeaderProps)
     <header className="bar">
       <div className="header-button left">
         {backButton != null && (
-          <NavArrowButton direction="left" text={backButton.label} href={backButton.href ?? ".."} />
+          <NavArrowButton
+            direction="left"
+            text={backButton.label}
+            href={backButton.href ?? ".."}
+          />
         )}
       </div>
 

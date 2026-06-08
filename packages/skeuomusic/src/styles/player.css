@@ -60,12 +60,7 @@
 
   border-top: 1px solid;
   border-bottom: 2px solid;
-  border-image: radial-gradient(
-      circle at center,
-      hsl(0 0 100% / 0.3),
-      transparent
-    )
-    1;
+  border-image: radial-gradient(circle at center, hsl(0 0 100% / 0.3), transparent) 1;
   box-sizing: border-box;
   padding: 0 1rem;
   text-align: center;

@@ -8,19 +8,20 @@ export type FallbackProps = {
 export type ErrorBoundaryProps = PropsWithChildren<{
   /** A name for debugging */
   name: string;
-  /**
-   * Optional callback for tracing errors. Or use 'log' to print the default message.
-   */
+  /** Optional callback for tracing errors. Or use 'log' to print the default message. */
   onError?: ((error: unknown, info: ErrorInfo) => void) | "log";
-  /**
-   * Content to render in place of an error.
-   */
+  /** Content to render in place of an error. */
   fallback: ((props: FallbackProps) => ReactNode) | ReactNode;
 }>;
 
-type ErrorBoundaryState = { hasError: true; error: unknown } | { hasError: false; error: null };
+type ErrorBoundaryState =
+  | { hasError: true; error: unknown }
+  | { hasError: false; error: null };
 
-export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export default class ErrorBoundary extends Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
   state = { hasError: false, error: null };
 
   static getDerivedStateFromError(error: unknown): ErrorBoundaryState {

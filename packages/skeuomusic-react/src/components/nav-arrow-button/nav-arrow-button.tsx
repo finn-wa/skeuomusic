@@ -63,9 +63,18 @@ export default function NavArrowButton({
           <path
             id={arrowId}
             d={`m0 20 13.2-17.6a6 6 153.43 0 1 4.8-2.4h${svgPadding}a6 6 45 0 1 6 6v28a6 6 135 0 1-6 6h-${svgPadding}a6 6 26.565 0 1-4.8-2.4z`}
-            transform={direction === "left" ? undefined : `translate(${width}) scale(-1, 1)`}
+            transform={
+              direction === "left" ? undefined : `translate(${width}) scale(-1, 1)`
+            }
           />
-          <linearGradient id={bgId} x1="0" x2="0" y1="0" y2="40" gradientUnits="userSpaceOnUse">
+          <linearGradient
+            id={bgId}
+            x1="0"
+            x2="0"
+            y1="0"
+            y2="40"
+            gradientUnits="userSpaceOnUse"
+          >
             <stop stopColor="var(--header-btn-gradient-top)" offset="0" />
             <stop stopColor="var(--header-btn-gradient-bottom)" offset="1" />
           </linearGradient>
@@ -77,7 +86,12 @@ export default function NavArrowButton({
               floodColor={kind === "player" ? "white" : "black"}
               result="flood"
             />
-            <feComposite in="flood" in2="SourceGraphic" operator="in" result="composite" />
+            <feComposite
+              in="flood"
+              in2="SourceGraphic"
+              operator="in"
+              result="composite"
+            />
             <feBlend in="blur" in2="composite" />
           </filter>
           <clipPath id={clipId}>

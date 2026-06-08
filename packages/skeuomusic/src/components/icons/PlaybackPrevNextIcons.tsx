@@ -26,11 +26,7 @@ export function PlaybackPrevIcon(props: { height: string }) {
       <PlaybackControlPanelIconDefs ids={ids} />
       <g transform="translate(50) scale(-1, 1)">
         <polygon points={smallTriangle} {...defUrls} />
-        <polygon
-          points={smallTriangle}
-          transform="translate(24)"
-          {...defUrls}
-        />
+        <polygon points={smallTriangle} transform="translate(24)" {...defUrls} />
       </g>
     </svg>
   );

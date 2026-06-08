@@ -43,9 +43,7 @@ export default function ArtistDetail() {
   return (
     <>
       <Suspense fallback={<LoadingPage />}>
-        <ErrorBoundary
-          fallback={<ErrorPage message="Failed to load discography" />}
-        >
+        <ErrorBoundary fallback={<ErrorPage message="Failed to load discography" />}>
           <Await promise={albums} fallback={<ErrorPage />}>
             {(resolvedAlbums) => (
               <AlphabetList
@@ -54,11 +52,7 @@ export default function ArtistDetail() {
                 hideIndex={true}
                 hideItemCount={true}
                 itemRenderer={(album, hide) => (
-                  <AlbumListItem
-                    album={album}
-                    href={`./${album.id}`}
-                    hide={hide}
-                  />
+                  <AlbumListItem album={album} href={`./${album.id}`} hide={hide} />
                 )}
               />
             )}

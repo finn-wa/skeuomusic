@@ -29,11 +29,7 @@ export default function Albums() {
               items={resolvedAlbums}
               namePlural="albums"
               itemRenderer={(album, hide) => (
-                <AlbumListItem
-                  album={album}
-                  hide={hide}
-                  href={`./${album.id}`}
-                />
+                <AlbumListItem album={album} hide={hide} href={`./${album.id}`} />
               )}
             />
           )}

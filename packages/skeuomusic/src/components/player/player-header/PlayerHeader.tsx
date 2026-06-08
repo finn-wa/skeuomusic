@@ -35,9 +35,7 @@ export function PlayerHeader(props: PlayerHeaderProps) {
             <br />
             <span class={styles["track-title"]}>{props.song!.name}</span>
             <br />
-            <span class={styles["track-subtitle"]}>
-              {props.song!.album.name}
-            </span>
+            <span class={styles["track-subtitle"]}>{props.song!.album.name}</span>
           </Show>
         </h1>
       </button>

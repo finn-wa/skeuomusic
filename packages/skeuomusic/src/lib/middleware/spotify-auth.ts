@@ -1,9 +1,6 @@
 import { redirect } from "@tanstack/solid-router";
 import { createMiddleware } from "@tanstack/solid-start";
-import {
-  emptyAccessToken,
-  spotifyAuthViaProvidedAccessToken,
-} from "spotify-web-client";
+import { emptyAccessToken, spotifyAuthViaProvidedAccessToken } from "spotify-web-client";
 import { useSpotifySession } from "../server/session";
 
 export const spotifyApiMiddleware = createMiddleware({

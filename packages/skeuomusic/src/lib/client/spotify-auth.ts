@@ -7,9 +7,7 @@ import {
 } from "spotify-web-client";
 import { SPOTIFY_SCOPES } from "../constants";
 
-export function createSpotifyAuth(
-  origin = window.location.origin,
-): SpotifyAuth {
+export function createSpotifyAuth(origin = window.location.origin): SpotifyAuth {
   const cachingStrategy = getDefaultCachingStrategy({
     expiryWindow: 300000,
     interval: 360000,

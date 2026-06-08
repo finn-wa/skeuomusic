@@ -24,9 +24,7 @@ export function RangeInput(rawProps: RangeInputProps) {
 
   function setKnobPosition(newValue: number) {
     const valueDecimal = (newValue - props.min) / (props.max - props.min);
-    const valuePercent = Number.isNaN(valueDecimal)
-      ? 0
-      : Math.round(valueDecimal * 100);
+    const valuePercent = Number.isNaN(valueDecimal) ? 0 : Math.round(valueDecimal * 100);
     slider.style.setProperty("--range-percent", `${valuePercent}%`);
   }
 

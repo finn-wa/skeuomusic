@@ -85,5 +85,9 @@ export function spotifyAuthViaProvidedAccessToken(
     refreshTokenAction?: (clientId: string, token: AccessToken) => Promise<AccessToken>;
   },
 ) {
-  return new ProvidedAccessTokenStrategy(config.clientId, accessToken, config.refreshTokenAction);
+  return new ProvidedAccessTokenStrategy(
+    config.clientId,
+    accessToken,
+    config.refreshTokenAction,
+  );
 }

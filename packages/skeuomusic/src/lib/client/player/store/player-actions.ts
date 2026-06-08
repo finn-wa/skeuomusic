@@ -45,9 +45,7 @@ export const PlayerActionFactory = {
   [K in PlayerActionKind]: (...params: any[]) => { kind: K };
 };
 
-export type PlayerAction = ReturnType<
-  (typeof PlayerActionFactory)[PlayerActionKind]
->;
+export type PlayerAction = ReturnType<(typeof PlayerActionFactory)[PlayerActionKind]>;
 
 export type PlayerActions = {
   [K in PlayerActionKind]: ReturnType<(typeof PlayerActionFactory)[K]>;

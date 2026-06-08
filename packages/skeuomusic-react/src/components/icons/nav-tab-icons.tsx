@@ -136,7 +136,11 @@ export function NavTabPlaylistsIcon() {
 
       <g>
         <use href="#playlistsIcon" filter="url(#playlistsGlow)" />
-        <use href="#playlistsIcon" clipPath="url(#playlistsClip)" filter="url(#playlistsEffects)" />
+        <use
+          href="#playlistsIcon"
+          clipPath="url(#playlistsClip)"
+          filter="url(#playlistsEffects)"
+        />
       </g>
     </svg>
   );
@@ -191,7 +195,11 @@ export function NavTabAlbumIcon() {
 
       <g>
         <use href="#albumsIcon" filter="url(#albumsGlow)" />
-        <use href="#albumsIcon" clipPath="url(#albumsClip)" filter="url(#albumsEffects)" />
+        <use
+          href="#albumsIcon"
+          clipPath="url(#albumsClip)"
+          filter="url(#albumsEffects)"
+        />
       </g>
     </svg>
   );
@@ -249,7 +257,11 @@ export function NavTabArtistIcon() {
 
       <g>
         <use href="#artistsIcon" filter="url(#artistsGlow)" />
-        <use href="#artistsIcon" clipPath="url(#artistsClip)" filter="url(#artistsEffects)" />
+        <use
+          href="#artistsIcon"
+          clipPath="url(#artistsClip)"
+          filter="url(#artistsEffects)"
+        />
       </g>
     </svg>
   );

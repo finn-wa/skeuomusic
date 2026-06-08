@@ -10,7 +10,8 @@ nav.bar {
     var(--navbar-gradient-mid) 33%,
     var(--navbar-gradient-bottom)
   );
-  box-shadow: 0px calc(var(--i-px) * -2) calc(var(--i-px) * 8) 0px var(--navbar-shadow-color);
+  box-shadow: 0px calc(var(--i-px) * -2) calc(var(--i-px) * 8) 0px
+    var(--navbar-shadow-color);
 }
 
 .tab {

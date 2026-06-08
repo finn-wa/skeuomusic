@@ -17,7 +17,10 @@ describe("NavBar", () => {
       expect(href).toBeTruthy();
       return { path: href.slice(0, href.indexOf("#")), index: i };
     });
-    const expectedPaths = Object.entries(NAV_TAB_ORDER).map(([path, index]) => ({ path, index }));
+    const expectedPaths = Object.entries(NAV_TAB_ORDER).map(([path, index]) => ({
+      path,
+      index,
+    }));
     expect(actualPaths).toEqual(expectedPaths);
   });
 

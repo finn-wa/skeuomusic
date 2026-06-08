@@ -4,7 +4,11 @@
   align-items: center;
   position: relative;
   height: var(--list-item-height);
-  background: linear-gradient(to bottom, var(--search-gradient-top), var(--search-gradient-bottom));
+  background: linear-gradient(
+    to bottom,
+    var(--search-gradient-top),
+    var(--search-gradient-bottom)
+  );
 }
 
 .search-input {

@@ -10,7 +10,11 @@ header.bar {
   flex: 0 0 auto;
   z-index: 2;
   color: var(--header-font-color);
-  background: linear-gradient(to bottom, var(--header-gradient-top), var(--header-gradient-bottom));
+  background: linear-gradient(
+    to bottom,
+    var(--header-gradient-top),
+    var(--header-gradient-bottom)
+  );
   box-shadow: 0px var(--i-2px) calc(var(--i-px) * 8) 0px var(--navbar-shadow-color);
 }
 

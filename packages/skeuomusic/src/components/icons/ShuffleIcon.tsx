@@ -1,10 +1,5 @@
 import { PlayerIconGradient } from "~/components/icons/IconDefs";
-import {
-  getIconDefIds,
-  hrefForId,
-  urlForId,
-  viewBox,
-} from "~/lib/client/svg-utils";
+import { getIconDefIds, hrefForId, urlForId, viewBox } from "~/lib/client/svg-utils";
 
 export function ShuffleIcon(props: { height: string; shuffle: boolean }) {
   const ids = {
@@ -67,12 +62,7 @@ export function ShuffleIcon(props: { height: string; shuffle: boolean }) {
         <use href={urls.arrow2Href} />
         <use href={urls.arrow3Href} />{" "}
       </g>
-      <rect
-        width="40"
-        height="39"
-        fill={urls.gradientUrl}
-        clip-path={urls.clipUrl}
-      />
+      <rect width="40" height="39" fill={urls.gradientUrl} clip-path={urls.clipUrl} />
     </svg>
   );
 }

@@ -23,7 +23,10 @@ export default class GenericCache implements CachingStrategy {
    * removed. Listeners will not be called for cache items that expire on
    * access.
    */
-  public addUpdateListener<T>(cacheKey: string, listener: (value: T | null) => void): void {
+  public addUpdateListener<T>(
+    cacheKey: string,
+    listener: (value: T | null) => void,
+  ): void {
     const existingListeners = this.updateListeners[cacheKey];
     if (existingListeners == null) {
       this.updateListeners[cacheKey] = [listener];
@@ -34,7 +37,10 @@ export default class GenericCache implements CachingStrategy {
     }
   }
 
-  public removeUpdateListener<T>(cacheKey: string, listener: (value: T | null) => void): void {
+  public removeUpdateListener<T>(
+    cacheKey: string,
+    listener: (value: T | null) => void,
+  ): void {
     const listeners = this.updateListeners[cacheKey];
     if (listeners == null || listeners.length === 0) {
       return;
@@ -85,7 +91,10 @@ export default class GenericCache implements CachingStrategy {
       return null;
     }
 
-    if (cachedItem.expires && (cachedItem.expires === -1 || cachedItem.expires <= Date.now())) {
+    if (
+      cachedItem.expires &&
+      (cachedItem.expires === -1 || cachedItem.expires <= Date.now())
+    ) {
       this.remove(cacheKey);
       return null;
     }

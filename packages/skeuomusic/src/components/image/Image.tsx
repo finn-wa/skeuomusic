@@ -17,9 +17,7 @@ export default function Image(props: ImageProps) {
       srcset={props.srcset
         .map(({ width, url }) => (width == null ? url : `${url} ${width}w`))
         .join(", ")}
-      sizes={
-        typeof props.sizes === "string" ? props.sizes : props.sizes?.join("\n")
-      }
+      sizes={typeof props.sizes === "string" ? props.sizes : props.sizes?.join("\n")}
       alt={props.alt}
       width={props.width}
       height={props.height}

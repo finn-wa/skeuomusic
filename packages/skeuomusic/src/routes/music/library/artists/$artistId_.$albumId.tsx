@@ -5,9 +5,7 @@ import { formatArtists } from "~/lib/client/music-utils";
 import { SKEUOMUSIC } from "~/lib/constants";
 import { getAlbum } from "~/lib/server/spotify-data";
 
-export const Route = createFileRoute(
-  "/music/library/artists/$artistId_/$albumId",
-)({
+export const Route = createFileRoute("/music/library/artists/$artistId_/$albumId")({
   component: AlbumDetailPage,
   beforeLoad: async ({ params, context }) => {
     const album = await getAlbum({ data: params.albumId });

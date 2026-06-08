@@ -1,10 +1,7 @@
 import { createEffect, createSignal, onCleanup } from "solid-js";
 import { RangeInput } from "~/components/range-input/RangeInput";
 import { useMusicContext } from "~/lib/client/music-context";
-import {
-  formatTrackTimeSecs,
-  getCurrentTrackTime,
-} from "~/lib/client/music-utils";
+import { formatTrackTimeSecs, getCurrentTrackTime } from "~/lib/client/music-utils";
 
 export default function PlaybackTimeline() {
   const { state, action, dispatch } = useMusicContext().playerStore;
@@ -60,9 +57,7 @@ export default function PlaybackTimeline() {
 
   return (
     <>
-      <div class="playback-timestamp time-current">
-        {formatTrackTimeSecs(timeSecs())}
-      </div>
+      <div class="playback-timestamp time-current">{formatTrackTimeSecs(timeSecs())}</div>
       <div class="playback-timeline">
         <RangeInput
           value={timeSecs()}

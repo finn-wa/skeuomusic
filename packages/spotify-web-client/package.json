@@ -12,7 +12,8 @@
   "scripts": {
     "fmt": "oxfmt",
     "generate-client": "node openapi/generate-client.ts",
-    "lint": "oxlint"
+    "lint": "oxlint",
+    "test": "vitest run"
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "2.23.1",

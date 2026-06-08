@@ -46,10 +46,8 @@
     border-radius: 999px;
     border-left: var(--track-border-side);
     border-right: var(--track-border-side);
-    border-bottom: var(--track-border-bottom-width) solid
-      var(--track-border-bottom-color);
-    border-top: var(--track-border-top-width) solid
-      var(--track-border-top-color);
+    border-bottom: var(--track-border-bottom-width) solid var(--track-border-bottom-color);
+    border-top: var(--track-border-top-width) solid var(--track-border-top-color);
   }
 
   .progress {
@@ -86,11 +84,7 @@
    * 2. Light shine effect in quadrants 
    * 3. Circular bezel lines */
     background-image:
-      radial-gradient(
-        circle at center,
-        transparent 67%,
-        hsl(0 0 100% / 0.7) 70%
-      ),
+      radial-gradient(circle at center, transparent 67%, hsl(0 0 100% / 0.7) 70%),
       conic-gradient(
         white 0deg 10deg,
         transparent 80deg 100deg,

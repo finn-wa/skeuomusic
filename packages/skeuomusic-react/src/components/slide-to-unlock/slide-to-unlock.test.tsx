@@ -14,7 +14,9 @@ describe("SlideToUnlock", () => {
   });
 
   it("renders custom text via the text prop", async () => {
-    const screen = await render(<SlideToUnlock onUnlock={() => {}} text="slide to set up" />);
+    const screen = await render(
+      <SlideToUnlock onUnlock={() => {}} text="slide to set up" />,
+    );
     await expect
       .element(screen.getByRole("button", { name: /slide to set up/i }))
       .toBeInTheDocument();

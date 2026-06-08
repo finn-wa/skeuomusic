@@ -9,7 +9,10 @@ import {
 import { Outlet } from "@tanstack/react-router";
 import { render } from "vitest-browser-react";
 
-export async function renderWithRouter(ui: ReactElement, context?: Record<string, unknown>) {
+export async function renderWithRouter(
+  ui: ReactElement,
+  context?: Record<string, unknown>,
+) {
   const rootRoute = createRootRoute({ component: Outlet });
   const testRoute = createRoute({
     getParentRoute: () => rootRoute,

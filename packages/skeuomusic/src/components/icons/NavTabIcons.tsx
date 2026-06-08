@@ -11,12 +11,7 @@ export function NavTabMoreIcon() {
           <feOffset dx="0" dy="3" />
           <feGaussianBlur result="blur" stdDeviation="2.5" />
           <feFlood flood-color="black" flood-opacity="0.6" result="flood" />
-          <feComposite
-            in="flood"
-            in2="SourceGraphic"
-            operator="in"
-            result="composite"
-          />
+          <feComposite in="flood" in2="SourceGraphic" operator="in" result="composite" />
           <feBlend in="blur" in2="composite" />
         </filter>
         <filter id="glow">
@@ -31,11 +26,7 @@ export function NavTabMoreIcon() {
 
         <g id="prettyCircle">
           <use href="#circle" filter="url(#glow)" />
-          <use
-            href="#circle"
-            clip-path="url(#circleClip)"
-            filter="url(#circleEffects)"
-          />
+          <use href="#circle" clip-path="url(#circleClip)" filter="url(#circleEffects)" />
         </g>
       </defs>
 
@@ -55,12 +46,7 @@ export function NavTabSongsIcon() {
           <feOffset dx="0" dy="3" />
           <feGaussianBlur result="blur" stdDeviation="2.5" />
           <feFlood flood-color="black" flood-opacity="0.6" result="flood" />
-          <feComposite
-            in="flood"
-            in2="SourceGraphic"
-            operator="in"
-            result="composite"
-          />
+          <feComposite in="flood" in2="SourceGraphic" operator="in" result="composite" />
           <feBlend in="blur" in2="composite" />
         </filter>
         <filter id="noteGlow">
@@ -91,11 +77,7 @@ export function NavTabSongsIcon() {
 
       <g>
         <use href="#note" filter="url(#noteGlow)" />
-        <use
-          href="#note"
-          clip-path="url(#noteClip)"
-          filter="url(#noteEffects)"
-        />
+        <use href="#note" clip-path="url(#noteClip)" filter="url(#noteEffects)" />
       </g>
     </svg>
   );
@@ -126,12 +108,7 @@ export function NavTabPlaylistsIcon() {
           <feOffset dx="0" dy="3" />
           <feGaussianBlur result="blur" stdDeviation="2.5" />
           <feFlood flood-color="black" flood-opacity="0.6" result="flood" />
-          <feComposite
-            in="flood"
-            in2="SourceGraphic"
-            operator="in"
-            result="composite"
-          />
+          <feComposite in="flood" in2="SourceGraphic" operator="in" result="composite" />
           <feBlend in="blur" in2="composite" />
         </filter>
         <filter id="playlistsGlow">
@@ -190,12 +167,7 @@ export function NavTabAlbumIcon() {
           <feOffset dx="0" dy="3" />
           <feGaussianBlur result="blur" stdDeviation="2.5" />
           <feFlood flood-color="black" flood-opacity="0.6" result="flood" />
-          <feComposite
-            in="flood"
-            in2="SourceGraphic"
-            operator="in"
-            result="composite"
-          />
+          <feComposite in="flood" in2="SourceGraphic" operator="in" result="composite" />
           <feBlend in="blur" in2="composite" />
         </filter>
         <filter id="albumsGlow">
@@ -257,12 +229,7 @@ export function NavTabArtistIcon() {
           <feOffset dx="0" dy="3" />
           <feGaussianBlur result="blur" stdDeviation="2.5" />
           <feFlood flood-color="black" flood-opacity="0.6" result="flood" />
-          <feComposite
-            in="flood"
-            in2="SourceGraphic"
-            operator="in"
-            result="composite"
-          />
+          <feComposite in="flood" in2="SourceGraphic" operator="in" result="composite" />
           <feBlend in="blur" in2="composite" />
         </filter>
         <filter id="artistsGlow">

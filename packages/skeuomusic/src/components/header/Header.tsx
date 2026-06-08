@@ -18,12 +18,7 @@ export default function Header() {
       return undefined;
     },
   });
-  return (
-    <HeaderComponent
-      title={context()?.title}
-      backButton={context()?.backButton}
-    />
-  );
+  return <HeaderComponent title={context()?.title} backButton={context()?.backButton} />;
 }
 
 export type HeaderProps = HeaderRouteContext;

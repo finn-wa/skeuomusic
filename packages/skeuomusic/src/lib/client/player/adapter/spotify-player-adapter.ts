@@ -15,18 +15,12 @@ import {
   playerActionHandler,
 } from "../store/player-action-listeners";
 import type { PlayerAction } from "../store/player-actions";
-import type {
-  PlaybackDevice,
-  PlayerState,
-  Repeat,
-} from "../store/player-state";
+import type { PlaybackDevice, PlayerState, Repeat } from "../store/player-state";
 import type { PlayerStore } from "../store/player-store";
 
 export async function getSpotifyPlayerState(
   playerApi: PlayerApi,
-): Promise<
-  { success: true; state: PlayerState } | { success: false; error: unknown }
-> {
+): Promise<{ success: true; state: PlayerState } | { success: false; error: unknown }> {
   let spotifyState: CurrentlyPlayingContextObject | null | undefined;
   try {
     spotifyState = await playerApi.getInformationAboutTheUsersCurrentPlayback();
@@ -140,43 +134,40 @@ class SpotifyPlayerAdapter {
     syncExternalState: () => {},
   });
 
-  private readonly webPlayerActionHandler = playerActionHandler(
-    "Spotify Web Player",
-    {
-      play: () => {
-        return this.requiredWebPlayer().togglePlay();
-      },
-      pause: async () => {
-        return this.requiredWebPlayer().togglePlay();
-      },
-      setVolume: ({ volume }) => {
-        return this.requiredWebPlayer().setVolume(1.0 / volume);
-      },
-      seek: ({ positionMs }) => {
-        return this.requiredWebPlayer().seek(positionMs);
-      },
-      next: () => {
-        return this.requiredWebPlayer().nextTrack();
-      },
-      previous: () => {
-        return this.requiredWebPlayer().previousTrack();
-      },
-      requestSync: async () => {
-        const webPlayer = this.requiredWebPlayer();
-        const state = await webPlayer.getCurrentState();
-        if (state == null) {
-          console.error("Web player is not connected, cannot get state");
-          return;
-        }
-        this.patchStoreState(this.webPlayerStateToStoreState(state));
-      },
-      setDevice: ({ device }) => this.setDevice(device),
-      syncExternalState: () => {},
-      setRepeat: (action) => this.apiActionHandler.setRepeat(action),
-      setShuffle: (action) => this.apiActionHandler.setShuffle(action),
-      setSong: (action) => this.apiActionHandler.setSong(action),
+  private readonly webPlayerActionHandler = playerActionHandler("Spotify Web Player", {
+    play: () => {
+      return this.requiredWebPlayer().togglePlay();
     },
-  );
+    pause: async () => {
+      return this.requiredWebPlayer().togglePlay();
+    },
+    setVolume: ({ volume }) => {
+      return this.requiredWebPlayer().setVolume(1.0 / volume);
+    },
+    seek: ({ positionMs }) => {
+      return this.requiredWebPlayer().seek(positionMs);
+    },
+    next: () => {
+      return this.requiredWebPlayer().nextTrack();
+    },
+    previous: () => {
+      return this.requiredWebPlayer().previousTrack();
+    },
+    requestSync: async () => {
+      const webPlayer = this.requiredWebPlayer();
+      const state = await webPlayer.getCurrentState();
+      if (state == null) {
+        console.error("Web player is not connected, cannot get state");
+        return;
+      }
+      this.patchStoreState(this.webPlayerStateToStoreState(state));
+    },
+    setDevice: ({ device }) => this.setDevice(device),
+    syncExternalState: () => {},
+    setRepeat: (action) => this.apiActionHandler.setRepeat(action),
+    setShuffle: (action) => this.apiActionHandler.setShuffle(action),
+    setSong: (action) => this.apiActionHandler.setSong(action),
+  });
 
   constructor(
     private readonly auth: AuthContext,

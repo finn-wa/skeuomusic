@@ -32,7 +32,11 @@
   .track {
     height: var(--track-height);
     top: calc(50% - (var(--track-height) / 2));
-    background: linear-gradient(to bottom, var(--track-gradient-top), var(--track-gradient-bottom));
+    background: linear-gradient(
+      to bottom,
+      var(--track-gradient-top),
+      var(--track-gradient-bottom)
+    );
     box-sizing: border-box;
     display: flex;
     align-items: center;

@@ -3,7 +3,10 @@ import ProvidedAccessTokenStrategy from "./ProvidedAccessTokenStrategy";
 
 describe("ProvidedAccessTokenStrategy", () => {
   it("getAccesToken, no expires property provided, generates one", async () => {
-    const sut = new ProvidedAccessTokenStrategy("some-client-id", tokenWithoutExpiresProperty());
+    const sut = new ProvidedAccessTokenStrategy(
+      "some-client-id",
+      tokenWithoutExpiresProperty(),
+    );
     const token = await sut.getAccessToken();
 
     expect(token!.expires).toBeDefined();

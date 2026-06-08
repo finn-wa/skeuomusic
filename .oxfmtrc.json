@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "ignorePatterns": ["routeTree.gen.ts"],
-  "printWidth": 80,
+  "ignorePatterns": ["**/routeTree.gen.ts"],
+  "printWidth": 90,
   "jsdoc": {
     "keepUnparsableExampleIndent": true,
     "preferCodeFences": true,

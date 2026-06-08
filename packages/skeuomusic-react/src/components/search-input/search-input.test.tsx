@@ -44,7 +44,9 @@ describe("SearchInput", () => {
       .element(screen.getByRole("button", { name: "Clear search" }))
       .not.toBeInTheDocument();
     await userEvent.fill(input, "rock");
-    await expect.element(screen.getByRole("button", { name: "Clear search" })).toBeInTheDocument();
+    await expect
+      .element(screen.getByRole("button", { name: "Clear search" }))
+      .toBeInTheDocument();
   });
 
   it("clicking the clear button clears the input and calls onQueryChanged with empty string", async () => {

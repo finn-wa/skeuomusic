@@ -1,8 +1,4 @@
-import type {
-  PlayerAction,
-  PlayerActionKind,
-  PlayerActions,
-} from "./player-actions";
+import type { PlayerAction, PlayerActionKind, PlayerActions } from "./player-actions";
 
 export type PlayerActionListener<T extends PlayerAction = PlayerAction> = (
   action: T,
@@ -12,10 +8,7 @@ export type PlayerActionHandler = {
   [K in PlayerActionKind]: PlayerActionListener<PlayerActions[K]>;
 };
 
-export function playerActionHandler(
-  name: string,
-  handler: PlayerActionHandler,
-) {
+export function playerActionHandler(name: string, handler: PlayerActionHandler) {
   return {
     ...handler,
     applyAction<T extends PlayerAction>(action: T) {

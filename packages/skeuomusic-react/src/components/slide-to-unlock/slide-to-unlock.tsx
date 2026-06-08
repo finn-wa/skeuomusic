@@ -9,8 +9,11 @@ export type SlideToUnlockProps = {
   onUnlock: () => void;
 };
 
-/** iOS 6 lock-screen-style slide to unlock component */
-export default function SlideToUnlock({ onUnlock, text = "slide to unlock" }: SlideToUnlockProps) {
+/** IOS 6 lock-screen-style slide to unlock component */
+export default function SlideToUnlock({
+  onUnlock,
+  text = "slide to unlock",
+}: SlideToUnlockProps) {
   // The arrow image that the user drags along the track
   const thumbRef = useRef<HTMLImageElement>(null);
   // The slider track that contains the arrow
@@ -59,7 +62,8 @@ export default function SlideToUnlock({ onUnlock, text = "slide to unlock" }: Sl
   }
 
   /**
-   * Computes the bounds for the thumb's X position in the page. Updates boundsRef with the result.
+   * Computes the bounds for the thumb's X position in the page. Updates boundsRef with
+   * the result.
    */
   function computeBounds() {
     const trackRect = trackRef.current!.getBoundingClientRect();
@@ -73,8 +77,9 @@ export default function SlideToUnlock({ onUnlock, text = "slide to unlock" }: Sl
   /**
    * Updates the thumb's position along the slider.
    *
-   * @param position the x position on the page in pixels
-   * @param transition a transition specifier for translate (e.g. "400ms"), or null to disable transitions
+   * @param position The x position on the page in pixels
+   * @param transition A transition specifier for translate (e.g. "400ms"), or null to
+   *   disable transitions
    */
   function setThumbPosition(position: number, transition: string | null) {
     const bounds = getBounds();
@@ -99,7 +104,8 @@ export default function SlideToUnlock({ onUnlock, text = "slide to unlock" }: Sl
     setTextAnimation("static");
     // Re-compute bounds in case the window size has changed
     computeBounds();
-    pointerOffset.current = event.clientX - thumbRef.current!.getBoundingClientRect().left;
+    pointerOffset.current =
+      event.clientX - thumbRef.current!.getBoundingClientRect().left;
     // keep drag alive outside element
     thumbRef.current!.setPointerCapture(event.pointerId);
   }

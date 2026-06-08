@@ -10,9 +10,7 @@ import { createSpotifyAuth } from "~/lib/client/spotify-auth";
 export const Route = createRootRoute({
   context: () => {},
   component: () => {
-    const [spotifyAuth, setSpotifyAuth] = createSignal<
-      SpotifyAuth | undefined
-    >();
+    const [spotifyAuth, setSpotifyAuth] = createSignal<SpotifyAuth | undefined>();
 
     const context: AuthContext = {
       spotifyAuth,

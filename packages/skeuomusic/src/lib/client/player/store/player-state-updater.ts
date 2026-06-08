@@ -18,9 +18,7 @@ export class PlayerStateUpdater {
         const epochMs = Date.now();
         this.setState("playedAt", {
           epochMs,
-          trackMs:
-            this.state.playedAt.trackMs +
-            (epochMs - this.state.playedAt.epochMs),
+          trackMs: this.state.playedAt.trackMs + (epochMs - this.state.playedAt.epochMs),
         });
       }
     },

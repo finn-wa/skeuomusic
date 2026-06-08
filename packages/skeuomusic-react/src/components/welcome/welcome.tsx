@@ -9,7 +9,10 @@ export default function Welcome() {
       <img id="unlock-logo" height={256} src={musicIcon} alt="skeuomusic" />
       <SlideToUnlock
         onUnlock={() =>
-          navigate({ to: "/music/library/artists", viewTransition: { types: ["unlock"] } })
+          navigate({
+            to: "/music/library/artists",
+            viewTransition: { types: ["unlock"] },
+          })
         }
       />
     </main>

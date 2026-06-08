@@ -24,9 +24,7 @@ export default function Music() {
   const requiredSpotifyAuth = authContext.requiredSpotifyAuth;
 
   const playerStore = createPlayerStore();
-  const [spotifyPlayer, setSpotifyPlayer] = createSignal<
-    SpotifyPlayer | undefined
-  >();
+  const [spotifyPlayer, setSpotifyPlayer] = createSignal<SpotifyPlayer | undefined>();
 
   const musicContext: MusicContext = {
     playerStore,
@@ -42,10 +40,7 @@ export default function Music() {
       },
     },
   };
-  const spotifyPlayerAdapter = createSpotifyPlayerAdapter(
-    authContext,
-    musicContext,
-  );
+  const spotifyPlayerAdapter = createSpotifyPlayerAdapter(authContext, musicContext);
   playerStore.listeners.add(spotifyPlayerAdapter);
 
   const [syncInterval, setSyncInterval] = createSignal<number | undefined>();
@@ -59,8 +54,7 @@ export default function Music() {
   };
 
   onMount(() => {
-    const requestSync = () =>
-      playerStore.dispatch(playerStore.action.requestSync());
+    const requestSync = () => playerStore.dispatch(playerStore.action.requestSync());
     requestSync();
 
     clearSyncInterval();

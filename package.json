@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "lint": "oxlint",
-    "fmt": "oxfmt"
+    "fmt": "oxfmt -c .oxfmtrc.json"
   },
   "devDependencies": {
     "lint-staged": "^17.0.4",
@@ -12,18 +12,14 @@
     "oxlint-tsgolint": "^0.22.1"
   },
   "lint-staged": {
-    "*": "oxfmt"
+    "*": "oxfmt -c .oxfmtrc.json"
   },
   "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "11.5.2",
-      "onFail": "warn"
-    },
     "runtime": {
       "name": "node",
       "version": "^24",
       "onFail": "warn"
     }
-  }
+  },
+  "packageManager": "pnpm@11.5.2+sha512.71c631e382066efc25625d5cf029075de07b61b37f6e27350fbd84b1bda5864c8c1967adc280776b45c30a715c0359a3be08fef42d5bb09e2b99029979692916"
 }

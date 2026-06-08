@@ -1,5 +1,9 @@
 import { Errors } from "./enums/Errors";
-import { type AnthemEventListener, AnthemEvents, type AnthemEventType } from "./enums/Events";
+import {
+  type AnthemEventListener,
+  AnthemEvents,
+  type AnthemEventType,
+} from "./enums/Events";
 import { Messages, type MessageType } from "./enums/Messages";
 import { PlayerError } from "./error/PlayerError";
 import type { Message } from "./shared/Message";
@@ -12,7 +16,10 @@ const defaultIframeFactory = (hostWindow: Window) => (src: string) => {
   const id = "spotify-playback-sdk-container";
   const existingIframe = hostWindow.document.getElementById(id);
   if (existingIframe != null) {
-    if (existingIframe instanceof HTMLIFrameElement && existingIframe.contentWindow != null) {
+    if (
+      existingIframe instanceof HTMLIFrameElement &&
+      existingIframe.contentWindow != null
+    ) {
       console.log("Connecting to existing Spotify playback iframe...");
       return existingIframe.contentWindow;
     }
@@ -139,8 +146,8 @@ export function initSpotifyPlayer(
 
     private _onEvent(e: { name: MessageType; eventData: unknown }): void {
       const name = e.name;
-      this._getListeners(AnthemEvents[name as keyof typeof AnthemEvents]).forEach((listener) =>
-        listener(e.eventData as any),
+      this._getListeners(AnthemEvents[name as keyof typeof AnthemEvents]).forEach(
+        (listener) => listener(e.eventData as any),
       );
     }
 
@@ -151,7 +158,10 @@ export function initSpotifyPlayer(
             this._sendMessage(messages.token(token, ref));
           })
           .catch((error) => {
-            const playerError = new PlayerError(Errors.INVALID_OAUTH, "Error in getOAuthToken");
+            const playerError = new PlayerError(
+              Errors.INVALID_OAUTH,
+              "Error in getOAuthToken",
+            );
             playerError.cause = error;
             throw playerError;
           });
@@ -219,7 +229,10 @@ export function initSpotifyPlayer(
     }
 
     /** Create a new event listener in the Web Playback SDK. */
-    on<T extends AnthemEventType>(eventType: T, listener: AnthemEventListener[T]): boolean {
+    on<T extends AnthemEventType>(
+      eventType: T,
+      listener: AnthemEventListener[T],
+    ): boolean {
       if (this._eventListeners[eventType].includes(listener)) {
         return false;
       }
@@ -255,7 +268,9 @@ export function initSpotifyPlayer(
       }
       const listeners = this._eventListeners[eventName];
       if (listeners?.length) {
-        this._eventListeners[eventName] = listeners.filter((x) => x !== listener) as any[];
+        this._eventListeners[eventName] = listeners.filter(
+          (x) => x !== listener,
+        ) as any[];
       }
       return true;
     }

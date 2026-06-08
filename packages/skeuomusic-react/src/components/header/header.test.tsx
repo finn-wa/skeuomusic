@@ -31,12 +31,16 @@ describe("HeaderComponent", () => {
 
   it("renders a left arrow with the correct label when backButton is provided", async () => {
     const screen = await render(<HeaderComponent backButton={{ label: "Library" }} />);
-    await expect.element(screen.getByTestId("nav-arrow-left")).toHaveTextContent("Library");
+    await expect
+      .element(screen.getByTestId("nav-arrow-left"))
+      .toHaveTextContent("Library");
   });
 
   it("defaults the back button href to '..' when no href is given", async () => {
     const screen = await render(<HeaderComponent backButton={{ label: "Library" }} />);
-    await expect.element(screen.getByTestId("nav-arrow-left")).toHaveAttribute("href", "..");
+    await expect
+      .element(screen.getByTestId("nav-arrow-left"))
+      .toHaveAttribute("href", "..");
   });
 
   it("uses the provided href for the back button", async () => {

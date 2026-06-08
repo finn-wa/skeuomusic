@@ -210,7 +210,10 @@ const measuredFonts = {
   },
 } satisfies Record<string, Record<MeasuredFontChar, number>>;
 
-export function estimateTextWidth(fontKey: keyof typeof measuredFonts, text: string): number {
+export function estimateTextWidth(
+  fontKey: keyof typeof measuredFonts,
+  text: string,
+): number {
   let width = 0;
   const font = measuredFonts[fontKey];
   for (const char of text) {

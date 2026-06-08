@@ -26,8 +26,12 @@ describe("NavArrowButton", () => {
 
   describe("link and text", () => {
     it("renders a link pointing to href", async () => {
-      const screen = await renderWithRouter(<NavArrowButton {...defaultProps} direction="right" />);
-      await expect.element(screen.getByRole("link")).toHaveAttribute("href", defaultProps.href);
+      const screen = await renderWithRouter(
+        <NavArrowButton {...defaultProps} direction="right" />,
+      );
+      await expect
+        .element(screen.getByRole("link"))
+        .toHaveAttribute("href", defaultProps.href);
     });
 
     it("renders the label text", async () => {
@@ -45,7 +49,9 @@ describe("NavArrowButton", () => {
           <NavArrowButton {...defaultProps} text="Radiohead" direction="left" />,
         </div>,
       );
-      await expect(screen.getByRole("link")).toMatchScreenshot("nav-arrow-secondary-left");
+      await expect(screen.getByRole("link")).toMatchScreenshot(
+        "nav-arrow-secondary-left",
+      );
     });
 
     it("points right when direction=right", { tags: "visual" }, async () => {
@@ -54,13 +60,20 @@ describe("NavArrowButton", () => {
           <NavArrowButton {...defaultProps} direction="right" />
         </div>,
       );
-      await expect(screen.getByRole("link")).toMatchScreenshot("nav-arrow-secondary-right");
+      await expect(screen.getByRole("link")).toMatchScreenshot(
+        "nav-arrow-secondary-right",
+      );
     });
 
     it("applies player styling when kind=player", { tags: "visual" }, async () => {
       const screen = await renderWithRouter(
         <div style={{ display: "flex" }}>
-          <NavArrowButton href="/player" text="Radiohead" kind="player" direction="left" />
+          <NavArrowButton
+            href="/player"
+            text="Radiohead"
+            kind="player"
+            direction="left"
+          />
         </div>,
       );
       await expect(screen.getByRole("link")).toMatchScreenshot("nav-arrow-player-left");
@@ -69,7 +82,12 @@ describe("NavArrowButton", () => {
     it("applies primary styling when kind=primary", { tags: "visual" }, async () => {
       const screen = await renderWithRouter(
         <div style={{ display: "flex" }}>
-          <NavArrowButton {...defaultProps} text="Now Playing" direction="right" kind="primary" />
+          <NavArrowButton
+            {...defaultProps}
+            text="Now Playing"
+            direction="right"
+            kind="primary"
+          />
         </div>,
       );
       await expect(screen.getByRole("link")).toMatchScreenshot("nav-arrow-primary-right");
@@ -78,10 +96,17 @@ describe("NavArrowButton", () => {
     it("applies secondary styling when kind=secondary", { tags: "visual" }, async () => {
       const screen = await renderWithRouter(
         <div style={{ display: "flex" }}>
-          <NavArrowButton {...defaultProps} text="Radiohead" kind="secondary" direction="left" />
+          <NavArrowButton
+            {...defaultProps}
+            text="Radiohead"
+            kind="secondary"
+            direction="left"
+          />
         </div>,
       );
-      await expect(screen.getByRole("link")).toMatchScreenshot("nav-arrow-secondary-left");
+      await expect(screen.getByRole("link")).toMatchScreenshot(
+        "nav-arrow-secondary-left",
+      );
     });
   });
 
@@ -91,7 +116,9 @@ describe("NavArrowButton", () => {
       const { container } = await renderWithRouter(
         <NavArrowButton {...defaultProps} direction="left" text="Artists" />,
       );
-      const widthValue = parseFloat(container.querySelector("svg")?.getAttribute("width") ?? "");
+      const widthValue = parseFloat(
+        container.querySelector("svg")?.getAttribute("width") ?? "",
+      );
       expect(widthValue).toBe(80 + 24);
     });
   });

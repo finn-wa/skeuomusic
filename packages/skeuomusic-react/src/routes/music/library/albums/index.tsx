@@ -1,5 +1,8 @@
 import ErrorBoundary from "@/components/error-boundary/error-boundary";
-import PageMessage, { ErrorPage, LoadingPage } from "@/components/page-message/page-message";
+import PageMessage, {
+  ErrorPage,
+  LoadingPage,
+} from "@/components/page-message/page-message";
 import SearchInput from "@/components/search-input/search-input";
 import { PRELOAD_STALE_TIME, STALE_TIME } from "@/shared/constants";
 import type { Album } from "@/shared/types";

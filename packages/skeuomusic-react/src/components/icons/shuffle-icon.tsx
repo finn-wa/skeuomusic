@@ -48,7 +48,13 @@ export function ShuffleIcon({ height }: { height: string; shuffle: boolean }) {
         </clipPath>
 
         <filter id={ids.shadow} height="150%" width="150%" x="-25%" y="-25%">
-          <feDropShadow dx="0" dy="-1" stdDeviation=".1" floodColor="black" floodOpacity="0.5" />
+          <feDropShadow
+            dx="0"
+            dy="-1"
+            stdDeviation=".1"
+            floodColor="black"
+            floodOpacity="0.5"
+          />
         </filter>
       </defs>
 

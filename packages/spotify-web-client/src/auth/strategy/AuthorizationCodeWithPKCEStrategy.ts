@@ -46,7 +46,9 @@ export default class AuthorizationCodeWithPKCEStrategy implements SpotifyAuth {
   }
 
   public async getAccessToken(): Promise<AccessToken | null> {
-    const token = await this.cache.get<AccessToken>(AuthorizationCodeWithPKCEStrategy.cacheKey);
+    const token = await this.cache.get<AccessToken>(
+      AuthorizationCodeWithPKCEStrategy.cacheKey,
+    );
     return token;
   }
 
@@ -120,7 +122,10 @@ export default class AuthorizationCodeWithPKCEStrategy implements SpotifyAuth {
     return `https://accounts.spotify.com/authorize?${params.toString()}`;
   }
 
-  protected async exchangeCodeForToken(code: string, verifier: string): Promise<AccessToken> {
+  protected async exchangeCodeForToken(
+    code: string,
+    verifier: string,
+  ): Promise<AccessToken> {
     const params = new URLSearchParams();
     params.append("client_id", this.clientId);
     params.append("grant_type", "authorization_code");

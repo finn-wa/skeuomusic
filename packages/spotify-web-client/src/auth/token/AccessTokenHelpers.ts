@@ -18,7 +18,10 @@ export function calculateAccessTokenExpiry(item: AccessToken) {
   return Date.now() + item.expires_in * 1000;
 }
 
-async function refreshAccessToken(clientId: string, refreshToken: string): Promise<AccessToken> {
+async function refreshAccessToken(
+  clientId: string,
+  refreshToken: string,
+): Promise<AccessToken> {
   const params = new URLSearchParams();
   params.append("client_id", clientId);
   params.append("grant_type", "refresh_token");
