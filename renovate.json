@@ -1,4 +1,4 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "ignorePaths": ["packages/skeuomusic/**"]
+  "ignorePaths": ["packages/skeuomusic/package.json"]
 }
