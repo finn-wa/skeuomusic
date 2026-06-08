@@ -31,4 +31,4 @@ jobs:
         run: pnpm --filter skeuomusic-react exec playwright install chromium --with-deps
 
       - name: Test
-        run: pnpm --recursive test
+        run: pnpm --recursive run test:ci

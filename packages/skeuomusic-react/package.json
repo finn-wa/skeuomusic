@@ -11,7 +11,8 @@
     "fmt": "oxfmt",
     "lint": "oxlint",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:ci": "vitest run --tags-filter=!visual"
   },
   "dependencies": {
     "@tanstack/react-devtools": "latest",
