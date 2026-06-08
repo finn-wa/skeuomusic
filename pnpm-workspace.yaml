@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=https://json.schemastore.org/pnpm-workspace.json
 packages:
-  - "packages/*"
+  - "packages/skeuomusic-react"
+  - "packages/spotify-web-client"
 
 catalog:
   "@types/node": "24.12.4"

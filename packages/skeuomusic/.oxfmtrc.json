@@ -1,5 +1,0 @@
-{
-  "$schema": "../../node_modules/oxfmt/configuration_schema.json",
-  "extends": ["../../.oxfmtrc.json"],
-  "ignorePatterns": ["src/routeTree.gen.ts"]
-}

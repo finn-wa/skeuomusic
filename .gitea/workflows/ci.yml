@@ -17,7 +17,7 @@ jobs:
         with:
           cache: true
           run_install: |
-            - args: ["--filter=!skeuomusic", "--frozen-lockfile"]
+            - args: ["--frozen-lockfile"]
 
       - uses: actions/setup-node@v6.4.0
         with:
@@ -31,4 +31,4 @@ jobs:
         run: pnpm --filter skeuomusic-react exec playwright install chromium --with-deps
 
       - name: Test
-        run: pnpm --filter=!skeuomusic test
+        run: pnpm --recursive test
