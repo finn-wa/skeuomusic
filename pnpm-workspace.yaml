@@ -1,10 +1,13 @@
+# yaml-language-server: $schema=https://json.schemastore.org/pnpm-workspace.json
 packages:
   - "packages/*"
 
 catalog:
-  "@types/node": "24"
-  typescript: "6"
-  vitest: "4.0.4"
+  "@types/node": "24.12.4"
+  typescript: "6.0.2"
+  vitest: "4.1.7"
+  "@vitest/browser": "4.1.7"
+  "@vitest/browser-playwright": "4.1.7"
 
 allowBuilds:
   "@nestjs/core": false

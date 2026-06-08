@@ -18,7 +18,7 @@
     "@tanstack/solid-router": "1.131.27",
     "@tanstack/solid-router-devtools": "1.131.27",
     "@tanstack/solid-start": "1.131.27",
-    "solid-js": "1.9.9",
+    "solid-js": "1.9.12",
     "spotify-web-client": "workspace:*"
   },
   "devDependencies": {
@@ -30,9 +30,8 @@
     "dotenv": "17.2.3",
     "jsdom": "27.0.1",
     "typescript": "catalog:",
-    "vite": "7.1.12",
-    "vite-plugin-solid": "2.11.9",
-    "vite-tsconfig-paths": "5.1.4",
-    "vitest": "catalog:"
+    "vite": "8",
+    "vite-plugin-solid": "2.11.12",
+    "vitest": "4.0.4"
   }
 }
