@@ -15,15 +15,15 @@
     "test:ci": "vitest run --tags-filter=!visual"
   },
   "dependencies": {
-    "@tanstack/react-devtools": "latest",
-    "@tanstack/react-router": "latest",
-    "@tanstack/react-router-devtools": "latest",
+    "@tanstack/react-devtools": "0.10.5",
+    "@tanstack/react-router": "1.170.15",
+    "@tanstack/react-router-devtools": "1.167.0",
     "@tanstack/router-plugin": "1.132.0",
     "react": "19.2.0",
     "react-dom": "19.2.0"
   },
   "devDependencies": {
-    "@tanstack/devtools-vite": "latest",
+    "@tanstack/devtools-vite": "0.7.0",
     "@types/node": "catalog:",
     "@types/react": "19.2.0",
     "@types/react-dom": "19.2.0",
