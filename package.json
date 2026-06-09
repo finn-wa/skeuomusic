@@ -6,7 +6,7 @@
     "fmt": "oxfmt -c .oxfmtrc.json"
   },
   "devDependencies": {
-    "lint-staged": "17.0.4",
+    "lint-staged": "17.0.7",
     "oxfmt": "0.53.0",
     "oxlint": "1.68.0",
     "oxlint-tsgolint": "0.23.0"
