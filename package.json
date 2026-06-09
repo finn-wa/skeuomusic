@@ -7,7 +7,7 @@
   },
   "devDependencies": {
     "lint-staged": "17.0.4",
-    "oxfmt": "0.50.0",
+    "oxfmt": "0.53.0",
     "oxlint": "1.65.0",
     "oxlint-tsgolint": "0.22.1"
   },
