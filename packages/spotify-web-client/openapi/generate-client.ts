@@ -3,6 +3,7 @@ import { cpSync, mkdirSync, renameSync, rmSync, writeFileSync } from "node:fs";
 import type { OpenAPIObject } from "openapi3-ts/oas30";
 import YAML from "yaml";
 import { processOpenApiSpec } from "./process-spec.ts";
+import { resolve } from "node:path";
 
 const cwd = "./openapi";
 const originalSpecPath = `${cwd}/spec/spotify-original.yml`;
@@ -69,8 +70,11 @@ function saveGeneratedSourceCode() {
   cpSync(`${cwd}/client/src`, `${cwd}/client/openapi`, { recursive: true });
   // Then move the copy into ./src
   renameSync(`${cwd}/client/openapi`, "./src/openapi");
-  // Format it
-  spawnSync("pnpm", ["oxfmt", "./src/openapi"], { stdio: "inherit" });
+  // Format it from the root as otherwise oxfmt doesn't seem to load the config properly
+  spawnSync("pnpm", ["run", "fmt", "./packages/spotify-web-client"], {
+    stdio: "inherit",
+    cwd: resolve("../.."),
+  });
   console.log("(4/4) Done.");
 }
 

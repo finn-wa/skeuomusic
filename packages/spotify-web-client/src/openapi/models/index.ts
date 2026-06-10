@@ -7,8 +7,9 @@
 export interface AddItemsToPlaylistRequest {
   [key: string]: any | any;
   /**
-   * A JSON array of the [Spotify URIs](/documentation/web-api/concepts/spotify-uris-ids)
-   * to add. For example: `{"uris":
+   * A JSON array of the [Spotify
+   * URIs](/documentation/web-api/concepts/spotify-uris-ids) to add. For example:
+   * `{"uris":
    * ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh","spotify:track:1301WleyT98MSxVHPZCA6M",
    * "spotify:episode:512ojhOuo1ktJprKbVcKyQ"]}`<br/>A maximum of 100 items can be added
    * in one request. _**Note**: if the `uris` parameter is present in the query string,
@@ -21,8 +22,8 @@ export interface AddItemsToPlaylistRequest {
   /**
    * The position to insert the items, a zero-based index. For example, to insert the
    * items in the first position: `position=0` ; to insert the items in the third
-   * position: `position=2`. If omitted, the items will be appended to the playlist. Items
-   * are added in the order they appear in the uris array. For example: `{"uris":
+   * position: `position=2`. If omitted, the items will be appended to the playlist.
+   * Items are added in the order they appear in the uris array. For example: `{"uris":
    * ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh","spotify:track:1301WleyT98MSxVHPZCA6M"],
    * "position": 3}`
    *
@@ -306,8 +307,8 @@ export interface AlbumObject {
    */
   label: string;
   /**
-   * The popularity of the album. The value will be between 0 and 100, with 100 being the
-   * most popular.
+   * The popularity of the album. The value will be between 0 and 100, with 100 being
+   * the most popular.
    *
    * @memberof AlbumObject
    * @deprecated
@@ -542,8 +543,8 @@ export interface ArtistObject {
    */
   followers?: FollowersObject;
   /**
-   * A list of the genres the artist is associated with. If not yet classified, the array
-   * is empty.
+   * A list of the genres the artist is associated with. If not yet classified, the
+   * array is empty.
    *
    * @memberof ArtistObject
    * @deprecated
@@ -579,9 +580,9 @@ export interface ArtistObject {
    */
   name?: string;
   /**
-   * The popularity of the artist. The value will be between 0 and 100, with 100 being the
-   * most popular. The artist's popularity is calculated from the popularity of all the
-   * artist's tracks.
+   * The popularity of the artist. The value will be between 0 and 100, with 100 being
+   * the most popular. The artist's popularity is calculated from the popularity of all
+   * the artist's tracks.
    *
    * @memberof ArtistObject
    * @deprecated
@@ -627,17 +628,17 @@ export interface AudioAnalysisObject {
    */
   track?: AudioAnalysisObjectTrack;
   /**
-   * The time intervals of the bars throughout the track. A bar (or measure) is a segment
-   * of time defined as a given number of beats.
+   * The time intervals of the bars throughout the track. A bar (or measure) is a
+   * segment of time defined as a given number of beats.
    *
    * @memberof AudioAnalysisObject
    * @type {TimeIntervalObject[]}
    */
   bars?: Array<TimeIntervalObject>;
   /**
-   * The time intervals of beats throughout the track. A beat is the basic time unit of a
-   * piece of music; for example, each tick of a metronome. Beats are typically multiples
-   * of tatums.
+   * The time intervals of beats throughout the track. A beat is the basic time unit of
+   * a piece of music; for example, each tick of a metronome. Beats are typically
+   * multiples of tatums.
    *
    * @memberof AudioAnalysisObject
    * @type {TimeIntervalObject[]}
@@ -660,8 +661,8 @@ export interface AudioAnalysisObject {
    */
   segments?: Array<SegmentObject>;
   /**
-   * A tatum represents the lowest regular pulse train that a listener intuitively infers
-   * from the timing of perceived musical events (segments).
+   * A tatum represents the lowest regular pulse train that a listener intuitively
+   * infers from the timing of perceived musical events (segments).
    *
    * @memberof AudioAnalysisObject
    * @type {TimeIntervalObject[]}
@@ -800,10 +801,10 @@ export interface AudioAnalysisObjectTrack {
    */
   start_of_fade_out?: number;
   /**
-   * The overall loudness of a track in decibels (dB). Loudness values are averaged across
-   * the entire track and are useful for comparing relative loudness of tracks. Loudness
-   * is the quality of a sound that is the primary psychological correlate of physical
-   * strength (amplitude). Values typically range between -60 and 0 db.
+   * The overall loudness of a track in decibels (dB). Loudness values are averaged
+   * across the entire track and are useful for comparing relative loudness of tracks.
+   * Loudness is the quality of a sound that is the primary psychological correlate of
+   * physical strength (amplitude). Values typically range between -60 and 0 db.
    *
    * @memberof AudioAnalysisObjectTrack
    * @type {number}
@@ -826,9 +827,9 @@ export interface AudioAnalysisObjectTrack {
    */
   tempo_confidence?: number;
   /**
-   * An estimated time signature. The time signature (meter) is a notational convention to
-   * specify how many beats are in each bar (or measure). The time signature ranges from 3
-   * to 7 indicating time signatures of "3/4", to "7/4".
+   * An estimated time signature. The time signature (meter) is a notational convention
+   * to specify how many beats are in each bar (or measure). The time signature ranges
+   * from 3 to 7 indicating time signatures of "3/4", to "7/4".
    *
    * @memberof AudioAnalysisObjectTrack
    * @type {number}
@@ -858,8 +859,8 @@ export interface AudioAnalysisObjectTrack {
    */
   key_confidence?: number;
   /**
-   * Mode indicates the modality (major or minor) of a track, the type of scale from which
-   * its melodic content is derived. Major is represented by 1 and minor is 0.
+   * Mode indicates the modality (major or minor) of a track, the type of scale from
+   * which its melodic content is derived. Major is represented by 1 and minor is 0.
    *
    * @memberof AudioAnalysisObjectTrack
    * @type {number}
@@ -882,8 +883,8 @@ export interface AudioAnalysisObjectTrack {
    */
   codestring?: string;
   /**
-   * A version number for the Echo Nest Musical Fingerprint format used in the codestring
-   * field.
+   * A version number for the Echo Nest Musical Fingerprint format used in the
+   * codestring field.
    *
    * @memberof AudioAnalysisObjectTrack
    * @type {number}
@@ -940,24 +941,24 @@ export interface AudioAnalysisObjectTrack {
  */
 export interface AudioFeaturesObject {
   /**
-   * A confidence measure from 0.0 to 1.0 of whether the track is acoustic. 1.0 represents
-   * high confidence the track is acoustic.
+   * A confidence measure from 0.0 to 1.0 of whether the track is acoustic. 1.0
+   * represents high confidence the track is acoustic.
    *
    * @memberof AudioFeaturesObject
    * @type {number}
    */
   acousticness?: number;
   /**
-   * A URL to access the full audio analysis of this track. An access token is required to
-   * access this data.
+   * A URL to access the full audio analysis of this track. An access token is required
+   * to access this data.
    *
    * @memberof AudioFeaturesObject
    * @type {string}
    */
   analysis_url?: string;
   /**
-   * Danceability describes how suitable a track is for dancing based on a combination of
-   * musical elements including tempo, rhythm stability, beat strength, and overall
+   * Danceability describes how suitable a track is for dancing based on a combination
+   * of musical elements including tempo, rhythm stability, beat strength, and overall
    * regularity. A value of 0.0 is least danceable and 1.0 is most danceable.
    *
    * @memberof AudioFeaturesObject
@@ -972,11 +973,11 @@ export interface AudioFeaturesObject {
    */
   duration_ms?: number;
   /**
-   * Energy is a measure from 0.0 to 1.0 and represents a perceptual measure of intensity
-   * and activity. Typically, energetic tracks feel fast, loud, and noisy. For example,
-   * death metal has high energy, while a Bach prelude scores low on the scale. Perceptual
-   * features contributing to this attribute include dynamic range, perceived loudness,
-   * timbre, onset rate, and general entropy.
+   * Energy is a measure from 0.0 to 1.0 and represents a perceptual measure of
+   * intensity and activity. Typically, energetic tracks feel fast, loud, and noisy. For
+   * example, death metal has high energy, while a Bach prelude scores low on the scale.
+   * Perceptual features contributing to this attribute include dynamic range, perceived
+   * loudness, timbre, onset rate, and general entropy.
    *
    * @memberof AudioFeaturesObject
    * @type {number}
@@ -1019,18 +1020,18 @@ export interface AudioFeaturesObject {
    */
   liveness?: number;
   /**
-   * The overall loudness of a track in decibels (dB). Loudness values are averaged across
-   * the entire track and are useful for comparing relative loudness of tracks. Loudness
-   * is the quality of a sound that is the primary psychological correlate of physical
-   * strength (amplitude). Values typically range between -60 and 0 db.
+   * The overall loudness of a track in decibels (dB). Loudness values are averaged
+   * across the entire track and are useful for comparing relative loudness of tracks.
+   * Loudness is the quality of a sound that is the primary psychological correlate of
+   * physical strength (amplitude). Values typically range between -60 and 0 db.
    *
    * @memberof AudioFeaturesObject
    * @type {number}
    */
   loudness?: number;
   /**
-   * Mode indicates the modality (major or minor) of a track, the type of scale from which
-   * its melodic content is derived. Major is represented by 1 and minor is 0.
+   * Mode indicates the modality (major or minor) of a track, the type of scale from
+   * which its melodic content is derived. Major is represented by 1 and minor is 0.
    *
    * @memberof AudioFeaturesObject
    * @type {number}
@@ -1038,11 +1039,12 @@ export interface AudioFeaturesObject {
   mode?: number;
   /**
    * Speechiness detects the presence of spoken words in a track. The more exclusively
-   * speech-like the recording (e.g. talk show, audio book, poetry), the closer to 1.0 the
-   * attribute value. Values above 0.66 describe tracks that are probably made entirely of
-   * spoken words. Values between 0.33 and 0.66 describe tracks that may contain both
-   * music and speech, either in sections or layered, including such cases as rap music.
-   * Values below 0.33 most likely represent music and other non-speech-like tracks.
+   * speech-like the recording (e.g. talk show, audio book, poetry), the closer to 1.0
+   * the attribute value. Values above 0.66 describe tracks that are probably made
+   * entirely of spoken words. Values between 0.33 and 0.66 describe tracks that may
+   * contain both music and speech, either in sections or layered, including such cases
+   * as rap music. Values below 0.33 most likely represent music and other
+   * non-speech-like tracks.
    *
    * @memberof AudioFeaturesObject
    * @type {number}
@@ -1058,9 +1060,9 @@ export interface AudioFeaturesObject {
    */
   tempo?: number;
   /**
-   * An estimated time signature. The time signature (meter) is a notational convention to
-   * specify how many beats are in each bar (or measure). The time signature ranges from 3
-   * to 7 indicating time signatures of "3/4", to "7/4".
+   * An estimated time signature. The time signature (meter) is a notational convention
+   * to specify how many beats are in each bar (or measure). The time signature ranges
+   * from 3 to 7 indicating time signatures of "3/4", to "7/4".
    *
    * @memberof AudioFeaturesObject
    * @type {number}
@@ -1089,8 +1091,8 @@ export interface AudioFeaturesObject {
   uri?: string;
   /**
    * A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track.
-   * Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while
-   * tracks with low valence sound more negative (e.g. sad, depressed, angry).
+   * Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric),
+   * while tracks with low valence sound more negative (e.g. sad, depressed, angry).
    *
    * @memberof AudioFeaturesObject
    * @type {number}
@@ -1156,8 +1158,8 @@ export interface AudiobookBase {
    */
   edition?: string;
   /**
-   * Whether or not the audiobook has explicit content (true = yes it does; false = no it
-   * does not OR unknown).
+   * Whether or not the audiobook has explicit content (true = yes it does; false = no
+   * it does not OR unknown).
    *
    * @memberof AudiobookBase
    * @type {boolean}
@@ -1178,7 +1180,8 @@ export interface AudiobookBase {
    */
   href: string;
   /**
-   * The [Spotify ID](/documentation/web-api/concepts/spotify-uris-ids) for the audiobook.
+   * The [Spotify ID](/documentation/web-api/concepts/spotify-uris-ids) for the
+   * audiobook.
    *
    * @memberof AudiobookBase
    * @type {string}
@@ -1310,8 +1313,8 @@ export interface AudiobookObject {
    */
   edition?: string;
   /**
-   * Whether or not the audiobook has explicit content (true = yes it does; false = no it
-   * does not OR unknown).
+   * Whether or not the audiobook has explicit content (true = yes it does; false = no
+   * it does not OR unknown).
    *
    * @memberof AudiobookObject
    * @type {boolean}
@@ -1332,7 +1335,8 @@ export interface AudiobookObject {
    */
   href: string;
   /**
-   * The [Spotify ID](/documentation/web-api/concepts/spotify-uris-ids) for the audiobook.
+   * The [Spotify ID](/documentation/web-api/concepts/spotify-uris-ids) for the
+   * audiobook.
    *
    * @memberof AudiobookObject
    * @type {string}
@@ -1482,10 +1486,10 @@ export interface ChangePlaylistDetailsRequest {
    */
   name?: string;
   /**
-   * The playlist's public/private status (if it should be added to the user's profile or
-   * not): `true` the playlist will be public, `false` the playlist will be private,
-   * `null` the playlist status is not relevant. For more about public/private status, see
-   * [Working with Playlists](/documentation/web-api/concepts/playlists)
+   * The playlist's public/private status (if it should be added to the user's profile
+   * or not): `true` the playlist will be public, `false` the playlist will be private,
+   * `null` the playlist status is not relevant. For more about public/private status,
+   * see [Working with Playlists](/documentation/web-api/concepts/playlists)
    *
    * @memberof ChangePlaylistDetailsRequest
    * @type {boolean}
@@ -1522,8 +1526,8 @@ export interface ChapterBase {
    */
   audio_preview_url: string | null;
   /**
-   * A list of the countries in which the chapter can be played, identified by their [ISO
-   * 3166-1 alpha-2](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code.
+   * A list of the countries in which the chapter can be played, identified by their
+   * [ISO 3166-1 alpha-2](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code.
    *
    * @memberof ChapterBase
    * @deprecated
@@ -1618,8 +1622,8 @@ export interface ChapterBase {
    */
   name: string;
   /**
-   * The date the chapter was first released, for example `"1981-12-15"`. Depending on the
-   * precision, it might be shown as `"1981"` or `"1981-12"`.
+   * The date the chapter was first released, for example `"1981-12-15"`. Depending on
+   * the precision, it might be shown as `"1981"` or `"1981-12"`.
    *
    * @memberof ChapterBase
    * @type {string}
@@ -1633,8 +1637,8 @@ export interface ChapterBase {
    */
   release_date_precision: ChapterBaseReleaseDatePrecisionEnum;
   /**
-   * The user's most recent position in the chapter. Set if the supplied access token is a
-   * user token and has the scope 'user-read-playback-position'.
+   * The user's most recent position in the chapter. Set if the supplied access token is
+   * a user token and has the scope 'user-read-playback-position'.
    *
    * @memberof ChapterBase
    * @type {ResumePointObject}
@@ -1648,7 +1652,8 @@ export interface ChapterBase {
    */
   type: ChapterBaseTypeEnum;
   /**
-   * The [Spotify URI](/documentation/web-api/concepts/spotify-uris-ids) for the chapter.
+   * The [Spotify URI](/documentation/web-api/concepts/spotify-uris-ids) for the
+   * chapter.
    *
    * @memberof ChapterBase
    * @type {string}
@@ -1693,8 +1698,8 @@ export interface ChapterObject {
    */
   audio_preview_url: string | null;
   /**
-   * A list of the countries in which the chapter can be played, identified by their [ISO
-   * 3166-1 alpha-2](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code.
+   * A list of the countries in which the chapter can be played, identified by their
+   * [ISO 3166-1 alpha-2](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code.
    *
    * @memberof ChapterObject
    * @deprecated
@@ -1789,8 +1794,8 @@ export interface ChapterObject {
    */
   name: string;
   /**
-   * The date the chapter was first released, for example `"1981-12-15"`. Depending on the
-   * precision, it might be shown as `"1981"` or `"1981-12"`.
+   * The date the chapter was first released, for example `"1981-12-15"`. Depending on
+   * the precision, it might be shown as `"1981"` or `"1981-12"`.
    *
    * @memberof ChapterObject
    * @type {string}
@@ -1804,8 +1809,8 @@ export interface ChapterObject {
    */
   release_date_precision: ChapterObjectReleaseDatePrecisionEnum;
   /**
-   * The user's most recent position in the chapter. Set if the supplied access token is a
-   * user token and has the scope 'user-read-playback-position'.
+   * The user's most recent position in the chapter. Set if the supplied access token is
+   * a user token and has the scope 'user-read-playback-position'.
    *
    * @memberof ChapterObject
    * @type {ResumePointObject}
@@ -1819,7 +1824,8 @@ export interface ChapterObject {
    */
   type: ChapterObjectTypeEnum;
   /**
-   * The [Spotify URI](/documentation/web-api/concepts/spotify-uris-ids) for the chapter.
+   * The [Spotify URI](/documentation/web-api/concepts/spotify-uris-ids) for the
+   * chapter.
    *
    * @memberof ChapterObject
    * @type {string}
@@ -1871,8 +1877,8 @@ export interface ChapterRestrictionObject {
    *   explicit content.
    * - `payment_required` - Payment is required to play the content item.
    *
-   * Additional reasons may be added in the future. **Note**: If you use this field, make
-   * sure that your application safely handles unknown values.
+   * Additional reasons may be added in the future. **Note**: If you use this field,
+   * make sure that your application safely handles unknown values.
    *
    * @memberof ChapterRestrictionObject
    * @type {string}
@@ -1906,7 +1912,8 @@ export interface ContextObject {
    */
   external_urls?: ExternalUrlObject;
   /**
-   * The [Spotify URI](/documentation/web-api/concepts/spotify-uris-ids) for the context.
+   * The [Spotify URI](/documentation/web-api/concepts/spotify-uris-ids) for the
+   * context.
    *
    * @memberof ContextObject
    * @type {string}
@@ -1941,8 +1948,8 @@ export interface CopyrightObject {
 export interface CreatePlaylistRequest {
   [key: string]: any | any;
   /**
-   * The name for the new playlist, for example `"Your Coolest Playlist"`. This name does
-   * not need to be unique; a user may have several playlists with the same name.
+   * The name for the new playlist, for example `"Your Coolest Playlist"`. This name
+   * does not need to be unique; a user may have several playlists with the same name.
    *
    * @memberof CreatePlaylistRequest
    * @type {string}
@@ -1950,9 +1957,9 @@ export interface CreatePlaylistRequest {
   name: string;
   /**
    * Defaults to `true`. The playlist's public/private status (if it should be added to
-   * the user's profile or not): `true` the playlist will be public, `false` the playlist
-   * will be private. To be able to create private playlists, the user must have granted
-   * the `playlist-modify-private`
+   * the user's profile or not): `true` the playlist will be public, `false` the
+   * playlist will be private. To be able to create private playlists, the user must
+   * have granted the `playlist-modify-private`
    * [scope](/documentation/web-api/concepts/scopes/#list-of-scopes). For more about
    * public/private status, see [Working with
    * Playlists](/documentation/web-api/concepts/playlists)
@@ -2041,8 +2048,8 @@ export interface CurrentlyPlayingContextObject {
    */
   item?: QueueObjectCurrentlyPlaying;
   /**
-   * The object type of the currently playing item. Can be one of `track`, `episode`, `ad`
-   * or `unknown`.
+   * The object type of the currently playing item. Can be one of `track`, `episode`,
+   * `ad` or `unknown`.
    *
    * @memberof CurrentlyPlayingContextObject
    * @type {string}
@@ -2096,8 +2103,8 @@ export interface CurrentlyPlayingObject {
    */
   item?: QueueObjectCurrentlyPlaying;
   /**
-   * The object type of the currently playing item. Can be one of `track`, `episode`, `ad`
-   * or `unknown`.
+   * The object type of the currently playing item. Can be one of `track`, `episode`,
+   * `ad` or `unknown`.
    *
    * @memberof CurrentlyPlayingObject
    * @type {string}
@@ -2271,8 +2278,8 @@ export interface CursorPagingSimplifiedArtistObject {
  */
 export interface DeviceObject {
   /**
-   * The device ID. This ID is unique and persistent to some extent. However, this is not
-   * guaranteed and any cached `device_id` should periodically be cleared out and
+   * The device ID. This ID is unique and persistent to some extent. However, this is
+   * not guaranteed and any cached `device_id` should periodically be cleared out and
    * refetched as necessary.
    *
    * @memberof DeviceObject
@@ -2495,8 +2502,8 @@ export interface EpisodeBase {
   is_playable: boolean;
   /**
    * The language used in the episode, identified by a [ISO
-   * 639](https://en.wikipedia.org/wiki/ISO_639) code. This field is deprecated and might
-   * be removed in the future. Please use the `languages` field instead.
+   * 639](https://en.wikipedia.org/wiki/ISO_639) code. This field is deprecated and
+   * might be removed in the future. Please use the `languages` field instead.
    *
    * @memberof EpisodeBase
    * @deprecated
@@ -2519,8 +2526,8 @@ export interface EpisodeBase {
    */
   name: string;
   /**
-   * The date the episode was first released, for example `"1981-12-15"`. Depending on the
-   * precision, it might be shown as `"1981"` or `"1981-12"`.
+   * The date the episode was first released, for example `"1981-12-15"`. Depending on
+   * the precision, it might be shown as `"1981"` or `"1981-12"`.
    *
    * @memberof EpisodeBase
    * @type {string}
@@ -2534,8 +2541,8 @@ export interface EpisodeBase {
    */
   release_date_precision: EpisodeBaseReleaseDatePrecisionEnum;
   /**
-   * The user's most recent position in the episode. Set if the supplied access token is a
-   * user token and has the scope 'user-read-playback-position'.
+   * The user's most recent position in the episode. Set if the supplied access token is
+   * a user token and has the scope 'user-read-playback-position'.
    *
    * @memberof EpisodeBase
    * @type {ResumePointObject}
@@ -2549,7 +2556,8 @@ export interface EpisodeBase {
    */
   type: EpisodeBaseTypeEnum;
   /**
-   * The [Spotify URI](/documentation/web-api/concepts/spotify-uris-ids) for the episode.
+   * The [Spotify URI](/documentation/web-api/concepts/spotify-uris-ids) for the
+   * episode.
    *
    * @memberof EpisodeBase
    * @type {string}
@@ -2667,8 +2675,8 @@ export interface EpisodeObject {
   is_playable: boolean;
   /**
    * The language used in the episode, identified by a [ISO
-   * 639](https://en.wikipedia.org/wiki/ISO_639) code. This field is deprecated and might
-   * be removed in the future. Please use the `languages` field instead.
+   * 639](https://en.wikipedia.org/wiki/ISO_639) code. This field is deprecated and
+   * might be removed in the future. Please use the `languages` field instead.
    *
    * @memberof EpisodeObject
    * @deprecated
@@ -2691,8 +2699,8 @@ export interface EpisodeObject {
    */
   name: string;
   /**
-   * The date the episode was first released, for example `"1981-12-15"`. Depending on the
-   * precision, it might be shown as `"1981"` or `"1981-12"`.
+   * The date the episode was first released, for example `"1981-12-15"`. Depending on
+   * the precision, it might be shown as `"1981"` or `"1981-12"`.
    *
    * @memberof EpisodeObject
    * @type {string}
@@ -2706,8 +2714,8 @@ export interface EpisodeObject {
    */
   release_date_precision: EpisodeObjectReleaseDatePrecisionEnum;
   /**
-   * The user's most recent position in the episode. Set if the supplied access token is a
-   * user token and has the scope 'user-read-playback-position'.
+   * The user's most recent position in the episode. Set if the supplied access token is
+   * a user token and has the scope 'user-read-playback-position'.
    *
    * @memberof EpisodeObject
    * @type {ResumePointObject}
@@ -2721,7 +2729,8 @@ export interface EpisodeObject {
    */
   type: EpisodeObjectTypeEnum;
   /**
-   * The [Spotify URI](/documentation/web-api/concepts/spotify-uris-ids) for the episode.
+   * The [Spotify URI](/documentation/web-api/concepts/spotify-uris-ids) for the
+   * episode.
    *
    * @memberof EpisodeObject
    * @type {string}
@@ -2772,8 +2781,8 @@ export interface EpisodeRestrictionObject {
    * - `explicit` - The content item is explicit and the user's account is set to not play
    *   explicit content.
    *
-   * Additional reasons may be added in the future. **Note**: If you use this field, make
-   * sure that your application safely handles unknown values.
+   * Additional reasons may be added in the future. **Note**: If you use this field,
+   * make sure that your application safely handles unknown values.
    *
    * @memberof EpisodeRestrictionObject
    * @type {string}
@@ -4138,8 +4147,8 @@ export interface PlaylistObject {
    */
   collaborative?: boolean;
   /**
-   * The playlist description. _Only returned for modified, verified playlists, otherwise_
-   * `null`.
+   * The playlist description. _Only returned for modified, verified playlists,
+   * otherwise_ `null`.
    *
    * @memberof PlaylistObject
    * @type {string}
@@ -4160,7 +4169,8 @@ export interface PlaylistObject {
    */
   href?: string;
   /**
-   * The [Spotify ID](/documentation/web-api/concepts/spotify-uris-ids) for the playlist.
+   * The [Spotify ID](/documentation/web-api/concepts/spotify-uris-ids) for the
+   * playlist.
    *
    * @memberof PlaylistObject
    * @type {string}
@@ -4201,8 +4211,8 @@ export interface PlaylistObject {
    */
   _public?: boolean;
   /**
-   * The version identifier for the current playlist. Can be supplied in other requests to
-   * target a specific playlist version
+   * The version identifier for the current playlist. Can be supplied in other requests
+   * to target a specific playlist version
    *
    * @memberof PlaylistObject
    * @type {string}
@@ -4232,7 +4242,8 @@ export interface PlaylistObject {
    */
   type?: string;
   /**
-   * The [Spotify URI](/documentation/web-api/concepts/spotify-uris-ids) for the playlist.
+   * The [Spotify URI](/documentation/web-api/concepts/spotify-uris-ids) for the
+   * playlist.
    *
    * @memberof PlaylistObject
    * @type {string}
@@ -4309,8 +4320,8 @@ export type PlaylistOwnerObjectTypeEnum =
  */
 export interface PlaylistTrackObject {
   /**
-   * The date and time the track or episode was added. _**Note**: some very old playlists
-   * may return `null` in this field._
+   * The date and time the track or episode was added. _**Note**: some very old
+   * playlists may return `null` in this field._
    *
    * @memberof PlaylistTrackObject
    * @type {string}
@@ -4437,10 +4448,20 @@ export type PlaylistUserObjectTypeEnum =
  */
 export interface PrivateUserObject {
   /**
-   * The country of the user, as set in the user's account profile. An [ISO 3166-1 alpha-2
-   * country code](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). _This field is only
-   * available when the current user has granted access to the
-   * [user-read-private](/documentation/web-api/concepts/scopes/#list-of-scopes) scope._
+   * A public, immutable, pseudoanonymous identifier for the user's account. Use this
+   * field for account linking rather than the `id` field, as it is stable and will not
+   * change over the lifetime of the account.
+   *
+   * @memberof PrivateUserObject
+   * @type {string}
+   */
+  account_id?: string;
+  /**
+   * The country of the user, as set in the user's account profile. An [ISO 3166-1
+   * alpha-2 country code](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). _This field
+   * is only available when the current user has granted access to the
+   * [user-read-private](/documentation/web-api/concepts/scopes/#list-of-scopes)
+   * scope._
    *
    * @memberof PrivateUserObject
    * @deprecated
@@ -4456,9 +4477,9 @@ export interface PrivateUserObject {
   display_name?: string;
   /**
    * The user's email address, as entered by the user when creating their account.
-   * _**Important!** This email address is unverified; there is no proof that it actually
-   * belongs to the user._ _This field is only available when the current user has granted
-   * access to the
+   * _**Important!** This email address is unverified; there is no proof that it
+   * actually belongs to the user._ _This field is only available when the current user
+   * has granted access to the
    * [user-read-email](/documentation/web-api/concepts/scopes/#list-of-scopes) scope._
    *
    * @memberof PrivateUserObject
@@ -4467,9 +4488,10 @@ export interface PrivateUserObject {
    */
   email?: string;
   /**
-   * The user's explicit content settings. _This field is only available when the current
-   * user has granted access to the
-   * [user-read-private](/documentation/web-api/concepts/scopes/#list-of-scopes) scope._
+   * The user's explicit content settings. _This field is only available when the
+   * current user has granted access to the
+   * [user-read-private](/documentation/web-api/concepts/scopes/#list-of-scopes)
+   * scope._
    *
    * @memberof PrivateUserObject
    * @deprecated
@@ -4499,7 +4521,9 @@ export interface PrivateUserObject {
    */
   href?: string;
   /**
-   * The [Spotify user ID](/documentation/web-api/concepts/spotify-uris-ids) for the user.
+   * The [Spotify user ID](/documentation/web-api/concepts/spotify-uris-ids) for the
+   * user. Do not use this field for account linking — use `account_id` instead, which
+   * is immutable.
    *
    * @memberof PrivateUserObject
    * @type {string}
@@ -4516,7 +4540,8 @@ export interface PrivateUserObject {
    * The user's Spotify subscription level: "premium", "free", etc. (The subscription
    * level "open" can be considered the same as "free".) _This field is only available
    * when the current user has granted access to the
-   * [user-read-private](/documentation/web-api/concepts/scopes/#list-of-scopes) scope._
+   * [user-read-private](/documentation/web-api/concepts/scopes/#list-of-scopes)
+   * scope._
    *
    * @memberof PrivateUserObject
    * @deprecated
@@ -4663,9 +4688,9 @@ export interface RecommendationSeedObject {
    */
   afterRelinkingSize?: number;
   /**
-   * A link to the full track or artist data for this seed. For tracks this will be a link
-   * to a Track Object. For artists a link to an Artist Object. For genre seeds, this
-   * value will be `null`.
+   * A link to the full track or artist data for this seed. For tracks this will be a
+   * link to a Track Object. For artists a link to an Artist Object. For genre seeds,
+   * this value will be `null`.
    *
    * @memberof RecommendationSeedObject
    * @type {string}
@@ -4721,10 +4746,11 @@ export interface RecommendationsObject {
 export interface RemoveItemsPlaylistRequest {
   /**
    * An array of objects containing [Spotify
-   * URIs](/documentation/web-api/concepts/spotify-uris-ids) of the tracks or episodes to
-   * remove. For example: `{ "items": [{ "uri": "spotify:track:4iV5W9uYEdYUVa79Axb7Rh" },{
-   * "uri": "spotify:track:1301WleyT98MSxVHPZCA6M" }] }`. A maximum of 100 objects can be
-   * sent at once.
+   * URIs](/documentation/web-api/concepts/spotify-uris-ids) of the tracks or episodes
+   * to remove. For example: `{ "items": [{ "uri":
+   * "spotify:track:4iV5W9uYEdYUVa79Axb7Rh" },{ "uri":
+   * "spotify:track:1301WleyT98MSxVHPZCA6M" }] }`. A maximum of 100 objects can be sent
+   * at once.
    *
    * @memberof RemoveItemsPlaylistRequest
    * @type {RemoveItemsPlaylistRequestItemsInner[]}
@@ -4783,23 +4809,23 @@ export interface ReorderOrReplacePlaylistsItemsRequest {
    */
   range_start?: number;
   /**
-   * The position where the items should be inserted.<br/>To reorder the items to the end
-   * of the playlist, simply set _insert_before_ to the position after the last
-   * item.<br/>Examples:<br/>To reorder the first item to the last position in a playlist
-   * with 10 items, set _range_start_ to 0, and _insert_before_ to 10.<br/>To reorder the
-   * last item in a playlist with 10 items to the start of the playlist, set _range_start_
-   * to 9, and _insert_before_ to 0.
+   * The position where the items should be inserted.<br/>To reorder the items to the
+   * end of the playlist, simply set _insert_before_ to the position after the last
+   * item.<br/>Examples:<br/>To reorder the first item to the last position in a
+   * playlist with 10 items, set _range_start_ to 0, and _insert_before_ to 10.<br/>To
+   * reorder the last item in a playlist with 10 items to the start of the playlist, set
+   * _range_start_ to 9, and _insert_before_ to 0.
    *
    * @memberof ReorderOrReplacePlaylistsItemsRequest
    * @type {number}
    */
   insert_before?: number;
   /**
-   * The amount of items to be reordered. Defaults to 1 if not set.<br/>The range of items
-   * to be reordered begins from the _range_start_ position, and includes the
-   * _range_length_ subsequent items.<br/>Example:<br/>To move the items at index 9-10 to
-   * the start of the playlist, _range_start_ is set to 9, and _range_length_ is set to
-   * 2.
+   * The amount of items to be reordered. Defaults to 1 if not set.<br/>The range of
+   * items to be reordered begins from the _range_start_ position, and includes the
+   * _range_length_ subsequent items.<br/>Example:<br/>To move the items at index 9-10
+   * to the start of the playlist, _range_start_ is set to 9, and _range_length_ is set
+   * to 2.
    *
    * @memberof ReorderOrReplacePlaylistsItemsRequest
    * @type {number}
@@ -4862,10 +4888,11 @@ export interface SavedAlbumObject {
  */
 export interface SavedAudiobookObject {
   /**
-   * The date and time the audiobook was saved Timestamps are returned in ISO 8601 format
-   * as Coordinated Universal Time (UTC) with a zero offset: YYYY-MM-DDTHH:MM:SSZ. If the
-   * time is imprecise (for example, the date/time of an album release), an additional
-   * field indicates the precision; see for example, release_date in an album object.
+   * The date and time the audiobook was saved Timestamps are returned in ISO 8601
+   * format as Coordinated Universal Time (UTC) with a zero offset:
+   * YYYY-MM-DDTHH:MM:SSZ. If the time is imprecise (for example, the date/time of an
+   * album release), an additional field indicates the precision; see for example,
+   * release_date in an album object.
    *
    * @memberof SavedAudiobookObject
    * @type {string}
@@ -4929,10 +4956,11 @@ export interface SavedShowObject {
  */
 export interface SavedTrackObject {
   /**
-   * The date and time the track was saved. Timestamps are returned in ISO 8601 format as
-   * Coordinated Universal Time (UTC) with a zero offset: YYYY-MM-DDTHH:MM:SSZ. If the
-   * time is imprecise (for example, the date/time of an album release), an additional
-   * field indicates the precision; see for example, release_date in an album object.
+   * The date and time the track was saved. Timestamps are returned in ISO 8601 format
+   * as Coordinated Universal Time (UTC) with a zero offset: YYYY-MM-DDTHH:MM:SSZ. If
+   * the time is imprecise (for example, the date/time of an album release), an
+   * additional field indicates the precision; see for example, release_date in an album
+   * object.
    *
    * @memberof SavedTrackObject
    * @type {string}
@@ -5014,8 +5042,8 @@ export interface SectionObject {
    */
   confidence?: number;
   /**
-   * The overall loudness of the section in decibels (dB). Loudness values are useful for
-   * comparing relative loudness of sections within tracks.
+   * The overall loudness of the section in decibels (dB). Loudness values are useful
+   * for comparing relative loudness of sections within tracks.
    *
    * @memberof SectionObject
    * @type {number}
@@ -5031,18 +5059,18 @@ export interface SectionObject {
    */
   tempo?: number;
   /**
-   * The confidence, from 0.0 to 1.0, of the reliability of the tempo. Some tracks contain
-   * tempo changes or sounds which don't contain tempo (like pure speech) which would
-   * correspond to a low value in this field.
+   * The confidence, from 0.0 to 1.0, of the reliability of the tempo. Some tracks
+   * contain tempo changes or sounds which don't contain tempo (like pure speech) which
+   * would correspond to a low value in this field.
    *
    * @memberof SectionObject
    * @type {number}
    */
   tempo_confidence?: number;
   /**
-   * The estimated overall key of the section. The values in this field ranging from 0 to
-   * 11 mapping to pitches using standard Pitch Class notation (E.g. 0 = C, 1 = C♯/D♭, 2 =
-   * D, and so on). If no key was detected, the value is -1.
+   * The estimated overall key of the section. The values in this field ranging from 0
+   * to 11 mapping to pitches using standard Pitch Class notation (E.g. 0 = C, 1 =
+   * C♯/D♭, 2 = D, and so on). If no key was detected, the value is -1.
    *
    * @memberof SectionObject
    * @type {number}
@@ -5075,17 +5103,17 @@ export interface SectionObject {
    */
   mode_confidence?: number;
   /**
-   * An estimated time signature. The time signature (meter) is a notational convention to
-   * specify how many beats are in each bar (or measure). The time signature ranges from 3
-   * to 7 indicating time signatures of "3/4", to "7/4".
+   * An estimated time signature. The time signature (meter) is a notational convention
+   * to specify how many beats are in each bar (or measure). The time signature ranges
+   * from 3 to 7 indicating time signatures of "3/4", to "7/4".
    *
    * @memberof SectionObject
    * @type {number}
    */
   time_signature?: number;
   /**
-   * The confidence, from 0.0 to 1.0, of the reliability of the `time_signature`. Sections
-   * with time signature changes may correspond to low values in this field.
+   * The confidence, from 0.0 to 1.0, of the reliability of the `time_signature`.
+   * Sections with time signature changes may correspond to low values in this field.
    *
    * @memberof SectionObject
    * @type {number}
@@ -5122,27 +5150,27 @@ export interface SegmentObject {
    */
   duration?: number;
   /**
-   * The confidence, from 0.0 to 1.0, of the reliability of the segmentation. Segments of
-   * the song which are difficult to logically segment (e.g: noise) may correspond to low
-   * values in this field.
+   * The confidence, from 0.0 to 1.0, of the reliability of the segmentation. Segments
+   * of the song which are difficult to logically segment (e.g: noise) may correspond to
+   * low values in this field.
    *
    * @memberof SegmentObject
    * @type {number}
    */
   confidence?: number;
   /**
-   * The onset loudness of the segment in decibels (dB). Combined with `loudness_max` and
-   * `loudness_max_time`, these components can be used to describe the "attack" of the
-   * segment.
+   * The onset loudness of the segment in decibels (dB). Combined with `loudness_max`
+   * and `loudness_max_time`, these components can be used to describe the "attack" of
+   * the segment.
    *
    * @memberof SegmentObject
    * @type {number}
    */
   loudness_start?: number;
   /**
-   * The peak loudness of the segment in decibels (dB). Combined with `loudness_start` and
-   * `loudness_max_time`, these components can be used to describe the "attack" of the
-   * segment.
+   * The peak loudness of the segment in decibels (dB). Combined with `loudness_start`
+   * and `loudness_max_time`, these components can be used to describe the "attack" of
+   * the segment.
    *
    * @memberof SegmentObject
    * @type {number}
@@ -5158,24 +5186,24 @@ export interface SegmentObject {
    */
   loudness_max_time?: number;
   /**
-   * The offset loudness of the segment in decibels (dB). This value should be equivalent
-   * to the loudness_start of the following segment.
+   * The offset loudness of the segment in decibels (dB). This value should be
+   * equivalent to the loudness_start of the following segment.
    *
    * @memberof SegmentObject
    * @type {number}
    */
   loudness_end?: number;
   /**
-   * Pitch content is given by a “chroma” vector, corresponding to the 12 pitch classes C,
-   * C#, D to B, with values ranging from 0 to 1 that describe the relative dominance of
-   * every pitch in the chromatic scale. For example a C Major chord would likely be
+   * Pitch content is given by a “chroma” vector, corresponding to the 12 pitch classes
+   * C, C#, D to B, with values ranging from 0 to 1 that describe the relative dominance
+   * of every pitch in the chromatic scale. For example a C Major chord would likely be
    * represented by large values of C, E and G (i.e. classes 0, 4, and 7).
    *
-   * Vectors are normalized to 1 by their strongest dimension, therefore noisy sounds are
-   * likely represented by values that are all close to 1, while pure tones are described
-   * by one value at 1 (the pitch) and others near 0. As can be seen below, the 12 vector
-   * indices are a combination of low-power spectrum values at their respective pitch
-   * frequencies. ![pitch vector](/assets/audio/Pitch_vector.png)
+   * Vectors are normalized to 1 by their strongest dimension, therefore noisy sounds
+   * are likely represented by values that are all close to 1, while pure tones are
+   * described by one value at 1 (the pitch) and others near 0. As can be seen below,
+   * the 12 vector indices are a combination of low-power spectrum values at their
+   * respective pitch frequencies. ![pitch vector](/assets/audio/Pitch_vector.png)
    *
    * @memberof SegmentObject
    * @type {number[]}
@@ -5185,15 +5213,15 @@ export interface SegmentObject {
    * Timbre is the quality of a musical note or sound that distinguishes different types
    * of musical instruments, or voices. It is a complex notion also referred to as sound
    * color, texture, or tone quality, and is derived from the shape of a segment’s
-   * spectro-temporal surface, independently of pitch and loudness. The timbre feature is
-   * a vector that includes 12 unbounded values roughly centered around 0. Those values
-   * are high level abstractions of the spectral surface, ordered by degree of
+   * spectro-temporal surface, independently of pitch and loudness. The timbre feature
+   * is a vector that includes 12 unbounded values roughly centered around 0. Those
+   * values are high level abstractions of the spectral surface, ordered by degree of
    * importance.
    *
-   * For completeness however, the first dimension represents the average loudness of the
-   * segment; second emphasizes brightness; third is more closely correlated to the
-   * flatness of a sound; fourth to sounds with a stronger attack; etc. See an image below
-   * representing the 12 basis functions (i.e. template segments). ![timbre basis
+   * For completeness however, the first dimension represents the average loudness of
+   * the segment; second emphasizes brightness; third is more closely correlated to the
+   * flatness of a sound; fourth to sounds with a stronger attack; etc. See an image
+   * below representing the 12 basis functions (i.e. template segments). ![timbre basis
    * functions](/assets/audio/Timbre_basis_functions.png)
    *
    * The actual timbre of the segment is best described as a linear combination of these
@@ -5244,8 +5272,8 @@ export interface ShowBase {
    */
   html_description: string;
   /**
-   * Whether or not the show has explicit content (true = yes it does; false = no it does
-   * not OR unknown).
+   * Whether or not the show has explicit content (true = yes it does; false = no it
+   * does not OR unknown).
    *
    * @memberof ShowBase
    * @type {boolean}
@@ -5383,8 +5411,8 @@ export interface ShowObject {
    */
   html_description: string;
   /**
-   * Whether or not the show has explicit content (true = yes it does; false = no it does
-   * not OR unknown).
+   * Whether or not the show has explicit content (true = yes it does; false = no it
+   * does not OR unknown).
    *
    * @memberof ShowObject
    * @type {boolean}
@@ -5736,8 +5764,8 @@ export interface SimplifiedAudiobookObject {
    */
   edition?: string;
   /**
-   * Whether or not the audiobook has explicit content (true = yes it does; false = no it
-   * does not OR unknown).
+   * Whether or not the audiobook has explicit content (true = yes it does; false = no
+   * it does not OR unknown).
    *
    * @memberof SimplifiedAudiobookObject
    * @type {boolean}
@@ -5758,7 +5786,8 @@ export interface SimplifiedAudiobookObject {
    */
   href: string;
   /**
-   * The [Spotify ID](/documentation/web-api/concepts/spotify-uris-ids) for the audiobook.
+   * The [Spotify ID](/documentation/web-api/concepts/spotify-uris-ids) for the
+   * audiobook.
    *
    * @memberof SimplifiedAudiobookObject
    * @type {string}
@@ -5853,8 +5882,8 @@ export interface SimplifiedChapterObject {
    */
   audio_preview_url: string | null;
   /**
-   * A list of the countries in which the chapter can be played, identified by their [ISO
-   * 3166-1 alpha-2](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code.
+   * A list of the countries in which the chapter can be played, identified by their
+   * [ISO 3166-1 alpha-2](http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code.
    *
    * @memberof SimplifiedChapterObject
    * @deprecated
@@ -5949,8 +5978,8 @@ export interface SimplifiedChapterObject {
    */
   name: string;
   /**
-   * The date the chapter was first released, for example `"1981-12-15"`. Depending on the
-   * precision, it might be shown as `"1981"` or `"1981-12"`.
+   * The date the chapter was first released, for example `"1981-12-15"`. Depending on
+   * the precision, it might be shown as `"1981"` or `"1981-12"`.
    *
    * @memberof SimplifiedChapterObject
    * @type {string}
@@ -5964,8 +5993,8 @@ export interface SimplifiedChapterObject {
    */
   release_date_precision: SimplifiedChapterObjectReleaseDatePrecisionEnum;
   /**
-   * The user's most recent position in the chapter. Set if the supplied access token is a
-   * user token and has the scope 'user-read-playback-position'.
+   * The user's most recent position in the chapter. Set if the supplied access token is
+   * a user token and has the scope 'user-read-playback-position'.
    *
    * @memberof SimplifiedChapterObject
    * @type {ResumePointObject}
@@ -5979,7 +6008,8 @@ export interface SimplifiedChapterObject {
    */
   type: SimplifiedChapterObjectTypeEnum;
   /**
-   * The [Spotify URI](/documentation/web-api/concepts/spotify-uris-ids) for the chapter.
+   * The [Spotify URI](/documentation/web-api/concepts/spotify-uris-ids) for the
+   * chapter.
    *
    * @memberof SimplifiedChapterObject
    * @type {string}
@@ -6097,8 +6127,8 @@ export interface SimplifiedEpisodeObject {
   is_playable: boolean;
   /**
    * The language used in the episode, identified by a [ISO
-   * 639](https://en.wikipedia.org/wiki/ISO_639) code. This field is deprecated and might
-   * be removed in the future. Please use the `languages` field instead.
+   * 639](https://en.wikipedia.org/wiki/ISO_639) code. This field is deprecated and
+   * might be removed in the future. Please use the `languages` field instead.
    *
    * @memberof SimplifiedEpisodeObject
    * @deprecated
@@ -6121,8 +6151,8 @@ export interface SimplifiedEpisodeObject {
    */
   name: string;
   /**
-   * The date the episode was first released, for example `"1981-12-15"`. Depending on the
-   * precision, it might be shown as `"1981"` or `"1981-12"`.
+   * The date the episode was first released, for example `"1981-12-15"`. Depending on
+   * the precision, it might be shown as `"1981"` or `"1981-12"`.
    *
    * @memberof SimplifiedEpisodeObject
    * @type {string}
@@ -6136,8 +6166,8 @@ export interface SimplifiedEpisodeObject {
    */
   release_date_precision: SimplifiedEpisodeObjectReleaseDatePrecisionEnum;
   /**
-   * The user's most recent position in the episode. Set if the supplied access token is a
-   * user token and has the scope 'user-read-playback-position'.
+   * The user's most recent position in the episode. Set if the supplied access token is
+   * a user token and has the scope 'user-read-playback-position'.
    *
    * @memberof SimplifiedEpisodeObject
    * @type {ResumePointObject}
@@ -6151,7 +6181,8 @@ export interface SimplifiedEpisodeObject {
    */
   type: SimplifiedEpisodeObjectTypeEnum;
   /**
-   * The [Spotify URI](/documentation/web-api/concepts/spotify-uris-ids) for the episode.
+   * The [Spotify URI](/documentation/web-api/concepts/spotify-uris-ids) for the
+   * episode.
    *
    * @memberof SimplifiedEpisodeObject
    * @type {string}
@@ -6195,8 +6226,8 @@ export interface SimplifiedPlaylistObject {
    */
   collaborative?: boolean;
   /**
-   * The playlist description. _Only returned for modified, verified playlists, otherwise_
-   * `null`.
+   * The playlist description. _Only returned for modified, verified playlists,
+   * otherwise_ `null`.
    *
    * @memberof SimplifiedPlaylistObject
    * @type {string}
@@ -6217,7 +6248,8 @@ export interface SimplifiedPlaylistObject {
    */
   href?: string;
   /**
-   * The [Spotify ID](/documentation/web-api/concepts/spotify-uris-ids) for the playlist.
+   * The [Spotify ID](/documentation/web-api/concepts/spotify-uris-ids) for the
+   * playlist.
    *
    * @memberof SimplifiedPlaylistObject
    * @type {string}
@@ -6258,28 +6290,28 @@ export interface SimplifiedPlaylistObject {
    */
   _public?: boolean;
   /**
-   * The version identifier for the current playlist. Can be supplied in other requests to
-   * target a specific playlist version
+   * The version identifier for the current playlist. Can be supplied in other requests
+   * to target a specific playlist version
    *
    * @memberof SimplifiedPlaylistObject
    * @type {string}
    */
   snapshot_id?: string;
   /**
-   * A collection containing a link ( `href` ) to the Web API endpoint where full details
-   * of the playlist's items can be retrieved, along with the `total` number of items in
-   * the playlist. Note, a track object may be `null`. This can happen if a track is no
-   * longer available.
+   * A collection containing a link ( `href` ) to the Web API endpoint where full
+   * details of the playlist's items can be retrieved, along with the `total` number of
+   * items in the playlist. Note, a track object may be `null`. This can happen if a
+   * track is no longer available.
    *
    * @memberof SimplifiedPlaylistObject
    * @type {PlaylistTracksRefObject}
    */
   items?: PlaylistTracksRefObject;
   /**
-   * **Deprecated:** Use `items` instead. A collection containing a link ( `href` ) to the
-   * Web API endpoint where full details of the playlist's tracks can be retrieved, along
-   * with the `total` number of tracks in the playlist. Note, a track object may be
-   * `null`. This can happen if a track is no longer available.
+   * **Deprecated:** Use `items` instead. A collection containing a link ( `href` ) to
+   * the Web API endpoint where full details of the playlist's tracks can be retrieved,
+   * along with the `total` number of tracks in the playlist. Note, a track object may
+   * be `null`. This can happen if a track is no longer available.
    *
    * @memberof SimplifiedPlaylistObject
    * @deprecated
@@ -6294,7 +6326,8 @@ export interface SimplifiedPlaylistObject {
    */
   type?: string;
   /**
-   * The [Spotify URI](/documentation/web-api/concepts/spotify-uris-ids) for the playlist.
+   * The [Spotify URI](/documentation/web-api/concepts/spotify-uris-ids) for the
+   * playlist.
    *
    * @memberof SimplifiedPlaylistObject
    * @type {string}
@@ -6338,8 +6371,8 @@ export interface SimplifiedShowObject {
    */
   html_description: string;
   /**
-   * Whether or not the show has explicit content (true = yes it does; false = no it does
-   * not OR unknown).
+   * Whether or not the show has explicit content (true = yes it does; false = no it
+   * does not OR unknown).
    *
    * @memberof SimplifiedShowObject
    * @type {boolean}
@@ -6447,8 +6480,8 @@ export type SimplifiedShowObjectTypeEnum =
  */
 export interface SimplifiedTrackObject {
   /**
-   * The artists who performed the track. Each artist object includes a link in `href` to
-   * more detailed information about the artist.
+   * The artists who performed the track. Each artist object includes a link in `href`
+   * to more detailed information about the artist.
    *
    * @memberof SimplifiedTrackObject
    * @type {SimplifiedArtistObject[]}
@@ -6478,8 +6511,8 @@ export interface SimplifiedTrackObject {
    */
   duration_ms?: number;
   /**
-   * Whether or not the track has explicit lyrics ( `true` = yes it does; `false` = no it
-   * does not OR unknown).
+   * Whether or not the track has explicit lyrics ( `true` = yes it does; `false` = no
+   * it does not OR unknown).
    *
    * @memberof SimplifiedTrackObject
    * @type {boolean}
@@ -6519,8 +6552,8 @@ export interface SimplifiedTrackObject {
    * Part of the response when [Track
    * Relinking](/documentation/web-api/concepts/track-relinking/) is applied and is only
    * part of the response if the track linking, in fact, exists. The requested track has
-   * been replaced with a different track. The track in the `linked_from` object contains
-   * information about the originally requested track.
+   * been replaced with a different track. The track in the `linked_from` object
+   * contains information about the originally requested track.
    *
    * @memberof SimplifiedTrackObject
    * @deprecated
@@ -6604,8 +6637,8 @@ export interface StartAUsersPlaybackRequest {
   uris?: Array<string>;
   /**
    * Optional. Indicates from where in the context playback should start. Only available
-   * when context_uri corresponds to an album or playlist object "position" is zero based
-   * and can’t be negative. Example: `"offset": {"position": 5}` "uri" is a string
+   * when context_uri corresponds to an album or playlist object "position" is zero
+   * based and can’t be negative. Example: `"offset": {"position": 5}` "uri" is a string
    * representing the uri of the item to start at. Example: `"offset": {"uri":
    * "spotify:track:1301WleyT98MSxVHPZCA6M"}`
    *
@@ -6614,8 +6647,8 @@ export interface StartAUsersPlaybackRequest {
    */
   offset?: { [key: string]: any };
   /**
-   * Indicates from what position to start playback. Must be a positive number. Passing in
-   * a position that is greater than the length of the track will cause the player to
+   * Indicates from what position to start playback. Must be a positive number. Passing
+   * in a position that is greater than the length of the track will cause the player to
    * start playing the next song.
    *
    * @memberof StartAUsersPlaybackRequest
@@ -6664,8 +6697,8 @@ export interface TrackObject {
    */
   album?: SimplifiedAlbumObject;
   /**
-   * The artists who performed the track. Each artist object includes a link in `href` to
-   * more detailed information about the artist.
+   * The artists who performed the track. Each artist object includes a link in `href`
+   * to more detailed information about the artist.
    *
    * @memberof TrackObject
    * @type {SimplifiedArtistObject[]}
@@ -6695,8 +6728,8 @@ export interface TrackObject {
    */
   duration_ms?: number;
   /**
-   * Whether or not the track has explicit lyrics ( `true` = yes it does; `false` = no it
-   * does not OR unknown).
+   * Whether or not the track has explicit lyrics ( `true` = yes it does; `false` = no
+   * it does not OR unknown).
    *
    * @memberof TrackObject
    * @type {boolean}
@@ -6765,16 +6798,16 @@ export interface TrackObject {
    */
   name?: string;
   /**
-   * The popularity of the track. The value will be between 0 and 100, with 100 being the
-   * most popular.<br/>The popularity of a track is a value between 0 and 100, with 100
-   * being the most popular. The popularity is calculated by algorithm and is based, in
-   * the most part, on the total number of plays the track has had and how recent those
-   * plays are.<br/>Generally speaking, songs that are being played a lot now will have a
-   * higher popularity than songs that were played a lot in the past. Duplicate tracks
-   * (e.g. the same track from a single and an album) are rated independently. Artist and
-   * album popularity is derived mathematically from track popularity. _**Note**: the
-   * popularity value may lag actual popularity by a few days: the value is not updated in
-   * real time._
+   * The popularity of the track. The value will be between 0 and 100, with 100 being
+   * the most popular.<br/>The popularity of a track is a value between 0 and 100, with
+   * 100 being the most popular. The popularity is calculated by algorithm and is based,
+   * in the most part, on the total number of plays the track has had and how recent
+   * those plays are.<br/>Generally speaking, songs that are being played a lot now will
+   * have a higher popularity than songs that were played a lot in the past. Duplicate
+   * tracks (e.g. the same track from a single and an album) are rated independently.
+   * Artist and album popularity is derived mathematically from track popularity.
+   * _**Note**: the popularity value may lag actual popularity by a few days: the value
+   * is not updated in real time._
    *
    * @memberof TrackObject
    * @deprecated
@@ -6840,8 +6873,8 @@ export interface TrackRestrictionObject {
    * - `explicit` - The content item is explicit and the user's account is set to not play
    *   explicit content.
    *
-   * Additional reasons may be added in the future. **Note**: If you use this field, make
-   * sure that your application safely handles unknown values.
+   * Additional reasons may be added in the future. **Note**: If you use this field,
+   * make sure that your application safely handles unknown values.
    *
    * @memberof TrackRestrictionObject
    * @type {string}
@@ -6857,17 +6890,17 @@ export interface TransferAUsersPlaybackRequest {
   /**
    * A JSON array containing the ID of the device on which playback should be
    * started/transferred.<br/>For
-   * example:`{device_ids:["74ASZWbe4lXaubB36ztrGX"]}`<br/>_**Note**: Although an array is
-   * accepted, only a single device_id is currently supported. Supplying more than one
-   * will return `400 Bad Request`_
+   * example:`{device_ids:["74ASZWbe4lXaubB36ztrGX"]}`<br/>_**Note**: Although an array
+   * is accepted, only a single device_id is currently supported. Supplying more than
+   * one will return `400 Bad Request`_
    *
    * @memberof TransferAUsersPlaybackRequest
    * @type {string[]}
    */
   device_ids: Array<string>;
   /**
-   * **true**: ensure playback happens on new device.<br/>**false** or not provided: keep
-   * the current playback state.
+   * **true**: ensure playback happens on new device.<br/>**false** or not provided:
+   * keep the current playback state.
    *
    * @memberof TransferAUsersPlaybackRequest
    * @type {boolean}
