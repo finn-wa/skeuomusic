@@ -4,10 +4,10 @@ import { memo } from "react";
 
 export type ItemWithLink = Item & { href?: string };
 
-export interface ListItemProps {
+export type ListItemProps = {
   item: ItemWithLink;
   hide?: boolean;
-}
+};
 
 export default memo(function ListItem({ item, hide }: ListItemProps) {
   return (
