@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { tanstackStart } from "@tanstack/solid-start/plugin/vite";
 import { defineConfig, type ServerOptions } from "vite";
 import viteSolid from "vite-plugin-solid";
+import tsConfigPaths from "vite-tsconfig-paths";
 
 import "dotenv/config";
 import { hash } from "node:crypto";
@@ -46,8 +47,8 @@ export default defineConfig({
     proxy: {},
   },
   envPrefix: "PUBLIC_",
-  resolve: { tsconfigPaths: true },
   plugins: [
+    tsConfigPaths({ projects: ["./tsconfig.json"] }),
     tanstackStart({
       spa: { enabled: true },
     }),

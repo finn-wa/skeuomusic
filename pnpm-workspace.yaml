@@ -1,4 +1,5 @@
 packages:
+  # - "packages/skeuomusic"
   - "packages/skeuomusic-react"
   - "packages/spotify-web-client"
 
