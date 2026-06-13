@@ -5,29 +5,28 @@ import PageMessage from "../page-message/page-message";
 import SearchInput from "../search-input/search-input";
 import AlphabetIndex from "./alphabet-index";
 import { LETTERS, LETTER_LABEL, type Letter } from "./alphabet-list-model";
+import ListItem, { type ItemWithLink } from "../list-item/list-item";
 
-type ItemRendererProps<T extends Item> = {
+export type ItemRendererProps<T extends ItemWithLink> = {
   item: T;
   hide?: boolean;
-  href?: string;
 };
 
-export interface AlphabetListProps<T extends Item> {
+export interface AlphabetListProps<T extends ItemWithLink> {
   namePlural: string;
   items: T[];
   hideItemCount?: boolean;
   hideIndex?: boolean;
-  itemRenderer: React.ComponentType<ItemRendererProps<T>>;
+  itemComponent?: React.ComponentType<ItemRendererProps<T>>;
 }
 
 type SortableItem<T> = { key: string; value: T; hide?: boolean };
 
 type GroupedItems<T> = { [K in Letter]: SortableItem<T>[] };
 
-const letterRegex = /^[A-Z]/;
-
+const lettersSet: ReadonlySet<string> = new Set(LETTERS.slice(0, -1));
 function getLetter(uppercaseChar: string): Letter {
-  if (letterRegex.test(uppercaseChar)) {
+  if (lettersSet.has(uppercaseChar)) {
     return uppercaseChar as Letter;
   }
   return "#";
@@ -48,7 +47,7 @@ function groupItems<T extends Item>(sortedItems: SortableItem<T>[]) {
 export default function AlphabetList<T extends Item>({
   items,
   namePlural,
-  itemRenderer: Item,
+  itemComponent: Item = ListItem,
   hideItemCount,
   hideIndex,
 }: AlphabetListProps<T>) {
@@ -58,7 +57,6 @@ export default function AlphabetList<T extends Item>({
     .sort((a, b) => a.key.localeCompare(b.key));
   const itemGroups = groupItems(sortedItems);
   /** Set of item keys that match the current query */
-
   const query = search.trim().toUpperCase();
   const visibleItems = new Set<string>();
   for (const item of sortedItems) {
@@ -83,29 +81,20 @@ export default function AlphabetList<T extends Item>({
                 const hasVisibleItems = letterItems.some((item) =>
                   visibleItems.has(item.key),
                 );
+                if (!hasVisibleItems) {
+                  return null;
+                }
                 return (
-                  <li
-                    id={letter}
-                    key={letter}
-                    className="list-section"
-                    style={{
-                      display: hasVisibleItems ? undefined : "none",
-                    }}
-                  >
-                    <div
-                      className="section-header"
-                      style={{
-                        display: hasVisibleItems ? undefined : "none",
-                      }}
-                    >
+                  <li id={letter} key={letter} className="list-section">
+                    <div className="section-header">
                       <div className="section-header-border">
                         <span>{LETTER_LABEL[letter]}</span>
                       </div>
                     </div>
                     <ul>
-                      {letterItems.map(({ key, value }) => (
-                        <Item key={key} item={value} hide={!visibleItems.has(key)} />
-                      ))}
+                      {letterItems.map(({ key, value }) =>
+                        visibleItems.has(key) ? <Item key={key} item={value} /> : null,
+                      )}
                     </ul>
                   </li>
                 );
