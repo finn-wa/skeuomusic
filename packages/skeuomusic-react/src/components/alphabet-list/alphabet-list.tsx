@@ -1,6 +1,6 @@
 import { INITIAL_SCROLL_ID } from "@/shared/constants";
 import type { Item } from "@/shared/types";
-import React, { useState } from "react";
+import React, { useDeferredValue, useMemo, useState } from "react";
 import PageMessage from "../page-message/page-message";
 import SearchInput from "../search-input/search-input";
 import AlphabetIndex from "./alphabet-index";
@@ -32,6 +32,12 @@ function getLetter(uppercaseChar: string): Letter {
   return "#";
 }
 
+function sortItems<T extends Item>(items: T[]): SortableItem<T>[] {
+  return items
+    .map((value) => ({ value, key: value.name.trim().toUpperCase() }))
+    .sort((a, b) => a.key.localeCompare(b.key));
+}
+
 function groupItems<T extends Item>(sortedItems: SortableItem<T>[]) {
   const groups = Object.fromEntries(
     LETTERS.map((letter) => [letter, [] as SortableItem<T>[]]),
@@ -44,18 +50,10 @@ function groupItems<T extends Item>(sortedItems: SortableItem<T>[]) {
   return groups;
 }
 
-export default function AlphabetList<T extends Item>({
-  items,
-  namePlural,
-  itemComponent: Item = ListItem,
-  hideItemCount,
-  hideIndex,
-}: AlphabetListProps<T>) {
-  const [search, setSearch] = useState("");
-  const sortedItems: SortableItem<T>[] = items
-    .map((value) => ({ value, key: value.name.trim().toUpperCase() }))
-    .sort((a, b) => a.key.localeCompare(b.key));
-  const itemGroups = groupItems(sortedItems);
+function filterItems<T extends Item>(
+  sortedItems: SortableItem<T>[],
+  search: string,
+): Set<string> {
   /** Set of item keys that match the current query */
   const query = search.trim().toUpperCase();
   const visibleItems = new Set<string>();
@@ -64,6 +62,25 @@ export default function AlphabetList<T extends Item>({
       visibleItems.add(item.key);
     }
   }
+  return visibleItems;
+}
+
+export default function AlphabetListPage<T extends Item>({
+  items,
+  namePlural,
+  itemComponent: Item = ListItem,
+  hideItemCount,
+  hideIndex,
+}: AlphabetListProps<T>) {
+  const [liveSearch, setSearch] = useState("");
+  const search = useDeferredValue(liveSearch);
+  const sortedItems = useMemo(() => sortItems(items), [items]);
+  const groupedItems = useMemo(() => groupItems(sortedItems), [sortedItems]);
+  const visibleItemKeys = useMemo(
+    () => filterItems(sortedItems, search),
+    [sortedItems, search],
+  );
+  const showItemCount = !hideItemCount && visibleItemKeys.size > 0;
   const capitalisedNamePlural =
     (namePlural[0]?.toUpperCase() ?? "") + (namePlural.substring(1) ?? "");
   return (
@@ -71,40 +88,45 @@ export default function AlphabetList<T extends Item>({
       <div className="content-scroll">
         <SearchInput onQueryChanged={(value) => setSearch(value)} />
         <div id={INITIAL_SCROLL_ID}>
-          {visibleItems.size === 0 && (
+          {visibleItemKeys.size === 0 && (
             <PageMessage message={items.length > 0 ? "No results" : `No ${namePlural}`} />
           )}
-          {visibleItems.size > 0 && (
+          {visibleItemKeys.size > 0 && (
             <ul>
               {LETTERS.map((letter) => {
-                const letterItems = itemGroups[letter];
+                const letterItems = groupedItems[letter];
                 const hasVisibleItems = letterItems.some((item) =>
-                  visibleItems.has(item.key),
+                  visibleItemKeys.has(item.key),
                 );
-                if (!hasVisibleItems) {
-                  return null;
-                }
                 return (
-                  <li id={letter} key={letter} className="list-section">
-                    <div className="section-header">
+                  <li
+                    id={letter}
+                    key={letter}
+                    className="list-section"
+                    style={{ display: hasVisibleItems ? undefined : "none" }}
+                  >
+                    <div
+                      className="section-header"
+                      style={{ display: hasVisibleItems ? undefined : "none" }}
+                    >
                       <div className="section-header-border">
                         <span>{LETTER_LABEL[letter]}</span>
                       </div>
                     </div>
                     <ul>
-                      {letterItems.map(({ key, value }) =>
-                        visibleItems.has(key) ? <Item key={key} item={value} /> : null,
-                      )}
+                      {letterItems.map(({ key, value }) => (
+                        <Item key={key} item={value} hide={!visibleItemKeys.has(key)} />
+                      ))}
                     </ul>
                   </li>
                 );
               })}
             </ul>
           )}
-          {!hideItemCount && (
+          {showItemCount && (
             <div className="list-footer">
               <span className="page-msg">
-                {visibleItems.size} {search ? "Results" : capitalisedNamePlural}
+                {visibleItemKeys.size} {search ? "Results" : capitalisedNamePlural}
               </span>
             </div>
           )}

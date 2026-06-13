@@ -1,5 +1,6 @@
 import type { Item } from "@/shared/types";
 import { Link } from "@tanstack/react-router";
+import { memo } from "react";
 
 export type ItemWithLink = Item & { href?: string };
 
@@ -8,7 +9,7 @@ export interface ListItemProps {
   hide?: boolean;
 }
 
-export default function ListItem({ item, hide }: ListItemProps) {
+export default memo(function ListItem({ item, hide }: ListItemProps) {
   return (
     <li
       className="list-item emboss-y text-truncate"
@@ -24,4 +25,4 @@ export default function ListItem({ item, hide }: ListItemProps) {
       )}
     </li>
   );
-}
+});
