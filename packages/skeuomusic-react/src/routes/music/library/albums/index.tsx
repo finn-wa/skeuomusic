@@ -4,7 +4,7 @@ import { ErrorPage } from "@/components/page-message/page-message";
 import { PRELOAD_STALE_TIME, STALE_TIME } from "@/shared/constants";
 import type { Item } from "@/shared/types";
 import { createFileRoute } from "@tanstack/react-router";
-import birdItems from "./bird-items-2k.json";
+import birdItems from "./bird-items-300.json";
 
 const title = "Albums";
 
