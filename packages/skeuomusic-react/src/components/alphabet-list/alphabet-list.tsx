@@ -12,11 +12,12 @@ import ListItem, { type ItemWithLink } from "../list-item/list-item";
 import PageMessage, { LoadingPage } from "../page-message/page-message";
 import SearchInput from "../search-input/search-input";
 import AlphabetIndex from "./alphabet-index";
-import { LETTERS, LETTER_LABEL, type Letter } from "./alphabet-list-model";
+import { LETTERS, LETTER_LABEL, type Letter } from "./letters";
+import { plural, singular } from "@/shared/plural";
 
 export type AlphabetListProps<T extends ItemWithLink> = {
   items: Promise<T[]>;
-  namePlural: string;
+  noun: string | { singular: string; plural: string };
   hideItemCount?: boolean;
   hideIndex?: boolean;
   itemComponent?: ComponentType<ItemRendererProps<T>>;
@@ -27,9 +28,13 @@ export type ItemRendererProps<T extends ItemWithLink> = {
   hide?: boolean;
 };
 
+/**
+ * Renders a large list of items in alphabetical order. Includes a search bar at the top
+ * to filter the items, and an optional index on the side to jump to a letter.
+ */
 export default function AlphabetList<T extends Item>({
   items,
-  namePlural,
+  noun,
   itemComponent,
   hideItemCount,
   hideIndex,
@@ -41,11 +46,11 @@ export default function AlphabetList<T extends Item>({
       <div className="content-scroll">
         <SearchInput onQueryChanged={(value) => setSearch(value)} />
         <div id={INITIAL_SCROLL_ID}></div>
-        <Suspense name={namePlural + "AlphabetList"} fallback={<LoadingPage />}>
+        <Suspense name={singular(noun) + "AlphabetList"} fallback={<LoadingPage />}>
           <AlphabetListItems
             items={items}
             search={deferredSearch}
-            namePlural={namePlural}
+            noun={noun}
             itemComponent={itemComponent}
             hideItemCount={hideItemCount}
           />
@@ -66,7 +71,7 @@ type AlphabetListItemsProps<T extends ItemWithLink> = Omit<
 function AlphabetListItems<T extends Item>({
   items,
   search,
-  namePlural,
+  noun,
   hideItemCount,
   itemComponent: ItemComponent = ListItem,
 }: AlphabetListItemsProps<T>) {
@@ -74,17 +79,15 @@ function AlphabetListItems<T extends Item>({
   const resolvedItems = use(items);
   const sortedItems = useMemo(() => sortItems(resolvedItems), [resolvedItems]);
   const groupedItems = useMemo(() => groupItems(sortedItems), [sortedItems]);
-  const visibleItemKeys = useMemo(
+  const visibleItemIds = useMemo(
     () => filterItems(sortedItems, query),
     [sortedItems, query],
   );
-  const showItemCount = !hideItemCount && visibleItemKeys.size > 0;
-  const capitalisedNamePlural =
-    (namePlural[0]?.toUpperCase() ?? "") + (namePlural.slice(1) ?? "");
-  if (visibleItemKeys.size === 0) {
+  const showItemCount = !hideItemCount && visibleItemIds.size > 0;
+  if (visibleItemIds.size === 0) {
     return (
       <PageMessage
-        message={resolvedItems.length > 0 ? "No Results" : `No ${capitalisedNamePlural}`}
+        message={resolvedItems.length > 0 ? "No Results" : `No ${plural(noun)}`}
       />
     );
   }
@@ -93,13 +96,16 @@ function AlphabetListItems<T extends Item>({
       <ul>
         {LETTERS.map((letter) => {
           const letterItems = groupedItems[letter];
-          const hasVisibleItems = letterItems.some((item) =>
-            visibleItemKeys.has(item.sortKey),
-          );
+          const hasVisibleItems = letterItems.some((item) => visibleItemIds.has(item.id));
           return (
             // We don't apply display: none to list sections even if they have no
             // visible items so that the index can still to jump to their position
-            <li id={letter} key={letter} className="list-section">
+            <li
+              id={LETTER_LABEL[letter]}
+              key={letter}
+              className="list-section"
+              data-testid={`list-section-${letter}`}
+            >
               <div
                 className="section-header"
                 style={{ display: hasVisibleItems ? undefined : "none" }}
@@ -109,11 +115,11 @@ function AlphabetListItems<T extends Item>({
                 </div>
               </div>
               <ul>
-                {letterItems.map(({ sortKey, value }) => (
+                {letterItems.map((item) => (
                   <ItemComponent
-                    key={value.id}
-                    item={value}
-                    hide={!visibleItemKeys.has(sortKey)}
+                    key={item.id}
+                    item={item}
+                    hide={!visibleItemIds.has(item.id)}
                   />
                 ))}
               </ul>
@@ -124,7 +130,7 @@ function AlphabetListItems<T extends Item>({
       {showItemCount && (
         <div className="list-footer">
           <span className="page-msg">
-            {visibleItemKeys.size} {search ? "Results" : capitalisedNamePlural}
+            {visibleItemIds.size} {plural(search ? "Result" : noun, visibleItemIds.size)}
           </span>
         </div>
       )}
@@ -136,10 +142,7 @@ type SortableItem<T extends Item> = {
   /** The value name, trimmed and uppercased */
   sortKey: string;
   value: T;
-  hide?: boolean;
 };
-
-type GroupedItems<T extends Item> = { [K in Letter]: SortableItem<T>[] };
 
 const lettersSet: ReadonlySet<string> = new Set(LETTERS.slice(0, -1));
 function getLetter(uppercaseChar: string): Letter {
@@ -152,21 +155,26 @@ function getLetter(uppercaseChar: string): Letter {
 function sortItems<T extends Item>(items: T[]): SortableItem<T>[] {
   return items
     .map((value) => ({ value, sortKey: value.name.trim().toUpperCase() }))
-    .sort((a, b) => a.sortKey.localeCompare(b.sortKey));
+    .sort(
+      (a, b) =>
+        a.sortKey.localeCompare(b.sortKey) || a.value.name.localeCompare(b.value.name),
+    );
 }
 
-function groupItems<T extends Item>(sortedItems: SortableItem<T>[]) {
-  const groups = Object.fromEntries(
-    LETTERS.map((letter) => [letter, [] as SortableItem<T>[]]),
-  ) as GroupedItems<T>;
-
-  for (const value of sortedItems) {
-    const letter = getLetter(value.sortKey[0] ?? "");
-    groups[letter].push(value);
+function groupItems<T extends Item>(
+  sortedItems: SortableItem<T>[],
+): { [K in Letter]: T[] } {
+  const groups = Object.fromEntries(LETTERS.map((letter) => [letter, [] as T[]])) as {
+    [K in Letter]: T[];
+  };
+  for (const item of sortedItems) {
+    const letter = getLetter(item.sortKey[0] ?? "");
+    groups[letter].push(item.value);
   }
   return groups;
 }
 
+/** Filters matching items and returns their IDs. */
 function filterItems<T extends Item>(
   sortedItems: SortableItem<T>[],
   search: string,
@@ -176,7 +184,7 @@ function filterItems<T extends Item>(
   const visibleItems = new Set<string>();
   for (const item of sortedItems) {
     if (item.sortKey.includes(query)) {
-      visibleItems.add(item.sortKey);
+      visibleItems.add(item.value.id);
     }
   }
   return visibleItems;

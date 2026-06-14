@@ -1,6 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 import { useRef } from "react";
-import { LETTERS } from "./alphabet-list-model";
+import { LETTER_LABEL, LETTERS } from "./letters";
 
 /**
  * Displays the alphabet as a column down the right-hand side of long alphabetised lists.
@@ -41,7 +41,7 @@ export default function AlphabetIndex() {
               }
             }}
           >
-            <a href={`#${letter}`} draggable="false">
+            <a href={`#${LETTER_LABEL[letter]}`} draggable="false">
               {letter}
             </a>
           </li>

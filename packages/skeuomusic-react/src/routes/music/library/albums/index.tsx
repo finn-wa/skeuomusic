@@ -33,7 +33,7 @@ function AlbumsComponent() {
       fallback={<ErrorPage message="An unexpected error occurred" />}
       onError="log"
     >
-      <AlphabetList items={loaderData.albums} namePlural="Albums" />
+      <AlphabetList items={loaderData.albums} noun="Album" />
     </ErrorBoundary>
   );
 }
