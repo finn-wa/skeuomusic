@@ -97,12 +97,9 @@ function AlphabetListItems<T extends Item>({
             visibleItemKeys.has(item.sortKey),
           );
           return (
-            <li
-              id={letter}
-              key={letter}
-              className="list-section"
-              style={{ display: hasVisibleItems ? undefined : "none" }}
-            >
+            // We don't apply display: none to list sections even if they have no
+            // visible items so that the index can still to jump to their position
+            <li id={letter} key={letter} className="list-section">
               <div
                 className="section-header"
                 style={{ display: hasVisibleItems ? undefined : "none" }}
