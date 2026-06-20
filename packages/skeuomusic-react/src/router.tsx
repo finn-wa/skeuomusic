@@ -12,6 +12,8 @@ export const NAV_TAB_ORDER: { [path: string]: number } = {
 export function getRouter() {
   const router = createTanStackRouter({
     routeTree,
+    // Provided in main.tsx
+    context: { auth: undefined! },
     scrollRestoration: true,
     defaultPreload: "intent",
     defaultPreloadStaleTime: 0,

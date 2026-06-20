@@ -1,13 +1,22 @@
 import { RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import "./global.css";
+import { AuthProvider, useAuth } from "./auth";
 import { getRouter } from "./router";
+
+import "./global.css";
 
 const router = getRouter();
 
 createRoot(document.getElementById("app")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <App />
+    </AuthProvider>
   </StrictMode>,
 );
+
+function App() {
+  const auth = useAuth();
+  return <RouterProvider router={router} context={{ auth }} />;
+}

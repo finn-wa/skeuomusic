@@ -258,6 +258,9 @@ importers:
       react-dom:
         specifier: 19.2.7
         version: 19.2.7(react@19.2.7)
+      subsonic-api:
+        specifier: ^3.3.1
+        version: 3.3.1
     devDependencies:
       '@tanstack/devtools-vite':
         specifier: 0.7.0
@@ -2540,6 +2543,10 @@ packages:
 
   strtok3@10.3.5:
     resolution: {integrity: sha512-ki4hZQfh5rX0QDLLkOCj+h+CVNkqmp/CMf8v8kZpkNVK6jGQooMytqzLZYUVYIZcFZ6yDB70EfD8POcFXiF5oA==}
+    engines: {node: '>=18'}
+
+  subsonic-api@3.3.1:
+    resolution: {integrity: sha512-0320kOsY8ym4wSR1rwVUqEYpMaa7zjbER26SsI8akO6P22DRW7iEliJLreuj7aKSE0t7FT/NbvbVXgm8PqU4yg==}
     engines: {node: '>=18'}
 
   supports-color@10.2.2:
@@ -4990,6 +4997,8 @@ snapshots:
   strtok3@10.3.5:
     dependencies:
       '@tokenizer/token': 0.3.0
+
+  subsonic-api@3.3.1: {}
 
   supports-color@10.2.2: {}
 

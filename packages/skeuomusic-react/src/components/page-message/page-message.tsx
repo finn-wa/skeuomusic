@@ -22,3 +22,7 @@ export const LoadingPage = () => <PageMessage message="Loading..." />;
 export const ErrorPage = ({ message = "An error occurred" }: { message?: string }) => (
   <PageMessage message={message} />
 );
+
+export function LoginHintPage() {
+  return <PageMessage message="Go to More to set up" />;
+}
