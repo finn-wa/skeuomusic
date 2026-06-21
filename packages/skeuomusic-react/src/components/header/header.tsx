@@ -1,36 +1,33 @@
-import { useRouterState } from "@tanstack/react-router";
-import { SKEUOMUSIC } from "@/shared/constants";
+import { useHeaderContext, type HeaderState } from "@/shared/context/header";
 import HeaderArrowButton from "../header-arrow-button/header-arrow-button";
-
-export type HeaderRouteContext = {
-  title?: string;
-  backButton?: { label: string; href?: string };
-};
+import HeaderButton from "../header-button/header-button";
 
 export default function Header() {
-  const context = useRouterState({
-    select: (state) => {
-      const context = state.matches.at(-1)?.context;
-      if (context != null && "header" in context) {
-        return context.header as HeaderRouteContext;
-      }
-      return undefined;
-    },
-  });
-  return <HeaderComponent title={context?.title} backButton={context?.backButton} />;
+  const headerContext = useHeaderContext();
+  return (
+    <HeaderComponent
+      title={headerContext.title}
+      leftButton={headerContext.leftButton}
+      rightButton={headerContext.rightButton}
+    />
+  );
 }
 
-export type HeaderProps = HeaderRouteContext;
+export type HeaderProps = HeaderState;
 
-export function HeaderComponent({ backButton, title = SKEUOMUSIC }: HeaderProps) {
+export function HeaderComponent({
+  leftButton,
+  rightButton = { kind: "link", label: "Now\nPlaying", href: "/music/player" },
+  title,
+}: HeaderProps) {
   return (
     <header className="bar">
       <div className="header-button left">
-        {backButton != null && (
+        {leftButton != null && (
           <HeaderArrowButton
             direction="left"
-            text={backButton.label}
-            href={backButton.href ?? ".."}
+            text={leftButton.label}
+            href={leftButton.href ?? ".."}
           />
         )}
       </div>
@@ -38,12 +35,22 @@ export function HeaderComponent({ backButton, title = SKEUOMUSIC }: HeaderProps)
       <h1 className="text-truncate">{title}</h1>
 
       <div className="header-button right">
-        <HeaderArrowButton
-          direction="right"
-          kind="primary"
-          text={"Now\nPlaying"}
-          href="/music/player"
-        />
+        {rightButton.kind === "link" ? (
+          <HeaderArrowButton
+            direction="right"
+            kind="primary"
+            text={"Now\nPlaying"}
+            href="/music/player"
+          />
+        ) : (
+          <HeaderButton
+            type={rightButton.kind}
+            text={rightButton.label}
+            disabled={rightButton.disabled}
+            form={rightButton.formId}
+            onClick={rightButton.onClick}
+          />
+        )}
       </div>
     </header>
   );

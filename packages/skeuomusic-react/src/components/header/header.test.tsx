@@ -14,30 +14,29 @@ vi.mock("../header-arrow-button/header-arrow-button", () => ({
 }));
 
 describe("HeaderComponent", () => {
-  it("renders the default title when no title prop is given", async () => {
-    const screen = await render(<HeaderComponent />);
-    await expect.element(screen.getByRole("heading")).toHaveTextContent(SKEUOMUSIC);
-  });
-
-  it("renders a custom title", async () => {
+  it("renders the title", async () => {
     const screen = await render(<HeaderComponent title="Artists" />);
     await expect.element(screen.getByRole("heading")).toHaveTextContent("Artists");
   });
 
   it("does not render a left arrow when backButton is not provided", async () => {
-    const screen = await render(<HeaderComponent />);
+    const screen = await render(<HeaderComponent title={SKEUOMUSIC} />);
     await expect.element(screen.getByTestId("header-arrow-left")).not.toBeInTheDocument();
   });
 
   it("renders a left arrow with the correct label when backButton is provided", async () => {
-    const screen = await render(<HeaderComponent backButton={{ label: "Library" }} />);
+    const screen = await render(
+      <HeaderComponent title={SKEUOMUSIC} leftButton={{ label: "Library" }} />,
+    );
     await expect
       .element(screen.getByTestId("header-arrow-left"))
       .toHaveTextContent("Library");
   });
 
   it("defaults the back button href to '..' when no href is given", async () => {
-    const screen = await render(<HeaderComponent backButton={{ label: "Library" }} />);
+    const screen = await render(
+      <HeaderComponent title={SKEUOMUSIC} leftButton={{ label: "Library" }} />,
+    );
     await expect
       .element(screen.getByTestId("header-arrow-left"))
       .toHaveAttribute("href", "..");
@@ -45,7 +44,10 @@ describe("HeaderComponent", () => {
 
   it("uses the provided href for the back button", async () => {
     const screen = await render(
-      <HeaderComponent backButton={{ label: "Library", href: "/music/library" }} />,
+      <HeaderComponent
+        title={SKEUOMUSIC}
+        leftButton={{ label: "Library", href: "/music/library" }}
+      />,
     );
     await expect
       .element(screen.getByTestId("header-arrow-left"))
@@ -53,7 +55,7 @@ describe("HeaderComponent", () => {
   });
 
   it("always renders the Now Playing right arrow linking to /music/player", async () => {
-    const screen = await render(<HeaderComponent />);
+    const screen = await render(<HeaderComponent title={SKEUOMUSIC} />);
     const nowPlaying = screen.getByTestId("header-arrow-right");
     await expect.element(nowPlaying).toBeInTheDocument();
     await expect.element(nowPlaying).toHaveAttribute("href", "/music/player");

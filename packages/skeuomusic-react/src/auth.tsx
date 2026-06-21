@@ -1,30 +1,12 @@
-import { createContext, use, useEffect, useState, type PropsWithChildren } from "react";
+import { useEffect, useState, type PropsWithChildren } from "react";
 import SubsonicAPI from "subsonic-api";
 import { LoadingPage } from "./components/page-message/page-message";
-
-export type SubsonicAuthState = {
-  username: string;
-  api: SubsonicAPI;
-};
-export type SubsonicConfig = {
-  url: string;
-  username: string;
-  password: string;
-};
-export type SavedSubsonicConfig = Omit<SubsonicConfig, "password"> & {
-  password?: string;
-};
-export type SubsonicAuth = {
-  login: (config: SubsonicConfig) => Promise<void>;
-  logout: () => void;
-  state: SubsonicAuthState | null;
-};
-
-export type AuthState = {
-  subsonic: SubsonicAuth;
-};
-
-const AuthContext = createContext<AuthState | undefined>(undefined);
+import {
+  AuthContext,
+  type SavedSubsonicConfig,
+  type SubsonicAuthState,
+  type SubsonicConfig,
+} from "./shared/context/auth";
 
 async function loginToSubsonic({
   url,
@@ -136,12 +118,4 @@ export function AuthProvider({ children }: PropsWithChildren) {
       {children}
     </AuthContext>
   );
-}
-
-export function useAuth(): AuthState {
-  const context = use(AuthContext);
-  if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
-  }
-  return context;
 }

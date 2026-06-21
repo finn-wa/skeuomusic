@@ -1,6 +1,5 @@
 import AlphabetList from "@/components/alphabet-list/alphabet-list";
-import ErrorBoundary from "@/components/error-boundary/error-boundary";
-import { ErrorPage, LoginHintPage } from "@/components/page-message/page-message";
+import { LoginHintPage } from "@/components/page-message/page-message";
 import { PRELOAD_STALE_TIME, STALE_TIME } from "@/shared/constants";
 import type { Item } from "@/shared/types";
 import { createFileRoute } from "@tanstack/react-router";
