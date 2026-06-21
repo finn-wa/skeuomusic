@@ -1,24 +1,24 @@
 import { describe, expect, it, vi } from "vitest";
-import NavArrowButton, { type NavArrowButtonProps } from "./nav-arrow-button";
+import HeaderArrowButton, { type HeaderArrowButtonProps } from "./header-arrow-button";
 import { renderWithRouter } from "@/test/router-utils";
 
 const defaultProps = {
   href: "/music/artists",
   text: "Artists",
-} satisfies Partial<NavArrowButtonProps>;
+} satisfies Partial<HeaderArrowButtonProps>;
 
-describe("NavArrowButton", () => {
+describe("HeaderArrowButton", () => {
   describe("early returns", () => {
     it("renders nothing when hide is true", async () => {
       const { container } = await renderWithRouter(
-        <NavArrowButton {...defaultProps} direction="left" hide />,
+        <HeaderArrowButton {...defaultProps} direction="left" hide />,
       );
       expect(container).toBeEmptyDOMElement();
     });
 
     it("renders nothing when text is omitted", async () => {
       const { container } = await renderWithRouter(
-        <NavArrowButton href="/music/artists" direction="left" />,
+        <HeaderArrowButton href="/music/artists" direction="left" />,
       );
       expect(container).toBeEmptyDOMElement();
     });
@@ -27,7 +27,7 @@ describe("NavArrowButton", () => {
   describe("link and text", () => {
     it("renders a link pointing to href", async () => {
       const screen = await renderWithRouter(
-        <NavArrowButton {...defaultProps} direction="right" />,
+        <HeaderArrowButton {...defaultProps} direction="right" />,
       );
       await expect
         .element(screen.getByRole("link"))
@@ -36,7 +36,7 @@ describe("NavArrowButton", () => {
 
     it("renders the label text", async () => {
       const screen = await renderWithRouter(
-        <NavArrowButton {...defaultProps} direction="left" text="Albums" />,
+        <HeaderArrowButton {...defaultProps} direction="left" text="Albums" />,
       );
       await expect.element(screen.getByRole("link")).toHaveTextContent("Albums");
     });
@@ -46,29 +46,29 @@ describe("NavArrowButton", () => {
     it("points left when direction=left", { tags: "visual" }, async () => {
       const screen = await renderWithRouter(
         <div style={{ display: "flex" }}>
-          <NavArrowButton {...defaultProps} text="Radiohead" direction="left" />,
+          <HeaderArrowButton {...defaultProps} text="Radiohead" direction="left" />,
         </div>,
       );
       await expect(screen.getByRole("link")).toMatchScreenshot(
-        "nav-arrow-secondary-left",
+        "header-arrow-secondary-left",
       );
     });
 
     it("points right when direction=right", { tags: "visual" }, async () => {
       const screen = await renderWithRouter(
         <div style={{ display: "flex" }}>
-          <NavArrowButton {...defaultProps} direction="right" />
+          <HeaderArrowButton {...defaultProps} direction="right" />
         </div>,
       );
       await expect(screen.getByRole("link")).toMatchScreenshot(
-        "nav-arrow-secondary-right",
+        "header-arrow-secondary-right",
       );
     });
 
     it("applies player styling when kind=player", { tags: "visual" }, async () => {
       const screen = await renderWithRouter(
         <div style={{ display: "flex" }}>
-          <NavArrowButton
+          <HeaderArrowButton
             href="/player"
             text="Radiohead"
             kind="player"
@@ -76,13 +76,15 @@ describe("NavArrowButton", () => {
           />
         </div>,
       );
-      await expect(screen.getByRole("link")).toMatchScreenshot("nav-arrow-player-left");
+      await expect(screen.getByRole("link")).toMatchScreenshot(
+        "header-arrow-player-left",
+      );
     });
 
     it("applies primary styling when kind=primary", { tags: "visual" }, async () => {
       const screen = await renderWithRouter(
         <div style={{ display: "flex" }}>
-          <NavArrowButton
+          <HeaderArrowButton
             {...defaultProps}
             text="Now Playing"
             direction="right"
@@ -90,13 +92,15 @@ describe("NavArrowButton", () => {
           />
         </div>,
       );
-      await expect(screen.getByRole("link")).toMatchScreenshot("nav-arrow-primary-right");
+      await expect(screen.getByRole("link")).toMatchScreenshot(
+        "header-arrow-primary-right",
+      );
     });
 
     it("applies secondary styling when kind=secondary", { tags: "visual" }, async () => {
       const screen = await renderWithRouter(
         <div style={{ display: "flex" }}>
-          <NavArrowButton
+          <HeaderArrowButton
             {...defaultProps}
             text="Radiohead"
             kind="secondary"
@@ -105,7 +109,7 @@ describe("NavArrowButton", () => {
         </div>,
       );
       await expect(screen.getByRole("link")).toMatchScreenshot(
-        "nav-arrow-secondary-left",
+        "header-arrow-secondary-left",
       );
     });
   });
@@ -114,7 +118,7 @@ describe("NavArrowButton", () => {
     it("SVG width uses clientWidth after mount", async () => {
       vi.spyOn(HTMLElement.prototype, "clientWidth", "get").mockReturnValue(80);
       const { container } = await renderWithRouter(
-        <NavArrowButton {...defaultProps} direction="left" text="Artists" />,
+        <HeaderArrowButton {...defaultProps} direction="left" text="Artists" />,
       );
       const widthValue = parseFloat(
         container.querySelector("svg")?.getAttribute("width") ?? "",

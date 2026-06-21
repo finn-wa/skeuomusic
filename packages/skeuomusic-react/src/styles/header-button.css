@@ -1,4 +1,4 @@
-.nav-arrow {
+.header-arrow {
   background-color: transparent;
   display: flex;
   position: relative;
@@ -48,7 +48,7 @@
   }
 }
 
-.nav-arrow-text {
+.header-arrow-text {
   max-width: max(33%, 175px);
   min-width: 1rem;
   font-size: 1rem;

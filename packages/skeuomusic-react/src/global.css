@@ -2,10 +2,10 @@
 @import "./styles/skeuomorphic.css";
 @import "./styles/forms.css";
 @import "./styles/header.css";
+@import "./styles/header-button.css";
 @import "./styles/list.css";
 @import "./styles/login.css";
 @import "./styles/navbar.css";
-@import "./styles/nav-arrow.css";
 @import "./styles/page-msg.css";
 @import "./styles/player.css";
 @import "./styles/search.css";

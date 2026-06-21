@@ -9,7 +9,7 @@
   z-index: 1;
 }
 
-.player-header .nav-arrow-text {
+.player-header .header-arrow-text {
   text-shadow: var(--text-emboss-shadow);
 }
 
