@@ -39,7 +39,7 @@ Routes live in `src/routes/` and mirror the URL structure:
 `src/components/` is organized by feature, including:
 
 - `header/` — `<Header>` top bar
-- `nav-bar/` — `<NavBar>` bottom tab bar, `<NavTab>`, `<NavArrowButton>`
+- `nav-bar/` — `<NavBar>` bottom tab bar, `<NavTab>`, `<HeaderArrowButton>`
 - `icons/` — SVG icon components (play/pause, shuffle, repeat, nav tabs, prev/next). Shared `<IconDefs>` for `<defs>` that need to be in the document.
 
 ### Styling

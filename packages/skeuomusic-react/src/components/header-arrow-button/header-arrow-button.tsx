@@ -3,7 +3,7 @@ import { urlForId } from "@/shared/svg-utils";
 import { Link, useLocation } from "@tanstack/react-router";
 import { useId, useLayoutEffect, useRef, useState } from "react";
 
-export type NavArrowButtonProps = {
+export type HeaderArrowButtonProps = {
   text?: string;
   href: string;
   direction: "left" | "right";
@@ -11,13 +11,13 @@ export type NavArrowButtonProps = {
   hide?: boolean;
 };
 
-export default function NavArrowButton({
+export default function HeaderArrowButton({
   text,
   href,
   direction,
   kind = "secondary",
   hide = false,
-}: NavArrowButtonProps) {
+}: HeaderArrowButtonProps) {
   const textRef = useRef<HTMLSpanElement>(null);
   const [textWidth, setTextWidth] = useState(() =>
     estimateTextWidth("interVariable16px700w", text ?? ""),
@@ -46,10 +46,10 @@ export default function NavArrowButton({
     <Link
       to={href}
       from={currentLocation as any}
-      className={`nav-arrow ${direction} ${kind} text-truncate`}
-      data-testid={`nav-arrow-${direction}`}
+      className={`header-arrow ${direction} ${kind} text-truncate`}
+      data-testid={`header-arrow-${direction}`}
     >
-      <span ref={textRef} className="nav-arrow-text text-truncate">
+      <span ref={textRef} className="header-arrow-text text-truncate">
         {text}
       </span>
       <svg

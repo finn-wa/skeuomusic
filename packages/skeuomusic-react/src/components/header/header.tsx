@@ -1,6 +1,6 @@
 import { useRouterState } from "@tanstack/react-router";
 import { SKEUOMUSIC } from "@/shared/constants";
-import NavArrowButton from "../nav-arrow-button/nav-arrow-button";
+import HeaderArrowButton from "../header-arrow-button/header-arrow-button";
 
 export type HeaderRouteContext = {
   title?: string;
@@ -27,7 +27,7 @@ export function HeaderComponent({ backButton, title = SKEUOMUSIC }: HeaderProps)
     <header className="bar">
       <div className="header-button left">
         {backButton != null && (
-          <NavArrowButton
+          <HeaderArrowButton
             direction="left"
             text={backButton.label}
             href={backButton.href ?? ".."}
@@ -38,7 +38,7 @@ export function HeaderComponent({ backButton, title = SKEUOMUSIC }: HeaderProps)
       <h1 className="text-truncate">{title}</h1>
 
       <div className="header-button right">
-        <NavArrowButton
+        <HeaderArrowButton
           direction="right"
           kind="primary"
           text={"Now\nPlaying"}
