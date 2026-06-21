@@ -35,14 +35,6 @@ export const Route = createFileRoute("/music/library/albums/")({
 });
 
 function AlbumsRouteComponent() {
-  return (
-    <ErrorBoundary name="AlbumsComponent" fallback={<ErrorPage />} onError="log">
-      <AlbumsComponent />
-    </ErrorBoundary>
-  );
-}
-
-function AlbumsComponent() {
   const { albums } = Route.useLoaderData();
   if (albums === undefined) {
     return <LoginHintPage />;
