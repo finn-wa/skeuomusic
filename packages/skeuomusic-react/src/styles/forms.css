@@ -1,0 +1,43 @@
+:root {
+  --form-border: 1px solid #d0d0d0;
+}
+.form-group {
+  width: 100%;
+  max-width: 37rem;
+  min-width: 20rem;
+  padding: 0;
+  margin: 0.5rem 0;
+  border: var(--form-border);
+  background-color: white;
+  border-radius: 0.75rem;
+
+  label {
+    text-shadow: none;
+    color: black;
+    margin: 0.25rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 0.5rem;
+    padding: 0 0.25rem;
+    border-bottom: var(--form-border);
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  input {
+    border: none;
+  }
+
+  input[type="checkbox"] {
+    margin-right: auto;
+  }
+}
+
+form button[type="submit"] {
+  float: right;
+  margin-right: 0.5rem;
+}

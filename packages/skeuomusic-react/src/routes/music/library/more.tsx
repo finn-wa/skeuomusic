@@ -1,6 +1,6 @@
 import { useAuth } from "@/auth";
-import ErrorBoundary from "@/components/error-boundary/error-boundary";
-import PageMessage, { ErrorPage } from "@/components/page-message/page-message";
+import PageMessage from "@/components/page-message/page-message";
+import SubsonicForm from "@/components/subsonic-form/subsonic-form";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/music/library/more")({
@@ -8,18 +8,10 @@ export const Route = createFileRoute("/music/library/more")({
 });
 
 function MoreRouteComponent() {
-  return (
-    <ErrorBoundary name="MoreComponent" fallback={<ErrorPage />} onError="log">
-      <MoreComponent />
-    </ErrorBoundary>
-  );
-}
-
-function MoreComponent() {
   const auth = useAuth();
   return (
-    <PageMessage
-      message={auth.subsonic.state == null ? "Not logged in" : "Logged in with subsonic"}
-    />
+    <div className="content-scroll">
+      <SubsonicForm />
+    </div>
   );
 }
