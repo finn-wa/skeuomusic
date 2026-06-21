@@ -1,8 +1,11 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
+import ErrorBoundary from "@/components/error-boundary/error-boundary";
 import Header from "@/components/header/header";
 import NavBar from "@/components/nav-bar/nav-bar";
-import ErrorBoundary from "@/components/error-boundary/error-boundary";
 import { ErrorPage } from "@/components/page-message/page-message";
+import { SKEUOMUSIC } from "@/shared/constants";
+import { HeaderContext, type HeaderState } from "@/shared/context/header";
+import { createFileRoute, Outlet, useRouterState } from "@tanstack/react-router";
+import { useState } from "react";
 
 export const Route = createFileRoute("/music/library")({
   component: MusicLibrary,
@@ -10,8 +13,25 @@ export const Route = createFileRoute("/music/library")({
 
 /** Provides header and nav tab bar for /music/library routes */
 function MusicLibrary() {
+  const { routeHeaderState, pathname } = useRouterState({
+    select: (state) => {
+      const context = state.matches.at(-1)?.context;
+      const routeHeaderState: HeaderState =
+        context != null && "header" in context ? context.header : { title: SKEUOMUSIC };
+      return { routeHeaderState, pathname: state.location.pathname };
+    },
+  });
+  const [headerStateOverride, setHeaderStateOverride] = useState<HeaderState | null>(
+    null,
+  );
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setHeaderStateOverride(null);
+  }
+  const headerState = headerStateOverride ?? routeHeaderState;
   return (
-    <>
+    <HeaderContext value={{ ...headerState, setHeaderState: setHeaderStateOverride }}>
       <Header />
       <main id="library-content" className="content-frame">
         <ErrorBoundary name="MusicLibrary" fallback={<ErrorPage />} onError="log">
@@ -19,6 +39,6 @@ function MusicLibrary() {
         </ErrorBoundary>
       </main>
       <NavBar />
-    </>
+    </HeaderContext>
   );
 }

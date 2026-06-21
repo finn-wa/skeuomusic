@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
 
+export const SUBSONIC_FORM_ID = "subsonicConfig";
+
+export type SubsonicFormProps = {
+  formValid: (disabled: true) => void;
+};
+
 export default function SubsonicForm() {
   const [url, setUrl] = useState("");
   const [username, setUsername] = useState("");
@@ -12,11 +18,12 @@ export default function SubsonicForm() {
     console.log(formState);
   }
   return (
-    <form id="subsonicConfig" action={submit}>
+    <form id={SUBSONIC_FORM_ID} action={submit}>
       <fieldset className="form-group">
         <div className="form-row">
           <label htmlFor="subsonicUrl">Server URL</label>
           <input
+            required
             name="url"
             id="subsonicUrl"
             type="text"
@@ -28,6 +35,7 @@ export default function SubsonicForm() {
         <div className="form-row">
           <label htmlFor="subsonicUsername">User Name</label>
           <input
+            required
             name="username"
             id="subsonicUsername"
             type="text"
@@ -39,6 +47,7 @@ export default function SubsonicForm() {
         <div className="form-row">
           <label htmlFor="subsonicPassword">Password</label>
           <input
+            required
             name="password"
             id="subsonicPassword"
             type="password"

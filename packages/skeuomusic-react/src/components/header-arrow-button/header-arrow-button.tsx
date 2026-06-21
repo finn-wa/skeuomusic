@@ -34,7 +34,7 @@ export default function HeaderArrowButton({
       setTextWidth(textRef.current.clientWidth);
     }
   }, [text]);
-
+  // TODO flip gradient when active
   // TODO : Now Playing text is a bit smaller and it has a line break
   // perhaps support using child prop for text via foreignObject
   if (hide || text == null || href == null) {

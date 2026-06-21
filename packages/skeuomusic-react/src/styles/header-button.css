@@ -54,3 +54,43 @@
   font-size: 1rem;
   z-index: 3;
 }
+
+.header-text-button {
+  box-sizing: border-box;
+  height: 40px;
+  padding: 0 var(--spacer-3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  border: 1px solid hsl(0 0 0 / 0.4);
+  color: var(--header-btn-secondary-text-color);
+  text-shadow: var(--text-emboss-glow);
+  background: linear-gradient(
+    to bottom,
+    var(--header-btn-secondary-gradient-top),
+    var(--header-btn-secondary-gradient-bottom)
+  );
+
+  &:active:not(:disabled) {
+    background: linear-gradient(
+      to bottom,
+      var(--header-btn-secondary-gradient-bottom),
+      var(--header-btn-secondary-gradient-top)
+    );
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.header-text-button-text {
+  max-width: 175px;
+  min-width: 1rem;
+  font-size: 1rem;
+
+  .header-text-button:disabled & {
+    opacity: 0.5;
+  }
+}
