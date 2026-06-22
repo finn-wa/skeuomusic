@@ -11,7 +11,10 @@ export const Route = createFileRoute("/music/library")({
   component: MusicLibrary,
 });
 
-/** Provides header and nav tab bar for /music/library routes */
+/**
+ * Displays header and nav tab bar around the Outlet for /music/library routes.
+ * Provides {@link HeaderContext}.
+ */
 function MusicLibrary() {
   const { routeHeaderState, pathname } = useRouterState({
     select: (state) => {

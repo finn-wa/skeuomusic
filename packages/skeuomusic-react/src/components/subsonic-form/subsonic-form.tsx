@@ -1,21 +1,33 @@
+import type { SubsonicConfig } from "@/shared/context/auth";
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
 
 export const SUBSONIC_FORM_ID = "subsonicConfig";
 
 export type SubsonicFormProps = {
-  formValid: (disabled: true) => void;
+  onSubmit: (state: SubsonicFormValue) => void | Promise<void>;
+  setIsValid: (valid: boolean) => void;
+  initialState?: Partial<SubsonicFormValue>;
 };
 
-export default function SubsonicForm() {
-  const [url, setUrl] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [isSavePassword, setSavePassword] = useState(false);
+export type SubsonicFormValue = SubsonicConfig;
 
-  function submit() {
-    const formState = { url, username, password, isSavePassword };
-    console.log(formState);
+export default function SubsonicForm({ onSubmit, initialState = {} }: SubsonicFormProps) {
+  const [url, setUrl] = useState(initialState.url ?? "");
+  const [username, setUsername] = useState(initialState.username ?? "");
+  const [password, setPassword] = useState("");
+  const [isSavePassword, setSavePassword] = useState(
+    initialState.dangerouslySavePassword ?? false,
+  );
+
+  async function submit() {
+    const formState: SubsonicFormValue = {
+      url,
+      username,
+      password,
+      dangerouslySavePassword: isSavePassword,
+    };
+    await onSubmit(formState);
   }
   return (
     <form id={SUBSONIC_FORM_ID} action={submit}>
@@ -51,7 +63,7 @@ export default function SubsonicForm() {
             name="password"
             id="subsonicPassword"
             type="password"
-            placeholder="demo"
+            placeholder={initialState.dangerouslySavePassword ? "Saved" : "demo"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />

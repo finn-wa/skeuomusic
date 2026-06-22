@@ -4,6 +4,7 @@ import { LoadingPage } from "./components/page-message/page-message";
 import {
   AuthContext,
   type SavedSubsonicConfig,
+  type SubsonicAuthContext,
   type SubsonicAuthState,
   type SubsonicConfig,
 } from "./shared/context/auth";
@@ -30,14 +31,18 @@ async function loginToSubsonic({
 const OPENSUBSONIC_CONFIG_KEY = "opensubsonicConfig";
 
 function isValidSubsonicConfig(config: unknown): config is SavedSubsonicConfig {
+  const configObj = config as Record<string, unknown>;
   return (
     config != null &&
     typeof config === "object" &&
-    typeof (config as Record<string, unknown>)["username"] === "string" &&
-    typeof (config as Record<string, unknown>)["url"] === "string"
+    typeof configObj["username"] === "string" &&
+    typeof configObj["url"] === "string" &&
+    typeof configObj["dangerouslySavePassword"] === "boolean"
   );
 }
-
+function hasPassword(config: SavedSubsonicConfig): config is SubsonicConfig {
+  return typeof config.password === "string";
+}
 export function loadSubsonicConfig(): SavedSubsonicConfig | null {
   const configJson = localStorage.getItem(OPENSUBSONIC_CONFIG_KEY);
   if (configJson === null) {
@@ -56,15 +61,10 @@ export function loadSubsonicConfig(): SavedSubsonicConfig | null {
  * Saves config to local storage.
  *
  * @param config The subsonic config
- * @param dangerouslySavePassword Whether to include the password when saving the config.
- *   Local storage is not secure, so it's not recommended.
  */
-export function saveSubsonicConfig(
-  config: SavedSubsonicConfig,
-  dangerouslySavePassword = false,
-) {
+export function saveSubsonicConfig(config: SavedSubsonicConfig) {
   const configToSave = { ...config };
-  if (!dangerouslySavePassword) {
+  if (!config.dangerouslySavePassword) {
     delete configToSave.password;
   }
   localStorage.setItem(OPENSUBSONIC_CONFIG_KEY, JSON.stringify(configToSave));
@@ -77,17 +77,17 @@ export function AuthProvider({ children }: PropsWithChildren) {
   // Restore auth state on app load
   useEffect(() => {
     const subsonicConfig = loadSubsonicConfig();
-    if (subsonicConfig?.password == null) {
+    if (subsonicConfig === null || !hasPassword(subsonicConfig)) {
       setLoading(false);
       return;
     }
-    loginToSubsonic(subsonicConfig as SubsonicConfig)
+    loginToSubsonic(subsonicConfig)
       .then((response) => {
         if (!response.success) {
           throw new Error(response.error);
         }
         setSubsonicState({
-          username: subsonicConfig.username,
+          config: subsonicConfig,
           api: response.api,
         });
       })
@@ -101,15 +101,16 @@ export function AuthProvider({ children }: PropsWithChildren) {
     return <LoadingPage />;
   }
 
-  const login = async (config: SubsonicConfig, dangerouslySavePassword = false) => {
+  const login: SubsonicAuthContext["login"] = async (config) => {
     const response = await loginToSubsonic(config);
     if (!response.success) {
       throw new Error(response.error);
     }
-    saveSubsonicConfig(config, dangerouslySavePassword);
+    saveSubsonicConfig(config);
+    setSubsonicState({ config, api: response.api });
   };
 
-  const logout = () => {
+  const logout: SubsonicAuthContext["logout"] = () => {
     localStorage.removeItem(OPENSUBSONIC_CONFIG_KEY);
   };
 
