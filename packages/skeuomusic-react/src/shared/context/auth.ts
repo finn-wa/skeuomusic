@@ -6,13 +6,18 @@ export type AuthContextValue = {
   subsonic: SubsonicAuthContext;
 };
 export type SubsonicAuthState = {
-  username: string;
+  config: SubsonicConfig;
   api: SubsonicAPI;
 };
 export type SubsonicConfig = {
   url: string;
   username: string;
   password: string;
+  /**
+   * Whether to include the password when saving the config to local storage.
+   * Local storage is not secure, so it's not recommended.
+   */
+  dangerouslySavePassword: boolean;
 };
 export type SavedSubsonicConfig = Omit<SubsonicConfig, "password"> & {
   password?: string;

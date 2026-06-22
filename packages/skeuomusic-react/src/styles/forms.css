@@ -1,6 +1,11 @@
 :root {
   --form-border: 1px solid #d0d0d0;
 }
+
+.form-container {
+  align-items: center;
+}
+
 .form-group {
   width: 100%;
   max-width: 37rem;
