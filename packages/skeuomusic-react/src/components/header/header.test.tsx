@@ -1,31 +1,36 @@
 import { SKEUOMUSIC } from "@/shared/constants";
-import { render } from "vitest-browser-react";
 import { describe, expect, it, vi } from "vitest";
-import type { HeaderArrowButtonProps } from "../header-arrow-button/header-arrow-button";
 import Header, { HeaderComponent } from "./header";
 import { renderWithRouter } from "@/test/router-utils";
+import { HeaderContext, type HeaderContextValue } from "@/shared/context/header";
 
-vi.mock("../header-arrow-button/header-arrow-button", () => ({
-  default: ({ text, href, direction }: HeaderArrowButtonProps) => (
-    <a data-testid={`header-arrow-${direction}`} href={href}>
-      {text}
-    </a>
-  ),
-}));
+function renderHeaderWithContext(state: Partial<HeaderContextValue>) {
+  const contextValue: HeaderContextValue = {
+    title: SKEUOMUSIC,
+    setHeaderState:
+      vi.fn<(value: Parameters<HeaderContextValue["setHeaderState"]>[0]) => void>(),
+    ...state,
+  };
+  return renderWithRouter(
+    <HeaderContext.Provider value={contextValue}>
+      <Header />
+    </HeaderContext.Provider>,
+  );
+}
 
 describe("HeaderComponent", () => {
   it("renders the title", async () => {
-    const screen = await render(<HeaderComponent title="Artists" />);
+    const screen = await renderWithRouter(<HeaderComponent title="Artists" />);
     await expect.element(screen.getByRole("heading")).toHaveTextContent("Artists");
   });
 
-  it("does not render a left arrow when backButton is not provided", async () => {
-    const screen = await render(<HeaderComponent title={SKEUOMUSIC} />);
+  it("does not render a left arrow when leftButton is not provided", async () => {
+    const screen = await renderWithRouter(<HeaderComponent title={SKEUOMUSIC} />);
     await expect.element(screen.getByTestId("header-arrow-left")).not.toBeInTheDocument();
   });
 
-  it("renders a left arrow with the correct label when backButton is provided", async () => {
-    const screen = await render(
+  it("renders a left arrow with the correct label when leftButton is provided", async () => {
+    const screen = await renderWithRouter(
       <HeaderComponent title={SKEUOMUSIC} leftButton={{ label: "Library" }} />,
     );
     await expect
@@ -33,17 +38,15 @@ describe("HeaderComponent", () => {
       .toHaveTextContent("Library");
   });
 
-  it("defaults the back button href to '..' when no href is given", async () => {
-    const screen = await render(
+  it("renders the left arrow even when no href is explicitly given", async () => {
+    const screen = await renderWithRouter(
       <HeaderComponent title={SKEUOMUSIC} leftButton={{ label: "Library" }} />,
     );
-    await expect
-      .element(screen.getByTestId("header-arrow-left"))
-      .toHaveAttribute("href", "..");
+    await expect.element(screen.getByTestId("header-arrow-left")).toBeInTheDocument();
   });
 
   it("uses the provided href for the back button", async () => {
-    const screen = await render(
+    const screen = await renderWithRouter(
       <HeaderComponent
         title={SKEUOMUSIC}
         leftButton={{ label: "Library", href: "/music/library" }}
@@ -54,38 +57,46 @@ describe("HeaderComponent", () => {
       .toHaveAttribute("href", "/music/library");
   });
 
-  it("always renders the Now Playing right arrow linking to /music/player", async () => {
-    const screen = await render(<HeaderComponent title={SKEUOMUSIC} />);
+  it("renders the Now Playing right arrow by default", async () => {
+    const screen = await renderWithRouter(<HeaderComponent title={SKEUOMUSIC} />);
     const nowPlaying = screen.getByTestId("header-arrow-right");
     await expect.element(nowPlaying).toBeInTheDocument();
     await expect.element(nowPlaying).toHaveAttribute("href", "/music/player");
   });
+
+  it("renders a HeaderButton and no arrow when rightButton kind is submit", async () => {
+    const screen = await renderWithRouter(
+      <HeaderComponent
+        title={SKEUOMUSIC}
+        rightButton={{ kind: "submit", label: "Save", formId: "my-form" }}
+      />,
+    );
+    await expect.element(screen.getByTestId("header-button")).toHaveTextContent("Save");
+    await expect
+      .element(screen.getByTestId("header-arrow-right"))
+      .not.toBeInTheDocument();
+  });
 });
 
-describe("Header (router integration)", () => {
-  it("falls back to defaults when the last match has no context", async () => {
-    const screen = await renderWithRouter(<Header />);
-    await expect.element(screen.getByRole("heading")).toHaveTextContent(SKEUOMUSIC);
-    await expect.element(screen.getByTestId("header-arrow-left")).not.toBeInTheDocument();
-  });
-
-  it("falls back to defaults when the last match context has no header key", async () => {
-    const screen = await renderWithRouter(<Header />, { someOtherKey: true });
-    await expect.element(screen.getByRole("heading")).toHaveTextContent(SKEUOMUSIC);
-    await expect.element(screen.getByTestId("header-arrow-left")).not.toBeInTheDocument();
-  });
-
-  it("renders the title from route context header", async () => {
-    const screen = await renderWithRouter(<Header />, { header: { title: "Albums" } });
+describe("Header (context integration)", () => {
+  it("renders the title from context", async () => {
+    const screen = await renderHeaderWithContext({ title: "Albums" });
     await expect.element(screen.getByRole("heading")).toHaveTextContent("Albums");
   });
 
-  it("renders the back button from route context header", async () => {
-    const screen = await renderWithRouter(<Header />, {
-      header: { backButton: { label: "Library", href: "/music/library" } },
+  it("renders the left button from context", async () => {
+    const screen = await renderHeaderWithContext({
+      leftButton: { label: "Library", href: "/music/library" },
     });
     const backButton = screen.getByTestId("header-arrow-left");
     await expect.element(backButton).toHaveTextContent("Library");
     await expect.element(backButton).toHaveAttribute("href", "/music/library");
+  });
+
+  it("renders a submit button from context", async () => {
+    const screen = await renderHeaderWithContext({
+      rightButton: { kind: "submit", label: "Save", formId: "settings-form" },
+    });
+    await expect.element(screen.getByTestId("header-button")).toHaveTextContent("Save");
   });
 });

@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "lint": "oxlint",
-    "fmt": "oxfmt -c .oxfmtrc.json"
+    "fmt": "oxfmt -c .oxfmtrc.json",
+    "test": "vitest"
   },
   "devDependencies": {
     "lint-staged": "17.0.8",
