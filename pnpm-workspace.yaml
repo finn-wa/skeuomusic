@@ -4,7 +4,7 @@ packages:
   - "packages/spotify-web-client"
 
 catalog:
-  "@types/node": "24.12.4"
+  "@types/node": "24.13.2"
   typescript: "6.0.3"
   vitest: "4.1.8"
   "@vitest/browser": "4.1.8"
