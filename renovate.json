@@ -1,13 +1,5 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "ignorePaths": ["packages/skeuomusic/package.json"],
-  // Only automerge on Mondays (midnight-midday)
-  "automergeSchedule": ["* 0-12 * * 1"],
-  "packageRules": [
-    {
-      "matchDepTypes": ["devDependencies"],
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "automerge": true
-    }
-  ]
+  "extends": ["group:allNonMajor"]
 }
