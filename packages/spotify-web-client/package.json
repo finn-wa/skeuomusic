@@ -19,7 +19,7 @@
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "2.39.0",
     "@types/node": "catalog:",
-    "openapi3-ts": "4.5.0",
+    "openapi3-ts": "4.6.0",
     "typescript": "catalog:",
     "vitest": "catalog:",
     "yaml": "2.9.0"
