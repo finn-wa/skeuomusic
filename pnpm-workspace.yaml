@@ -4,11 +4,11 @@ packages:
   - "packages/spotify-web-client"
 
 catalog:
-  "@types/node": "24.12.4"
+  "@types/node": "24.13.2"
   typescript: "6.0.3"
-  vitest: "4.1.8"
-  "@vitest/browser": "4.1.8"
-  "@vitest/browser-playwright": "4.1.8"
+  vitest: "4.1.9"
+  "@vitest/browser": "4.1.9"
+  "@vitest/browser-playwright": "4.1.9"
 
 allowBuilds:
   "@nestjs/core": false
