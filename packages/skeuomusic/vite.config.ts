@@ -3,10 +3,10 @@ import { tanstackStart } from "@tanstack/solid-start/plugin/vite";
 import { defineConfig, type ServerOptions } from "vite";
 import viteSolid from "vite-plugin-solid";
 import tsConfigPaths from "vite-tsconfig-paths";
-
-import "dotenv/config";
 import { hash } from "node:crypto";
+import { loadEnvFile } from "node:process";
 
+loadEnvFile(".env");
 const vars = {
   host: "HOST",
   httpsEnabled: "HTTPS_ENABLED",
