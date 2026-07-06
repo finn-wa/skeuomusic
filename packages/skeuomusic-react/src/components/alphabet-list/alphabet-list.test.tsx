@@ -2,8 +2,9 @@ import type { Item } from "@/shared/types";
 import { renderWithRouter } from "@/test/router-utils";
 import { describe, expect, it } from "vitest";
 import { userEvent } from "vitest/browser";
-import AlphabetList, { type ItemRendererProps } from "./alphabet-list";
+import AlphabetList from "./alphabet-list";
 import { LETTERS } from "./letters";
+import type { ListItemProps } from "../list-item/list-item";
 
 type RenderedScreen = Awaited<ReturnType<typeof renderWithRouter>>;
 
@@ -169,7 +170,7 @@ describe("AlphabetList", () => {
   });
 
   describe("itemComponent prop", () => {
-    function CustomItem({ item, hide }: ItemRendererProps<Item>) {
+    function CustomItem({ item, hide }: ListItemProps<Item>) {
       return (
         <li data-testid={`custom-${item.id}`} data-hide={String(!!hide)}>
           {item.name}

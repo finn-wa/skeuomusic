@@ -1,6 +1,6 @@
 import type { AlbumWithTracklist } from "@/shared/types";
 import styles from "./album-detail.module.css";
-import { AlbumArt } from "./album-art/album-art";
+import { AlbumCoverReflected } from "../album-cover/album-cover-reflected";
 import { formatArtists, getRuntimeMins } from "@/shared/music-utils";
 import AlbumTrack from "./album-track/album-track";
 
@@ -16,10 +16,10 @@ export default function AlbumDetail({ album }: AlbumDetailProps) {
     <>
       <div className={styles.album} id="1">
         <div className={styles.header}>
-          <AlbumArt
+          <AlbumCoverReflected
+            albumId={album.id}
             name={album.name}
-            srcSet={album.images}
-            sizes={["(max-width: 1000px) 33vw", "333px"]}
+            coverArtId={album.coverArtId}
             containerClass={styles.art}
             reflectionClass={styles.reflection}
           />

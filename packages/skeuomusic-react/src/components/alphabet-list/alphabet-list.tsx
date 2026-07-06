@@ -8,7 +8,7 @@ import {
   useState,
   type ComponentType,
 } from "react";
-import ListItem, { type ItemWithLink } from "../list-item/list-item";
+import ListItem, { type ItemWithLink, type ListItemProps } from "../list-item/list-item";
 import PageMessage, { LoadingPage } from "../page-message/page-message";
 import SearchInput from "../search-input/search-input";
 import AlphabetIndex from "./alphabet-index";
@@ -20,12 +20,7 @@ export type AlphabetListProps<T extends ItemWithLink> = {
   noun: string | { singular: string; plural: string };
   hideItemCount?: boolean;
   hideIndex?: boolean;
-  itemComponent?: ComponentType<ItemRendererProps<T>>;
-};
-
-export type ItemRendererProps<T extends ItemWithLink> = {
-  item: T;
-  hide?: boolean;
+  itemComponent?: ComponentType<ListItemProps<T>>;
 };
 
 /**

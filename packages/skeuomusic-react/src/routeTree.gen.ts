@@ -16,6 +16,7 @@ import { Route as MusicLibraryMoreRouteImport } from "./routes/music/library/mor
 import { Route as MusicLibraryPlaylistsIndexRouteImport } from "./routes/music/library/playlists/index"
 import { Route as MusicLibraryArtistsIndexRouteImport } from "./routes/music/library/artists/index"
 import { Route as MusicLibraryAlbumsIndexRouteImport } from "./routes/music/library/albums/index"
+import { Route as MusicLibraryAlbumsAlbumIdRouteImport } from "./routes/music/library/albums/$albumId"
 
 const IndexRoute = IndexRouteImport.update({
   id: "/",
@@ -54,12 +55,19 @@ const MusicLibraryAlbumsIndexRoute = MusicLibraryAlbumsIndexRouteImport.update({
   path: "/albums/",
   getParentRoute: () => MusicLibraryRoute,
 } as any)
+const MusicLibraryAlbumsAlbumIdRoute =
+  MusicLibraryAlbumsAlbumIdRouteImport.update({
+    id: "/albums/$albumId",
+    path: "/albums/$albumId",
+    getParentRoute: () => MusicLibraryRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   "/": typeof IndexRoute
   "/music/library": typeof MusicLibraryRouteWithChildren
   "/music/library/more": typeof MusicLibraryMoreRoute
   "/music/library/songs": typeof MusicLibrarySongsRoute
+  "/music/library/albums/$albumId": typeof MusicLibraryAlbumsAlbumIdRoute
   "/music/library/albums/": typeof MusicLibraryAlbumsIndexRoute
   "/music/library/artists/": typeof MusicLibraryArtistsIndexRoute
   "/music/library/playlists/": typeof MusicLibraryPlaylistsIndexRoute
@@ -69,6 +77,7 @@ export interface FileRoutesByTo {
   "/music/library": typeof MusicLibraryRouteWithChildren
   "/music/library/more": typeof MusicLibraryMoreRoute
   "/music/library/songs": typeof MusicLibrarySongsRoute
+  "/music/library/albums/$albumId": typeof MusicLibraryAlbumsAlbumIdRoute
   "/music/library/albums": typeof MusicLibraryAlbumsIndexRoute
   "/music/library/artists": typeof MusicLibraryArtistsIndexRoute
   "/music/library/playlists": typeof MusicLibraryPlaylistsIndexRoute
@@ -79,6 +88,7 @@ export interface FileRoutesById {
   "/music/library": typeof MusicLibraryRouteWithChildren
   "/music/library/more": typeof MusicLibraryMoreRoute
   "/music/library/songs": typeof MusicLibrarySongsRoute
+  "/music/library/albums/$albumId": typeof MusicLibraryAlbumsAlbumIdRoute
   "/music/library/albums/": typeof MusicLibraryAlbumsIndexRoute
   "/music/library/artists/": typeof MusicLibraryArtistsIndexRoute
   "/music/library/playlists/": typeof MusicLibraryPlaylistsIndexRoute
@@ -90,6 +100,7 @@ export interface FileRouteTypes {
     | "/music/library"
     | "/music/library/more"
     | "/music/library/songs"
+    | "/music/library/albums/$albumId"
     | "/music/library/albums/"
     | "/music/library/artists/"
     | "/music/library/playlists/"
@@ -99,6 +110,7 @@ export interface FileRouteTypes {
     | "/music/library"
     | "/music/library/more"
     | "/music/library/songs"
+    | "/music/library/albums/$albumId"
     | "/music/library/albums"
     | "/music/library/artists"
     | "/music/library/playlists"
@@ -108,6 +120,7 @@ export interface FileRouteTypes {
     | "/music/library"
     | "/music/library/more"
     | "/music/library/songs"
+    | "/music/library/albums/$albumId"
     | "/music/library/albums/"
     | "/music/library/artists/"
     | "/music/library/playlists/"
@@ -169,12 +182,20 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof MusicLibraryAlbumsIndexRouteImport
       parentRoute: typeof MusicLibraryRoute
     }
+    "/music/library/albums/$albumId": {
+      id: "/music/library/albums/$albumId"
+      path: "/albums/$albumId"
+      fullPath: "/music/library/albums/$albumId"
+      preLoaderRoute: typeof MusicLibraryAlbumsAlbumIdRouteImport
+      parentRoute: typeof MusicLibraryRoute
+    }
   }
 }
 
 interface MusicLibraryRouteChildren {
   MusicLibraryMoreRoute: typeof MusicLibraryMoreRoute
   MusicLibrarySongsRoute: typeof MusicLibrarySongsRoute
+  MusicLibraryAlbumsAlbumIdRoute: typeof MusicLibraryAlbumsAlbumIdRoute
   MusicLibraryAlbumsIndexRoute: typeof MusicLibraryAlbumsIndexRoute
   MusicLibraryArtistsIndexRoute: typeof MusicLibraryArtistsIndexRoute
   MusicLibraryPlaylistsIndexRoute: typeof MusicLibraryPlaylistsIndexRoute
@@ -183,6 +204,7 @@ interface MusicLibraryRouteChildren {
 const MusicLibraryRouteChildren: MusicLibraryRouteChildren = {
   MusicLibraryMoreRoute: MusicLibraryMoreRoute,
   MusicLibrarySongsRoute: MusicLibrarySongsRoute,
+  MusicLibraryAlbumsAlbumIdRoute: MusicLibraryAlbumsAlbumIdRoute,
   MusicLibraryAlbumsIndexRoute: MusicLibraryAlbumsIndexRoute,
   MusicLibraryArtistsIndexRoute: MusicLibraryArtistsIndexRoute,
   MusicLibraryPlaylistsIndexRoute: MusicLibraryPlaylistsIndexRoute,

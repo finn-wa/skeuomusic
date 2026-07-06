@@ -9,23 +9,54 @@ import {
   type SubsonicConfig,
 } from "./shared/context/auth";
 
+function getRequestUrl(input: RequestInfo | URL): string {
+  if (input instanceof URL) {
+    return input.href;
+  }
+  if (typeof input === "string") {
+    return input;
+  }
+  return input.url;
+}
+
 async function loginToSubsonic({
   url,
   username,
   password,
 }: SubsonicConfig): Promise<
-  { success: true; api: SubsonicAPI } | { success: false; error: string }
+  | { success: true; api: SubsonicAPI; requestParams: Record<string, string> }
+  | { success: false; error: string }
 > {
-  const api = new SubsonicAPI({ url, auth: { username, password } });
+  // Capture the query params (auth token/salt, client, version) from the first
+  // request so we can reuse them to build authenticated media URLs later. The
+  // token/salt pair stays valid for the session, so we only need to grab it once.
+  let requestParams: Record<string, string> | null = null;
+  const capturingFetch: typeof fetch = (input, init) => {
+    if (requestParams === null) {
+      const params = new URL(getRequestUrl(input)).searchParams;
+      params.delete("f"); // response format is per-request; not wanted for media URLs
+      requestParams = Object.fromEntries(params);
+    }
+    return fetch(input, init);
+  };
+
+  const api = new SubsonicAPI({
+    url,
+    auth: { username, password },
+    fetch: capturingFetch,
+  });
   // TODO: figure out error type for failed requests
   const response = await api.ping();
-  if (response.status === "ok") {
-    return { success: true, api };
+  if (response.status !== "ok") {
+    return {
+      success: false,
+      error: `Subsonic API error ${response.error.code}: ${response.error.message}`,
+    };
   }
-  return {
-    success: false,
-    error: `Subsonic API error ${response.error.code}: ${response.error.message}`,
-  };
+  if (requestParams === null) {
+    return { success: false, error: "Failed to capture request params" };
+  }
+  return { success: true, api, requestParams };
 }
 
 const OPENSUBSONIC_CONFIG_KEY = "opensubsonicConfig";
@@ -89,6 +120,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
         setSubsonicState({
           config: subsonicConfig,
           api: response.api,
+          requestParams: response.requestParams,
         });
       })
       .catch((error) => {
@@ -107,7 +139,11 @@ export function AuthProvider({ children }: PropsWithChildren) {
       throw new Error(response.error);
     }
     saveSubsonicConfig(config);
-    setSubsonicState({ config, api: response.api });
+    setSubsonicState({
+      config,
+      api: response.api,
+      requestParams: response.requestParams,
+    });
   };
 
   const logout: SubsonicAuthContext["logout"] = () => {

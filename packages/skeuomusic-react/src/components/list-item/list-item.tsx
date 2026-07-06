@@ -4,8 +4,8 @@ import { memo } from "react";
 
 export type ItemWithLink = Item & { href?: string };
 
-export type ListItemProps = {
-  item: ItemWithLink;
+export type ListItemProps<T extends ItemWithLink = ItemWithLink> = {
+  item: T;
   hide?: boolean;
 };
 

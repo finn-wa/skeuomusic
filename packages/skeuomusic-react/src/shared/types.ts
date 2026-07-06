@@ -5,8 +5,8 @@ export type Item = {
 
 export type Album = Item & {
   artists: { id: string; name: string }[];
-  images: { url: string; width?: number | null }[];
-  releaseDate: string;
+  coverArtId?: string;
+  releaseDate?: string;
 };
 
 export type Artist = Item;
@@ -14,7 +14,7 @@ export type Artist = Item;
 export type Playlist = Item;
 
 export type Song = Item & {
-  album: Pick<Album, "id" | "name" | "images">;
+  album: Pick<Album, "id" | "name" | "coverArtId">;
   artists: { name: string }[];
   uri: string;
   durationMs: number;

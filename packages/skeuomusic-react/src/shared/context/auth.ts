@@ -8,6 +8,13 @@ export type AuthContextValue = {
 export type SubsonicAuthState = {
   config: SubsonicConfig;
   api: SubsonicAPI;
+  /**
+   * The query parameters (auth token/salt, client, version) captured from the
+   * initial ping request. Reused to build authenticated media URLs (e.g. cover
+   * art) that can be used directly as an `img` src without fetching a blob.
+   * Suitable for passing to the `URLSearchParams` constructor.
+   */
+  requestParams: Record<string, string>;
 };
 export type SubsonicConfig = {
   url: string;
@@ -29,6 +36,17 @@ export type SubsonicAuthContext = {
 };
 
 export const AuthContext = createContext<AuthContextValue | undefined>(undefined);
+
 export function useAuthContext() {
   return useRequiredContext(AuthContext);
+}
+
+export function useSubsonicAuthState(): SubsonicAuthState {
+  const subsonicState = useAuthContext().subsonic.state;
+  if (subsonicState == null) {
+    throw new Error(
+      "useSubsonicAuthState was called but subsonic state is not initialised",
+    );
+  }
+  return subsonicState;
 }

@@ -1,7 +1,12 @@
 import type { ImgHTMLAttributes } from "react";
 
+export type ImageSrcSet = {
+  width?: number | null;
+  url: string;
+}[];
+
 type ImagePropOverrides = {
-  srcSet: { width?: number | null; url: string }[];
+  srcSet: ImageSrcSet;
   sizes?: string[] | string;
 };
 

@@ -1,21 +1,26 @@
 import AlphabetList from "@/components/alphabet-list/alphabet-list";
+import AlbumListItem, {
+  type AlbumListItemData,
+} from "@/components/list-item/album-list-item";
 import { LoginHintPage } from "@/components/page-message/page-message";
 import { PRELOAD_STALE_TIME, STALE_TIME } from "@/shared/constants";
-import type { Item } from "@/shared/types";
 import { createFileRoute } from "@tanstack/react-router";
 import SubsonicAPI from "subsonic-api";
 
 const title = "Albums";
 
-async function getAlbums(api: SubsonicAPI): Promise<Item[]> {
-  return api
-    .getAlbumList({ type: "alphabeticalByName" })
-    .then(
-      (res) =>
-        res.albumList.album?.map(
-          (album): Item => ({ id: album.id, name: album.album ?? "No name" }),
-        ) ?? [],
-    );
+async function getAlbums(api: SubsonicAPI): Promise<AlbumListItemData[]> {
+  return api.getAlbumList2({ type: "alphabeticalByName" }).then(
+    (res) =>
+      res.albumList2.album?.map(
+        (album): AlbumListItemData => ({
+          id: album.id,
+          coverArtId: album.coverArt,
+          artists: album.artists ?? [],
+          name: album.name,
+        }),
+      ) ?? [],
+  );
 }
 
 export const Route = createFileRoute("/music/library/albums/")({
@@ -38,5 +43,5 @@ function AlbumsRouteComponent() {
   if (albums === undefined) {
     return <LoginHintPage />;
   }
-  return <AlphabetList items={albums} noun="Album" />;
+  return <AlphabetList itemComponent={AlbumListItem} items={albums} noun="Album" />;
 }
