@@ -1,8 +1,9 @@
-import { defineConfig } from "vitest/config";
+import { defineProject } from "vitest/config";
 import viteReact from "@vitejs/plugin-react";
 import { playwright } from "@vitest/browser-playwright";
 
-export default defineConfig({
+const ui = false;
+export default defineProject({
   plugins: [viteReact()],
   resolve: { alias: { "@": "/src" } },
   test: {
@@ -11,7 +12,9 @@ export default defineConfig({
     clearMocks: true,
     unstubGlobals: true,
     browser: {
-      headless: true,
+      ui,
+      headless: !ui,
+      screenshotFailures: false,
       enabled: true,
       provider: playwright(),
       instances: [{ browser: "chromium" }],

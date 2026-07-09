@@ -1,10 +1,9 @@
 import type { AlbumWithTracklist } from "@/shared/types";
-import channelOrangeMockupArt from "./assets/channel-orange-mockup.png";
 
 export const channelOrange: AlbumWithTracklist = {
   artists: [{ id: "fo-123", name: "Frank Ocean" }],
   id: "co-123",
-  images: [{ url: channelOrangeMockupArt, width: 1280 }],
+  coverArtId: "co-art-123",
   name: "Channel Orange",
   releaseDate: "2010-07-19",
   tracks: [

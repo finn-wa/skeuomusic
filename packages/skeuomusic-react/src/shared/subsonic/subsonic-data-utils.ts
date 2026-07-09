@@ -5,7 +5,9 @@ export function formatItemDate(date: ItemDate | undefined): string | undefined {
   if (date?.year == null) {
     return undefined;
   }
-  return `${date.year}-${date.month ?? "01"}-${date.day} ?? '01'`;
+  const month = String(date.month ?? 1).padStart(2, "0");
+  const day = String(date.day ?? 1).padStart(2, "0");
+  return `${date.year}-${month}-${day}`;
 }
 
 export function toAlbum(album: AlbumID3 | Child): Album {
@@ -24,7 +26,7 @@ export function toAlbumWithTracklist(album: AlbumWithSongsID3): AlbumWithTrackli
     ...toAlbum(album),
     tracks:
       album.song?.map((song) => ({
-        durationMs: song.duration ?? 0,
+        durationMs: (song.duration ?? 0) * 1000,
         id: song.id,
         name: song.title,
         trackNumber: song.track ?? 0,

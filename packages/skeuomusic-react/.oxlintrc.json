@@ -7,6 +7,7 @@
     "vitest/valid-title": [
       "error",
       { "ignoreTypeOfDescribeName": true, "ignoreTypeOfTestName": true }
-    ]
+    ],
+    "vitest/valid-expect": ["warn", { "maxArgs": 2 }]
   }
 }

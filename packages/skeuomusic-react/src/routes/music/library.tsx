@@ -20,7 +20,9 @@ function MusicLibrary() {
     select: (state) => {
       const context = state.matches.at(-1)?.context;
       const routeHeaderState: HeaderState =
-        context != null && "header" in context ? context.header : { title: SKEUOMUSIC };
+        context != null && "header" in context && context.header != null
+          ? context.header
+          : { title: SKEUOMUSIC };
       return { routeHeaderState, pathname: state.location.pathname };
     },
   });

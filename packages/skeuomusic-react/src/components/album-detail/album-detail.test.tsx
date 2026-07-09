@@ -1,12 +1,11 @@
 import type { AlbumWithTracklist, Track } from "@/shared/types";
 import { describe, expect, it } from "vitest";
-import { render } from "vitest-browser-react";
 import AlbumDetail from "./album-detail";
-import channelOrangeArt from "@/test/assets/channel-orange-mockup.png";
 import type { Locator } from "vitest/browser";
 import { channelOrange } from "@/test/test-data";
+import { renderWithAuth } from "@/test/router-utils";
 
-type RenderedScreen = Awaited<ReturnType<typeof render>>;
+type RenderedScreen = Awaited<ReturnType<typeof renderWithAuth>>;
 
 /**
  * The tracks in the tracklist `<ol>`. The album facts (release date, song
@@ -36,12 +35,12 @@ function makeAlbum(overrides: Partial<AlbumWithTracklist> = {}): AlbumWithTrackl
 
 describe("AlbumDetail", () => {
   it("renders the album name", async () => {
-    const screen = await render(<AlbumDetail album={makeAlbum()} />);
+    const screen = await renderWithAuth(<AlbumDetail album={makeAlbum()} />);
     await expect.element(screen.getByText("Channel Orange")).toBeVisible();
   });
 
   it("renders the artist name", async () => {
-    const screen = await render(<AlbumDetail album={makeAlbum()} />);
+    const screen = await renderWithAuth(<AlbumDetail album={makeAlbum()} />);
     await expect.element(screen.getByText("Frank Ocean")).toBeVisible();
   });
 
@@ -52,12 +51,12 @@ describe("AlbumDetail", () => {
         { id: "a2", name: "André 3000" },
       ],
     });
-    const screen = await render(<AlbumDetail album={album} />);
+    const screen = await renderWithAuth(<AlbumDetail album={album} />);
     await expect.element(screen.getByText("Frank Ocean, André 3000")).toBeVisible();
   });
 
   it("renders the release date", async () => {
-    const screen = await render(
+    const screen = await renderWithAuth(
       <AlbumDetail album={makeAlbum({ releaseDate: "2012-07-10" })} />,
     );
     await expect.element(screen.getByText("Released 2012-07-10")).toBeVisible();
@@ -70,12 +69,12 @@ describe("AlbumDetail", () => {
         makeTrack({ id: "t2", durationMs: 4 * 60_000 }),
       ],
     });
-    const screen = await render(<AlbumDetail album={album} />);
+    const screen = await renderWithAuth(<AlbumDetail album={album} />);
     await expect.element(screen.getByText("2 Songs, 7 Mins.")).toBeVisible();
   });
 
   it("renders the album cover art with an alt derived from the name", async () => {
-    const screen = await render(<AlbumDetail album={makeAlbum()} />);
+    const screen = await renderWithAuth(<AlbumDetail album={makeAlbum()} />);
     await expect
       .element(screen.getByAltText("Channel Orange cover art", { exact: true }))
       .toBeVisible();
@@ -89,7 +88,7 @@ describe("AlbumDetail", () => {
         makeTrack({ id: "t3", name: "Super Rich Kids" }),
       ],
     });
-    const screen = await render(<AlbumDetail album={album} />);
+    const screen = await renderWithAuth(<AlbumDetail album={album} />);
     await expect.element(tracklistItemsLocator(screen).first()).toBeVisible();
     expect(tracklistItemsLocator(screen).elements()).toHaveLength(3);
   });
@@ -101,7 +100,7 @@ describe("AlbumDetail", () => {
         makeTrack({ id: "t2", name: "Sweet Life" }),
       ],
     });
-    const screen = await render(<AlbumDetail album={album} />);
+    const screen = await renderWithAuth(<AlbumDetail album={album} />);
     await expect.element(screen.getByText("Thinkin Bout You")).toBeVisible();
     const names = tracklistItemsLocator(screen)
       .elements()
@@ -114,20 +113,22 @@ describe("AlbumDetail", () => {
     const album = makeAlbum({
       tracks: [makeTrack({ id: "t1", name: "Pyramids", durationMs: 594_000 })],
     });
-    const screen = await render(<AlbumDetail album={album} />);
+    const screen = await renderWithAuth(<AlbumDetail album={album} />);
     await expect.element(screen.getByText("Pyramids")).toBeVisible();
     await expect.element(screen.getByText("9:54")).toBeVisible();
   });
 
   it("renders an empty tracklist without crashing", async () => {
-    const screen = await render(<AlbumDetail album={makeAlbum({ tracks: [] })} />);
+    const screen = await renderWithAuth(
+      <AlbumDetail album={makeAlbum({ tracks: [] })} />,
+    );
     await expect.element(screen.getByText("0 Songs, 0 Mins.")).toBeVisible();
     await expect.element(tracklistItemsLocator(screen).first()).not.toBeInTheDocument();
   });
 
   // Disabled until the styling is fixed
   it("should match screenshot", { tags: "visual", skip: true }, async () => {
-    const screen = await render(
+    const screen = await renderWithAuth(
       <div className="content-scroll">
         <AlbumDetail album={channelOrange} />
       </div>,

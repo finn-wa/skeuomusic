@@ -9,7 +9,7 @@ import {
   type SubsonicConfig,
 } from "./shared/context/auth";
 
-function getRequestUrl(input: RequestInfo | URL): string {
+export function getRequestUrl(input: RequestInfo | URL): string {
   if (input instanceof URL) {
     return input.href;
   }
@@ -19,14 +19,25 @@ function getRequestUrl(input: RequestInfo | URL): string {
   return input.url;
 }
 
-async function loginToSubsonic({
-  url,
-  username,
-  password,
-}: SubsonicConfig): Promise<
-  | { success: true; api: SubsonicAPI; requestParams: Record<string, string> }
-  | { success: false; error: string }
-> {
+export type SubsonicApiFactory = (
+  ...params: ConstructorParameters<typeof SubsonicAPI>
+) => SubsonicAPI;
+
+export type SubsonicLoginSuccess = {
+  success: true;
+  api: SubsonicAPI;
+  requestParams: Record<string, string>;
+};
+
+export type SubsonicLoginError = {
+  success: false;
+  error: string;
+};
+
+export async function loginToSubsonic(
+  { url, username, password }: SubsonicConfig,
+  newSubsonicApi: SubsonicApiFactory = (config) => new SubsonicAPI(config),
+): Promise<SubsonicLoginSuccess | SubsonicLoginError> {
   // Capture the query params (auth token/salt, client, version) from the first
   // request so we can reuse them to build authenticated media URLs later. The
   // token/salt pair stays valid for the session, so we only need to grab it once.
@@ -40,7 +51,7 @@ async function loginToSubsonic({
     return fetch(input, init);
   };
 
-  const api = new SubsonicAPI({
+  const api = newSubsonicApi({
     url,
     auth: { username, password },
     fetch: capturingFetch,
