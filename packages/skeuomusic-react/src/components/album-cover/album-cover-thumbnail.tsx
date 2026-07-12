@@ -11,5 +11,13 @@ export type AlbumCoverProps = CoverArtInfo & {
 /** A thumbnail-size cover art image. */
 export function AlbumCoverThumbnail({ name, ...coverArtInfo }: AlbumCoverProps) {
   const srcSet = useCoverArtThumbnailSrcSet(coverArtInfo);
-  return <Image srcSet={srcSet} sizes={"58"} alt={`${name} cover art`} />;
+  return (
+    <Image
+      srcSet={srcSet}
+      sizes={"58"}
+      width={58}
+      height={58}
+      alt={`${name} cover art`}
+    />
+  );
 }

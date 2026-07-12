@@ -1,6 +1,7 @@
 import type { ImageSrcSet } from "@/components/image/image";
 import { useEffect, useState } from "react";
 import { useSubsonicAuthState, type SubsonicAuthState } from "../context/auth";
+import defaultCoverArt from "./default-cover-art.svg";
 
 /**
  * Build an authenticated cover art URL that can be used directly as an `img`
@@ -130,10 +131,6 @@ export type CoverArtInfo = {
   albumId: string;
 };
 
-// TODO: make proper placeholders
-const placeholderArt = "/icon.svg?url";
-const placeholderThumbnail = "/favicon.ico?url";
-
 /**
  * Returns a srcset for a thumbnail-sized cover art image. Images are retrieved from
  * Subsonic if coverArtId is provided, or Last FM if not.
@@ -146,7 +143,7 @@ export function useCoverArtThumbnailSrcSet({
   const lastFmImgSrcSet = useLastFmCoverArtThumbnailSrcSet(
     coverArtId == null ? albumId : null,
   );
-  return subsonicImgSrcSet ?? lastFmImgSrcSet ?? [{ url: placeholderThumbnail }];
+  return subsonicImgSrcSet ?? lastFmImgSrcSet ?? [{ url: defaultCoverArt }];
 }
 
 /**
@@ -156,5 +153,5 @@ export function useCoverArtThumbnailSrcSet({
 export function useCoverArtSrcSet({ coverArtId, albumId }: CoverArtInfo): ImageSrcSet {
   const subsonicImgSrcSet = useSubsonicCoverArtSrcSet(coverArtId ?? null);
   const lastFmImgSrcSet = useLastFmCoverArtSrcSet(coverArtId == null ? albumId : null);
-  return subsonicImgSrcSet ?? lastFmImgSrcSet ?? [{ url: placeholderArt }];
+  return subsonicImgSrcSet ?? lastFmImgSrcSet ?? [{ url: defaultCoverArt }];
 }

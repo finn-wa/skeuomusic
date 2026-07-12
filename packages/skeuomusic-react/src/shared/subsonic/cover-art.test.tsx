@@ -27,9 +27,6 @@ function parseSrcSet(out: Locator): ImageSrcSet {
   return JSON.parse(out.element().textContent) as ImageSrcSet;
 }
 
-const PLACEHOLDER_THUMBNAIL = "/favicon.ico?url";
-const PLACEHOLDER_ART = "/icon.svg?url";
-
 describe("useCoverArtThumbnailSrcSet", () => {
   let api: SubsonicAPI;
   let getAlbumInfo: Mock<SubsonicAPI["getAlbumInfo"]>;
@@ -143,9 +140,10 @@ describe("useCoverArtThumbnailSrcSet", () => {
         state: makeSubsonicAuthState({ api }),
       });
       await expect.poll(() => getAlbumInfo).toHaveBeenCalledWith({ id: "album-1" });
-      await expect
-        .poll(() => parseSrcSet(screen.getByTestId("out")))
-        .toEqual([{ url: PLACEHOLDER_THUMBNAIL }]);
+      await expect.element(screen.getByTestId("out")).toBeVisible();
+      const srcSet = parseSrcSet(screen.getByTestId("out"));
+      expect(srcSet).toHaveLength(1);
+      expect(srcSet[0].url).toMatch(/^data:image\/svg/);
     });
   });
 
@@ -154,9 +152,10 @@ describe("useCoverArtThumbnailSrcSet", () => {
       const screen = await renderWithAuth(<ThumbnailProbe albumId="album-1" />, {
         state: makeSubsonicAuthState({ api }),
       });
-      await expect
-        .poll(() => parseSrcSet(screen.getByTestId("out")))
-        .toEqual([{ url: PLACEHOLDER_THUMBNAIL }]);
+      await expect.element(screen.getByTestId("out")).toBeVisible();
+      const srcSet = parseSrcSet(screen.getByTestId("out"));
+      expect(srcSet).toHaveLength(1);
+      expect(srcSet[0].url).toMatch(/^data:image\/svg/);
     });
   });
 });
@@ -246,9 +245,10 @@ describe("useCoverArtSrcSet", () => {
         state: makeSubsonicAuthState({ api }),
       });
       await expect.poll(() => getAlbumInfo).toHaveBeenCalledWith({ id: "album-1" });
-      await expect
-        .poll(() => parseSrcSet(screen.getByTestId("out")))
-        .toEqual([{ url: PLACEHOLDER_ART }]);
+      await expect.element(screen.getByTestId("out")).toBeVisible();
+      const srcSet = parseSrcSet(screen.getByTestId("out"));
+      expect(srcSet).toHaveLength(1);
+      expect(srcSet[0].url).toMatch(/^data:image\/svg/);
     });
   });
 
@@ -258,9 +258,10 @@ describe("useCoverArtSrcSet", () => {
       const screen = await renderWithAuth(<FullProbe albumId="album-1" />, {
         state: makeSubsonicAuthState({ api }),
       });
-      await expect
-        .poll(() => parseSrcSet(screen.getByTestId("out")))
-        .toEqual([{ url: PLACEHOLDER_ART }]);
+      await expect.element(screen.getByTestId("out")).toBeVisible();
+      const srcSet = parseSrcSet(screen.getByTestId("out"));
+      expect(srcSet).toHaveLength(1);
+      expect(srcSet[0].url).toMatch(/^data:image\/svg/);
     });
   });
 });

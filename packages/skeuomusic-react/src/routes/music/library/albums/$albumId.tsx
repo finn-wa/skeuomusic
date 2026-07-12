@@ -27,7 +27,7 @@ export const Route = createFileRoute("/music/library/albums/$albumId")({
   preloadStaleTime: Number.MAX_SAFE_INTEGER,
 });
 
-export default function AlbumDetailPage() {
+function AlbumDetailPage() {
   const { album } = Route.useLoaderData();
   if (album === undefined) {
     return <LoginHintPage />;
