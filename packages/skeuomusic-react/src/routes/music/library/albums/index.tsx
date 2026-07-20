@@ -10,16 +10,16 @@ import SubsonicAPI from "subsonic-api";
 const title = "Albums";
 
 async function getAlbums(api: SubsonicAPI): Promise<AlbumListItemData[]> {
-  return api.getAlbumList2({ type: "alphabeticalByName" }).then(
-    (res) =>
-      res.albumList2.album?.map(
-        (album): AlbumListItemData => ({
-          id: album.id,
-          coverArtId: album.coverArt,
-          artists: album.artists ?? [],
-          name: album.name,
-        }),
-      ) ?? [],
+  const res = await api.getAlbumList2({ type: "alphabeticalByName" });
+  return (
+    res.albumList2.album?.map(
+      (album): AlbumListItemData => ({
+        id: album.id,
+        coverArtId: album.coverArt,
+        artists: album.artists ?? [],
+        name: album.name,
+      }),
+    ) ?? []
   );
 }
 
