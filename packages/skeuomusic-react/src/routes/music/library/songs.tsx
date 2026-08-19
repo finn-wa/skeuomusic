@@ -17,14 +17,12 @@ async function getSongs(api: SubsonicAPI): Promise<SongListItemData[]> {
     albumCount: 0,
   });
   return (
-    response.searchResult3.song?.map(
-      (song): SongListItemData => ({
-        id: song.id,
-        artists: song.artists ?? [],
-        album: song.album,
-        name: song.title,
-      }),
-    ) ?? []
+    response.searchResult3.song?.map((song): SongListItemData => ({
+      id: song.id,
+      artists: song.artists ?? [],
+      album: song.album,
+      name: song.title,
+    })) ?? []
   );
 }
 
