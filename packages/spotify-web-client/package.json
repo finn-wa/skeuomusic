@@ -17,7 +17,7 @@
     "test:ci": "vitest run"
   },
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "2.40.1",
+    "@openapitools/openapi-generator-cli": "2.41.0",
     "@types/node": "catalog:",
     "openapi3-ts": "4.6.1",
     "typescript": "catalog:",
