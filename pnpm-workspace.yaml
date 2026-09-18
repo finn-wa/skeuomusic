@@ -6,9 +6,9 @@ packages:
 catalog:
   "@types/node": "24.13.3"
   typescript: "6.0.3"
-  vitest: "4.1.11"
-  "@vitest/browser": "4.1.11"
-  "@vitest/browser-playwright": "4.1.11"
+  vitest: "5.0.1"
+  "@vitest/browser": "5.0.1"
+  "@vitest/browser-playwright": "5.0.1"
 
 allowBuilds:
   "@nestjs/core": false
