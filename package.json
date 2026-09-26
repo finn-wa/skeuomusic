@@ -7,10 +7,10 @@
     "test": "vitest"
   },
   "devDependencies": {
-    "lint-staged": "17.3.0",
-    "oxfmt": "0.64.0",
-    "oxlint": "1.79.0",
-    "oxlint-tsgolint": "7.0.2001",
+    "lint-staged": "17.5.1",
+    "oxfmt": "0.70.0",
+    "oxlint": "1.85.0",
+    "oxlint-tsgolint": "7.0.2002",
     "vitest": "catalog:"
   },
   "lint-staged": {
@@ -23,5 +23,5 @@
       "onFail": "warn"
     }
   },
-  "packageManager": "pnpm@11.22.0"
+  "packageManager": "pnpm@11.27.1"
 }
