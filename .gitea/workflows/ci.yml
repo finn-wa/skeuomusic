@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v7.0.1
+        uses: builtin:checkout
 
       - name: Set up pnpm
         uses: pnpm/action-setup@v6.0.10
